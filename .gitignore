@@ -1,5 +1,6 @@
 # ignore everything for the start
 /*
+**.pyc
 
 # include just special files & folders
 !/.gitignore
