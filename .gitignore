@@ -1,0 +1,7 @@
+# ignore everything for the start
+/*
+
+# include just special files & folders
+!/.gitignore
+
+!/kitty/
