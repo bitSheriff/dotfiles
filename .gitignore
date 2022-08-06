@@ -5,3 +5,5 @@
 !/.gitignore
 
 !/kitty/
+!/nvim/
+/nvim/plugged/
