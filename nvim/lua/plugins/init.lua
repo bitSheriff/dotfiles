@@ -189,6 +189,11 @@ local plugins = {
       require "plugins.configs.whichkey"
     end,
   },
+
+  -- Tools for Rust
+  ["neovim/nvim-lspconfig"] = {},
+  ["simrat39/rust-tools.nvim"] = {},
 }
 
 require("core.packer").run(plugins)
+require("rust-tools").setup({})
