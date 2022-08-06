@@ -25,13 +25,16 @@ opt.cul = true -- cursor line
 opt.expandtab = true
 opt.shiftwidth = 2
 opt.smartindent = true
-opt.tabstop = 2
-opt.softtabstop = 2
+opt.tabstop = 4
+opt.softtabstop = 4
 
 opt.fillchars = { eob = " " }
 opt.ignorecase = true
 opt.smartcase = true
 opt.mouse = "a"
+
+-- Scrolling
+opt.so = 999 -- keep cursor in the middle
 
 -- Numbers
 opt.number = true
