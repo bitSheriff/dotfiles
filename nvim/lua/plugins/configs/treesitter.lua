@@ -10,7 +10,12 @@ require("base46").load_highlight "treesitter"
 local options = {
   ensure_installed = {
     "lua",
+    "c",
+    "cpp",
+    "rust",
+    "python",
   },
+  auto_install = true,
   highlight = {
     enable = true,
     use_languagetree = true,
