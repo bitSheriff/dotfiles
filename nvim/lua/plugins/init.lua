@@ -190,10 +190,21 @@ local plugins = {
     end,
   },
 
+  -- Themes
+  ["EdenEast/nightfox.nvim"] = {},
+  ["folke/tokyonight.nvim"] = {},
+  ["catppuccin/nvim"] = {},
+
   -- Tools for Rust
   ["neovim/nvim-lspconfig"] = {},
   ["simrat39/rust-tools.nvim"] = {},
 }
+vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 
 require("core.packer").run(plugins)
 require("rust-tools").setup({})
+require("catppuccin").setup({})
+
+
+-- Set the Theme
+vim.cmd[[colorscheme catppuccin]]
