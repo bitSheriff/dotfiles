@@ -194,6 +194,7 @@ local plugins = {
   ["EdenEast/nightfox.nvim"] = {},
   ["folke/tokyonight.nvim"] = {},
   ["catppuccin/nvim"] = {},
+  ["dracula/vim"] = {},
 
   -- Tools for Rust
   ["neovim/nvim-lspconfig"] = {},
@@ -209,4 +210,4 @@ require("catppuccin").setup({})
 
 
 -- Set the Theme
-vim.cmd[[colorscheme catppuccin]]
+vim.cmd[[colorscheme dracula]]
