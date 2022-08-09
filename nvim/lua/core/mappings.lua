@@ -40,6 +40,8 @@ M.general = {
     ["<leader>n"] = { "<cmd> set nu! <CR>", "   toggle line number" },
     ["<leader>rn"] = { "<cmd> set rnu! <CR>", "   toggle relative number" },
 
+    ["<leader>o"] = { "o <ESC>", "insert new line without entering insert mode" },
+
     -- update nvchad
     ["<leader>uu"] = { "<cmd> :NvChadUpdate <CR>", "  update nvchad" },
 
