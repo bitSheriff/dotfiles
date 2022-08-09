@@ -190,6 +190,14 @@ local plugins = {
     end,
   },
 
+  -- Start up page
+  ["startup-nvim/startup.nvim"] = {
+    requires = {"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
+  config = function()
+    require"startup".setup()
+  end
+  },
+
   -- Themes
   ["EdenEast/nightfox.nvim"] = {},
   ["folke/tokyonight.nvim"] = {},
