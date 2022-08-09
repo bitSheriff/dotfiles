@@ -14,6 +14,8 @@ local options = {
     "cpp",
     "rust",
     "python",
+    "markdown",
+    "markdown_inline",
   },
   auto_install = true,
   highlight = {
