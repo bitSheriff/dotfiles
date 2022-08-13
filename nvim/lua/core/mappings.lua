@@ -65,6 +65,7 @@ M.general = {
 
   t = {
     ["<C-x>"] = { termcodes "<C-\\><C-N>", "   escape terminal mode" },
+    ["<ESC>"] = { termcodes "<C-\\><C-N>", "   escape terminal mode" },
   },
 
   v = {

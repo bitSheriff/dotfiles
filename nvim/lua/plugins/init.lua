@@ -209,6 +209,12 @@ local plugins = {
       }
   end
   }, 
+
+  -- Tabs
+  ["romgrk/barbar.nvim"] = {
+    requires = {"kyazdani42/nvim-web-devicons"},
+  },
+  
   -- Themes
   ["EdenEast/nightfox.nvim"] = {},
   ["folke/tokyonight.nvim"] = {},
