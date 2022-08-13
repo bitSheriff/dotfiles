@@ -232,7 +232,7 @@ vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 require("core.packer").run(plugins)
 require("rust-tools").setup({})
 require("catppuccin").setup({})
-
+require'lspconfig'.pyright.setup{}
 
 -- Set the Theme
 vim.cmd[[colorscheme dracula]]
