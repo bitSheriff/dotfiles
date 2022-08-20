@@ -2,3 +2,6 @@
 
 ## git
 alias gti="git"
+
+## kitty
+alias icat="kitty +kitten icat --align=left"
