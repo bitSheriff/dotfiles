@@ -5,3 +5,9 @@ alias gti="git"
 
 ## kitty
 alias icat="kitty +kitten icat --align=left"
+
+## general linux commands simplified
+# param alias
+search_man() {
+    man $1 | grep -- $2
+}
