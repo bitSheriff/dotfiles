@@ -8,6 +8,7 @@
 !/kitty/
 !/nvim/
 !/ranger/
+!/git/                  # additional git configurations
 
 # tmux
 !/tmux/tmux.conf
