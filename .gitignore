@@ -5,10 +5,10 @@
 # include just special files & folders
 !/.gitignore
 
-!/kitty/
-!/nvim/
-!/ranger/
-!/git/                  # additional git configurations
+!/kitty/*
+!/nvim/*
+!/ranger/*
+!/git/*                  # additional git configurations
 
 # tmux
 !/tmux/tmux.conf
