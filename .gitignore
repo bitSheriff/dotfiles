@@ -8,7 +8,11 @@
 !/kitty/
 !/nvim/
 !/ranger/
+
+# tmux
 !/tmux/tmux.conf
+!/tmux/alias             # alias file
+!/tmux/README.md
 /tmux/plugins/**        # location of the plugins which get downloaded
 !/tmux/plugins/tpm      # location of the plugin manager which is needed to download these plugins
 /tmux/plugins/tmux_cpu/
