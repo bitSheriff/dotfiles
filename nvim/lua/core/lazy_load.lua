@@ -44,6 +44,20 @@ M.on_file_open = function(plugin_name)
   }
 end
 
+M.packer_cmds = {
+  "PackerSnapshot",
+  "PackerSnapshotRollback",
+  "PackerSnapshotDelete",
+  "PackerInstall",
+  "PackerUpdate",
+  "PackerSync",
+  "PackerClean",
+  "PackerCompile",
+  "PackerStatus",
+  "PackerProfile",
+  "PackerLoad",
+}
+
 M.treesitter_cmds = {
   "TSInstall",
   "TSBufEnable",
@@ -65,7 +79,8 @@ M.mason_cmds = {
 M.gitsigns = function()
   autocmd({ "BufRead" }, {
     callback = function()
-      if vim.fn.isdirectory ".git" ~= 0 then
+      vim.fn.system("git rev-parse " .. vim.fn.expand "%:p:h")
+      if vim.v.shell_error == 0 then
         vim.schedule(function()
           require("packer").loader "gitsigns.nvim"
         end)
