@@ -6,8 +6,24 @@ alias gti="git"
 ## kitty
 alias icat="kitty +kitten icat --align=left"
 
+## change directories
+alias go2conf="cd ~/.config"
+alias go2code="cd ~/code"
+alias ..="cd .."
+
 ## general linux commands simplified
 # param alias
 search_man() {
     man $1 | grep -- $2
 }
+
+# list only mounted devices
+alias mnt="mount | awk -F' ' '{ printf \"%s\t%s\n\",\$1,\$3; }' | column -t | egrep ^/dev/ | sort"
+# count files in current directory 
+alias count='find . -type f | wc -l'
+# copy with progressbar 
+alias cpv='rsync -ah --info=progress2'
+# quit terminal like vim
+alias :q="exit"
+# open nautilus (file explorer) in the current directory
+alias exp="nautilus ."
