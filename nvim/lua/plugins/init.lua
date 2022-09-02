@@ -252,7 +252,10 @@ local plugins = {
   ["romgrk/barbar.nvim"] = {
     requires = {"kyazdani42/nvim-web-devicons"},
   },
-  
+
+  -- somethink like sticky headers
+  ["nvim-treesitter/nvim-treesitter-context"] = {},
+
   -- Themes
   ["EdenEast/nightfox.nvim"] = {},
   ["folke/tokyonight.nvim"] = {},
