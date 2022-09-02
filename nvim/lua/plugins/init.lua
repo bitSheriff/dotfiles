@@ -246,7 +246,7 @@ local plugins = {
       -- refer to the configuration section below
     }
   end
-},
+  },
 
   -- Tabs
   ["romgrk/barbar.nvim"] = {
@@ -254,7 +254,11 @@ local plugins = {
   },
 
   -- somethink like sticky headers
-  ["nvim-treesitter/nvim-treesitter-context"] = {},
+  ["nvim-treesitter/nvim-treesitter-context"] = {
+    config = function()
+      require "plugins.configs.treesitter-context"
+    end
+  },
 
   -- Themes
   ["EdenEast/nightfox.nvim"] = {},
