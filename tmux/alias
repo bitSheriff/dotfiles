@@ -5,7 +5,8 @@ alias gti="git"
 
 ## kitty
 alias icat="kitty +kitten icat --align=left"
-
+alias nvim-gui="kitty nvim"
+ 
 ## change directories
 alias go2conf="cd ~/.config"
 alias go2code="cd ~/code"
