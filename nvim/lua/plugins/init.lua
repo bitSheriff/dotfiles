@@ -267,7 +267,6 @@ local plugins = {
   ["dracula/vim"] = {},
 
   -- Tools for Rust
-  ["neovim/nvim-lspconfig"] = {},
   ["simrat39/rust-tools.nvim"] = {},
 --  ["rust-lang/rust"] = {},
 
@@ -278,6 +277,7 @@ require("core.packer").run(plugins)
 require("rust-tools").setup({})
 require("catppuccin").setup({})
 require'lspconfig'.pyright.setup{}
-
+require'lspconfig'.rust_analyzer.setup{}
+ 
 -- Set the Theme
 vim.cmd[[colorscheme dracula]]
