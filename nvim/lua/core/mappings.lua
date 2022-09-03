@@ -118,10 +118,7 @@ M.comment = {
   -- toggle comment in both modes
   n = {
     ["<leader>/"] = {
-      function()
-        require("Comment.api").toggle_current_linewise()
-      end,
-
+        "<ESC> <cmd> lua require('Comment.api').toggle.linewise.current()<CR>",
       "蘒  toggle comment",
     },
   },
