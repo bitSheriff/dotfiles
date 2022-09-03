@@ -53,6 +53,10 @@ M.general = {
       "   toggle theme",
     },
 
+    -- move lines
+    ["<A-j>"] = { "<cmd> :m . +1 <CR>", "  move current line one down" },
+    ["<A-k>"] = { "<cmd> :m . -2 <CR>", "  move current line one up" },
+
     -- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
     -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
     -- empty mode is same as using <cmd> :map
