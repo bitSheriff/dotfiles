@@ -65,6 +65,10 @@ M.general = {
     -- ["k"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', opts = { expr = true } },
     -- ["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', opts = { expr = true } },
     -- ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', opts = { expr = true } },
+
+    -- Packer Package Manager
+    ["<leader>ps"] = { "<cmd> PackerSync <CR>", "   Packer Sync" },
+    ["<leader>pu"] = { "<cmd> PackerUpdate <CR>", "   Packer Update" },
   },
 
   t = {
