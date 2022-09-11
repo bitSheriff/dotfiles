@@ -99,6 +99,12 @@ local plugins = {
     end,
   },
 
+  ["williamboman/mason-lspconfig.nvim"] = {
+    config = function()
+      require "plugins.configs.mason-lspconfig"
+    end,
+  },
+
   ["neovim/nvim-lspconfig"] = {
     opt = true,
     setup = function()
