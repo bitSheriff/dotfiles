@@ -18,6 +18,9 @@ search_man() {
     man $1 | grep -- $2
 }
 
+## applications
+alias code="flatpak run com.visualstudio.code"
+
 ## scripts
 alias updir=". ~/.config/tmux/scripts/updir.sh"
 
