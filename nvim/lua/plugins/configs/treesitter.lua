@@ -16,6 +16,7 @@ local options = {
     "python",
     "markdown",
     "markdown_inline",
+    "java",
   },
   auto_install = true,
   highlight = {

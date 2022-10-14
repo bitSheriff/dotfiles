@@ -99,6 +99,12 @@ local plugins = {
     end,
   },
 
+  ["williamboman/mason-lspconfig.nvim"] = {
+    config = function()
+      require "plugins.configs.mason-lspconfig"
+    end,
+  },
+
   ["neovim/nvim-lspconfig"] = {
     opt = true,
     setup = function()
@@ -246,13 +252,20 @@ local plugins = {
       -- refer to the configuration section below
     }
   end
-},
+  },
 
   -- Tabs
   ["romgrk/barbar.nvim"] = {
     requires = {"kyazdani42/nvim-web-devicons"},
   },
-  
+
+  -- somethink like sticky headers
+  ["nvim-treesitter/nvim-treesitter-context"] = {
+    config = function()
+      require "plugins.configs.treesitter-context"
+    end
+  },
+
   -- Themes
   ["EdenEast/nightfox.nvim"] = {},
   ["folke/tokyonight.nvim"] = {},
@@ -260,7 +273,6 @@ local plugins = {
   ["dracula/vim"] = {},
 
   -- Tools for Rust
-  ["neovim/nvim-lspconfig"] = {},
   ["simrat39/rust-tools.nvim"] = {},
   ["rust-lang/rust"] = {},
 
@@ -271,6 +283,7 @@ require("core.packer").run(plugins)
 require("rust-tools").setup({})
 require("catppuccin").setup({})
 require'lspconfig'.pyright.setup{}
-
+require'lspconfig'.rust_analyzer.setup{}
+ 
 -- Set the Theme
 vim.cmd[[colorscheme dracula]]
