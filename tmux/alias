@@ -51,3 +51,7 @@ function timer() {
 
 # always allow creating nested folders
 alias mkdir="mkdir -p"
+
+# device specific commands
+alias doUpdate=". ~/.config/tmux/scripts/doUpdate.sh"
+
