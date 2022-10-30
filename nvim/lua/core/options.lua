@@ -58,6 +58,9 @@ opt.updatetime = 250
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
 opt.whichwrap:append "<>[]hl"
+-- beautiful line wrap, do not break word
+opt.wrap = true
+opt.linebreak = true
 
 -- syntx folding
 opt.foldlevel = 20
