@@ -2,6 +2,7 @@
 
 ## git
 alias gti="git"
+alias lg="lazygit"
 
 ## kitty
 alias icat="kitty +kitten icat --align=left"
