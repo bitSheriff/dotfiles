@@ -115,6 +115,7 @@ M.luasnip = function()
   local options = {
     history = true,
     updateevents = "TextChanged,TextChangedI",
+    enable_autosnippets = true,
   }
 
   options = load_override(options, "L3MON4D3/LuaSnip")
@@ -122,6 +123,11 @@ M.luasnip = function()
   require("luasnip.loaders.from_vscode").lazy_load()
   require("luasnip.loaders.from_vscode").lazy_load { paths = vim.g.luasnippets_path or "" }
 
+  -- load the lua snippes
+  require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/lua/plugins/configs/snippets"})
+   
+  luasnip.filetype_set("cpp", { "c" })
+   
   vim.api.nvim_create_autocmd("InsertLeave", {
     callback = function()
       if
