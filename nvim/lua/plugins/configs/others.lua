@@ -128,6 +128,8 @@ M.luasnip = function()
 
   luasnip.filetype_set("cpp", { "c" })
   luasnip.filetype_set("tex", { "latex", "tex" })
+  luasnip.filetype_extend("tex", { "plaintex", "latex", "tex" })
+  luasnip.filetype_extend("plaintex", { "plaintex", "latex", "tex" })
 
   vim.api.nvim_create_autocmd("InsertLeave", {
     callback = function()
