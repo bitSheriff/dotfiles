@@ -24,10 +24,20 @@ local postfix = require("luasnip.extras.postfix").postfix
 local types = require("luasnip.util.types")
 local parse = require("luasnip.util.parser").parse_snippet
 
-
-
-
-ls.add_snippets("all", {
-  s("blub", {t("BliBlaBlub")})
+-- snippet for underline text
+ls.add_snippets("markdown", {
+  s("underline", {
+    t({"<u>"}),
+    i(1),
+    t({"</u>"})
+  })
 })
 
+-- snippet for comment
+ls.add_snippets("markdown", {
+  s("comment", {
+    t({"%"}),
+    i(1),
+    t({"%"})
+  })
+})

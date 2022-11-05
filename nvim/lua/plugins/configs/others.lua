@@ -125,9 +125,10 @@ M.luasnip = function()
 
   -- load the lua snippes
   require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/lua/plugins/configs/snippets"})
-   
+
   luasnip.filetype_set("cpp", { "c" })
-   
+  luasnip.filetype_set("tex", { "latex", "tex" })
+
   vim.api.nvim_create_autocmd("InsertLeave", {
     callback = function()
       if

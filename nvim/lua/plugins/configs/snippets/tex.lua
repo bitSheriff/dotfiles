@@ -25,7 +25,7 @@ local types = require("luasnip.util.types")
 local parse = require("luasnip.util.parser").parse_snippet
 
 -- snippet for underline text
-ls.add_snippets("all", {
+ls.add_snippets("latex", {
   s("underline", {
     t({"\\underline{"}),
     i(1),
