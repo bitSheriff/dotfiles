@@ -33,3 +33,12 @@ ls.add_snippets("tex", {
   })
 })
 
+-- snippet for color box
+ls.add_snippets("tex", {
+  s("fcbox", {
+    t({"\\fcolorbox{lightlightgray}{lightlightgray}{\\minipage[t]{\\dimexpr\\linewidth-2\\fboxsep-2\\fboxrule\\relax}\\begin{small}"}),
+    i(1),
+    t({"\\end{small}\\endminipage}"})
+  })
+})
+
