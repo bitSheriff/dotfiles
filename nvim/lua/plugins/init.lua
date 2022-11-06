@@ -276,6 +276,8 @@ local plugins = {
   ["simrat39/rust-tools.nvim"] = {},
 --  ["rust-lang/rust"] = {},
 
+  -- Tools for LaTeX and markdown
+  ["lervag/vimtex"] = {},
 }
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 
