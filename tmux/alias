@@ -42,6 +42,9 @@ alias cpv='rsync -ah --info=progress2'
 # quit terminal like vim
 alias :q="exit"
 
+# clear terminal
+alias :c="clear"
+
 # update zsh
 alias :r="exec zsh"
 
