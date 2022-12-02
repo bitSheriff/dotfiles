@@ -266,6 +266,9 @@ local plugins = {
     end
   },
 
+  -- Sneaky peak when go to lines
+  ["nacro90/numb.nvim"] = {},
+
   -- Themes
   ["EdenEast/nightfox.nvim"] = {},
   ["folke/tokyonight.nvim"] = {},
@@ -274,14 +277,17 @@ local plugins = {
 
   -- Tools for Rust
   ["simrat39/rust-tools.nvim"] = {},
-  ["rust-lang/rust"] = {},
+--  ["rust-lang/rust"] = {},
 
+  -- Tools for LaTeX and markdown
+  ["lervag/vimtex"] = {},
 }
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 
 require("core.packer").run(plugins)
 require("rust-tools").setup({})
 require("catppuccin").setup({})
+require("numb").setup({})
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.rust_analyzer.setup{}
  

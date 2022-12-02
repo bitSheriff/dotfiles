@@ -18,10 +18,10 @@ local options = {
     "markdown_inline",
     "java",
   },
-  auto_install = true,
   highlight = {
     enable = true,
     use_languagetree = true,
+    disable = { "latex" },
   },
 }
 

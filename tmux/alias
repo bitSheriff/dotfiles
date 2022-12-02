@@ -2,11 +2,17 @@
 
 ## git
 alias gti="git"
+alias lg="lazygit"
 
 ## kitty
 alias icat="kitty +kitten icat --align=left"
 alias nvim-gui="kitty nvim"
- 
+alias ls="exa"
+alias lsla="exa --long --header --git --icons" 
+alias exat="exa --long --header --git --icons --tree"
+alias exat2="exa --long --header --git --icons --tree --level=2"
+alias exat3="exa --long --header --git --icons --tree --level=3"
+
 ## change directories
 alias go2conf="cd ~/.config"
 alias go2code="cd ~/code"
@@ -35,6 +41,9 @@ alias cpv='rsync -ah --info=progress2'
 
 # quit terminal like vim
 alias :q="exit"
+
+# update zsh
+alias :r="exec zsh"
 
 # open nautilus (file explorer) in the current directory
 alias exp="nautilus ."
