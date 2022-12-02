@@ -51,6 +51,9 @@ alias :r="exec zsh"
 # open nautilus (file explorer) in the current directory
 alias exp="nautilus ."
 
+# show a clock in the terminal
+alias clock="tock -cms -C 5"
+
 # show weather information
 weather(){ curl -s "wttr.in/$1?m1"} 
 
