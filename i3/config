@@ -192,8 +192,8 @@ client.urgent           #ff5555 #FF5555 #F8F8F2 #FF5555   #FF5555
 client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
 client.background       #F8F8F2
 
-
-
+bindsym $mod+m exec --no-startup-id ~/.config/rofi/launchers/type-6/launcher.sh
+bindsym $mod+x exec --no-startup-id ~/.config/rofi/powermenu/type-6/powermenu.sh
 
 # add polybar
 exec_always ~/.config/polybar/launch.sh &
