@@ -181,6 +181,9 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
+gaps inner 5
+gaps outer 5
+
 bindsym $mod+r mode "resize"
 
 # dracula color scheme
