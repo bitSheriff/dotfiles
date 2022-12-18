@@ -281,6 +281,7 @@ local plugins = {
 
   -- Tools for LaTeX and markdown
   ["lervag/vimtex"] = {},
+  ["junegunn/goyo.vim"] = {}, -- distraction-free writing
 }
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 
