@@ -45,6 +45,9 @@ M.general = {
     -- update nvchad
     ["<leader>uu"] = { "<cmd> :NvChadUpdate <CR>", "  update nvchad" },
 
+    -- toggle Goyo
+    ["<leader>go"] = { "<cmd> :Goyo <CR>", "  toggle Goyo" },
+
     ["<leader>tt"] = {
       function()
         require("base46").toggle_theme()
