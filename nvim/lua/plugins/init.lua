@@ -277,7 +277,7 @@ local plugins = {
 
   -- Tools for Rust
   ["simrat39/rust-tools.nvim"] = {},
---  ["rust-lang/rust"] = {},
+  ["rust-lang/rust"] = {},
 
   -- Tools for LaTeX and markdown
   ["lervag/vimtex"] = {},
