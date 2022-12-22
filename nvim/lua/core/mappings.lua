@@ -42,9 +42,6 @@ M.general = {
 
     ["<leader>o"] = { "o <ESC>", "insert new line without entering insert mode" },
 
-    -- update nvchad
-    ["<leader>uu"] = { "<cmd> :NvChadUpdate <CR>", "  update nvchad" },
-
     -- toggle Goyo
     ["<leader>go"] = { "<cmd> :Goyo <CR>", "  toggle Goyo" },
 
@@ -68,6 +65,10 @@ M.general = {
     ["k"] = {"gk"},
     ["<Up>"] = {"gk"},
     ["<Down>"] = {"gj"},
+
+
+    -- undotree
+    ["<leader>uu"] = {"<cmd> UndotreeToggle <CR>", "   Toggle UndoTree"};
 
     -- Packer Package Manager
     ["<leader>ps"] = { "<cmd> PackerSync <CR>", "   Packer Sync" },

@@ -269,6 +269,9 @@ local plugins = {
   -- Sneaky peak when go to lines
   ["nacro90/numb.nvim"] = {},
 
+  -- undo tree to skip through different undos
+  ["mbbill/undotree"] = {},
+
   -- Themes
   ["EdenEast/nightfox.nvim"] = {},
   ["folke/tokyonight.nvim"] = {},
