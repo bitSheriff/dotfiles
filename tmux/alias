@@ -51,6 +51,9 @@ alias :c="clear"
 # update zsh
 alias :r="exec zsh"
 
+# start ranger in the current dir
+alias r="ranger"
+
 # open nautilus (file explorer) in the current directory
 alias exp="nautilus ."
 
