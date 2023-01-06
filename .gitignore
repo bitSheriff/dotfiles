@@ -20,3 +20,4 @@
 /tmux/plugins/tmux_cpu/
 lazygit/state.yml
 lazygit/state.yml
+!/espanso/*

@@ -7,11 +7,14 @@ alias lg="lazygit"
 ## kitty
 alias icat="kitty +kitten icat --align=left"
 alias nvim-gui="kitty nvim"
+
+## shortcuts
+alias nv="nvim"
 alias ls="exa"
-alias lsla="exa --long --header --git --icons" 
-alias exat="exa --long --header --git --icons --tree"
-alias exat2="exa --long --header --git --icons --tree --level=2"
-alias exat3="exa --long --header --git --icons --tree --level=3"
+alias lsla="exa --long --header --icons" 
+alias exat="exa --long --header --icons --tree"
+alias exat2="exa --long --header --icons --tree --level=2"
+alias exat3="exa --long --header --icons --tree --level=3"
 
 ## change directories
 alias go2conf="cd ~/.config"
@@ -48,6 +51,9 @@ alias :c="clear"
 # update zsh
 alias :r="exec zsh"
 
+# start ranger in the current dir
+alias r="ranger"
+
 # open nautilus (file explorer) in the current directory
 alias exp="nautilus ."
 
@@ -69,4 +75,11 @@ alias mkdir="mkdir -p"
 
 # device specific commands
 alias doUpdate=". ~/.config/tmux/scripts/doUpdate.sh"
+
+# add a note
+note() {
+    echo "## $(date +\"%Y-%m-%d) : $(date +\"%H:%M\")" >> $HOME/notes.md
+    echo "$@" >> $HOME/notes.md
+    echo "" >> $HOME/notes.md
+}
 

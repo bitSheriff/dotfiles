@@ -42,8 +42,8 @@ M.general = {
 
     ["<leader>o"] = { "o <ESC>", "insert new line without entering insert mode" },
 
-    -- update nvchad
-    ["<leader>uu"] = { "<cmd> :NvChadUpdate <CR>", "  update nvchad" },
+    -- toggle Goyo
+    ["<leader>go"] = { "<cmd> :Goyo <CR>", "  toggle Goyo" },
 
     -- toggle Goyo
     ["<leader>go"] = { "<cmd> :Goyo <CR>", "  toggle Goyo" },
@@ -59,7 +59,8 @@ M.general = {
     -- move lines
     ["<A-j>"] = { "<cmd> :m . +1 <CR>", "  move current line one down" },
     ["<A-k>"] = { "<cmd> :m . -2 <CR>", "  move current line one up" },
-
+    ["<A-Down>"] = { "<cmd> :m . +1 <CR>", "  move current line one down" },
+    ["<A-Up>"] = { "<cmd> :m . -2 <CR>", "  move current line one up" },
     -- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
     -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
     -- empty mode is same as using <cmd> :map
@@ -68,6 +69,10 @@ M.general = {
     ["k"] = {"gk"},
     ["<Up>"] = {"gk"},
     ["<Down>"] = {"gj"},
+
+
+    -- undotree
+    ["<leader>uu"] = {"<cmd> UndotreeToggle <CR>", "   Toggle UndoTree"};
 
     -- Packer Package Manager
     ["<leader>ps"] = { "<cmd> PackerSync <CR>", "   Packer Sync" },
