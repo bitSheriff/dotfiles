@@ -45,6 +45,9 @@ M.general = {
     -- toggle Goyo
     ["<leader>go"] = { "<cmd> :Goyo <CR>", "  toggle Goyo" },
 
+    -- toggle Goyo
+    ["<leader>go"] = { "<cmd> :Goyo <CR>", "  toggle Goyo" },
+
     ["<leader>tt"] = {
       function()
         require("base46").toggle_theme()

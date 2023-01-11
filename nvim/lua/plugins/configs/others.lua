@@ -71,9 +71,9 @@ M.colorizer = function()
   end
 
   local options = {
-    filetypes = {
-      "*",
-    },
+    -- filetypes = {
+    --   "*",
+    -- },
     user_default_options = {
       RGB = true, -- #RGB hex codes
       RRGGBB = true, -- #RRGGBB hex codes

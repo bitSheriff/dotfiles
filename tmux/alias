@@ -11,10 +11,10 @@ alias nvim-gui="kitty nvim"
 ## shortcuts
 alias nv="nvim"
 alias ls="exa"
-alias lsla="exa --long --header --icons" 
-alias exat="exa --long --header --icons --tree"
-alias exat2="exa --long --header --icons --tree --level=2"
-alias exat3="exa --long --header --icons --tree --level=3"
+alias lsla="exa -a --long --header --icons" 
+alias exat="exa -a --long --header --icons --tree"
+alias exat2="exa -a --long --header --icons --tree --level=2"
+alias exat3="exa -a --long --header --icons --tree --level=3"
 
 ## change directories
 alias go2conf="cd ~/.config"
