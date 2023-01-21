@@ -41,6 +41,11 @@ M.general = {
     ["<leader>rn"] = { "<cmd> set rnu! <CR>", "   toggle relative number" },
 
     ["<leader>o"] = { "o <ESC>", "insert new line without entering insert mode" },
+    -- redo
+    ["<S-u>"] = { "<cmd> redo <CR>", "烙 redo last undo" },
+
+    -- toggle Goyo
+    ["<leader>go"] = { "<cmd> :Goyo <CR>", "  toggle Goyo" },
 
     -- toggle Goyo
     ["<leader>go"] = { "<cmd> :Goyo <CR>", "  toggle Goyo" },
