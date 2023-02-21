@@ -285,6 +285,8 @@ local plugins = {
   -- Tools for LaTeX and markdown
   ["lervag/vimtex"] = {},
   ["junegunn/goyo.vim"] = {}, -- distraction-free writing
+
+  ["epwalsh/obsidian.nvim"] = {},
 }
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 
@@ -297,3 +299,10 @@ require'lspconfig'.rust_analyzer.setup{}
  
 -- Set the Theme
 vim.cmd[[colorscheme dracula]]
+
+require("obsidian").setup({
+  dir = "~/code/obsidian-secondBrain/",
+  completion = {
+    nvim_cmp = true, -- if using nvim-cmp, otherwise set to false
+  }
+})
