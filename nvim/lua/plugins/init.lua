@@ -286,7 +286,11 @@ local plugins = {
   ["lervag/vimtex"] = {},
   ["junegunn/goyo.vim"] = {}, -- distraction-free writing
 
+  -- Obidian and Markdown stuff
+  ["iamcco/markdown-preview.nvim"] = { run = function() vim.fn["mkdp#util#install"]() end },
   ["epwalsh/obsidian.nvim"] = {},
+  ["preservim/vim-markdown"] = {},
+  ["godlygeek/tabular"]={},
 }
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 
