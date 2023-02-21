@@ -7,6 +7,7 @@ local options = {
   ensure_installed = { "lua-language-server",
                        "python-lsp-server",
                        "rust-analyzer",
+                       "clang",
                        "jdtls"}, -- not an option from mason.nvim
 }
 

@@ -16,6 +16,7 @@ vim.api.nvim_create_autocmd("Filetype", {
 local options = {
   ensure_installed = { "lua-language-server",
                        "python-lsp-server",
+                       "clangd",
                        "rust-analyzer" }, -- not an option from mason.nvim
 
   ui = {
