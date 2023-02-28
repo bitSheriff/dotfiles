@@ -47,8 +47,8 @@ M.general = {
     -- toggle Goyo
     ["<leader>go"] = { "<cmd> :Goyo <CR>", "  toggle Goyo" },
 
-    -- toggle Goyo
-    ["<leader>go"] = { "<cmd> :Goyo <CR>", "  toggle Goyo" },
+    -- hop to sections
+    ["<leader>bb"] = { "<cmd> :HopAnywhere <CR>", "  hop anywhere" },
 
     ["<leader>tt"] = {
       function()
