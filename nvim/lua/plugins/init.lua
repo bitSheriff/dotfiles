@@ -269,6 +269,9 @@ local plugins = {
   -- Sneaky peak when go to lines
   ["nacro90/numb.nvim"] = {},
 
+  -- plugin for easy jumps
+  ["phaazon/hop.nvim"] = {},
+
   -- undo tree to skip through different undos
   ["mbbill/undotree"] = {},
 
@@ -300,6 +303,7 @@ require("catppuccin").setup({})
 require("numb").setup({})
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.rust_analyzer.setup{}
+require("hop").setup({})
  
 -- Set the Theme
 vim.cmd[[colorscheme dracula]]
