@@ -1,7 +1,6 @@
 format = """
 [](#2D2B55)\
 $status\
-$os\
 $username\
 [](bg:#A599E9 fg:#2D2B55)\
 $directory\
@@ -11,7 +10,6 @@ $git_status\
 [](fg:#FF628C bg:#86BBD8)\
 $c\
 $golang\
-$gradle\
 $haskell\
 $java\
 $julia\
@@ -84,10 +82,6 @@ format = '[$all_status$ahead_behind ]($style)'
 
 [golang]
 symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[gradle]
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
