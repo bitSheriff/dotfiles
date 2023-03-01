@@ -1,5 +1,6 @@
 format = """
 [](#2D2B55)\
+$status\
 $os\
 $username\
 [](bg:#A599E9 fg:#2D2B55)\
@@ -9,21 +10,19 @@ $git_branch\
 $git_status\
 [](fg:#FF628C bg:#86BBD8)\
 $c\
-$elixir\
-$elm\
 $golang\
 $gradle\
 $haskell\
 $java\
 $julia\
-$nodejs\
-$nim\
 $rust\
-$scala\
+$lua\
 [](fg:#86BBD8 bg:#06969A)\
 $docker_context\
 [](fg:#06969A bg:#33658A)\
 $time\
+$memory_usage\
+$battery\
 [ ](fg:#33658A)\
 """
 
@@ -74,16 +73,6 @@ symbol = " "
 style = "bg:#06969A"
 format = '[ $symbol $context ]($style) $path'
 
-[elixir]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[elm]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
 [git_branch]
 symbol = ""
 style = "bg:#FF628C"
@@ -117,23 +106,13 @@ symbol = " "
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
-[nodejs]
-symbol = ""
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[nim]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
 [rust]
 symbol = ""
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
-[scala]
-symbol = " "
+[lua]
+symbol = "🌕 "
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
@@ -142,3 +121,33 @@ disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:#33658A"
 format = '[ ♥ $time ]($style)'
+
+[battery]
+disabled = false
+full_symbol = '🔋 '
+charging_symbol = '⚡️ '
+discharging_symbol = '💀 '
+
+[[battery.display]] # 'bold red' style and discharging_symbol when capacity is between 0% and 10%
+threshold = 10
+style = 'bold red'
+
+[[battery.display]] # 'bold yellow' style and 💦 symbol when capacity is between 10% and 30%
+threshold = 30
+style = 'bold yellow'
+discharging_symbol = '💦'
+
+[memory_usage]
+disabled = true
+threshold = -1
+format = ' $symbol ${ram_pct} '
+symbol = '🐏 '
+style = "bg:#33658A"
+
+[status]
+style = 'bg:blue'
+symbol = '🔴 '
+success_symbol = '🟢 '
+format = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = true
