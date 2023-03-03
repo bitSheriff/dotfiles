@@ -25,20 +25,19 @@ local types = require("luasnip.util.types")
 local parse = require("luasnip.util.parser").parse_snippet
 
 -- snippet for underline text
-ls.add_snippets("tex", {
+ls.add_snippets("markdown", {
   s("underline", {
-    t({"\\underline{"}),
+    t({"<u>"}),
     i(1),
-    t({"}"})
+    t({"</u>"})
   })
 })
 
--- snippet for color box
-ls.add_snippets("tex", {
-  s("fcbox", {
-    t({"\\fcolorbox{lightlightgray}{lightlightgray}{\\minipage[t]{\\dimexpr\\linewidth-2\\fboxsep-2\\fboxrule\\relax}\\begin{small}"}),
+-- snippet for comment
+ls.add_snippets("markdown", {
+  s("comment", {
+    t({"%"}),
     i(1),
-    t({"\\end{small}\\endminipage}"})
+    t({"%"})
   })
 })
-

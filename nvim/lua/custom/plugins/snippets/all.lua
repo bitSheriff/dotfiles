@@ -24,9 +24,21 @@ local postfix = require("luasnip.extras.postfix").postfix
 local types = require("luasnip.util.types")
 local parse = require("luasnip.util.parser").parse_snippet
 
+-- require and load all the other snippets  
+require("custom.plugins.snippets.markdown")
+
+-- i dont know if this is needed
+ls.filetype_set("cpp", { "c" })
+ls.filetype_set("tex", { "latex", "tex" })
+ls.filetype_extend("tex", { "plaintex", "latex", "tex" })
+ls.filetype_extend("plaintex", { "plaintex", "latex", "tex" })
 
 
+-- -------------------
+-- SNIPPETS
+-- -------------------
 
+-- stupid snippet for testing
 ls.add_snippets("all", {
   s("blub", {t("BliBlaBlub")})
 })

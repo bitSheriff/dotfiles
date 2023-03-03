@@ -1,7 +1,6 @@
 format = """
 [](#2D2B55)\
 $status\
-$os\
 $username\
 [](bg:#A599E9 fg:#2D2B55)\
 $directory\
