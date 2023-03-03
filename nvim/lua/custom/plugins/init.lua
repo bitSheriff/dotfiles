@@ -41,5 +41,10 @@ return {
         end,
     },
 
-
+    -- view hex colors_name
+    { "NvChad/nvim-colorizer.lua",
+        config = function()
+            require("colorizer").setup {}
+        end,
+    },
 }
