@@ -24,41 +24,18 @@ local postfix = require("luasnip.extras.postfix").postfix
 local types = require("luasnip.util.types")
 local parse = require("luasnip.util.parser").parse_snippet
 
--- require and load all the other snippets  
-require("custom.plugins.snippets.markdown")
-require("custom.plugins.snippets.tex")
 
--- i dont know if this is needed
-ls.filetype_set("cpp", { "c" })
-ls.filetype_set("tex", { "latex", "tex" })
-ls.filetype_extend("tex", { "plaintex", "latex", "tex" })
-ls.filetype_extend("plaintex", { "plaintex", "latex", "tex" })
+---
+-- MATH add_snippets
+--- 
 
--- 
--- FUNCTIONS 
---
-local date = function()
-  return { os.date "%Y-%m-%d" }
-end
-
--- -------------------
--- SNIPPETS
--- -------------------
-
--- stupid snippet for testing
-ls.add_snippets("all", {
-  s("blub", {t("BliBlaBlub")})
-})
-
--- insert date
-ls.add_snippets(nil, {
-  all = {
-    s({
-      trig = "date",
-      namr = "Date",
-      dscr = "Date in the form of YYYY-MM-DD",
-    }, {
-      f(date, {}),
-    }),
-  },
+-- snippet for fraction
+ls.add_snippets("tex", {
+  s("\\frac", {
+    t({"\\frac{"}),
+    i(1),
+    t({"}{"}),
+    i(2),
+    t({"}"})
+  })
 })
