@@ -12,6 +12,9 @@ return {
           require("todo-comments").setup {}
         end,
     },
+
+    -- hot faster inside code
+    "phaazon/hop.nvim",
     
 
 }
