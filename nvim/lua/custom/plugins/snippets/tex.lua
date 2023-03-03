@@ -26,7 +26,7 @@ local parse = require("luasnip.util.parser").parse_snippet
 
 
 ---
--- MATH add_snippets
+-- MATH snippets
 --- 
 
 -- snippet for fraction
