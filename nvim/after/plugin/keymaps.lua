@@ -12,5 +12,7 @@ local function map(mode, lhs, rhs, opts)
   -- better up/down
   map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
   map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-  
+
   vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
+
+  map("n", "<leader>bb", "<cmd>HopAnywhere<cr>", { silent = true, desc = "Hop anywhere in the current file" })

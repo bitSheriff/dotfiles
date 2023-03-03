@@ -14,7 +14,10 @@ return {
     },
 
     -- hot faster inside code
-    "phaazon/hop.nvim",
+    { "phaazon/hop.nvim",
+        config = function()
+            require("hop").setup {}
+        end, },
     
 
 }
