@@ -7,3 +7,7 @@ opt.clipboard = "unnamedplus"
 
 -- Scrolling
 opt.so = 999 -- keep cursor in the middle
+
+
+-- Set the Theme
+vim.cmd[[colorscheme dracula]]
