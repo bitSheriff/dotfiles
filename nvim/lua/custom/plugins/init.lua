@@ -2,7 +2,12 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
+
+-- load all the snippets
+require("custom.plugins.snippets.all")
+
 return {
+
 
     "folke/which-key.nvim",
 
