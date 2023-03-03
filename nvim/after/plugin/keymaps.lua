@@ -38,3 +38,6 @@ local function map(mode, lhs, rhs, opts)
 
   -- lazygit
   map("n", "<leader>lg",  "<cmd>LazyGit <cr>", {desc = "call LazyGit"})
+
+ -- terminal
+ map("n", "<leader>th", "<cmd> ToggleTerm size=10 direction=horizontal <cr>", {desc = " toggle horizontal terminal"})

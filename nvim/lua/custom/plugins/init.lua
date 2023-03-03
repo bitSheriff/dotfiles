@@ -49,5 +49,8 @@ return {
     },
 
     -- git stuff
-    "kdheepak/lazygit.nvim"
+    "kdheepak/lazygit.nvim",
+
+    -- better terminal
+    { "akinsho/toggleterm.nvim", version = "*", config = true},
 }
