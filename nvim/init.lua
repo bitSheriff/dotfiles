@@ -225,7 +225,8 @@ vim.o.timeout = true
 vim.o.timeoutlen = 300
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.o.completeopt = 'menu,menuone,noinsert,noselect'
+
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
@@ -492,6 +493,10 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   },
+  preselect = 'none',
+  completion = {
+    completeopt = 'menu,menuone,noinsert,noselect'
+  }
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
