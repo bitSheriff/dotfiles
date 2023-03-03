@@ -7,7 +7,18 @@ return{
   -- Obidian and Markdown stuff
   { "iamcco/markdown-preview.nvim",  run = function() vim.fn["mkdp#util#install"]() end },
 
-  "epwalsh/obsidian.nvim",
+  -- Obsidian inside nvim
+  { "epwalsh/obsidian.nvim", 
+    config = function()
+        require("obsidian").setup {
+            dir = "~/code/obsidian-secondBrain/",
+            completion = {
+              nvim_cmp = true,
+            }
+        }
+    end,
+  },
+
   "preservim/vim-markdown",
   "godlygeek/tabular",
 }
