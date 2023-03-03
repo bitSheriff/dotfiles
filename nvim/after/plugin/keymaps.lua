@@ -16,3 +16,5 @@ local function map(mode, lhs, rhs, opts)
   vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
   map("n", "<leader>bb", "<cmd>HopAnywhere<cr>", { silent = true, desc = "Hop anywhere in the current file" })
+
+  map("n", "<leader>n", "<cmd>Neotree toggle<cr>", { silent = true, desc = "Open neotree" })
