@@ -11,7 +11,7 @@ return {
 
     "folke/which-key.nvim",
 
-    { "folke/todo-comments.nvim", 
+    { "folke/todo-comments.nvim",
         dependencies = {"nvim-lua/plenary.nvim"},
         config = function()
           require("todo-comments").setup {}
@@ -22,7 +22,7 @@ return {
     { "phaazon/hop.nvim",
         config = function()
             require("hop").setup {}
-        end, 
+        end,
     },
 
     -- nvim start up page
@@ -33,7 +33,7 @@ return {
             require("dashboard").setup {}
         end,
     },
-    
+
     -- Tabs
     { "akinsho/nvim-bufferline.lua",
         config = function()
