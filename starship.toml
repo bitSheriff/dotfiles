@@ -15,6 +15,7 @@ $java\
 $julia\
 $rust\
 $lua\
+$python\
 [](fg:#86BBD8 bg:#06969A)\
 $docker_context\
 [](fg:#06969A bg:#33658A)\
@@ -107,6 +108,13 @@ format = '[ $symbol ($version) ]($style)'
 
 [lua]
 symbol = "🌕 "
+style = "bg:#86BBD8"
+format = '[ $symbol ($version) ]($style)'
+
+[python]
+symbol = '🐍 '
+pyenv_version_name = true
+python_binary = 'python3'
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
