@@ -17,7 +17,24 @@ return {
     { "phaazon/hop.nvim",
         config = function()
             require("hop").setup {}
-        end, },
+        end, 
+    },
+
+    -- nvim start up page
+    { "glepnir/dashboard-nvim",
+        event = 'VimEnter',
+        theme = 'hyper',
+        config = function()
+            require("dashboard").setup {}
+        end,
+    },
     
+    -- Tabs
+    { "akinsho/nvim-bufferline.lua",
+        config = function()
+            require("bufferline").setup {}
+        end,
+    },
+
 
 }
