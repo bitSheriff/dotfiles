@@ -47,4 +47,7 @@ return {
             require("colorizer").setup {}
         end,
     },
+
+    -- git stuff
+    "tpope/vim-fugitive",
 }
