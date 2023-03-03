@@ -17,4 +17,4 @@ opt.tabstop = 4
 opt.softtabstop = 4
 
 -- Set the Theme
-vim.cmd[[colorscheme synthwave84]]
+vim.cmd[[colorscheme dracula]]
