@@ -33,6 +33,12 @@ ls.filetype_set("tex", { "latex", "tex" })
 ls.filetype_extend("tex", { "plaintex", "latex", "tex" })
 ls.filetype_extend("plaintex", { "plaintex", "latex", "tex" })
 
+-- 
+-- FUNCTIONS 
+--
+local date = function()
+  return { os.date "%Y-%m-%d" }
+end
 
 -- -------------------
 -- SNIPPETS
@@ -43,3 +49,15 @@ ls.add_snippets("all", {
   s("blub", {t("BliBlaBlub")})
 })
 
+-- insert date
+ls.add_snippets(nil, {
+  all = {
+    s({
+      trig = "date",
+      namr = "Date",
+      dscr = "Date in the form of YYYY-MM-DD",
+    }, {
+      f(date, {}),
+    }),
+  },
+})
