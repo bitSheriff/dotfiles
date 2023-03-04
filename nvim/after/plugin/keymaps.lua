@@ -36,8 +36,10 @@ local function map(mode, lhs, rhs, opts)
   map("n", "<TAB>",     "<cmd> BufferLineCycleNext <cr>", {desc = "goto next buffer"})
   map("n", "<S-TAB>",   "<cmd> BufferLineCyclePrev <cr>", {desc = "goto prev buffer"})
 
-  -- lazygit
+  -- lazy stuff
   map("n", "<leader>lg",  "<cmd>LazyGit <cr>", {desc = "call [L]azy[G]it"})
+  map("n", "<leader>ls",  "<cmd>Lazy sync <cr>", {desc = "call [L]azy [S]ync"})
+  map("n", "<leader>lu",  "<cmd>Lazy update <cr>", {desc = "call [L]azy [U]pdate"})
 
  -- terminal
  map("n", "<leader>th", "<cmd> ToggleTerm size=10 direction=horizontal <cr>", {desc = " [T]erminal [H]orizontal Toggle"})
