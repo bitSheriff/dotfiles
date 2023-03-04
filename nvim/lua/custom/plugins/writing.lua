@@ -16,7 +16,7 @@ return{
   { "epwalsh/obsidian.nvim",
     config = function()
         require("obsidian").setup {
-            dir = "~/code/obsidian-secondBrain/",
+            dir = "~/notes",
             completion = {
               nvim_cmp = true,
             }
