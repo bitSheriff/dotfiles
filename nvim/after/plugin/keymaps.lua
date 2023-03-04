@@ -43,3 +43,6 @@ local function map(mode, lhs, rhs, opts)
  map("n", "<leader>th", "<cmd> ToggleTerm size=10 direction=horizontal <cr>", {desc = " [T]erminal [H]orizontal Toggle"})
  map("n", "<leader>tv", "<cmd> ToggleTerm size=60 direction=vertical <cr>", {desc = " [T]erminal [V]ertical Toggle"})
  map("n", "<leader>tf", "<cmd> ToggleTerm size=60 direction=float <cr>", {desc = " [T]erminal [F]loat Toggle"})
+
+-- Obsidian Workspace
+map("n", "<leader>os", "<cmd> ObsidianQuickSwitch <cr>", {desc = "[O]bsidian Quick [S]witch"})
