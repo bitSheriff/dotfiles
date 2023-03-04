@@ -1,5 +1,8 @@
 # additional git configuration
 
+[advice]
+  addIgnoredFile = false
+
 [pull]
   rebase = true
 
