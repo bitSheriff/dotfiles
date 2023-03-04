@@ -14,6 +14,7 @@ return{
 
   -- Obsidian inside nvim
   { "epwalsh/obsidian.nvim",
+    enabled = false,
     config = function()
         require("obsidian").setup {
             dir = "~/notes",
