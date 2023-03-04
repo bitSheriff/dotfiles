@@ -20,10 +20,10 @@ local function map(mode, lhs, rhs, opts)
   map("n", "<leader>ss",    "<cmd>Telescope live_grep<cr>", { silent = true, desc = "Search in the current file" })
 
   -- hop anywhere in the code
-  map("n", "<leader>bb",    "<cmd>HopAnywhere<cr>", { silent = true, desc = "Hop anywhere in the current file" })
+  map("n", "<leader>sb",    "<cmd>HopAnywhere<cr>", { silent = true, desc = "Hop anywhere in the current file" })
 
   -- toggle the build in file explorer
-  map("n", "<leader>n",    "<cmd>Neotree toggle<cr>", { silent = true, desc = "Open neotree" })
+  map("n", "<leader>n",    "<cmd>Neotree toggle<cr>", { silent = true, desc = "Open [N]eotree" })
 
   -- Redo
   map("n", "<S>u",      "<cmd>redo<cr>", { silent = true, desc = "Redo" })
@@ -37,7 +37,9 @@ local function map(mode, lhs, rhs, opts)
   map("n", "<S-TAB>",   "<cmd> BufferLineCyclePrev <cr>", {desc = "goto prev buffer"})
 
   -- lazygit
-  map("n", "<leader>lg",  "<cmd>LazyGit <cr>", {desc = "call LazyGit"})
+  map("n", "<leader>lg",  "<cmd>LazyGit <cr>", {desc = "call [L]azy[G]it"})
 
  -- terminal
- map("n", "<leader>th", "<cmd> ToggleTerm size=10 direction=horizontal <cr>", {desc = " toggle horizontal terminal"})
+ map("n", "<leader>th", "<cmd> ToggleTerm size=10 direction=horizontal <cr>", {desc = " [T]erminal [H]orizontal Toggle"})
+ map("n", "<leader>tv", "<cmd> ToggleTerm size=60 direction=vertical <cr>", {desc = " [T]erminal [V]ertical Toggle"})
+ map("n", "<leader>tf", "<cmd> ToggleTerm size=60 direction=float <cr>", {desc = " [T]erminal [F]loat Toggle"})
