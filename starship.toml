@@ -73,7 +73,7 @@ style = "bg:#06969A"
 format = '[ $symbol $context ]($style) $path'
 
 [git_branch]
-symbol = "🌱 "
+symbol = " "
 style = "bg:#FF628C"
 format = '[ $symbol $branch ]($style)'
 
