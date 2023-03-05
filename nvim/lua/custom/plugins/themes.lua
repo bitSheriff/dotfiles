@@ -19,6 +19,8 @@ return{
             }
         end,
     },
+
+    "rebelot/kanagawa.nvim",
 }
 
 -- theme will be set in the after/plugin/defaults.lua file
