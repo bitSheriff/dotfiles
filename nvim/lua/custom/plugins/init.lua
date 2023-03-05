@@ -53,4 +53,8 @@ return {
 
     -- better terminal
     { "akinsho/toggleterm.nvim", version = "*", config = true},
+
+    -- sourrund selection
+    "tpope/vim-surround",
+
 }
