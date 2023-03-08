@@ -48,3 +48,6 @@ local function map(mode, lhs, rhs, opts)
 
 -- Obsidian Workspace
 map("n", "<leader>os", "<cmd> ObsidianQuickSwitch <cr>", {desc = "[O]bsidian Quick [S]witch"})
+
+-- actions
+map("n", "<leader>af", "gg=G", {desc = "[A]ction code [f]ormat while file"})
