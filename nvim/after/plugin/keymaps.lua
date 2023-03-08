@@ -51,3 +51,4 @@ map("n", "<leader>os", "<cmd> ObsidianQuickSwitch <cr>", {desc = "[O]bsidian Qui
 
 -- actions
 map("n", "<leader>af", "gg=G", {desc = "[A]ction code [f]ormat while file"})
+map("n", "<leader>aF", "<cmd> Format <cr>", {desc = "[A]ction code [F]ormat while file with LSP"})
