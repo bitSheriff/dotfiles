@@ -24,44 +24,9 @@ local postfix = require("luasnip.extras.postfix").postfix
 local types = require("luasnip.util.types")
 local parse = require("luasnip.util.parser").parse_snippet
 
--- require and load all the other snippets  
-require("custom.plugins.snippets.markdown")
-require("custom.plugins.snippets.tex")
-require("custom.plugins.snippets.c")
-
-
--- i dont know if this is needed
-ls.filetype_extend("cpp", { "c" })
-ls.filetype_extend("h", { "c" })
-ls.filetype_extend("tex", { "latex", "tex" })
-ls.filetype_extend("tex", { "plaintex", "latex", "tex" })
-ls.filetype_extend("plaintex", { "plaintex", "latex", "tex" })
-
--- 
--- FUNCTIONS 
---
-local date = function()
-  return { os.date "%Y-%m-%d" }
-end
-
--- -------------------
--- SNIPPETS
--- -------------------
-
--- stupid snippet for testing
-ls.add_snippets("all", {
-  s("blub", {t("BliBlaBlub")})
-})
-
--- insert date
-ls.add_snippets(nil, {
-  all = {
-    s({
-      trig = "date",
-      namr = "Date",
-      dscr = "Date in the form of YYYY-MM-DD",
-    }, {
-      f(date, {}),
-    }),
-  },
+-- snippet for header include guard
+ls.add_snippets("c", {
+  s("include guard", {
+    t({"#pragma once"})
+  })
 })
