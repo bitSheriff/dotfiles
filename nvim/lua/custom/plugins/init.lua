@@ -98,5 +98,8 @@ return {
                 -- refer to the configuration section below
     }
         end,
-    }
+    },
+
+    -- colored brackets for tree-sitter
+    "p00f/nvim-ts-rainbow",
 }
