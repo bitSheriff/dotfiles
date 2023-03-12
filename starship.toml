@@ -81,6 +81,16 @@ format = '[ $symbol $branch ]($style)'
 
 [git_status]
 style = "bg:#FF628C"
+conflicted = "⚔️ "
+ahead = "🏎️ 💨 ×${count}"
+behind = "🐢 ×${count}"
+diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count}"
+untracked = "🛤️  ×${count}"
+stashed = "📦 "
+modified = "📝 ×${count}"
+staged = "🗃️  ×${count}"
+renamed = "📛 ×${count}"
+deleted = "🗑️  ×${count}"
 format = '[$all_status$ahead_behind ]($style)'
 
 [golang]
@@ -124,7 +134,7 @@ format = '[ $symbol ($version) ]($style)'
 disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:#33658A"
-format = '[  $time ]($style)'
+format = '[  $time ]($style)'
 
 [battery]
 disabled = false
