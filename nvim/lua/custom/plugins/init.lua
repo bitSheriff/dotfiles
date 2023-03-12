@@ -99,4 +99,7 @@ return {
     }
         end,
     },
+
+    -- sticky scroll
+    "nvim-treesitter/nvim-treesitter-context",
 }
