@@ -99,7 +99,4 @@ return {
     }
         end,
     },
-
-    -- colored brackets for tree-sitter
-    "p00f/nvim-ts-rainbow",
 }
