@@ -96,10 +96,19 @@ return {
                 -- your configuration comes here
                 -- or leave it empty to use the default settings
                 -- refer to the configuration section below
-    }
+            }
         end,
     },
 
     -- sticky scroll
     "nvim-treesitter/nvim-treesitter-context",
+
+    { "lukas-reineke/indent-blankline.nvim",
+        config = function()
+            require("indent_blankline").setup {
+                    show_current_context = true,
+                    show_current_context_start = true,
+            }
+        end,
+    },
 }
