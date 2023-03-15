@@ -18,3 +18,6 @@ opt.softtabstop = 4
 
 -- Set the Theme
 vim.cmd[[colorscheme dracula]]
+
+
+vim.cmd[[set spelllang=en,de]]
