@@ -55,3 +55,4 @@ map("n", "<leader>aF", "<cmd> Format <cr>", { desc = "[A]ction code [F]ormat whi
 map("n", "<leader>az", "<cmd> ZenMode <cr>", { desc = "[A]ction toggle [z]en mode" })
 map("n", "<leader>ar", "<cmd> lua vim.lsp.buf.rename() <cr>", { desc = "[A]ction [r]ename symbol" })
 map("n", "<leader>ac", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "[A]ction [c]ode" })
+map("n", "<leader>as", "<cmd> set spell! <CR>", { desc = "[A]ction toggle [s]pell checker" })
