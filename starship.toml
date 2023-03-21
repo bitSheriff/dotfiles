@@ -83,15 +83,15 @@ format = '[ $symbol $branch ]($style)'
 [git_status]
 style = "bg:#FF628C"
 conflicted = "⚔️ "
-ahead = "🏎️ 💨 ×${count}"
-behind = "🐢 ×${count}"
-diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count}"
-untracked = "  ×${count}"
+ahead = "🏎️ 💨 ×${count} "
+behind = "🐢 ×${count} "
+diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count} "
+untracked = "×${count} "
 stashed = "📦 "
-modified = " ×${count}"
-staged = "  ×${count}"
-renamed = "📛 ×${count}"
-deleted = "🗑️  ×${count}"
+modified = " ×${count} "
+staged = " ×${count} "
+renamed = "📛 ×${count} "
+deleted = "🗑️×${count} "
 format = '[$all_status$ahead_behind ]($style)'
 
 [golang]
