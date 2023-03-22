@@ -125,7 +125,7 @@ style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
 [python]
-symbol = '🐍 '
+symbol = ' '
 pyenv_version_name = true
 python_binary = 'python3'
 style = "bg:#86BBD8"
