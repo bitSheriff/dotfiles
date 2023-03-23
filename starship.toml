@@ -83,14 +83,14 @@ format = '[ $symbol $branch ]($style)'
 [git_status]
 style = "bg:#FF628C"
 conflicted = "⚔️ "
-ahead = "🏎️ 💨 ×${count} "
-behind = "🐢 ×${count} "
-diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count} "
+ahead = " ×${count} "
+behind = " ×${count} "
+diverged = " ×${ahead_count}  ×${behind_count} "
 untracked = "×${count} "
 stashed = "📦 "
 modified = " ×${count} "
 staged = " ×${count} "
-renamed = "📛 ×${count} "
+renamed = "󰑕 ×${count} "
 deleted = "🗑️×${count} "
 format = '[$all_status$ahead_behind ]($style)'
 
@@ -156,7 +156,7 @@ discharging_symbol = ' '
 disabled = true
 threshold = -1
 format = ' $symbol ${ram_pct} '
-symbol = '🐏 '
+symbol = '󰍛 '
 style = "bg:#33658A"
 
 [status]
