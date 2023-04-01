@@ -48,19 +48,19 @@ return {
                         {
                             desc = ' Apps',
                             group = 'DiagnosticHint',
-                            action = 'Telescope app',
+                            action = 'Lazy',
                             key = 'a',
                         },
                         {
                             desc = ' dotfiles',
                             group = 'Number',
-                            action = 'Telescope dotfiles',
+                            action = 'Telescope find_files',
                             key = 'd',
                         },
                     },
                     project = { enable = false, limit = 8, icon = '󰺛 ', label = 'bitSheriff', action = 'Telescope find_files cwd=' },
                     mru = { limit = 10, icon = '󰺛 ', label = 'bitSheriff',},
-                    footer = {enable = true ,label = 'riding on the synthwave'},
+                    footer = {" 󱑽 ride on the synthwave 󱑽 "},
                 },
             }
         end,
