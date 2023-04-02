@@ -54,6 +54,10 @@ map("n", "<leader>af", "gg=G", { desc = "[A]ction code [f]ormat while file" })
 map("n", "<leader>aF", "<cmd> Format <cr>", { desc = "[A]ction code [F]ormat while file with LSP" })
 map("n", "<leader>az", "<cmd> ZenMode <cr>", { desc = "[A]ction toggle [z]en mode" })
 map("n", "<leader>ar", "<cmd> lua vim.lsp.buf.rename() <cr>", { desc = "[A]ction [r]ename symbol" })
-map("n", "<leader>ac", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "[A]ction [c]ode" })
+map("n", "<leader>ac", "<cmd> lua vim.lsp.buf.code_action()<CR>", { desc = "[A]ction [c]ode" })
 map("n", "<leader>as", "<cmd> set spell! <CR>", { desc = "[A]ction toggle [s]pell checker" })
-map("n", "<leader>au", "<cmd> UndotreeToggle   <CR>", { desc = "[A]ction toggle [u]ndotree" })
+map("n", "<leader>au", "<cmd> UndotreeToggle  <CR>", { desc = "[A]ction toggle [u]ndotree" })
+
+-- builds
+map("n", "<leader>bm", "<cmd> MarkdownPreview <CR>", { desc = "[b]uild [m]arkdown" })
+map("n", "<leader>bl", "<cmd> VimtexCompile <CR>", { desc = "[b]uild [l]atex" })
