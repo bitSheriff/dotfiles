@@ -214,7 +214,8 @@ keybinding:
     init: 'i'
     update: 'u'
     bulkMenu: 'b'
-# customCommands:
-#   - key: 'b'
-#     command: 'git backup'
-#     context: 'backup'
+customCommands:
+  - key: '<c-p>'
+    command: "git backup"
+    context: 'global'
+    loadingText: 'pushing to backup'
