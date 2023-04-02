@@ -56,3 +56,4 @@ map("n", "<leader>az", "<cmd> ZenMode <cr>", { desc = "[A]ction toggle [z]en mod
 map("n", "<leader>ar", "<cmd> lua vim.lsp.buf.rename() <cr>", { desc = "[A]ction [r]ename symbol" })
 map("n", "<leader>ac", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "[A]ction [c]ode" })
 map("n", "<leader>as", "<cmd> set spell! <CR>", { desc = "[A]ction toggle [s]pell checker" })
+map("n", "<leader>au", "<cmd> UndotreeToggle   <CR>", { desc = "[A]ction toggle [u]ndotree" })
