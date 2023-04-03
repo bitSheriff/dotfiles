@@ -47,17 +47,18 @@ map("n", "<leader>tv", "<cmd> ToggleTerm size=60 direction=vertical <cr>", { des
 map("n", "<leader>tf", "<cmd> ToggleTerm size=60 direction=float <cr>", { desc = " [T]erminal [F]loat Toggle" })
 
 -- Obsidian Workspace
-map("n", "<leader>os", "<cmd> ObsidianQuickSwitch <cr>", { desc = "[O]bsidian Quick [S]witch" })
+-- map("n", "<leader>os", "<cmd> ObsidianQuickSwitch <cr>", { desc = "[O]bsidian Quick [S]witch" })
 
 -- actions
 map("n", "<leader>af", "gg=G", { desc = "[A]ction code [f]ormat while file" })
 map("n", "<leader>aF", "<cmd> Format <cr>", { desc = "[A]ction code [F]ormat while file with LSP" })
 map("n", "<leader>az", "<cmd> ZenMode <cr>", { desc = "[A]ction toggle [z]en mode" })
 map("n", "<leader>ar", "<cmd> lua vim.lsp.buf.rename() <cr>", { desc = "[A]ction [r]ename symbol" })
-map("n", "<leader>ac", "<cmd> lua vim.lsp.buf.code_action()<CR>", { desc = "[A]ction [c]ode" })
-map("n", "<leader>as", "<cmd> set spell! <CR>", { desc = "[A]ction toggle [s]pell checker" })
-map("n", "<leader>au", "<cmd> UndotreeToggle  <CR>", { desc = "[A]ction toggle [u]ndotree" })
+map("n", "<leader>ac", "<cmd> lua vim.lsp.buf.code_action() <cr>", { desc = "[A]ction [c]ode" })
+map("n", "<leader>as", "<cmd> set spell! <cr>", { desc = "[A]ction toggle [s]pell checker" })
+map("n", "<leader>au", "<cmd> UndotreeToggle <cr>", { desc = "[A]ction toggle [u]ndotree" })
+map("n", "<leader>aw", "<cmd> SudaWrite <cr>", { desc = "[A]ction [w]rite file with sudo" })
 
 -- builds
-map("n", "<leader>bm", "<cmd> MarkdownPreview <CR>", { desc = "[b]uild [m]arkdown" })
-map("n", "<leader>bl", "<cmd> VimtexCompile <CR>", { desc = "[b]uild [l]atex" })
+map("n", "<leader>bm", "<cmd> MarkdownPreview <cr>", { desc = "[b]uild [m]arkdown" })
+map("n", "<leader>bl", "<cmd> VimtexCompile <cr>", { desc = "[b]uild [l]atex" })

@@ -121,4 +121,7 @@ return {
 
     -- undotree
     {"mbbill/undotree"},
+
+    -- plugin to open file with sudo
+    {"lambdalisue/suda.vim"},
 }
