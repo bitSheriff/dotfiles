@@ -21,3 +21,6 @@ vim.cmd[[colorscheme dracula]]
 
 
 vim.cmd[[set spelllang=en,de]]
+
+-- set soft wrapping as default
+require('wrapping').soft_wrap_mode()

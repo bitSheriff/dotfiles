@@ -27,4 +27,12 @@ return{
 
   "preservim/vim-markdown",
   "godlygeek/tabular",
+
+  -- for better word wrapping
+  {
+    "andrewferrier/wrapping.nvim",
+    config = function()
+        require("wrapping").setup({notify_on_switch = false, create_keymappings = false,})
+    end
+  },
 }
