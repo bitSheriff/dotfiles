@@ -77,11 +77,9 @@ alias mkdir="mkdir -p"
 # device specific commands
 alias doUpdate=". ~/.config/tmux/scripts/doUpdate.sh"
 
-# add a note
+# add a note in the daily note
 note() {
-    echo "## $(date +\"%Y-%m-%d) : $(date +\"%H:%M\")" >> $HOME/notes.md
-    echo "$@" >> $HOME/notes.md
-    echo "" >> $HOME/notes.md
+    nvim ~/notes/Journal/Entries/Daily/$(date +"%F").md
 }
 
 # create new directory and move into it
