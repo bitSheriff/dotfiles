@@ -82,5 +82,12 @@ note() {
     nvim ~/notes/Journal/Entries/Daily/$(date +"%F").md
 }
 
+# quick note to daily note
+qn(){
+    echo "*quick note*" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
+    echo "$@" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
+    echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
+}
+
 # create new directory and move into it
 mkdir!() { mkdir -p "$1" && cd "$1"; }
