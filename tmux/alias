@@ -84,3 +84,5 @@ note() {
     echo "" >> $HOME/notes.md
 }
 
+# create new directory and move into it
+mkdir!() { mkdir -p "$1" && cd "$1"; }
