@@ -41,3 +41,61 @@ ls.add_snippets("markdown", {
     t({"%"})
   })
 })
+
+-- todos
+ls.add_snippets("markdown", {
+  s("todo", {
+    t({"- [ ] "}),
+    i(1),
+  })
+})
+
+ls.add_snippets("markdown", {
+  s("todo incomplete", {
+    t({"- [/] "}),
+    i(1),
+  })
+})
+
+ls.add_snippets("markdown", {
+  s("todo done", {
+    t({"- [x] "}),
+    i(1),
+  })
+})
+
+ls.add_snippets("markdown", {
+  s("todo cancled", {
+    t({"- [-] "}),
+    i(1),
+  })
+})
+
+ls.add_snippets("markdown", {
+  s("todo forwarded", {
+    t({"- [>] "}),
+    i(1),
+  })
+})
+
+ls.add_snippets("markdown", {
+  s("todo scheduling", {
+    t({"- [<] "}),
+    i(1),
+  })
+})
+
+ls.add_snippets("markdown", {
+  s("todo question", {
+    t({"- [?] "}),
+    i(1),
+  })
+})
+
+
+ls.add_snippets("markdown", {
+  s("todo important", {
+    t({"- [!] "}),
+    i(1),
+  })
+})
