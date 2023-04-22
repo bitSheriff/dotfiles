@@ -418,7 +418,9 @@ local servers = {
   pyright = {},
   rust_analyzer = {},
   -- tsserver = {},
-  ltex = {},
+  ltex = {
+    language = {"en", "de-AT"},
+  },
   texlab = {},
   marksman = {},
 
