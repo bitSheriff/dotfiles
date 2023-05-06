@@ -3,6 +3,7 @@
 ## git
 alias gti="git"
 alias lg="lazygit"
+alias gb+="git pull; git backup"
 
 ## kitty
 alias icat="kitty +kitten icat --align=left"
