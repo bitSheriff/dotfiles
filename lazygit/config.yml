@@ -215,7 +215,7 @@ keybinding:
     update: 'u'
     bulkMenu: 'b'
 customCommands:
-  - key: '<c-P>'
+  - key: '<c-l>'
     command: "git backup"
     context: 'global'
     loadingText: 'pushing to backup'
