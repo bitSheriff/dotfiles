@@ -17,6 +17,9 @@ alias exat="exa -a --long --header --icons --tree"
 alias exat2="exa -a --long --header --icons --tree --level=2"
 alias exat3="exa -a --long --header --icons --tree --level=3"
 
+## better cat command
+alias cat="bat"
+
 ## change directories
 alias go2conf="cd ~/.config"
 alias go2code="cd ~/code"
