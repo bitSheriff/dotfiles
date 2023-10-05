@@ -1,7 +1,8 @@
-return{
+return {
 
     -- nvim start up page
-    { "glepnir/dashboard-nvim",
+    {
+        "glepnir/dashboard-nvim",
         event = 'VimEnter',
         config = function()
             require("dashboard").setup {
@@ -33,25 +34,51 @@ return{
                             key = 'd',
                         },
                     },
-                    project = { enable = false, limit = 8, icon = '󰺛 ', label = 'bitSheriff', action = 'Telescope find_files cwd=' },
-                    mru = { limit = 10, icon = '󰺛 ', label = 'bitSheriff',},
-                    footer = {" 󱑽 ride on the synthwave 󱑽 "},
+                    project = {
+                        enable = false,
+                        limit = 8,
+                        icon = '󰺛 ',
+                        label = 'bitSheriff',
+                        action = 'Telescope find_files cwd='
+                    },
+                    mru = { limit = 10, icon = '󰺛 ', label = 'bitSheriff', },
+                    footer = { " 󱑽 ride on the synthwave 󱑽 " },
                 },
             }
         end,
     },
 
     -- Tabs
-    { "akinsho/nvim-bufferline.lua",
+    {
+        "akinsho/nvim-bufferline.lua",
         config = function()
             require("bufferline").setup {}
         end,
     },
 
     -- view hex colors_name
-    { "NvChad/nvim-colorizer.lua",
+    {
+        "NvChad/nvim-colorizer.lua",
         config = function()
             require("colorizer").setup {}
         end,
     },
+
+
+    -- lazy.nvim
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            -- add any options here
+        },
+        dependencies = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            -- OPTIONAL:
+            --   `nvim-notify` is only needed, if you want to use the notification view.
+            --   If not available, we use `mini` as the fallback
+            "rcarriga/nvim-notify",
+        }
+    }
 }
