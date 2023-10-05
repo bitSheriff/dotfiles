@@ -12,7 +12,7 @@ alias nvim-gui="kitty nvim"
 ## shortcuts
 alias nv="nvim"
 alias ls="exa"
-alias lsla="exa -a --long --header --icons" 
+alias lsl="exa -a --long --header --icons" 
 alias exat="exa -a --long --header --icons --tree"
 alias exat2="exa -a --long --header --icons --tree --level=2"
 alias exat3="exa -a --long --header --icons --tree --level=3"
@@ -78,6 +78,9 @@ function timer() {
 # always allow creating nested folders
 alias mkdir="mkdir -p"
 
+# create new directory and move into it
+mkdir!() { mkdir -p "$1" && cd "$1"; }
+
 # device specific commands
 alias doUpdate=". ~/.config/tmux/scripts/doUpdate.sh"
 
@@ -93,5 +96,3 @@ qn(){
     echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
 }
 
-# create new directory and move into it
-mkdir!() { mkdir -p "$1" && cd "$1"; }
