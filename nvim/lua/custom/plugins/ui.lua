@@ -1,3 +1,8 @@
+-- lock Zellij so no nvim keymaps get interpreted by zellij
+if vim.env.ZELLIJ ~= nil then
+    vim.fn.system({ "zellij", "action", "switch-mode", "locked" })
+end
+
 return {
 
     -- nvim start up page
