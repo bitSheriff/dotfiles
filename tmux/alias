@@ -11,6 +11,7 @@ alias nvim-gui="kitty nvim"
 
 ## shortcuts
 alias nv="nvim"
+alias hx="helix"
 alias ls="exa"
 alias lsl="exa -a --long --header --icons" 
 alias exat="exa -a --long --header --icons --tree"
