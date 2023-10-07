@@ -65,3 +65,7 @@ map("n", "<leader>bl", "<cmd> VimtexCompile <cr>", { desc = "[b]uild [l]atex" })
 
 
 -- debugging
+
+
+-- windows (=> panes)
+map("n", "<C-w>N", "<cmd> vnew <cr>", { desc = "[W]indow create [N]ew vertical window" })
