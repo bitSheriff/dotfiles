@@ -414,11 +414,9 @@ end
 local servers = {
   -- c/c++
   clangd = {},
-  -- codelldb = {},  -- DAPs cannot be installed this way
 
   -- python
   pyright = {},
-  -- debugpy = {},  -- DAPs cannot be installed this way
 
   rust_analyzer = {},
 
