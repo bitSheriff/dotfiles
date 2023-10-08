@@ -21,6 +21,8 @@ return {
     -- Add your own debuggers here
     'mfussenegger/nvim-dap-python',
   },
+  opts = { handlers = {} },
+  event = "VeryLazy",
   config = function()
     local dap = require 'dap'
     local dapui = require 'dapui'
@@ -34,7 +36,6 @@ return {
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
-        'cpptools',
         'codelldb'
       },
     }
