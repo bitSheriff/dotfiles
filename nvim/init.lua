@@ -416,7 +416,10 @@ local servers = {
   clangd = {},
   codelldb = {},
 
+  -- python
   pyright = {},
+  debugpy = {},
+
   rust_analyzer = {},
 
   -- markdown & co
