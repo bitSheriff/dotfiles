@@ -27,6 +27,29 @@ local parse = require("luasnip.util.parser").parse_snippet
 -- snippet for header include guard
 ls.add_snippets("c", {
   s("include guard", {
-    t({"#pragma once"})
+    t({ "#pragma once" })
+  })
+})
+
+
+-- snippets for doxygen documentation
+ls.add_snippets("c", {
+  s("doxy func", {
+    t({ "/*!",
+      " * @brief\t",
+      " * ",
+      " * @details",
+      " * ",
+      " * @param",
+      " * ",
+      " * @returns",
+      "**/"
+    }),
+  })
+})
+
+ls.add_snippets("c", {
+  s("doxy var after", {
+    t({ "/*!< Detailed description after the member */" })
   })
 })

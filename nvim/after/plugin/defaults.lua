@@ -13,14 +13,15 @@ opt.so = 999 -- keep cursor in the middle
 opt.expandtab = true
 opt.shiftwidth = 4
 opt.smartindent = true
+opt.autoindent = true
 opt.tabstop = 4
 opt.softtabstop = 4
 
 -- Set the Theme
-vim.cmd[[colorscheme dracula]]
+vim.cmd [[colorscheme dracula]]
 
 
-vim.cmd[[set spelllang=en,de]]
+vim.cmd [[set spelllang=en,de]]
 
 -- set soft wrapping as default
 require('wrapping').soft_wrap_mode()
