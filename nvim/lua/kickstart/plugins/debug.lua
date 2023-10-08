@@ -21,7 +21,6 @@ return {
     -- Add your own debuggers here
     'mfussenegger/nvim-dap-python',
   },
-  opts = { handlers = {} },
   event = "VeryLazy",
   config = function()
     local dap = require 'dap'
@@ -32,27 +31,22 @@ return {
       -- reasonable debug configurations
       automatic_setup = true,
 
+      handlers = {},
+
       -- You'll need to check that you have the required things installed
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
-        'codelldb'
+        'codelldb',
+        'debugpy',
       },
     }
 
     -- Basic debugging keymaps, feel free to change to your liking!
-    vim.keymap.set('n', '<F5>', dap.continue)
     vim.keymap.set('n', '.', dap.continue)
-    vim.keymap.set('n', '<F1>', dap.step_into)
     vim.keymap.set('n', ',', dap.step_into)
-    vim.keymap.set('n', '<F2>', dap.step_over)
     vim.keymap.set('n', '-', dap.step_over)
-    vim.keymap.set('n', '<F3>', dap.step_out)
     vim.keymap.set('n', '_', dap.step_out)
-    vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint)
-    vim.keymap.set('n', '<leader>B', function()
-      dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-    end)
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|

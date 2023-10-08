@@ -69,5 +69,9 @@ map("n", "<leader>bl", "<cmd> VimtexCompile <cr>", { desc = "[b]uild [l]atex" })
 map("n", "<leader>dr", "<cmd> DapContinue <cr>", { desc = "[D]ebug [R]un / Continue" })
 map("n", "<leader>db", "<cmd> DapToggleBreakpoint <cr>", { desc = "[D]ebug [B]reakpoint" })
 
+map("n", "<leader>d,", "<cmd> DapStepInto <cr>", { desc = "[D]ebug Step Into" })
+map("n", "<leader>d-", "<cmd> DapStepOver <cr>", { desc = "[D]ebug Step Over" })
+map("n", "<leader>d_", "<cmd> DapStepOut <cr>", { desc = "[D]ebug Step Out" })
+
 -- windows (=> panes)
 map("n", "<C-w>N", "<cmd> vnew <cr>", { desc = "[W]indow create [N]ew vertical window" })
