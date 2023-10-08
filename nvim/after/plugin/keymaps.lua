@@ -62,6 +62,10 @@ map("n", "<leader>aw", "<cmd> SudaWrite <cr>", { desc = "[A]ction [w]rite file w
 -- builds
 map("n", "<leader>bm", "<cmd> MarkdownPreview <cr>", { desc = "[b]uild [m]arkdown" })
 map("n", "<leader>bl", "<cmd> VimtexCompile <cr>", { desc = "[b]uild [l]atex" })
+map("n", "<leader>bca", "<cmd> make all <cr>", { desc = "[b]uild [c] make [a]ll" })
+map("n", "<leader>bcc", "<cmd> make clean <cr>", { desc = "[b]uild [c] make [c]lean" })
+map("n", "<leader>bcc", "<cmd> make doc <cr>", { desc = "[b]uild [c] make [d]oc" })
+
 
 
 -- debugging

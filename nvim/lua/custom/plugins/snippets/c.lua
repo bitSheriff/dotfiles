@@ -31,8 +31,11 @@ ls.add_snippets("c", {
   })
 })
 
-
+---
 -- snippets for doxygen documentation
+---
+
+-- function documentation
 ls.add_snippets("c", {
   s("doxy func", {
     t({ "/*!",
@@ -48,6 +51,7 @@ ls.add_snippets("c", {
   })
 })
 
+-- varaible documentation
 ls.add_snippets("c", {
   s("doxy var after", {
     t({ "/*!< Detailed description after the member */" })
