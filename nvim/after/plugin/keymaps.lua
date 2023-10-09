@@ -64,7 +64,7 @@ map("n", "<leader>bm", "<cmd> MarkdownPreview <cr>", { desc = "[b]uild [m]arkdow
 map("n", "<leader>bl", "<cmd> VimtexCompile <cr>", { desc = "[b]uild [l]atex" })
 map("n", "<leader>bca", "<cmd> make all <cr>", { desc = "[b]uild [c] make [a]ll" })
 map("n", "<leader>bcc", "<cmd> make clean <cr>", { desc = "[b]uild [c] make [c]lean" })
-map("n", "<leader>bcc", "<cmd> make doc <cr>", { desc = "[b]uild [c] make [d]oc" })
+map("n", "<leader>bcd", "<cmd> make doc <cr>", { desc = "[b]uild [c] make [d]oc" })
 
 
 
