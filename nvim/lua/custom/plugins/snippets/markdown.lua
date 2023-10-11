@@ -27,67 +27,67 @@ local parse = require("luasnip.util.parser").parse_snippet
 -- snippet for underline text
 ls.add_snippets("markdown", {
   s("underline", {
-    t({"<u>"}),
+    t({ "<u>" }),
     i(1),
-    t({"</u>"})
+    t({ "</u>" })
   })
 })
 
 -- snippet for comment
 ls.add_snippets("markdown", {
   s("comment", {
-    t({"%"}),
+    t({ "%" }),
     i(1),
-    t({"%"})
+    t({ "%" })
   })
 })
 
 -- todos
 ls.add_snippets("markdown", {
   s("todo", {
-    t({"- [ ] "}),
+    t({ "- [ ] " }),
     i(1),
   })
 })
 
 ls.add_snippets("markdown", {
   s("todo incomplete", {
-    t({"- [/] "}),
+    t({ "- [/] " }),
     i(1),
   })
 })
 
 ls.add_snippets("markdown", {
   s("todo done", {
-    t({"- [x] "}),
+    t({ "- [x] " }),
     i(1),
   })
 })
 
 ls.add_snippets("markdown", {
   s("todo cancled", {
-    t({"- [-] "}),
+    t({ "- [-] " }),
     i(1),
   })
 })
 
 ls.add_snippets("markdown", {
   s("todo forwarded", {
-    t({"- [>] "}),
+    t({ "- [>] " }),
     i(1),
   })
 })
 
 ls.add_snippets("markdown", {
   s("todo scheduling", {
-    t({"- [<] "}),
+    t({ "- [<] " }),
     i(1),
   })
 })
 
 ls.add_snippets("markdown", {
   s("todo question", {
-    t({"- [?] "}),
+    t({ "- [?] " }),
     i(1),
   })
 })
@@ -95,7 +95,16 @@ ls.add_snippets("markdown", {
 
 ls.add_snippets("markdown", {
   s("todo important", {
-    t({"- [!] "}),
+    t({ "- [!] " }),
     i(1),
+  })
+})
+
+ls.add_snippets("markdown", {
+  s("code block", {
+    t({ "```",
+      " ",
+      "```"
+    }),
   })
 })
