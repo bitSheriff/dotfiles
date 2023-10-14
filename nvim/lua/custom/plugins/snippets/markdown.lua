@@ -102,10 +102,10 @@ ls.add_snippets("markdown", {
 
 ls.add_snippets("markdown", {
   s("code block", {
-    t({ "```",
-      " ",
-      "```"
-    }),
+    -- code begin and langauge
+    t({ "```", "" }),
+    i(1),
+    t({ "", "```" })
   })
 })
 
