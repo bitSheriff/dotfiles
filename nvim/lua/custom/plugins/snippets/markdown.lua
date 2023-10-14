@@ -114,3 +114,38 @@ ls.add_snippets("markdown", {
     t({ "[]()" }),
   })
 })
+
+-- headings
+
+ls.add_snippets("markdown", {
+  s("h1", {
+    t({ "# " }),
+  })
+})
+
+ls.add_snippets("markdown", {
+  s("h2", {
+    t({ "## " }),
+  })
+})
+
+ls.add_snippets("markdown", {
+  s("h3", {
+    t({ "### " }),
+  })
+})
+ls.add_snippets("markdown", {
+  s("h4", {
+    t({ "#### " }),
+  })
+})
+ls.add_snippets("markdown", {
+  s("h5", {
+    t({ "##### " }),
+  })
+})
+ls.add_snippets("markdown", {
+  s("h6", {
+    t({ "###### " }),
+  })
+})
