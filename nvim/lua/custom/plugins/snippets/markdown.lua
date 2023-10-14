@@ -108,3 +108,9 @@ ls.add_snippets("markdown", {
     }),
   })
 })
+
+ls.add_snippets("markdown", {
+  s("link", {
+    t({ "[]()" }),
+  })
+})

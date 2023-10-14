@@ -57,3 +57,11 @@ ls.add_snippets("c", {
     t({ "/*!< Detailed description after the member */" })
   })
 })
+
+
+-- standard main function
+ls.add_snippets("c", {
+  s("main function", {
+    t({ "int main(int argc, char* argv[]) { return 0; }" })
+  })
+})
