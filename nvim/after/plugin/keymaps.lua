@@ -19,9 +19,6 @@ map("n", "<Up>", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 map("n", "<leader>sr", require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 map("n", "<leader>ss", "<cmd>Telescope live_grep<cr>", { silent = true, desc = "Search in the current file" })
 
--- hop anywhere in the code
-map("n", "<leader>sb", "<cmd>HopAnywhere<cr>", { silent = true, desc = "Hop anywhere in the current file" })
-
 -- toggle the build in file explorer
 map("n", "<leader>n", "<cmd>Neotree toggle<cr>", { silent = true, desc = "Open [N]eotree" })
 
