@@ -55,6 +55,8 @@ map("n", "<leader>ac", "<cmd> lua vim.lsp.buf.code_action() <cr>", { desc = "[A]
 map("n", "<leader>as", "<cmd> set spell! <cr>", { desc = "[A]ction toggle [s]pell checker" })
 map("n", "<leader>au", "<cmd> UndotreeToggle <cr>", { desc = "[A]ction toggle [u]ndotree" })
 map("n", "<leader>aw", "<cmd> SudaWrite <cr>", { desc = "[A]ction [w]rite file with sudo" })
+map("n", "<leader>at", "<cmd> TodoTelescope <cr>", { desc = "[A]ction show [T]odo" })
+
 
 -- builds
 map("n", "<leader>bm", "<cmd> MarkdownPreview <cr>", { desc = "[b]uild [m]arkdown" })
