@@ -54,7 +54,10 @@ ls.add_snippets("c", {
 -- varaible documentation
 ls.add_snippets("c", {
   s("doxy var after", {
-    t({ "/*!< Detailed description after the member */" })
+    t({ "/*!< " }),
+    i(1),
+    t({ " */" })
+
   })
 })
 
@@ -63,5 +66,14 @@ ls.add_snippets("c", {
 ls.add_snippets("c", {
   s("main function", {
     t({ "int main(int argc, char* argv[]) { return 0; }" })
+  })
+})
+
+-- simple comment
+ls.add_snippets("c", {
+  s("cmt", {
+    t({ "/* " }),
+    i(1),
+    t({ " */" })
   })
 })
