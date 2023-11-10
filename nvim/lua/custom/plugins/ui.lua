@@ -3,6 +3,36 @@ if vim.env.ZELLIJ ~= nil then
     vim.fn.system({ "zellij", "action", "switch-mode", "locked" })
 end
 
+
+local custom_header = {
+    "                                                                                                                                        ",
+    "BBBBBBBBBBBBBBBBB                                          jjjj                                           iiii                          ",
+    "B::::::::::::::::B                                        j::::j                                         i::::i                         ",
+    "B::::::BBBBBB:::::B                                        jjjj                                           iiii                          ",
+    "BB:::::B     B:::::B                                                                                                                    ",
+    "  B::::B     B:::::B    eeeeeeeeeeee    nnnn  nnnnnnnn   jjjjjjj  aaaaaaaaaaaaavvvvvvv           vvvvvvviiiiiii    mmmmmmm    mmmmmmm   ",
+    "  B::::B     B:::::B  ee::::::::::::ee  n:::nn::::::::nn j:::::j  a::::::::::::av:::::v         v:::::v i:::::i  mm:::::::m  m:::::::mm ",
+    "  B::::BBBBBB:::::B  e::::::eeeee:::::een::::::::::::::nn j::::j  aaaaaaaaa:::::av:::::v       v:::::v   i::::i m::::::::::mm::::::::::m",
+    "  B:::::::::::::BB  e::::::e     e:::::enn:::::::::::::::nj::::j           a::::a v:::::v     v:::::v    i::::i m::::::::::::::::::::::m",
+    "  B::::BBBBBB:::::B e:::::::eeeee::::::e  n:::::nnnn:::::nj::::j    aaaaaaa:::::a  v:::::v   v:::::v     i::::i m:::::mmm::::::mmm:::::m",
+    "  B::::B     B:::::Be:::::::::::::::::e   n::::n    n::::nj::::j  aa::::::::::::a   v:::::v v:::::v      i::::i m::::m   m::::m   m::::m",
+    "  B::::B     B:::::Be::::::eeeeeeeeeee    n::::n    n::::nj::::j a::::aaaa::::::a    v:::::v:::::v       i::::i m::::m   m::::m   m::::m",
+    "  B::::B     B:::::Be:::::::e             n::::n    n::::nj::::ja::::a    a:::::a     v:::::::::v        i::::i m::::m   m::::m   m::::m",
+    "BB:::::BBBBBB::::::Be::::::::e            n::::n    n::::nj::::ja::::a    a:::::a      v:::::::v        i::::::im::::m   m::::m   m::::m",
+    "B:::::::::::::::::B  e::::::::eeeeeeee    n::::n    n::::nj::::ja:::::aaaa::::::a       v:::::v         i::::::im::::m   m::::m   m::::m",
+    "B::::::::::::::::B    ee:::::::::::::e    n::::n    n::::nj::::j a::::::::::aa:::a       v:::v          i::::::im::::m   m::::m   m::::m",
+    "BBBBBBBBBBBBBBBBB       eeeeeeeeeeeeee    nnnnnn    nnnnnnj::::j  aaaaaaaaaa  aaaa        vvv           iiiiiiiimmmmmm   mmmmmm   mmmmmm",
+    "                                                          j::::j                                                                        ",
+    "                                                jjjj      j::::j                                                                        ",
+    "                                               j::::jj   j:::::j                                                                        ",
+    "                                               j::::::jjj::::::j                                                                        ",
+    "                                                jj::::::::::::j                                                                         ",
+    "                                                  jjj::::::jjj                                                                          ",
+    "                                                     jjjjjj                                                                             ",
+    "",
+}
+
+
 return {
 
     -- nvim start up page
@@ -13,8 +43,9 @@ return {
             require("dashboard").setup {
                 theme = 'hyper',
                 config = {
+                    header = custom_header,
                     week_header = {
-                        enable = true,
+                        enable = false,
                     },
                     shortcut = {
                         { desc = ' Update', group = '@property', action = 'Lazy update', key = 'u' },
