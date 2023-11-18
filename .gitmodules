@@ -1,3 +1,6 @@
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "nvim"]
+	path = nvim
+	url = git@github.com:bitSheriff/Benjavim.git
