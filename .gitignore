@@ -9,7 +9,7 @@
 !/nvim/*
 !/ranger/*
 !/git/*                  # additional git configurations
-!/nvim/*
+!/nvim
 
 # tmux
 !/tmux/tmux.conf
