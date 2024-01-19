@@ -93,8 +93,8 @@ note() {
 
 # quick note to daily note
 qn(){
-    echo "*quick note*" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
-    echo "$@" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
+    echo "- **$(date +%H:%M)**: $@" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
+    # echo "$@" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
     echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
 }
 
