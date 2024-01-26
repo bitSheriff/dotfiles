@@ -34,7 +34,7 @@ search_man() {
 }
 
 ## applications
-alias code="flatpak run com.visualstudio.code"
+# alias code="flatpak run com.visualstudio.code"
 alias notes="cd ~/notes && nv"
 
 ## scripts
