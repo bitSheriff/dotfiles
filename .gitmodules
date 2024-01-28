@@ -4,3 +4,7 @@
 [submodule "nvim"]
 	path = nvim
 	url = git@github.com:bitSheriff/Benjavim.git
+
+[submodule "wallpapers"]
+	path = wallpapers
+	url = git@github.com:bitSheriff/wallpapers.git
