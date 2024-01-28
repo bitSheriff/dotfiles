@@ -10,6 +10,7 @@
 !/ranger/*
 !/git/*                  # additional git configurations
 !/nvim
+!/wallpapers
 
 # tmux
 !/tmux/tmux.conf
