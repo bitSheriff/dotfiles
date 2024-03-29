@@ -98,3 +98,12 @@ qn(){
     echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
 }
 
+# add a note in the inbox note
+inbox() {
+    nvim ~/notes/Inbox/Inbox.md
+}
+
+# add a note in the inbox note
+inbox-gw() {
+    ghostwriter ~/notes/Inbox/Inbox.md &
+}
