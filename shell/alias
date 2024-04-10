@@ -18,6 +18,7 @@ alias lsl="exa -a --long --header --icons"
 alias exat="exa -a --long --header --icons --tree"
 alias exat2="exa -a --long --header --icons --tree --level=2"
 alias exat3="exa -a --long --header --icons --tree --level=3"
+alias gw="ghostwriter"
 
 ## better cat command
 alias cat="bat"
