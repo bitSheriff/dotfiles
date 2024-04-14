@@ -39,7 +39,7 @@ search_man() {
 alias notes="cd ~/notes && nv"
 
 ## scripts
-alias updir=". ~/.config/tmux/scripts/updir.sh"
+alias updir=". ~/.config/shell/scripts/updir.sh"
 
 # list only mounted devices
 alias mnt="mount | awk -F' ' '{ printf \"%s\t%s\n\",\$1,\$3; }' | column -t | egrep ^/dev/ | sort"
@@ -85,7 +85,7 @@ alias mkdir="mkdir -p"
 mkdir!() { mkdir -p "$1" && cd "$1"; }
 
 # device specific commands
-alias doUpdate=". ~/.config/tmux/scripts/doUpdate.sh"
+alias doUpdate=". ~/.config/shell/scripts/doUpdate.sh"
 
 # add a note in the daily note
 note() {
@@ -95,8 +95,13 @@ note() {
 # quick note to daily note
 qn(){
     echo "\n- **$(date +%H:%M)**: $@" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
-    # echo "$@" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
-    echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
+    # echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
+}
+
+# quick todo to daily note
+todo(){
+    echo "\n- [ ] $@" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
+    # echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
 }
 
 # add a note in the inbox note
