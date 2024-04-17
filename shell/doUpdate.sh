@@ -27,6 +27,17 @@ update_snaps()
   sudo snap refresh
 }
 
+update_pacman()
+{
+  echo "Updating Pacman"
+  sudo pacman -Syyu
+}
+
+update_yay()
+{
+  yay -Syyu
+}
+
 if varHostname=linuxlegion; then
   update_ubuntu
   update_flatpak
