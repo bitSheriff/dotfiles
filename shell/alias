@@ -113,3 +113,19 @@ inbox() {
 inbox-gw() {
     ghostwriter ~/notes/Inbox/Inbox.md &
 }
+
+# quickly create file in the Inbox folder and open it with nvim
+qf()
+{
+
+    if [ -z "$1" ]; then
+        echo "Error: A file name must be set, e.g. on \"the wonderful thing about tiggers\"."
+    exit 1
+    fi
+
+    file_name=$(echo "$1" | tr ' ' '-')
+    formatted_file_name=$(date "+%Y-%m-%d")_${file_name}.md
+    cd ~/notes
+    touch "Inbox/${formatted_file_name}"
+    nvim "Inbox/${formatted_file_name}"        
+}
