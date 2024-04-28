@@ -90,12 +90,12 @@ mkdir!() { mkdir -p "$1" && cd "$1"; }
 alias doUpdate=". ~/.config/shell/scripts/doUpdate.sh"
 
 # add a note in the daily note
-note() {
+daily() {
     nvim ~/notes/Journal/Entries/Daily/$(date +"%F").md
 }
 
 # quick note to daily note
-qn(){
+memo(){
     echo "\n- **$(date +%H:%M)**: $@" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
     # echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
 }
