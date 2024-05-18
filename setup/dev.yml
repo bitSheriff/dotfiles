@@ -1,4 +1,4 @@
-- name: Dev Tools and Packages
+- name: Dev Tools
   become: yes
   pacman:
     name:
@@ -10,7 +10,22 @@
       - lazygit
       - zoxide # better cd command
       - fzf
+      - yazi # better ranger (cli file manager)
       - ripgrep
+    state: present
+
+- name: Languages & Compilers
+  become: yes
+  pacman:
+    name:
       - clang
       - gcc
+      - rust
     state: present
+
+- name: Development Flatpaks
+  community.general.flatpak:
+    name:
+      - md.obsidian.Obsidian
+      - com.axosoft.GitKraken
+      - org.speedcrunch.SpeedCrunch

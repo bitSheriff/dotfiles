@@ -3,4 +3,13 @@
   pacman:
     name:
       - ghostwriter # markdown editor from KDE
+      - pdfgrep # search through pdfs
     state: present
+
+- name: Office Flatpaks
+  community.general.flatpak:
+    name:
+      - md.obsidian.Obsidian
+      - com.toggl.TogglDesktop
+      - net.ankiweb.Anki
+      - com.belmoussaoui.Decoder

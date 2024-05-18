@@ -17,6 +17,13 @@
       private: no
 
   tasks:
+    - name: Install needed general Tools
+      become: yes
+      pacman:
+        name:
+          - flatpak
+        state: present
+
     - include_tasks: hyprland.yml
       when: hyprland | bool
 
