@@ -3,6 +3,8 @@
   pacman:
     name:
       - hyprland
+      - waybar
+      - rofi
     state: present
 
 - name: Additional packages to look cool
