@@ -1,21 +1,16 @@
----
-- name: Dev Setup
-  hosts: localhost
-  gather_facts: false
-
-  tasks:
-    - name: Dev Tools and Packages
-      become: yes
-      pacman:
-        name:
-          - kitty
-          - neovim
-          - zellij # better tmux
-          - bat # better cat
-          - htop # better htop
-          - lazygit
-          - zoxide # better cd command
-          - fzf
-          - ripgrep
-          - ghostwriter # markdown editor from KDE
-        state: present
+- name: Dev Tools and Packages
+  become: yes
+  pacman:
+    name:
+      - kitty
+      - neovim
+      - zellij # better tmux
+      - bat # better cat
+      - htop # better htop
+      - lazygit
+      - zoxide # better cd command
+      - fzf
+      - ripgrep
+      - clang
+      - gcc
+    state: present
