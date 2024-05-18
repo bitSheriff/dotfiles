@@ -1,0 +1,16 @@
+{
+  "group/systray": {
+    "orientation": "horizontal",
+    "modules": ["tray", "power-profiles-daemon"],
+  },
+  "group/end-right-module": {
+    "orientation": "horizontal",
+    "modules": [
+      "clock",
+      "battery",
+      "backlight",
+      "group/group-power",
+      "custom/power",
+    ],
+  },
+}
