@@ -1,0 +1,68 @@
+---
+- name: Main Setup File
+  hosts: localhost
+  gather_facts: false
+
+  vars_prompt:
+    - name: "hyprland"
+      prompt: "Do you want to install Hyprland (yes/no)?"
+      private: no
+
+
+  vars_prompt:
+    - name: "dev_setup"
+      prompt: "Do you want to install the development setup (yes/no)?"
+      private: no
+
+  vars_prompt:
+    - name: "office_setup"
+      prompt: "Do you want to install the office setup (yes/no)?"
+      private: no
+
+  tasks:
+    - name: Check if pacman is installed
+      command: "which pacman"
+      register: pacman_result
+      ignore_errors: true
+
+    - name: Check if yay is installed
+      command: "which yay"
+      register: yay_result
+      ignore_errors: true
+
+    - name: Display results
+      debug:
+        msg: |
+          Pacman installed: {{ "Yes" if pacman_result.rc == 0 else "No" }}
+          Yay installed: {{ "Yes" if yay_result.rc == 0 else "No" }}
+
+    - name: Install Hyprland
+      command: "echo Hyprland will be installed"
+      when: hyprland | bool
+
+    - name: Install kitty, zellij, and bat
+      become: yes
+      pacman:
+        name:
+          - kitty
+          - neovim
+          - zellij # better tmux
+          - bat # better cat
+          - htop # better htop
+          - lazygit
+          - zoxide # better cd command
+          - fzf
+          - ripgrep
+          - ghostwriter # markdown editor from KDE
+        state: present
+
+    - name: Install 1Password with Yay
+      when: false
+      command: yay -S --answerdiff None --answerclean None 1password visual-studio-code-bin
+
+    - name: Clone or update the Git repository
+      git:
+        repo: "git@github.com:bitSheriff/dotfiles.git"
+        dest: "~/.config"
+        version: master # Setze die gewünschte Branch oder Tag, wenn benötigt
+        force: yes # Benutze die Option force, um das Repository zu überschreiben

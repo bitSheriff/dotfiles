@@ -1,0 +1,21 @@
+---
+- name: Hyprland
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Install Hyprland and needed pac
+      become: yes
+      pacman:
+        name:
+          - kitty
+          - neovim
+          - zellij # better tmux
+          - bat # better cat
+          - htop # better htop
+          - lazygit
+          - zoxide # better cd command
+          - fzf
+          - ripgrep
+          - ghostwriter # markdown editor from KDE
+        state: present

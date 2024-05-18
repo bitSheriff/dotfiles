@@ -1,0 +1,12 @@
+---
+- name: Office Setup
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Office Tools and Packages
+      become: yes
+      pacman:
+        name:
+          - ghostwriter # markdown editor from KDE
+        state: present
