@@ -8,7 +8,13 @@
       - hypridle
       - waybar
       - rofi
+      - flameshot
     state: present
+
+
+- name: Yay Packages
+  become: no # maybe yes
+  ansible.builtin.command: "yay -S wlogout"
 
 - name: Additional packages to look cool
   become: yes
