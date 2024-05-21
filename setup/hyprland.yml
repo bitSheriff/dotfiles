@@ -11,6 +11,8 @@
       - flameshot # screenshot
       - xbindkeys # for media buttons
       - brightnessctl # control monitor brigthness
+      - wl-copy   # copy paste for wayland
+      - grim      # cli screenshot tool
     state: present
 
 
