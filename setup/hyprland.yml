@@ -3,6 +3,9 @@
   pacman:
     name:
       - hyprland
+      - hyprpaper
+      - hyprlock
+      - hypridle
       - waybar
       - rofi
     state: present
