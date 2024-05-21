@@ -16,7 +16,7 @@
 
   // Clock
   "clock": {
-    "format": "{:%I:%M %p}",
+    "format": "{:%H:%M}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "format-alt": "{:%Y-%m-%d}",
   },
@@ -84,6 +84,6 @@
   // System Tray
   "tray": {
     "icon-size": 18,
-    "spacing": 5,
+    "spacing": 7,
   },
 },
