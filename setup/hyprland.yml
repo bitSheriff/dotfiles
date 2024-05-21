@@ -3,12 +3,13 @@
   pacman:
     name:
       - hyprland
-      - hyprpaper
-      - hyprlock
-      - hypridle
-      - waybar
-      - rofi
-      - flameshot
+      - hyprpaper # wallpaper engine
+      - hyprlock  # lock screen
+      - hypridle  # auto sleep
+      - waybar    # bar
+      - rofi      # application launcher
+      - flameshot # screenshot
+      - xbindkeys # for media buttons
     state: present
 
 
@@ -24,9 +25,9 @@
       - neovim
       - zellij # better tmux
       - bat # better cat
-      - htop # better htop
+      - btop # better htop
       - lazygit
       - zoxide # better cd command
-      - fzf
+      - fzf   # fuzzy finding in the cli
       - ripgrep
     state: present
