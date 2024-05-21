@@ -10,12 +10,13 @@
       - rofi      # application launcher
       - flameshot # screenshot
       - xbindkeys # for media buttons
+      - brightnessctl # control monitor brigthness
     state: present
 
 
 - name: Yay Packages
   become: no # maybe yes
-  ansible.builtin.command: "yay -S wlogout"
+  ansible.builtin.command: "yay -S wlogout clipman"
 
 - name: Additional packages to look cool
   become: yes
