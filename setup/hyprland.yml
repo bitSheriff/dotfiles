@@ -33,4 +33,5 @@
       - zoxide # better cd command
       - fzf   # fuzzy finding in the cli
       - ripgrep
+      - cool-retro-term
     state: present
