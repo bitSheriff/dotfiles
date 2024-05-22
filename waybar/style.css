@@ -21,7 +21,6 @@ window#waybar {
 #pulseaudio,
 #custom-media,
 #mode,
-#idle_inhibitor,
 #scratchpad,
 #systray,
 #mpd {
@@ -29,6 +28,16 @@ window#waybar {
   color: rgba(255, 255, 255, 1);
   border-radius: 20px;
   border: 0.19em solid rgba(203, 75, 22, 1);
+  background-color: rgba(0, 43, 54, 0.7);
+}
+
+#idle_inhibitor
+{
+  padding: 0px 8px ;
+  margin: 0px 8px;
+  color: rgba(255, 255, 255, 1);
+  border-radius: 20px;
+  /* border: 0.19em solid rgba(203, 75, 22, 1); */
   background-color: rgba(0, 43, 54, 0.7);
 }
 

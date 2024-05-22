@@ -1,7 +1,11 @@
 {
   "group/systray": {
     "orientation": "horizontal",
-    "modules": ["tray", "power-profiles-daemon"],
+    "modules": [
+      "tray", 
+      "idle_inhibitor",
+      "power-profiles-daemon", 
+    ],
   },
   "group/end-right-module": {
     "orientation": "horizontal",
