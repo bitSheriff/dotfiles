@@ -13,6 +13,9 @@
       - brightnessctl # control monitor brigthness
       - wl-copy   # copy paste for wayland
       - grim      # cli screenshot tool
+      - networkmanager # wlan etc control
+      - network-manager-applet # wlan control in the waybar
+      - blueman # bluetooth control
     state: present
 
 
