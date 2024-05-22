@@ -16,6 +16,7 @@
       - networkmanager # wlan etc control
       - network-manager-applet # wlan control in the waybar
       - blueman # bluetooth control
+      - polkit-kde-agent # keyring service
     state: present
 
 
