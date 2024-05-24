@@ -42,7 +42,8 @@ search_man() {
 alias notes="cd ~/notes && nv"
 
 ## scripts
-alias updir=". ~/.config/shell/scripts/updir.sh"
+alias updir=". ~/.config/shell/updir.sh"
+alias sysupdate=". ~/.config/shell/sysupdate.sh"
 
 # list only mounted devices
 alias mnt="mount | awk -F' ' '{ printf \"%s\t%s\n\",\$1,\$3; }' | column -t | egrep ^/dev/ | sort"
