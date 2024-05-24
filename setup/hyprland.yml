@@ -21,8 +21,8 @@
 
 
 - name: Yay Packages
-  become: no # maybe yes
-  ansible.builtin.command: "yay -S wlogout clipman"
+  become: yes # maybe yes
+  ansible.builtin.command: "yes | LANG=C yay --answerdiff None --answerclean None --mflags \"--noconfirm\" -S wlogout clipman wayland-logout"
 
 - name: Additional packages to look cool
   become: yes
