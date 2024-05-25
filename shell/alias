@@ -19,6 +19,8 @@ alias exat="exa -a --long --header --icons --tree"
 alias exat2="exa -a --long --header --icons --tree --level=2"
 alias exat3="exa -a --long --header --icons --tree --level=3"
 alias gw="ghostwriter"
+alias clock="peaclock --config-dir ~/.config/peaclock" # cli-clock
+
 # open file with standard program
 alias open="xdg-open"
 
@@ -71,9 +73,6 @@ alias y="yazi"
 
 # open nautilus (file explorer) in the current directory
 alias exp="nautilus ."
-
-# show a clock in the terminal
-alias clock="tock -cms -C 5"
 
 # show weather information
 weather(){ curl -s "wttr.in/$1?m1"} 
