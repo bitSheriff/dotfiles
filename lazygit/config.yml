@@ -323,7 +323,7 @@ os:
 # - 'create': initialize a new repo
 # - 'skip': open most recent repo
 # - 'quit': exit Lazygit
-notARepository: prompt
+notARepository: skip
 
 # If true, display a confirmation when subprocess terminates. This allows you to view the output of the subprocess before returning to Lazygit.
 promptToReturnFromSubprocess: true
