@@ -119,6 +119,10 @@
     "format-icons": {
         "activated": "",
         "deactivated": ""
-    }
+    }, 
+    "icon-size": 18,
+    "spacing": 7
 }
-},
+
+// global end
+}

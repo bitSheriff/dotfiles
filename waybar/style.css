@@ -32,18 +32,15 @@ window#waybar {
   padding: 0px 6px;
   color: rgba(255, 255, 255, 1);
   border-radius: 20px;
-  border: 0.19em solid rgba(203, 75, 22, 1);
+  border: 0.19em solid @purple;
+  /* border: 0.19em solid rgba(203, 75, 22, 1); */
   background-color: @background;
 }
 
-#idle_inhibitor
-{
-  padding: 0px 8px ;
-  margin: 0px 8px;
+#idle_inhibitor {
+  padding: 0px;
+  padding-right: 16px;
   color: rgba(255, 255, 255, 1);
-  border-radius: 20px;
-  /* border: 0.19em solid rgba(203, 75, 22, 1); */
-  background-color: @background;
 }
 
 @keyframes blink-workspace {
@@ -57,7 +54,7 @@ window#waybar {
 #window {
   color: rgba(255, 255, 255, 1);
   border-radius: 20px;
-  border: 0.19em solid rgba(41, 238, 223, 1);
+  border: 0.19em solid @cyan;
   background-color: @background;
   transition: all 0.4s ease-out;
 }
@@ -70,16 +67,18 @@ window#waybar {
 
 #workspaces button.active {
   background-color: @background;
-  color: rgba(41, 238, 223, 1);
+  color: @orange;
   animation-name: blink-workspace;
   animation-duration: 0.5s;
   animation-timing-function: steps(12);
   animation-iteration-count: 2;
   animation-direction: alternate;
+  font-weight: 900;
+  font-size: 17px;
 }
 
 #workspaces button.urgent {
-  color: rgba(220, 50, 47, 0.7);
+  color: @red;
   animation-name: blink-workspace;
   animation-duration: 0.5s;
   animation-timing-function: steps(12);
@@ -116,12 +115,12 @@ window#waybar {
 }
 
 #pulseaudio {
-  border: 0.19em solid rgba(108, 113, 196, 1);
+  border: 0.19em solid @blue;
   padding: 0px 8px;
 }
 
 #pulseaudio.muted {
-  border: 0.19em solid rgba(220, 50, 47, 1);
+  border: 0.19em solid @red;
 }
 
 #custom-media {
@@ -130,7 +129,7 @@ window#waybar {
 }
 
 #custom-media.custom-spotify {
-  border: 0.19em solid rgba(46, 204, 113, 1);
+  border: 0.19em solid @green;
 }
 
 #custom-media.custom-vlc {
@@ -180,7 +179,7 @@ window#waybar {
 }
 
 #systray {
-  border: 0.19em solid rgba(46, 204, 113, 1);
+  border: 0.19em solid @green;
   padding: 0px 4px;
 }
 
@@ -202,15 +201,15 @@ window#waybar {
 }
 
 #power-profiles-daemon.performance {
-  color: rgba(245, 60, 60, 1);
+  color: @red;
 }
 
 #power-profiles-daemon.balanced {
-  color: rgba(41, 128, 185, 1);
+  color: @yellow;
 }
 
 #power-profiles-daemon.power-saver {
-  color: rgba(46, 204, 113, 1);
+  color: @green;
 }
 
 #custom-power {
