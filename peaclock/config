@@ -106,7 +106,7 @@ rate-status 5000
 set hour-24 on
 
 # display seconds
-set seconds off
+set seconds on
 
 # display the date
 set date on
