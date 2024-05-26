@@ -16,6 +16,10 @@
       prompt: "Do you want to install the office setup (yes/no)?"
       private: no
 
+    - name: "clone_dots"
+      prompt: "Do you want to clone the dotfiles (yes/no)?"
+      private: no
+
   tasks:
     - name: Install needed general Tools
       become: yes
@@ -39,4 +43,4 @@
         dest: "~/.config"
         version: master # Setze die gewünschte Branch oder Tag, wenn benötigt
         force: yes # Benutze die Option force, um das Repository zu überschreiben
-      when: false
+      when: clone_dots | bool

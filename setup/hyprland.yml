@@ -22,12 +22,22 @@
     state: present
 
 
+# wlogout: Logout Manager
+# jome-git: emoji picker
+# wayland-logout: needed for wlogout
+# peaclock: cli-clock
+# webapp-manager: make webapps
 - name: Yay Packages
-  become: no # maybe yes
-  ansible.builtin.command: "yay --mflags --noconfirm --norebuild --answerclean N --answerdiff N -S wlogout clipman wayland-logout"
-  # debug:
-  #   msg: "yes | LANG=C yay --answerdiff None --answerclean None --mflags \"--noconfirm\" -S wlogout clipman wayland-logout"
-
+  debug:
+    msg: > 
+      yay --mflags --noconfirm --norebuild --answerclean N --answerdiff N 
+      -S 
+      wlogout 
+      wayland-logout 
+      jome-git 
+      peaclock  
+      webapp-manager 
+  
 - name: Additional packages to look cool
   become: yes
   pacman:
