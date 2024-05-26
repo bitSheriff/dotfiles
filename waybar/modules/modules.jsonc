@@ -127,7 +127,8 @@
 "hyprland/language": {
     "format": "{}",
     "format-en": "🇺🇸",
-    "format-de": "🇦🇹"   
+    "format-de": "🇦🇹" ,
+    "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
 },
 
 // global end
