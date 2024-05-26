@@ -17,12 +17,16 @@
       - network-manager-applet # wlan control in the waybar
       - blueman # bluetooth control
       - polkit-kde-agent # keyring service
+      - wofi # rofi but for wayland session
+      - dunst # notification manager
     state: present
 
 
 - name: Yay Packages
-  become: yes # maybe yes
-  ansible.builtin.command: "yes | LANG=C yay --answerdiff None --answerclean None --mflags \"--noconfirm\" -S wlogout clipman wayland-logout"
+  become: no # maybe yes
+  ansible.builtin.command: "yay --mflags --noconfirm --norebuild --answerclean N --answerdiff N -S wlogout clipman wayland-logout"
+  # debug:
+  #   msg: "yes | LANG=C yay --answerdiff None --answerclean None --mflags \"--noconfirm\" -S wlogout clipman wayland-logout"
 
 - name: Additional packages to look cool
   become: yes
