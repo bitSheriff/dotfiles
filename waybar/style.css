@@ -9,7 +9,7 @@
 
 
 window#waybar {
-  background-color: rgba(0, 43, 54, 0);
+  background-color: @backround;
   /* color: rgba(255, 255, 255, 1); */
   color: @purple;
   transition-property: background-color;
@@ -124,7 +124,7 @@ window#waybar {
 }
 
 #custom-media {
-  border: 0.19em solid rgba(46, 204, 113, 1);
+  border: 0.19em solid @yellow;
   min-width: 100px;
 }
 
