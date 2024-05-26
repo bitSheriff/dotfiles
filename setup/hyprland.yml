@@ -11,7 +11,7 @@
       - flameshot # screenshot
       - xbindkeys # for media buttons
       - brightnessctl # control monitor brigthness
-      - wl-copy   # copy paste for wayland
+      - wl-clipboard   # copy paste for wayland
       - grim      # cli screenshot tool
       - networkmanager # wlan etc control
       - network-manager-applet # wlan control in the waybar
