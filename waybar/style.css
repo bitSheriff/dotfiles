@@ -43,6 +43,10 @@ window#waybar {
   color: rgba(255, 255, 255, 1);
 }
 
+#language{
+  padding: 0px 8px;
+}
+
 @keyframes blink-workspace {
   to {
     color: rgba(255, 255, 255, 0.7);

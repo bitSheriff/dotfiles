@@ -122,7 +122,13 @@
     }, 
     "icon-size": 18,
     "spacing": 7
-}
+},
+
+"hyprland/language": {
+    "format": "{}",
+    "format-en": "🇺🇸",
+    "format-de": "🇦🇹"   
+},
 
 // global end
 }

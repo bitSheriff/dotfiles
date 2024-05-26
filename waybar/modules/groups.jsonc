@@ -10,6 +10,7 @@
   "group/end-right-module": {
     "orientation": "horizontal",
     "modules": [
+      "hyprland/language",
       "clock",
       // "network",  # use nm.applet for that
       // "bluetooth", # use blueman-applet for that
