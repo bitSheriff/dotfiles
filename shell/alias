@@ -98,7 +98,7 @@ daily_gw()
 
 # quick note to daily note
 memo(){
-    echo "\n- **$(date +%H:%M)**: $@" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
+    echo "\n- **$(date +%H:%M):** $@" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
     # echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
 }
 
