@@ -91,9 +91,9 @@ daily() {
     nvim ~/notes/Journal/Entries/Daily/$(date +"%F").md
 }
 
-daily_gw()
+daily-gw()
 {
-    ghostwriter ~/notes/Journal/Entries/Daily/$(date +"%F").md
+    ghostwriter ~/notes/Journal/Entries/Daily/$(date +"%F").md &
 }
 
 # quick note to daily note
