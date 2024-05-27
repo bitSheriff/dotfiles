@@ -183,7 +183,7 @@ window#waybar {
 }
 
 #systray {
-  border: 0.19em solid @green;
+  border: 0.19em solid @green-darker;
   padding: 0px 4px;
 }
 
