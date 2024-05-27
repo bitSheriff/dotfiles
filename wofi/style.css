@@ -1,7 +1,11 @@
+/* import the global color definitions */
+@import url("../theming/colors.css");
+
+
 window {
   margin: 0px;
   border: 1px solid #bd93f9;
-  background-color: #282a36;
+  background-color: $background;
 }
 
 #input {
