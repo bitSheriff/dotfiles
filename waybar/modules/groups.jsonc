@@ -12,9 +12,8 @@
     "modules": [
       // "hyprland/language",
       "clock",
-      "battery",
       "backlight",
-      "group/group-power",
+      "battery",
       "custom/power",
     ],
   },
