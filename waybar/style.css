@@ -44,6 +44,12 @@ window#waybar {
   color: rgba(255, 255, 255, 1);
 }
 
+#custom-dnd {
+  padding: 0px;
+  padding-right: 16px;
+  color: @pink;
+}
+
 #language{
   padding: 0px 8px;
 }
@@ -219,5 +225,5 @@ window#waybar {
 
 #custom-power {
   padding: 0px 6px;
-  color: rgba(245, 60, 60, 1);
+  color: @red;
 }

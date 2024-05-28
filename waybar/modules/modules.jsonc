@@ -12,6 +12,8 @@
   "hyprland/workspaces": {
     "active-only": false,
     "format": "{name}",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1"
   },
 
   // Clock
@@ -128,7 +130,21 @@
     "format": "{}",
     "format-en": "🇺🇸",
     "format-de": "🇦🇹" ,
-    "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
+    "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next"
+},
+
+// Do not Disturb Switch
+"custom/dnd": { 
+    "tooltip-format" : "Do not Disturb",
+    "format": "{}{icon}", 
+    // "format-icons": ["", "ﮡ" ], 
+    "format-icons": {
+      "false": "",
+      "true": "ﮡ" }, 
+    "on-click": "dunstctl set-paused toggle", 
+    // "return-type": "string", 
+    "interval" : 1, // every sec
+    "exec" : "dunstctl is-paused"
 },
 
 // global end

@@ -5,6 +5,7 @@
       "tray", 
       "idle_inhibitor",
       "power-profiles-daemon", 
+      "custom/dnd"
     ],
   },
   "group/end-right-module": {
