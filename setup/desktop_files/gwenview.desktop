@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=gwenview
+MimeType=image/png;
+Name=gwenview
+NoDisplay=true
+Type=Application
