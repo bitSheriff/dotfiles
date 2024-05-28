@@ -45,7 +45,7 @@ window#waybar {
 }
 
 #custom-dnd {
-  padding: 0px;
+  padding: 0px 8px 0px 4px;
   padding-right: 16px;
   color: @pink;
 }
@@ -208,7 +208,9 @@ window#waybar {
 }
 
 #power-profiles-daemon {
-  padding-right: 15px;
+  /* padding-right: 15px; */
+  padding: 0px 8px 0px 4px;
+
 }
 
 #power-profiles-daemon.performance {
@@ -226,4 +228,5 @@ window#waybar {
 #custom-power {
   padding: 0px 6px;
   color: @red;
+  opacity: 1.0;
 }
