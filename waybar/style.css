@@ -65,7 +65,7 @@ window#waybar {
 #window {
   color: rgba(255, 255, 255, 1);
   border-radius: 20px;
-  border: 0.19em solid @cyan;
+  border: 0.19em solid @neon-purple;
   background-color: @background;
   transition: all 0.4s ease-out;
 }
@@ -126,7 +126,7 @@ window#waybar {
 }
 
 #pulseaudio {
-  border: 0.19em solid @blue;
+  border: 0.19em solid @neon-pink;
   padding: 0px 8px;
 }
 
@@ -190,7 +190,7 @@ window#waybar {
 }
 
 #systray {
-  border: 0.19em solid @green-darker;
+  border: 0.19em solid @neon-light-blue;
   padding: 0px 4px;
 }
 
