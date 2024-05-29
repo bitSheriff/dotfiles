@@ -1,0 +1,10 @@
+eval "$(starship init zsh)"
+
+if [[ -z "$ZELLIJ" ]]; then
+    zellij
+fi
+
+
+
+eval "$(zoxide init zsh --cmd cd)"
+eval $(thefuck --alias)
