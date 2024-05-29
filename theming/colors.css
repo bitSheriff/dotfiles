@@ -36,6 +36,6 @@
 @define-color sop-strings          #A5FF90;
 @define-color sop-templates        #3AD900;
 @define-color sop-definitions      #FB94FF;
-@define-color sop-invalid          #EC3A37F5;
-@define-color sop-diff-added       #00FF009A;
-@define-color sop-diff-removed     #FF000D81;
+/* @define-color sop-invalid          #EC3A37F5; */
+/* @define-color sop-diff-added       #00FF009A; */
+/* @define-color sop-diff-removed     #FF000D81; */
