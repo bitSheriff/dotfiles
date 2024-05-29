@@ -78,7 +78,7 @@ window#waybar {
 
 #workspaces button.active {
   background-color: @selection;
-  color: @orange;
+  color: @foreground;
   animation-name: blink-workspace;
   animation-duration: 0.5s;
   animation-timing-function: steps(12);
@@ -135,7 +135,7 @@ window#waybar {
 }
 
 #custom-media {
-  border: 0.19em solid @yellow;
+  border: 0.19em solid @cyan;
   min-width: 100px;
 }
 

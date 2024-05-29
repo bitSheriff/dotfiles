@@ -20,3 +20,22 @@
 @define-color neon-light-blue #00b8ff;
 @define-color neon-cyan       #00fff9;
 
+/* Shades of Purple vscode-theme */
+@define-color sop-background       #2D2B55;
+@define-color sop-background-dark  #1E1E3F;
+@define-color sop-foreground       #A599E9;
+@define-color sop-hover-background #4D21FC;
+@define-color sop-contrast         #FAD000;
+@define-color sop-contrast-lite    #FFEE80;
+@define-color sop-contrast-lite-2  #FAEFA5;
+@define-color sop-highlight        #FF7200;
+@define-color sop-comment          #B362FF;
+@define-color sop-constants        #FF628C;
+@define-color sop-keywords         #FF9D00;
+@define-color sop-other            #9EFFFF;
+@define-color sop-strings          #A5FF90;
+@define-color sop-templates        #3AD900;
+@define-color sop-definitions      #FB94FF;
+@define-color sop-invalid          #EC3A37F5;
+@define-color sop-diff-added       #00FF009A;
+@define-color sop-diff-removed     #FF000D81;
