@@ -6,6 +6,7 @@
     "max-length": 40,
     "escape": true,
     "exec": "$HOME/.config/waybar/scripts/mediaplayer.py 2> /dev/null", // Script in resources folder
+    "on-click" : "playerctl play-pause"
   },
 
   // Workspaces
