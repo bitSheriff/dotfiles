@@ -102,6 +102,13 @@ memo(){
     # echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
 }
 
+# quick note to daily note (interactive)
+memo_int(){
+    read memostr
+    echo "\n- **$(date +%H:%M):** " $memostr >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
+    # echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
+}
+
 # quick todo to daily note
 todo(){
     echo "\n- [ ] $@" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
