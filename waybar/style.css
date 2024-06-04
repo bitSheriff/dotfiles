@@ -144,7 +144,7 @@ window#waybar {
 }
 
 #custom-media.custom-vlc {
-  border: 0.19em solid rgba(255, 160, 0, 1);
+  border: 0.19em solid @orange;
 }
 
 #clock {
