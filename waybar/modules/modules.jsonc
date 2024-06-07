@@ -160,15 +160,13 @@
 // Do not Disturb Switch
 "custom/dnd": { 
     "tooltip-format" : "Do not Disturb",
-    "format": "{}{icon}", 
+    "format": "{}", 
     // "format-icons": ["", "ﮡ" ], 
-    "format-icons": {
-      "false": "",
-      "true": "ﮡ" }, 
-    "on-click": "dunstctl set-paused toggle", 
+    "return-type": "json",
+    "on-click": "~/.config/waybar/scripts/dunst.sh toggle", 
     // "return-type": "string", 
     "interval" : 1, // every sec
-    "exec" : "dunstctl is-paused"
+    "exec" : "~/.config/waybar/scripts/dunst.sh status"
 },
 
 // global end
