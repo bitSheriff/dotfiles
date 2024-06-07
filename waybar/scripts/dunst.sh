@@ -4,11 +4,11 @@ PAUSED="dunstctl is-paused"
 TOGGLE="dunstctl set-paused toggle"
 
 if [[ "$1" == "status" ]]; then
-    sleep 1
-    if dunstctl is-paused | grep false ;then
-        echo '{"text": "" }'
+    if dunstctl is-paused | grep false > /dev/null ;then
+        echo '{"text": "🔔" }'
+        # "ﮡ"
     else
-        echo '{"text": "ﮡ" }'
+        echo '{"text": "🔕" }'
     fi
 fi
 if [[ "$1" == "toggle" ]]; then
