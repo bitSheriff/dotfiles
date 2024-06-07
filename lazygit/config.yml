@@ -186,7 +186,7 @@ git:
     pager: ""
 
     # e.g. 'difft --color=always'
-    externalDiffCommand: ""
+    externalDiffCommand: "meld"
 
   # Config relating to committing
   commit:

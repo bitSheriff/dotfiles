@@ -140,3 +140,8 @@ qf()
     touch "Inbox/${formatted_file_name}"
     nvim "Inbox/${formatted_file_name}"        
 }
+
+# backup: clone a file and add ".bk" at the end
+bk() {
+    cp "$1" "$1.bk"
+}
