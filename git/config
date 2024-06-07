@@ -4,6 +4,8 @@
   name = bitSheriff
   email = bitSheriff@protonmail.com
 
+[core]
+  editor = nvim
 
 [advice]
   addIgnoredFile = false
@@ -11,10 +13,12 @@
 [pull]
   rebase = true
 
-
 [credential "https://github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/usr/bin/gh auth git-credential
+  helper = !/usr/bin/gh auth git-credential
+
+  [commit]
+	verbose = false
