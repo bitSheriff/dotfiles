@@ -38,7 +38,7 @@ window#waybar {
   background-color: @background;
 }
 
-#idle_inhibitor {
+#custom-hypridle {
   padding: 0px;
   padding-right: 16px;
   color: rgba(255, 255, 255, 1);

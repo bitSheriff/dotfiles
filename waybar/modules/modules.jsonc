@@ -131,6 +131,25 @@
     "spacing": 7
 },
 
+// Hypridle inhibitor
+"custom/hypridle": {
+    "format": "{}{icon}", 
+    "format-icons": {
+        "activated": "",
+        "deactivated": ""
+    },
+    "return-type": "json",
+    // "escape": true,
+    "exec-on-event": true,
+    "return-type": "json",
+    "interval": 1,
+    "exec": "~/.config/hypr/scripts/hypridle.sh status",
+    "on-click": "~/.config/hypr/scripts/hypridle.sh toggle",
+    "icon-size": 18,
+    "spacing": 7
+},
+
+
 "hyprland/language": {
     "format": "{}",
     "format-en": "🇺🇸",
