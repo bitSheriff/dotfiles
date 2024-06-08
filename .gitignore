@@ -5,23 +5,16 @@
 # include just special files & folders
 !/.gitignore
 
-!/kitty/*
-!/nvim/*
-!/ranger/*
-!/git/*                  # additional git configurations
-!/nvim
-!/wallpapers
-!/hypr/*
-!/shell/*
-
-# tmux
-!/tmux/tmux.conf
-!/tmux/alias             # alias file
-!/tmux/README.md
-/tmux/plugins/**        # location of the plugins which get downloaded
-!/tmux/plugins/tpm      # location of the plugin manager which is needed to download these plugins
-/tmux/plugins/tmux_cpu/
-lazygit/state.yml
-lazygit/state.yml
 !/espanso/*
+!/git/*                  # additional git configurations
+!/hypr/*
+!/kitty/*
+!/nvim
+!/nvim/*
+!/shell/*
+!/wallpapers
+!/waybar/*
+!/wofi/*
+!/yazi/*
 lazygit/config.yml
+lazygit/state.yml
