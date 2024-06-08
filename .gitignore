@@ -11,6 +11,8 @@
 !/git/*                  # additional git configurations
 !/nvim
 !/wallpapers
+!/hypr/*
+!/shell/*
 
 # tmux
 !/tmux/tmux.conf
