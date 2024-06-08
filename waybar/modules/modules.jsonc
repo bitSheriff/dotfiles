@@ -5,7 +5,7 @@
     "return-type": "json",
     "max-length": 40,
     "escape": true,
-    "exec": "$HOME/.config/waybar/scripts/mediaplayer.py 2> /dev/null", // Script in resources folder
+    "exec": "~/.config/waybar/scripts/mediaplayer.py 2> /dev/null", // Script in resources folder
     "on-click" : "playerctl play-pause",
     "on-scroll-up": "playerctl next",
     "on-scroll-down": "playerctl previous",
@@ -79,7 +79,8 @@
       "car": "",
       "default": ["", "", ""],
     },
-    "on-click": "pavucontrol",
+    "on-click-right": "pavucontrol",
+    "on-click": "~/.config/waybar/scripts/audio_changer.py",
   },
 
   // Brightness Information
