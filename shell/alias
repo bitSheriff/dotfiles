@@ -145,3 +145,8 @@ qf()
 bk() {
     cp "$1" "$1.bk"
 }
+
+# print md5 hashsum for string
+md5(){
+    echo -n $1 | md5sum        
+}
