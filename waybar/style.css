@@ -220,7 +220,7 @@ window#waybar {
 }
 
 #power-profiles-daemon.balanced {
-  color: @yellow;
+  color: @foreground;
 }
 
 #power-profiles-daemon.power-saver {
