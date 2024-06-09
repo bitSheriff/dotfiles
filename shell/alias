@@ -99,15 +99,7 @@ daily-gw()
 
 # quick note to daily note
 memo(){
-    echo "\n- **$(date +%H:%M):** $@" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
-    # echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
-}
-
-# quick note to daily note (interactive)
-memo_int(){
-    read memostr
-    echo "\n- **$(date +%H:%M):** " $memostr >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
-    # echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
+    ./memo.sh $@
 }
 
 # quick todo to daily note
