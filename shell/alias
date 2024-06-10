@@ -144,3 +144,10 @@ bk() {
 md5(){
     echo -n $1 | md5sum        
 }
+
+# start mpv with the wanted file and be able to kill the terminal instance
+mpv_disown()
+{
+    mpv "$1" &
+    disown
+}
