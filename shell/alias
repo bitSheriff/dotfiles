@@ -21,6 +21,7 @@ alias exat3="exa -a --long --header --icons --tree --level=3"
 alias gw="ghostwriter"
 alias clock="peaclock --config-dir ~/.config/peaclock" # cli-clock
 alias cp="cp -r" # always copy recursive
+alias py="python3"
 
 # open file with standard program
 alias open="xdg-open"
