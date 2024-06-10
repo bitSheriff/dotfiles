@@ -34,6 +34,8 @@ alias cat="bat"
 alias go2conf="cd ~/.config"
 alias go2code="cd ~/code"
 alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
 
 ## general linux commands simplified
 # param alias
