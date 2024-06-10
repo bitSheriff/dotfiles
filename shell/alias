@@ -22,6 +22,7 @@ alias gw="ghostwriter"
 alias clock="peaclock --config-dir ~/.config/peaclock" # cli-clock
 alias cp="cp -r" # always copy recursive
 alias py="python3"
+alias term="kitty . &; disown" # open a new terminal at the same location
 
 # open file with standard program
 alias open="xdg-open"
