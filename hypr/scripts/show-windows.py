@@ -19,7 +19,7 @@ def resolveIconPath(iconName):
         return ""
 
 def mapWindow(w):
-    return "%s"%("%s (%s_%s)"%(w["title"], w["address"], w["workspace"]["id"]))
+    return "%s"%("{%s} %s (%s_%s)"%(w["class"], w["title"], w["address"], w["workspace"]["id"]))
 
 windows = json.loads(os.popen("hyprctl -j clients").read())
 filtered_windows = list(filter(lambda w: w["workspace"]["id"] != -1, windows))
