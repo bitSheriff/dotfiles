@@ -102,7 +102,7 @@ daily-gw()
 
 # quick note to daily note
 memo(){
-    ./memo.sh $@
+    ~/.config/shell/memo.sh $@
 }
 
 # quick todo to daily note
