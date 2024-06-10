@@ -9,8 +9,11 @@
 
 window {
   margin: 0px;
-  border: 1px solid #bd93f9;
-  background-color: $background;
+  border: 3px solid #bd93f9;   
+  border-radius: 10px;
+  background-color: @background;
+  color: @foreground;
+  /* background-color: @background; */
 }
 
 #input {
