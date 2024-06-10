@@ -488,6 +488,10 @@
    urgency = normal
    frame_color = "#00b8ff"
 
+[signal]
+   appname = ticktick
+   urgency = normal
+   frame_color = "#00fff9"
 #
 #[stack-volumes]
 #    appname = "some_volume_notifiers"
