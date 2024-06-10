@@ -32,7 +32,7 @@
     #geometry = "300x5-100+100"
     width = 300
     height = 100
-    offset = +5x+50
+    offset = +5x+10
     origin = top-right
 
     # Turn on the progess bar
@@ -216,7 +216,7 @@
     dmenu = /usr/bin/dmenu -p dunst:
 
     # Browser for opening urls in context menu.
-    browser = /usr/bin/brave -new-tab
+    browser = /usr/bin/firefox -new-tab
 
     # Always run rule-defined scripts, even if the notification is suppressed
     always_run_script = true
@@ -337,7 +337,7 @@
     # Otherwise the "#" and following would be interpreted as a comment.
     background = "#282a36"
     foreground = "#f8f8f2"
-    frame_color = "#ff79c6"
+    frame_color = "#bd93f9"
     timeout = 10
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
@@ -464,11 +464,30 @@
 #    appname = Pidgin
 #    summary = *says*
 #    urgency = critical
-#
+
+
 [spotify]
-   appname = spotify
-   # summary = *spotify*
+   appname = Spotify
+   # summary = spotify
    urgency = normal
+   frame_color = "#50fa7b"
+
+
+[Matrix]
+   appname = Element
+   urgency = normal
+   frame_color = "#206431"
+
+[telegram]
+   appname = Telegram
+   urgency = normal
+   frame_color = "#133e7c"
+
+[signal]
+   appname = Signal
+   urgency = normal
+   frame_color = "#00b8ff"
+
 #
 #[stack-volumes]
 #    appname = "some_volume_notifiers"
