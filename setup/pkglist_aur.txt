@@ -1,5 +1,4 @@
 1password
-bemoji
 cava
 clipman
 drawio-desktop
@@ -16,7 +15,6 @@ mimeo
 optimus-manager
 peaclock
 peazip-qt-bin
-spotify-tui
 superfile
 termius
 ticktick
