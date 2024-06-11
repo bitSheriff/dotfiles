@@ -25,30 +25,36 @@ install_from_backup(){
 create_symlinks(){
 
 	# Hyprland specific packages
-    ln -sf ~/.config/dunst/ ../dunst/
-    ln -sf ~/.config/fuzzel ../fuzzel
-    ln -sf ~/.config/hypr ../hypr
-    ln -sf ~/.config/kitty ../kitty
-    ln -sf ~/.config/peaclock ../peaclock
-    ln -sf ~/.config/qt6ct ../qt6ct
-    ln -sf ~/.config/shell ../shell
-    ln -sf ~/.config/theming ../theming
-    ln -sf ~/.config/wallpapers ../wallpapers
-    ln -sf ~/.config/waybar ../waybar
-    ln -sf ~/.config/waypaper ../waypaper
-    ln -sf ~/.config/wlogout ../wlogout
-    ln -sf ~/.config/wofi ../wofi
+	ln -sf $(pwd)/../dunst/ ~/.config/dunst
+	ln -sf $(pwd)/../fuzzel/ ~/.config/fuzzel
+	ln -sf $(pwd)/../hypr/ ~/.config/hypr
+	ln -sf $(pwd)/../kitty/ ~/.config/kitty
+	ln -sf $(pwd)/../peaclock/ ~/.config/peaclock
+	ln -sf $(pwd)/../qt6ct/ ~/.config/qt6ct
+	ln -sf $(pwd)/../shell/ ~/.config/shell
+	ln -sf $(pwd)/../theming/ ~/.config/theming
+	ln -sf $(pwd)/../wallpapers/ ~/.config/wallpapers
+	ln -sf $(pwd)/../waybar/ ~/.config/waybar
+	ln -sf $(pwd)/../waypaper/ ~/.config/waypaper
+	ln -sf $(pwd)/../wlogout/ ~/.config/wlogout
+	ln -sf $(pwd)/../wofi/ ~/.config/wofi
 
-    # Development Environment
-    ln -sf ~/.config/clang ../clang
-    ln -sf ~/.config/git ../git
-    ln -sf ~/.config/lazygit ../lazygit
-    ln -sf ~/.config/nvim ../nvim
-    ln -sf ~/.config/yazi ../yazi
-    ln -sf ~/.config/zellij ../zellij
+	# Development Enviroment
+	ln -sf $(pwd)/../clang/ ~/.config/clang
+	ln -sf $(pwd)/../git/ ~/.config/git
+	ln -sf $(pwd)/../lazygit/ ~/.config/lazygit
+	ln -sf $(pwd)/../nvim/ ~/.config/nvim
+	ln -sf $(pwd)/../yazi/ ~/.config/yazi
+	ln -sf $(pwd)/../zellij/ ~/.config/zellij
 
-    # Additional ones for comfort
-    ln -sf ~/Pictures/wallpapers ../wallpapers
+
+	# Additional ones for comfort
+	ln -sf $(pwd)/../wallpapers ~/Pictures/wallpapers
+
+}
+
+remove_symlinks() {
+    find ~/.config -type l -print0 | xargs -0 rm -v
 
 }
 
@@ -75,6 +81,10 @@ fi;
 
 if [[ "$ARG_MODE" = 'links' ]]; then
 	DO_SYMLINKS=1
+fi;
+
+if [[ "$ARG_MODE" = 'unlink' ]]; then
+	remove_symlinks
 fi;
 
 ######### ACTION ##########
