@@ -98,5 +98,5 @@ if [[ "$INSTALL_BACKUP" = 1 ]]; then
 fi;
 
 if [[ "$DO_SYMLINKS" = 1 ]]; then
-	create_symlinks
+	# create_symlinks # work in progress
 fi;
