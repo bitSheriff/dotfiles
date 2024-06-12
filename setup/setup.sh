@@ -74,6 +74,19 @@ remove_symlinks() {
 
 }
 
+install_hyprland(){
+
+	echo "[Hyprland] Install Pacman Packages"
+	sudo pacman $PACMAN_FLAGS -S - < pkglist_hyprland.txt
+
+	echo "[Hyprland] Install AUR Packages"
+	yay $YAY_FLAGS -S - < pkglist_hyprland_aur.txt
+}
+
+selective_installation(){
+	confirm "Would you like to install Hyprland & Co?" && install_hyprland
+}
+
 if [[ ${#ARGV[@]} = 0 ]]; then
 	echo "No arguements given: install the packages and link them"
 	INSTALL_BACKUP=1
@@ -105,7 +118,7 @@ fi;
 
 ######### ACTION ##########
 
-confirm "Would you like?" && echo "You said yes"
+confirm "Would you like a selective installation process?" && selective_installation
 
 if [[ "$DO_BACKUP" = 1 ]]; then
 	do_backup

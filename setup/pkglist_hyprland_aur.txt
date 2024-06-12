@@ -1,0 +1,8 @@
+cava
+clipman
+hyprpicker
+jome-git
+peaclock
+wayland-logout
+webapp-manager
+wlogout
