@@ -21,6 +21,7 @@ sddm
 slurp
 spotify-launcher
 swappy
+ttf-jetbrains-mono-nerd
 waybar
 wireplumber
 wl-clipboard
