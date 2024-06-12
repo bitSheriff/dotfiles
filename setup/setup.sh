@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PACMAN_FLAGS="-S --needed"
-YAY_FLAGS="-S --needed"
+PACMAN_FLAGS=" --needed -S "
+YAY_FLAGS=" --needed -S "
 
 # get the arguemnts
 ARGV=("$@")
@@ -18,8 +18,11 @@ do_backup(){
 }
 
 install_from_backup(){
-	pacman "$PACMAN_FLAGS" - < pkglist.txt
-	yay "$YAY_FLAGS" - < pkglist_aur.txt
+	echo "Install Pacman Packages"
+	sudo pacman $PACMAN_FLAGS - < pkglist.txt
+
+	echo "Install AUR Packages"
+	yay $YAY_FLAGS - < pkglist_aur.txt
 }
 
 create_symlinks(){
