@@ -3,6 +3,7 @@ clipman
 hyprpicker
 jome-git
 peaclock
+tokyonight-gtk-theme-git
 wayland-logout
 webapp-manager
 wlogout
