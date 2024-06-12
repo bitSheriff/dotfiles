@@ -88,6 +88,9 @@ alias mkdir="mkdir -p"
 # create new directory and move into it
 mkdir!() { mkdir -p "$1" && cd "$1"; }
 
+# start a process and disown it
+disown!() { exec "$1" & ; disown }
+
 # device specific commands
 alias doUpdate=". ~/.config/shell/scripts/doUpdate.sh"
 
