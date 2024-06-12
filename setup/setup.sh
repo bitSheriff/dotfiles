@@ -11,6 +11,19 @@ DO_BACKUP=0
 INSTALL_BACKUP=0
 DO_SYMLINKS=0
 
+confirm() {
+    # call with a prompt string or use a default
+    read -r -p "$1 - [y/n]" response
+    case "$response" in
+        [yY][eE][sS]|[yY]) 
+            true
+            ;;
+        *)
+            false
+            ;;
+    esac
+}
+
 do_backup(){
 	echo "Backing up installed packages"
 	pacman -Qqen > pkglist.txt
@@ -91,6 +104,8 @@ if [[ "$ARG_MODE" = 'unlink' ]]; then
 fi;
 
 ######### ACTION ##########
+
+confirm "Would you like?" && echo "You said yes"
 
 if [[ "$DO_BACKUP" = 1 ]]; then
 	do_backup
