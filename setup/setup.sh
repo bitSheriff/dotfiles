@@ -111,9 +111,9 @@ selective_installation(){
 }
 
 if [[ ${#ARGV[@]} = 0 ]]; then
-	echo "No arguements given: install the packages and link them"
-	INSTALL_BACKUP=1
-	DO_SYMLINKS=1
+	echo "No arguements given: start selective installation"
+	selective_installation
+	exit 0
 fi;
 
 if [[ "$ARG_MODE" = 'all' ]]; then
