@@ -1,0 +1,4 @@
+1password
+localsend-bin
+superfile
+ticktick

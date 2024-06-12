@@ -92,10 +92,21 @@ install_dev_tools(){
 	yay $YAY_FLAGS -S - < pkglist_dev_aur.txt
 }
 
+install_office_tools(){
+
+	echo "[Office] Install Pacman Packages"
+	sudo pacman $PACMAN_FLAGS -S - < pkglist_office.txt
+
+	echo "[Office] Install AUR Packages"
+	yay $YAY_FLAGS -S - < pkglist_office_aur.txt
+}
+
 selective_installation(){
 	confirm "Would you like to install Hyprland & Co?" && install_hyprland
 
 	confirm "Would you like to install the Development Tools?" && install_dev_tools
+
+	confirm "Would you like to install the Office Tools?" && install_office_tools
 
 }
 
