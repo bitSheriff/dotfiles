@@ -83,8 +83,20 @@ install_hyprland(){
 	yay $YAY_FLAGS -S - < pkglist_hyprland_aur.txt
 }
 
+install_dev_tools(){
+
+	echo "[Development] Install Pacman Packages"
+	sudo pacman $PACMAN_FLAGS -S - < pkglist_dev.txt
+
+	echo "[Development] Install AUR Packages"
+	yay $YAY_FLAGS -S - < pkglist_dev_aur.txt
+}
+
 selective_installation(){
 	confirm "Would you like to install Hyprland & Co?" && install_hyprland
+
+	confirm "Would you like to install the Development Tools?" && install_dev_tools
+
 }
 
 if [[ ${#ARGV[@]} = 0 ]]; then
