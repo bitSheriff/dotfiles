@@ -237,6 +237,7 @@ install_uni_tools(){
 install_latex(){
 
     print_h1 "LaTeX"
+    print_note "LaTeX installation needs a lot of space"
     install_pkgfiles "latex"
 }
 
