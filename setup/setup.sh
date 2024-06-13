@@ -27,7 +27,7 @@ DO_GIT=0
 
 confirm() {
     # call with a prompt string or use a default
-    read -r -p "$1 - [y/n] " response
+    read -r -p "$1 - [y/N] " response
     case "$response" in
         [yY][eE][sS]|[yY]) 
             true
@@ -112,7 +112,11 @@ print_h2(){
 }
 
 print_note(){
-    echo "_____ $1 _____"
+    echo ":::: $1 ::::"
+}
+
+print_debug(){
+    echo "?!?! $1 ?!?!"
 }
 
 
@@ -132,30 +136,35 @@ setup_shell(){
 
 setup_repositories(){
 
+
+    print_h1 "Setup Repositories"
+
     file="$(pwd)/repositories.list"
     target_dir="$HOME/code"
 
+
     # Create the directory if it doesn't exist
     if [ ! -d "$target_dir" ]; then
+        print_note "create code folder: $target_dir"
         mkdir -p "$target_dir"
+    else
+        print_note "code folder does exist"
     fi;
-
-    # Change to the target directory
-    cd "$target_dir"
 
     # Loop through each line in the file
     while IFS= read -r url; do
 
         # Skip empty lines
         if [ -z "$url" ]; then
+            echo "empty: $url"
             continue
         fi
 
         # Extract repository name from URL
         repo_name=$(basename -s .git "$url")
-        
+
         # Check if the repository directory already exists
-        if [ -d "$repo_name" ]; then
+        if [ -d "$target_dir/$repo_name" ]; then
             echo "Skipping $repo_name, already exists."
             continue
         fi
@@ -163,8 +172,8 @@ setup_repositories(){
         echo "Cloning $repo_name"
         
         # Clone the repository
-        git clone "$url"
-    done < "$file"
+        git clone "$url" "$target_dir/$repo_name"
+    done < $file
 }
 
 install_pkgfiles(){
