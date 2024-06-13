@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PACMAN_FLAGS=" --needed "
-YAY_FLAGS=" --needed --answerdiff None --answerclean None "
+YAY_FLAGS=" --needed --answerdiff None --answerclean None --noconfirm"
 
 DEBUG=0
 
