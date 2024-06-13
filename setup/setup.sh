@@ -3,11 +3,12 @@
 PACMAN_FLAGS=" --needed "
 YAY_FLAGS=" --needed --answerdiff None --answerclean None "
 
+DEBUG=0
+
 # get the arguemnts
 ARGV=("$@")
 ARG_MODE=("${ARGV[0]}")
 
-DO_SYMLINKS=0
 
 # Flags for selective installation
 DO_DEV=0
@@ -20,6 +21,7 @@ DO_OPTIONALS=0
 # Flags for additional installations / setups
 DO_ZSH=0
 DO_GIT=0
+DO_SYMLINKS=0
 
 
 
@@ -69,7 +71,6 @@ yay_install_file(){
 }
 
 yay_install_single(){
-    print_debug $1
     yay $YAY_FLAGS -S "$1"
 }
 
@@ -127,7 +128,10 @@ print_note(){
 }
 
 print_debug(){
-    echo "?!?! $1 ?!?!"
+
+    if [["$DEBUG" = 1]]; then
+        echo "?!?! $1 ?!?!"
+    fi;
 }
 
 
@@ -256,7 +260,11 @@ install_optionals(){
 
     confirm "Install KDE konsole?" && pacman_install_single "konsole"
 
-    confirm "Install Termius (SSH Client)" && yay_install_single "termius"
+    confirm "Install Termius (SSH Client)?" && yay_install_single "termius"
+
+    confirm "Install Mint WebApp Manager?" && yay_install_single "webapp-manager"
+
+    confirm "Install fake hacker tool 'hollywood'?" && yay_install_single "hollywood"
 
 }
 
