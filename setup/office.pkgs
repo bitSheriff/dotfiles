@@ -1,7 +1,6 @@
 calibre                     # ebook manager
 dolphin                     # file manager
 dolphin-plugins             # file manager plugins
-fprintd
 ghostwriter                 # markdown editor
 gwenview                    # image viewer
 haruna                      # video player
@@ -10,28 +9,5 @@ pdfgrep                     # search through pdf files in terminal
 poppler-glib                # pdf rendering library
 signal-desktop              # secure messaging
 telegram-desktop            # (not so) secure messaging
-texinfo                     # LaTex Stuff
-texlive-basic
-texlive-bibtexextra
-texlive-binextra
-texlive-context
-texlive-fontsextra
-texlive-fontsrecommended
-texlive-fontutils
-texlive-formatsextra
-texlive-games
-texlive-humanities
-texlive-latex
-texlive-latexextra
-texlive-latexrecommended
-texlive-luatex
-texlive-mathscience
-texlive-metapost
-texlive-music
-texlive-pictures
-texlive-plaingeneric
-texlive-pstricks
-texlive-publishers
-texlive-xetex
 veracrypt                   # encryption software   
 

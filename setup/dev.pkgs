@@ -6,6 +6,7 @@ cloc                        # 'count lines of code'
 cool-retro-term             # just what the name says
 cunit
 doxygen                     # documentation engine
+element-desktop             # Matrix Client
 eza
 fastfetch                   # neofetch alternative
 filezilla                   # ftp client

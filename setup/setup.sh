@@ -14,6 +14,7 @@ DO_DEV=0
 DO_OFFICE=0
 DO_UNI=0
 DO_HYPR=0
+DO_LATEX=0
 
 # Flags for additional installations / setups
 DO_ZSH=0
@@ -232,6 +233,14 @@ install_uni_tools(){
     print_h1 "University Tools"
     install_pkgfiles "uni"
 }
+
+install_latex(){
+
+    print_h1 "LaTeX"
+    install_pkgfiles "latex"
+}
+
+
 # ========================================
 # Flow Start & Arguemnt Handling
 # ========================================
@@ -267,6 +276,8 @@ confirm "Would you like to install the Office Tools?" && DO_OFFICE=1
 
 confirm "Would you like to install the University Tools?" && DO_UNI=1
 
+confirm "Would you like to install the LaTex?" && DO_LATEX=1
+
 confirm "Would you like to checkout the provided repositories?" && DO_GIT=1
 
 
@@ -288,6 +299,10 @@ fi;
 
 if [[ "$DO_UNI" = 1 ]]; then
     install_uni_tools
+fi;
+
+if [[ "$DO_LATEX" = 1 ]]; then
+    install_latex
 fi;
 
 if [[ "$DO_ZSH" = 1 ]]; then
