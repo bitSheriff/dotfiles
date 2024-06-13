@@ -19,6 +19,7 @@ lazygit
 meld
 mesa-utils
 neovim
+npm
 openssh
 pacman-contrib
 pandoc-cli
