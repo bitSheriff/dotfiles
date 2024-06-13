@@ -13,7 +13,7 @@ DO_SYMLINKS=0
 
 confirm() {
     # call with a prompt string or use a default
-    read -r -p "$1 - [y/n]" response
+    read -r -p "$1 - [y/n] " response
     case "$response" in
         [yY][eE][sS]|[yY]) 
             true
