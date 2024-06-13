@@ -96,30 +96,51 @@ remove_symlinks() {
 
 }
 
+print_h1(){
+    echo -e "\n========== [$1] ==========\n"
+}
+
+print_h2(){
+    echo -e "\n---------- [$1] ----------\n"
+}
+
+print_note(){
+    echo "_____ $1 _____"
+}
+
+
+
 setup_shell(){
 
-	# set zsh as default shell
-	chsh -s /bin/zsh
+    print_h2 "Shell"
 
+    # check if the default shell is already zsh
+    if [[ "$SHELL" == "/bin/zsh" ]]; then
+        print_note "Shell is already zsh"
+    else
+        # set zsh as default shell
+        chsh -s /bin/zsh
+    fi;
 }
 
 install_pkgfiles(){
 
-    # check if the file in the first arguemnt exists
+    # check if the pacman file in the first arguemnt exists
     if [[ -f "$1.pkgs" ]]; then
-        echo "Installing packages from $1"
+        print_h2 "Installing packages from $1"
         pacman_install "$1.pkgs"
     fi;
 
+    # check if the aur file in the first arguemnt exists
     if [[ -f "$1.aur_pkgs" ]]; then
-        echo "Installing packages from $1"
+        print_h2 "Installing AUR packages from $1"
         yay_install "$1.aur_pkgs"
     fi;
 }
 
 install_hyprland(){
 
-    echo "[Hyprland] Install Pacman & AUR Packages"
+    print_h1 "Hyprland"
     install_pkgfiles "hyprland"
 
 	DO_ZSH=1
@@ -127,28 +148,40 @@ install_hyprland(){
 
 install_dev_tools(){
 
+    print_h1 "Development Tools"
     install_pkgfiles "dev"
     DO_ZSH=1
+
+    # check if the .gitconfig already has a include directive
+    if grep -q "\[include\]" ~/.gitconfig; then
+        print_note "Gitconfig already has an include directive"
+    else
+        print_note "Adding include directive to gitconfig"
+        echo -e "[include]\n\tpath = ~/.config/git/gitconfig \n\tpath = ~/.config/git/alias" >> ~/.gitconfig
+    fi;
+
 }
 
 install_office_tools(){
 
+    print_h1 "Office Tools"
     install_pkgfiles "office"
 }
 
 # ========================================
-# Flow Start
+# Flow Start & Arguemnt Handling
 # ========================================
 
 if [[ ${#ARGV[@]} = 0 ]]; then
-	echo "No arguements given: start selective installation"
+    print_h1 "Welcome to my setup script"
+    echo "the interactive setup will start now"
+    echo -e "please stand by ...\n\n"
 fi;
 
 if [[ "$ARG_MODE" = 'backup' ]]; then
     do_backup
     exit 0
 fi;
-
 
 if [[ "$ARG_MODE" = 'links' ]]; then
 	DO_SYMLINKS=1
@@ -167,7 +200,6 @@ confirm "Would you like to install Hyprland & Co?" && DO_HYPR=1
 confirm "Would you like to install the Development Tools?" && DO_DEV=1
 
 confirm "Would you like to install the Office Tools?" && DO_OFFICE=1
-
 
 
 # ========================================
@@ -195,6 +227,6 @@ if [[ "$DO_BACKUP" = 1 ]]; then
 fi;
 
 if [[ "$DO_SYMLINKS" = 1 ]]; then
-	echo "[WIP] nothing will happen"
+	print_note "[WIP] nothing will happen"
 	# create_symlinks # work in progress
 fi;
