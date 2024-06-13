@@ -212,6 +212,14 @@ install_pkgfiles(){
     fi;
 }
 
+install_base(){
+
+    print_h1 "Base"
+    install_pkgfiles "base"
+
+	DO_ZSH=1
+}
+
 install_hyprland(){
 
     print_h1 "Hyprland"
@@ -266,6 +274,8 @@ install_optionals(){
 
     confirm "Install fake hacker tool 'hollywood'?" && yay_install_single "hollywood"
 
+    confirm "Install KDEConnect?" && pacman_install_single "kdeconnect"
+
 }
 
 
@@ -313,6 +323,9 @@ confirm "[INTERACTIVE] Would you like to install the opional packages?" && DO_OP
 # ========================================
 # Actual Installation & Setup
 # ========================================
+
+# base is mandatory
+install_base
 
 if [[ "$DO_HYPR" = 1 ]]; then
     install_hyprland
