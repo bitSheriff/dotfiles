@@ -62,6 +62,11 @@ yay_install(){
     grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | yay $YAY_FLAGS -S -
 }
 
+flatpak_install(){
+    # remove comments and spaces at the end of the line
+    grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | flatpak install -
+}
+
 create_symlinks(){
 
 	# Hyprland specific packages
@@ -174,6 +179,12 @@ install_pkgfiles(){
     if [[ -f "$1.aur_pkgs" ]]; then
         print_h2 "Installing AUR packages from $1"
         yay_install "$1.aur_pkgs"
+    fi;
+
+    # check if the flatpak file in the first arguemnt exists
+    if [[ -f "$1.flatpak_pkgs" ]]; then
+        print_h2 "Installing flatpak packages from $1"
+        flatpak_install "$1.flatpak_pkgs"
     fi;
 }
 
