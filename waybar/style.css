@@ -40,6 +40,7 @@ window#waybar {
   color: @foreground;
 }
 
+#idle_inhibitor,
 #custom-hypridle {
   padding: 0px;
   padding-right: 16px;

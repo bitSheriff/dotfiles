@@ -3,7 +3,7 @@
     "orientation": "horizontal",
     "modules": [
       "tray", 
-      "custom/hypridle",
+      "idle_inhibitor",
       "power-profiles-daemon", 
       "custom/dnd"
     ],
