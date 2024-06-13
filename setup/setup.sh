@@ -64,7 +64,7 @@ yay_install(){
 
 flatpak_install(){
     # remove comments and spaces at the end of the line
-    grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | flatpak install -
+    grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | xargs flatpak install -
 }
 
 create_symlinks(){
