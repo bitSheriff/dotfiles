@@ -43,21 +43,21 @@ confirm() {
 }
 
 do_backup(){
-	echo "Backing up installed packages"
-	pacman -Qqen > pkglist.txt
-	pacman -Qqem > pkglist_aur.txt
+    echo "Backing up installed packages"
+    pacman -Qqen > pkglist.txt
+    pacman -Qqem > pkglist_aur.txt
 }
 
 install_from_backup(){
-	echo "Install Pacman Packages"
-	sudo pacman $PACMAN_FLAGS -S - < pkglist.txt
+    echo "Install Pacman Packages"
+    sudo pacman $PACMAN_FLAGS -S - < pkglist.txt
 
-	echo "Install AUR Packages"
-	yay $YAY_FLAGS -S - < pkglist_aur.txt
+    echo "Install AUR Packages"
+    yay $YAY_FLAGS -S - < pkglist_aur.txt
 }
 
 pacman_install_file(){
-	# remove comments and spaces at the end of the line
+    # remove comments and spaces at the end of the line
     grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | sudo pacman $PACMAN_FLAGS -S -
 }
 
@@ -81,32 +81,32 @@ flatpak_install(){
 
 create_symlinks(){
 
-	# Hyprland specific packages
-	ln -sf $(pwd)/../dunst/ ~/.config/dunst
-	ln -sf $(pwd)/../fuzzel/ ~/.config/fuzzel
-	ln -sf $(pwd)/../hypr/ ~/.config/hypr
-	ln -sf $(pwd)/../kitty/ ~/.config/kitty
-	ln -sf $(pwd)/../peaclock/ ~/.config/peaclock
-	ln -sf $(pwd)/../qt6ct/ ~/.config/qt6ct
-	ln -sf $(pwd)/../shell/ ~/.config/shell
-	ln -sf $(pwd)/../theming/ ~/.config/theming
-	ln -sf $(pwd)/../wallpapers/ ~/.config/wallpapers
-	ln -sf $(pwd)/../waybar/ ~/.config/waybar
-	ln -sf $(pwd)/../waypaper/ ~/.config/waypaper
-	ln -sf $(pwd)/../wlogout/ ~/.config/wlogout
-	ln -sf $(pwd)/../wofi/ ~/.config/wofi
+    # Hyprland specific packages
+    ln -sf $(pwd)/../dunst/ ~/.config/dunst
+    ln -sf $(pwd)/../fuzzel/ ~/.config/fuzzel
+    ln -sf $(pwd)/../hypr/ ~/.config/hypr
+    ln -sf $(pwd)/../kitty/ ~/.config/kitty
+    ln -sf $(pwd)/../peaclock/ ~/.config/peaclock
+    ln -sf $(pwd)/../qt6ct/ ~/.config/qt6ct
+    ln -sf $(pwd)/../shell/ ~/.config/shell
+    ln -sf $(pwd)/../theming/ ~/.config/theming
+    ln -sf $(pwd)/../wallpapers/ ~/.config/wallpapers
+    ln -sf $(pwd)/../waybar/ ~/.config/waybar
+    ln -sf $(pwd)/../waypaper/ ~/.config/waypaper
+    ln -sf $(pwd)/../wlogout/ ~/.config/wlogout
+    ln -sf $(pwd)/../wofi/ ~/.config/wofi
 
-	# Development Enviroment
-	ln -sf $(pwd)/../clang/ ~/.config/clang
-	ln -sf $(pwd)/../git/ ~/.config/git
-	ln -sf $(pwd)/../lazygit/ ~/.config/lazygit
-	ln -sf $(pwd)/../nvim/ ~/.config/nvim
-	ln -sf $(pwd)/../yazi/ ~/.config/yazi
-	ln -sf $(pwd)/../zellij/ ~/.config/zellij
+    # Development Enviroment
+    ln -sf $(pwd)/../clang/ ~/.config/clang
+    ln -sf $(pwd)/../git/ ~/.config/git
+    ln -sf $(pwd)/../lazygit/ ~/.config/lazygit
+    ln -sf $(pwd)/../nvim/ ~/.config/nvim
+    ln -sf $(pwd)/../yazi/ ~/.config/yazi
+    ln -sf $(pwd)/../zellij/ ~/.config/zellij
 
 
-	# Additional ones for comfort
-	ln -sf $(pwd)/../wallpapers ~/Pictures/wallpapers
+    # Additional ones for comfort
+    ln -sf $(pwd)/../wallpapers ~/Pictures/wallpapers
 
 }
 
@@ -216,8 +216,6 @@ install_base(){
 
     print_h1 "Base"
     install_pkgfiles "base"
-
-	DO_ZSH=1
 }
 
 install_hyprland(){
@@ -225,7 +223,7 @@ install_hyprland(){
     print_h1 "Hyprland"
     install_pkgfiles "hyprland"
 
-	DO_ZSH=1
+    DO_ZSH=1
 }
 
 install_dev_tools(){
@@ -295,11 +293,11 @@ if [[ "$ARG_MODE" = 'backup' ]]; then
 fi;
 
 if [[ "$ARG_MODE" = 'links' ]]; then
-	DO_SYMLINKS=1
+    DO_SYMLINKS=1
 fi;
 
 if [[ "$ARG_MODE" = 'unlink' ]]; then
-	remove_symlinks
+    remove_symlinks
 fi;
 
 # ========================================
@@ -360,10 +358,10 @@ if [[ "$DO_GIT" = 1 ]]; then
 fi;
 
 if [[ "$DO_BACKUP" = 1 ]]; then
-	do_backup
+    do_backup
 fi;
 
 if [[ "$DO_SYMLINKS" = 1 ]]; then
-	print_note "[WIP] nothing will happen"
-	# create_symlinks # work in progress
+    print_note "[WIP] nothing will happen"
+    # create_symlinks # work in progress
 fi;
