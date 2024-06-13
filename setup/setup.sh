@@ -103,19 +103,19 @@ install_hyprland(){
 install_dev_tools(){
 
 	echo "[Development] Install Pacman Packages"
-	sudo pacman $PACMAN_FLAGS -S - < pkglist_dev.txt
+	pacman_install  pkglist_dev.txt
 
 	echo "[Development] Install AUR Packages"
-	yay $YAY_FLAGS -S - < pkglist_dev_aur.txt
+	yay_install pkglist_dev_aur.txt
 }
 
 install_office_tools(){
 
 	echo "[Office] Install Pacman Packages"
-	sudo pacman $PACMAN_FLAGS -S - < pkglist_office.txt
+	pacman_install  pkglist_office.txt
 
 	echo "[Office] Install AUR Packages"
-	yay $YAY_FLAGS -S - < pkglist_office_aur.txt
+	yay_install pkglist_office_aur.txt
 }
 
 selective_installation(){
