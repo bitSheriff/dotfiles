@@ -1,10 +1,10 @@
-cava
+cava                        # Console-based Audio Visualizer for Alsa
 clipman
-hyprpicker
-jome-git
-peaclock
-tokyonight-gtk-theme-git
-wayland-logout
-waypaper
-webapp-manager
-wlogout
+hyprpicker                  # A simple and fast GTK color picker
+jome-git                    # emoji picker
+peaclock                    # terminal clock
+tokyonight-gtk-theme-git    # gtk theme
+wayland-logout              # logout from wayland session
+waypaper                    # wallpaper chooser
+webapp-manager              # create webapps
+wlogout                     # logout from wayland session

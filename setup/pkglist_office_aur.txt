@@ -1,5 +1,5 @@
-1password
-localsend-bin
-parabolic
-superfile
-ticktick
+1password                   # Password manager
+localsend-bin               # Send files to other devices on the same network
+parabolic                   # youtube-dl frontend
+superfile                   # File manager (very new from KDE)
+ticktick                    # Task manager

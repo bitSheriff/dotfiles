@@ -1,35 +1,37 @@
 archlinux-xdg-menu
-blueman
-bluez
-brightnessctl
-cliphist
-dunst
-fuzzel
-grim
-hypridle
-hyprland
-hyprlock
-hyprpaper
-kvantum
-network-manager-applet
-networkmanager
+blueman                     # Bluetooth manager
+bluez                       # Bluetooth stack
+brightnessctl               # Brightness control
+cliphist                    # Clipboard manager for wayland (handles text and images)
+dunst                       # Notification daemon
+fuzzel                      # fuzzy finder for applications (app launcher)
+grim                        # Screenshot utility
+hypridle                    # Idle manager
+hyprland                    # Hyprland
+hyprlock                    # Lockscreen
+hyprpaper                   # Wallpaper manager
+kvantum                     # Theme manager for KDE applications
+mpv                         # Video player (minimalistic)
+network-manager-applet      # Network manager applet
+networkmanager              # Network manager
 pavucontrol
 pipewire
-polkit-kde-agent
-qt6ct
-sddm
-slurp
-spotify-launcher
-starship
-swappy
-ttf-jetbrains-mono-nerd
-waybar
+polkit-kde-agent            # Polkit agent for KDE
+qt5ct                       # Qt5 configuration tool
+qt6ct                       # Qt6 configuration tool
+sddm                        # Display manager
+slurp                       # Screenshot utility
+spotify-launcher            # Spotify launcher
+starship                    # Shell prompt
+swappy                      # Screenshot annotator
+ttf-jetbrains-mono-nerd     # Nerd Font
+waybar                      # Status bar
 wireplumber
 wl-clipboard
-wofi
-wtype
-xbindkeys
-xdg-desktop-portal-hyprland
-yazi
-zathura
-zathura-pdf-poppler
+wofi                        # Launcher
+wtype                       # Keyboard layout switcher
+xbindkeys                   # Media keys and stuff
+xdg-desktop-portal-hyprland 
+yazi                        # terminal file explorer
+zathura                     # PDF viewer (minimalistic)
+zathura-pdf-poppler         # PDF plugin for zathura
