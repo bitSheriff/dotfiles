@@ -16,6 +16,7 @@ DO_HYPR=0
 
 # Flags for additional installations / setups
 DO_ZSH=0
+DO_GIT=0
 
 
 
@@ -123,6 +124,43 @@ setup_shell(){
     fi;
 }
 
+setup_repositories(){
+
+    file="$(pwd)/repositories.list"
+    target_dir="$HOME/code"
+
+    # Create the directory if it doesn't exist
+    if [ ! -d "$target_dir" ]; then
+        mkdir -p "$target_dir"
+    fi;
+
+    # Change to the target directory
+    cd "$target_dir"
+
+    # Loop through each line in the file
+    while IFS= read -r url; do
+
+        # Skip empty lines
+        if [ -z "$url" ]; then
+            continue
+        fi
+
+        # Extract repository name from URL
+        repo_name=$(basename -s .git "$url")
+        
+        # Check if the repository directory already exists
+        if [ -d "$repo_name" ]; then
+            echo "Skipping $repo_name, already exists."
+            continue
+        fi
+
+        echo "Cloning $repo_name"
+        
+        # Clone the repository
+        git clone "$url"
+    done < "$file"
+}
+
 install_pkgfiles(){
 
     # check if the pacman file in the first arguemnt exists
@@ -201,6 +239,8 @@ confirm "Would you like to install the Development Tools?" && DO_DEV=1
 
 confirm "Would you like to install the Office Tools?" && DO_OFFICE=1
 
+confirm "Would you like to checkout the provided repositories?" && DO_GIT=1
+
 
 # ========================================
 # Actual Installation & Setup
@@ -220,6 +260,10 @@ fi;
 
 if [[ "$DO_ZSH" = 1 ]]; then
     setup_shell
+fi;
+
+if [[ "$DO_GIT" = 1 ]]; then
+    setup_repositories
 fi;
 
 if [[ "$DO_BACKUP" = 1 ]]; then
