@@ -15,6 +15,7 @@ DO_OFFICE=0
 DO_UNI=0
 DO_HYPR=0
 DO_LATEX=0
+DO_OPTIONALS=0
 
 # Flags for additional installations / setups
 DO_ZSH=0
@@ -53,14 +54,23 @@ install_from_backup(){
 	yay $YAY_FLAGS -S - < pkglist_aur.txt
 }
 
-pacman_install(){
+pacman_install_file(){
 	# remove comments and spaces at the end of the line
     grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | sudo pacman $PACMAN_FLAGS -S -
 }
 
-yay_install(){
+pacman_install_single(){
+    sudo pacman $PACMAN_FLAGS -S "$1"
+}
+
+yay_install_file(){
     # remove comments and spaces at the end of the line
     grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | yay $YAY_FLAGS -S -
+}
+
+yay_install_single(){
+    print_debug $1
+    yay $YAY_FLAGS -S "$1"
 }
 
 flatpak_install(){
@@ -182,13 +192,13 @@ install_pkgfiles(){
     # check if the pacman file in the first arguemnt exists
     if [[ -f "$1.pkgs" ]]; then
         print_h2 "Installing packages from $1"
-        pacman_install "$1.pkgs"
+        pacman_install_file "$1.pkgs"
     fi;
 
     # check if the aur file in the first arguemnt exists
     if [[ -f "$1.aur_pkgs" ]]; then
         print_h2 "Installing AUR packages from $1"
-        yay_install "$1.aur_pkgs"
+        yay_install_file "$1.aur_pkgs"
     fi;
 
     # check if the flatpak file in the first arguemnt exists
@@ -236,9 +246,18 @@ install_uni_tools(){
 
 install_latex(){
 
-    print_h1 "LaTeX"
+    ^
     print_note "LaTeX installation needs a lot of space"
     install_pkgfiles "latex"
+}
+
+install_optionals(){
+    print_h1 "Optional Packages"
+
+    confirm "Install KDE konsole?" && pacman_install_single "konsole"
+
+    confirm "Install Termius (SSH Client)" && yay_install_single "termius"
+
 }
 
 
@@ -281,6 +300,7 @@ confirm "Would you like to install the LaTex?" && DO_LATEX=1
 
 confirm "Would you like to checkout the provided repositories?" && DO_GIT=1
 
+confirm "[INTERACTIVE] Would you like to install the opional packages?" && DO_OPTIONALS=1
 
 # ========================================
 # Actual Installation & Setup
@@ -304,6 +324,10 @@ fi;
 
 if [[ "$DO_LATEX" = 1 ]]; then
     install_latex
+fi;
+
+if [[ "$DO_OPTIONALS" = 1 ]]; then
+    install_optionals
 fi;
 
 if [[ "$DO_ZSH" = 1 ]]; then
