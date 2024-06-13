@@ -1,5 +1,17 @@
 #!/bin/bash
 
+
+# ========================================
+# COLORS
+# ========================================
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+PURPLE='\033[0;35m'
+NC='\033[0m' # No Color
+# ========================================
+# FLAGS
+# ========================================
+
 PACMAN_FLAGS=" --needed "
 YAY_FLAGS=" --needed --answerdiff None --answerclean None --noconfirm"
 
@@ -222,6 +234,10 @@ install_hyprland(){
 
     print_h1 "Hyprland"
     install_pkgfiles "hyprland"
+
+    # setup SDDM
+    print_note "SDDM has to be enabled"
+    sudo systemctl enable sddm
 
     DO_ZSH=1
 }
