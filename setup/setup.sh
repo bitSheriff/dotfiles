@@ -39,11 +39,11 @@ install_from_backup(){
 }
 
 pacman_install(){
-	grep -v "^\s*#" "$1" | sudo pacman $PACMAN_FLAGS -S -
+	grep -v "^[^#]*" "$1" | sudo pacman $PACMAN_FLAGS -S -
 }
 
 yay_install(){
-	grep -v "^\s*#" "$1" | yay $YAY_FLAGS -S -
+	grep -v "^[^#]*" "$1" | yay $YAY_FLAGS -S -
 }
 
 create_symlinks(){
