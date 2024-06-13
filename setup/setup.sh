@@ -11,6 +11,10 @@ DO_BACKUP=0
 INSTALL_BACKUP=0
 DO_SYMLINKS=0
 
+DO_DEV=0
+DO_OFFICE=0
+DO_HYPR=0
+
 confirm() {
     # call with a prompt string or use a default
     read -r -p "$1 - [y/n] " response
@@ -39,11 +43,11 @@ install_from_backup(){
 }
 
 pacman_install(){
-	grep -v "^[^#]*" "$1" | sudo pacman $PACMAN_FLAGS -S -
+	grep -o "^[^#]*" "$1" | sudo pacman $PACMAN_FLAGS -S -
 }
 
 yay_install(){
-	grep -v "^[^#]*" "$1" | yay $YAY_FLAGS -S -
+	grep -o "^[^#]*" "$1" | yay $YAY_FLAGS -S -
 }
 
 create_symlinks(){
@@ -119,11 +123,26 @@ install_office_tools(){
 }
 
 selective_installation(){
-	confirm "Would you like to install Hyprland & Co?" && install_hyprland
 
-	confirm "Would you like to install the Development Tools?" && install_dev_tools
 
-	confirm "Would you like to install the Office Tools?" && install_office_tools
+	confirm "Would you like to install Hyprland & Co?" && DO_HYPR=1
+
+	confirm "Would you like to install the Development Tools?" && DO_DEV=1
+
+	confirm "Would you like to install the Office Tools?" && DO_OFFICE=1
+
+
+    if [[ "$DO_HYPR" = 1 ]]; then
+        install_hyprland
+    fi;
+
+    if [[ "$DO_DEV" = 1 ]]; then
+        install_dev_tools
+    fi;
+
+    if [[ "$DO_OFFICE" = 1 ]]; then
+        install_office_tools
+    fi;
 
 }
 
