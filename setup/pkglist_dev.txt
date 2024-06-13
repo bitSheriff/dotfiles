@@ -1,36 +1,36 @@
 base-devel
 bash-completion
-bat
+bat                         # better cat alternative
 clang
-cloc
-cool-retro-term
+cloc                        # 'count lines of code'
+cool-retro-term             # just what the name says
 cunit
-doxygen
+doxygen                     # documentation engine
 eza
-fastfetch
-filezilla
+fastfetch                   # neofetch alternative
+filezilla                   # ftp client
 firefox
 flatpak
-gnome-boxes
+gnome-boxes                 # qemu/kvm frontend
 jupyterlab
-kate
-kitty
-lazygit
-meld
+kate                        # file editor
+kitty                       # best terminal in the world
+lazygit                     # git tui
+meld                        # graphical diff and merge tool
 mesa-utils
-neovim
+neovim                      # best cli editor (well more than that)
 npm
 openssh
-pacman-contrib
+pacman-contrib              # needed for AUR and stuff
 pandoc-cli
-powertop
+powertop                    # battery and power management
 python
-qbittorrent
+qbittorrent                 # torrent gui
 qt5ct
 qt6ct
 ripgrep
 rsync
-speedcrunch
+speedcrunch                 # best scientific calculator
 spotify-launcher
 thefuck
 tldr
