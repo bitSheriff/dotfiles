@@ -10,6 +10,8 @@ pdfgrep
 poppler-glib
 signal-desktop
 telegram-desktop
+
+# here comes a comment
 texinfo
 texlive-basic
 texlive-bibtexextra

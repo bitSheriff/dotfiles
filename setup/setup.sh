@@ -38,6 +38,14 @@ install_from_backup(){
 	yay $YAY_FLAGS -S - < pkglist_aur.txt
 }
 
+pacman_install(){
+	grep -v "^\s*#" "$1" | sudo pacman $PACMAN_FLAGS -S -
+}
+
+yay_install(){
+	grep -v "^\s*#" "$1" | yay $YAY_FLAGS -S -
+}
+
 create_symlinks(){
 
 	# Hyprland specific packages
@@ -84,10 +92,10 @@ setup_shell(){
 install_hyprland(){
 
 	echo "[Hyprland] Install Pacman Packages"
-	sudo pacman $PACMAN_FLAGS -S - < pkglist_hyprland.txt
+	pacman_install pkglist_hyprland.txt
 
 	echo "[Hyprland] Install AUR Packages"
-	yay $YAY_FLAGS -S - < pkglist_hyprland_aur.txt
+	yay_install pkglist_hyprland_aur.txt
 
 	setup_shell
 }
