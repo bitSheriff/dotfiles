@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PACMAN_FLAGS=" --needed "
-YAY_FLAGS=" --needed --answerdiff None "
+YAY_FLAGS=" --needed --answerdiff None --answerclean None "
 
 # get the arguemnts
 ARGV=("$@")
@@ -74,6 +74,13 @@ remove_symlinks() {
 
 }
 
+setup_shell(){
+
+	# set zsh as default shell
+	chsh -s /bin/zsh
+
+}
+
 install_hyprland(){
 
 	echo "[Hyprland] Install Pacman Packages"
@@ -81,6 +88,8 @@ install_hyprland(){
 
 	echo "[Hyprland] Install AUR Packages"
 	yay $YAY_FLAGS -S - < pkglist_hyprland_aur.txt
+
+	setup_shell
 }
 
 install_dev_tools(){

@@ -20,6 +20,7 @@ qt6ct
 sddm
 slurp
 spotify-launcher
+starship
 swappy
 ttf-jetbrains-mono-nerd
 waybar
