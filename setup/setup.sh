@@ -7,13 +7,21 @@ YAY_FLAGS=" --needed --answerdiff None --answerclean None "
 ARGV=("$@")
 ARG_MODE=("${ARGV[0]}")
 
-DO_BACKUP=0
-INSTALL_BACKUP=0
 DO_SYMLINKS=0
 
+# Flags for selective installation
 DO_DEV=0
 DO_OFFICE=0
 DO_HYPR=0
+
+# Flags for additional installations / setups
+DO_ZSH=0
+
+
+
+# ========================================
+# Functions
+# ========================================
 
 confirm() {
     # call with a prompt string or use a default
@@ -43,11 +51,13 @@ install_from_backup(){
 }
 
 pacman_install(){
-	grep -o "^[^#]*" "$1" | sudo pacman $PACMAN_FLAGS -S -
+	# remove comments and spaces at the end of the line
+    grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | sudo pacman $PACMAN_FLAGS -S -
 }
 
 yay_install(){
-	grep -o "^[^#]*" "$1" | yay $YAY_FLAGS -S -
+    # remove comments and spaces at the end of the line
+    grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | yay $YAY_FLAGS -S -
 }
 
 create_symlinks(){
@@ -93,79 +103,52 @@ setup_shell(){
 
 }
 
+install_pkgfiles(){
+
+    # check if the file in the first arguemnt exists
+    if [[ -f "$1.pkgs" ]]; then
+        echo "Installing packages from $1"
+        pacman_install "$1.pkgs"
+    fi;
+
+    if [[ -f "$1.aur_pkgs" ]]; then
+        echo "Installing packages from $1"
+        yay_install "$1.aur_pkgs"
+    fi;
+}
+
 install_hyprland(){
 
-	echo "[Hyprland] Install Pacman Packages"
-	pacman_install pkglist_hyprland.txt
+    echo "[Hyprland] Install Pacman & AUR Packages"
+    install_pkgfiles "hyprland"
 
-	echo "[Hyprland] Install AUR Packages"
-	yay_install pkglist_hyprland_aur.txt
-
-	setup_shell
+	DO_ZSH=1
 }
 
 install_dev_tools(){
 
-	echo "[Development] Install Pacman Packages"
-	pacman_install  pkglist_dev.txt
-
-	echo "[Development] Install AUR Packages"
-	yay_install pkglist_dev_aur.txt
+    install_pkgfiles "dev"
+    DO_ZSH=1
 }
 
 install_office_tools(){
 
-	echo "[Office] Install Pacman Packages"
-	pacman_install  pkglist_office.txt
-
-	echo "[Office] Install AUR Packages"
-	yay_install pkglist_office_aur.txt
+    install_pkgfiles "office"
 }
 
-selective_installation(){
-
-
-	confirm "Would you like to install Hyprland & Co?" && DO_HYPR=1
-
-	confirm "Would you like to install the Development Tools?" && DO_DEV=1
-
-	confirm "Would you like to install the Office Tools?" && DO_OFFICE=1
-
-
-    if [[ "$DO_HYPR" = 1 ]]; then
-        install_hyprland
-    fi;
-
-    if [[ "$DO_DEV" = 1 ]]; then
-        install_dev_tools
-    fi;
-
-    if [[ "$DO_OFFICE" = 1 ]]; then
-        install_office_tools
-    fi;
-
-}
+# ========================================
+# Flow Start
+# ========================================
 
 if [[ ${#ARGV[@]} = 0 ]]; then
 	echo "No arguements given: start selective installation"
-	selective_installation
-	exit 0
-fi;
-
-if [[ "$ARG_MODE" = 'all' ]]; then
-	echo "Mode all selected"
-	echo "Installing packages and linkt them"
-	INSTALL_BACKUP=1
-	DO_SYMLINKS=1
 fi;
 
 if [[ "$ARG_MODE" = 'backup' ]]; then
-	DO_BACKUP=1
+    do_backup
+    exit 0
 fi;
 
-if [[ "$ARG_MODE" = 'install' ]]; then
-	INSTALL_BACKUP=1
-fi;
 
 if [[ "$ARG_MODE" = 'links' ]]; then
 	DO_SYMLINKS=1
@@ -175,16 +158,40 @@ if [[ "$ARG_MODE" = 'unlink' ]]; then
 	remove_symlinks
 fi;
 
-######### ACTION ##########
+# ========================================
+# Interactions
+# ========================================
 
-confirm "Would you like a selective installation process?" && selective_installation
+confirm "Would you like to install Hyprland & Co?" && DO_HYPR=1
+
+confirm "Would you like to install the Development Tools?" && DO_DEV=1
+
+confirm "Would you like to install the Office Tools?" && DO_OFFICE=1
+
+
+
+# ========================================
+# Actual Installation & Setup
+# ========================================
+
+if [[ "$DO_HYPR" = 1 ]]; then
+    install_hyprland
+fi;
+
+if [[ "$DO_DEV" = 1 ]]; then
+    install_dev_tools
+fi;
+
+if [[ "$DO_OFFICE" = 1 ]]; then
+    install_office_tools
+fi;
+
+if [[ "$DO_ZSH" = 1 ]]; then
+    setup_shell
+fi;
 
 if [[ "$DO_BACKUP" = 1 ]]; then
 	do_backup
-fi;
-
-if [[ "$INSTALL_BACKUP" = 1 ]]; then
-	install_from_backup
 fi;
 
 if [[ "$DO_SYMLINKS" = 1 ]]; then
