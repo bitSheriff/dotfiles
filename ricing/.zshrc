@@ -3,11 +3,26 @@
 source ~/.config/shell/autostart
 source ~/.config/shell/alias
 
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Auto completion
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+### ---- history config -------------------------------------
+export HISTFILE=$ZSH/.zsh_history
+
+# How many commands zsh will load to memory.
+export HISTSIZE=10000
+
+# How many commands history will save on file.
+export SAVEHIST=10000
+
+# History won't save duplicates.
+setopt HIST_IGNORE_ALL_DUPS
+
+# History won't show duplicates on search.
+setopt HIST_FIND_NO_DUPS
+
 # End of lines configured by zsh-newuser-install
 # ZSH has a quirk where `preexec` is only run if a command is actually run (i.e
 # pressing ENTER at an empty command line will not cause preexec to fire). This
