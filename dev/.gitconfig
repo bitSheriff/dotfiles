@@ -1,3 +1,25 @@
+[user]
+  name = bitSheriff
+  email = bitSheriff@protonmail.com
+
+[core]
+  editor = nvim
+
+[advice]
+  addIgnoredFile = false
+
+[pull]
+  rebase = true
+
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+  helper = !/usr/bin/gh auth git-credential
+
+[commit]
+    verbose = false
 
 [alias]
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
@@ -7,3 +29,4 @@
   backup = push --all backup
   ignore = update-index --assume-unchanged
   no-ignore = update-index --no-assume-unchanged
+
