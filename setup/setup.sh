@@ -93,29 +93,13 @@ flatpak_install(){
 
 create_symlinks(){
 
-    # Hyprland specific packages
-    ln -sf $(pwd)/../dunst/ ~/.config/dunst
-    ln -sf $(pwd)/../fuzzel/ ~/.config/fuzzel
-    ln -sf $(pwd)/../hypr/ ~/.config/hypr
-    ln -sf $(pwd)/../kitty/ ~/.config/kitty
-    ln -sf $(pwd)/../peaclock/ ~/.config/peaclock
-    ln -sf $(pwd)/../qt6ct/ ~/.config/qt6ct
-    ln -sf $(pwd)/../shell/ ~/.config/shell
-    ln -sf $(pwd)/../theming/ ~/.config/theming
-    ln -sf $(pwd)/../wallpapers/ ~/.config/wallpapers
-    ln -sf $(pwd)/../waybar/ ~/.config/waybar
-    ln -sf $(pwd)/../waypaper/ ~/.config/waypaper
-    ln -sf $(pwd)/../wlogout/ ~/.config/wlogout
-    ln -sf $(pwd)/../wofi/ ~/.config/wofi
+    # make sure stow is installed
+    pacman_install_single stow
 
-    # Development Enviroment
-    ln -sf $(pwd)/../clang/ ~/.config/clang
-    ln -sf $(pwd)/../git/ ~/.config/git
-    ln -sf $(pwd)/../lazygit/ ~/.config/lazygit
-    ln -sf $(pwd)/../nvim/ ~/.config/nvim
-    ln -sf $(pwd)/../yazi/ ~/.config/yazi
-    ln -sf $(pwd)/../zellij/ ~/.config/zellij
-
+    # stow the packages (no idea why it does not work with $FLAGS)
+    stow  --adopt --restow -t ~ -d ..  ricing
+    stow  --adopt --restow -t ~ -d ..  dev
+    stow  --adopt --restow -t ~ -d ..  misc
 
     # Additional ones for comfort
     ln -sf $(pwd)/../wallpapers ~/Pictures/wallpapers
@@ -327,12 +311,14 @@ if [[ "$ARG_MODE" = 'backup' ]]; then
     exit 0
 fi;
 
-if [[ "$ARG_MODE" = 'links' ]]; then
-    DO_SYMLINKS=1
+if [[ "$ARG_MODE" = 'link' ]]; then
+    create_symlinks
+    exit 0
 fi;
 
 if [[ "$ARG_MODE" = 'unlink' ]]; then
     remove_symlinks
+    exit 0
 fi;
 
 # ========================================
