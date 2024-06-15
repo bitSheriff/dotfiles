@@ -93,6 +93,10 @@ flatpak_install(){
 
 create_symlinks(){
 
+    # install GNU stow for better symlink handling
+    pacman_install_single stow
+
+
     # Hyprland specific packages
     ln -sf $(pwd)/../dunst/ ~/.config/dunst
     ln -sf $(pwd)/../fuzzel/ ~/.config/fuzzel
