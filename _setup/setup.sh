@@ -103,7 +103,11 @@ pacman_install_file(){
 }
 
 pacman_install_single(){
-    sudo pacman $PACMAN_FLAGS -S "$1"
+
+    # Check if the package is installed using yay
+    if ! pacman -Qi "$package_name" &> /dev/null; then
+        sudo pacman $PACMAN_FLAGS -S "$1"
+    fi
 }
 
 yay_install_file(){
@@ -129,10 +133,6 @@ create_symlinks(){
     stow  --adopt --restow -t ~ -d ..  ricing
     stow  --adopt --restow -t ~ -d ..  dev
     stow  --adopt --restow -t ~ -d ..  misc
-
-    # Additional ones for comfort
-    ln -sf $(pwd)/../wallpapers ~/Pictures/wallpapers
-
 }
 
 remove_symlinks() {
