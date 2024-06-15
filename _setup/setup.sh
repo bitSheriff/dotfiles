@@ -34,6 +34,8 @@ DO_OPTIONALS=0
 DO_ZSH=0
 DO_GIT=0
 DO_SYMLINKS=0
+DO_NVIM=0
+DO_WALLPAPERS=0
 
 
 
@@ -280,6 +282,24 @@ install_latex(){
     install_pkgfiles "latex"
 }
 
+install_benjavim(){
+    
+    if [ -d "~/.config/nvim/.git" ]; then
+        print_warning "nvim already checked out"
+    else
+        git clone git@github.com:bitSheriff/Benjavim.git ~/.config/nvim
+    fi
+
+}
+
+install_wallpapers() {
+    if [ -d "~/.config/nvim/.git" ]; then
+        print_warning "wallpapers already checked out"
+    else
+        git clone git@github.com:bitSheriff/wallpapers.git ~/.config/wallpapers
+    fi
+}
+
 install_optionals(){
     print_h1 "Optional Packages"
 
@@ -293,6 +313,7 @@ install_optionals(){
 
     confirm "Install KDEConnect?" && pacman_install_single "kdeconnect"
 
+    confirm "[Private Repo] Install the wallpapers?" && install_wallpapers
 }
 
 
