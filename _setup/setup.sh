@@ -6,6 +6,7 @@
 # ========================================
 RED='\033[0;31m'
 GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
 PURPLE='\033[0;35m'
 NC='\033[0m' # No Color
 # ========================================
@@ -55,6 +56,34 @@ confirm() {
             ;;
     esac
 }
+
+print_h1(){
+    echo -e "\n========== [$1] ==========\n"
+}
+
+print_h2(){
+    echo -e "\n---------- [$1] ----------\n"
+}
+
+print_note(){
+    echo ":::: $1 ::::"
+}
+
+print_warning(){
+    echo -e "$YELLOW" ":::: $1 ::::" "$NC"
+}
+
+print_error(){
+    echo -e "$RED" ":::: $1 ::::" "$NC"
+}
+
+print_debug(){
+
+    if [["$DEBUG" = 1]]; then
+        echo "?!?! $1 ?!?!"
+    fi;
+}
+
 
 do_backup(){
     echo "Backing up installed packages"
@@ -112,31 +141,6 @@ remove_symlinks() {
     find ~/.config -type l -print0 | xargs -0 rm -v
 
 }
-
-print_h1(){
-    echo -e "\n========== [$1] ==========\n"
-}
-
-print_h2(){
-    echo -e "\n---------- [$1] ----------\n"
-}
-
-print_note(){
-    echo ":::: $1 ::::"
-}
-
-print_warning(){
-    echo -e "$RED" ":::: $1 ::::" "$NC"
-}
-
-print_debug(){
-
-    if [["$DEBUG" = 1]]; then
-        echo "?!?! $1 ?!?!"
-    fi;
-}
-
-
 
 setup_shell(){
 
@@ -316,6 +320,40 @@ install_optionals(){
     confirm "[Private Repo] Install the wallpapers?" && install_wallpapers
 }
 
+setup_ssh_keys() {
+    # Check if SSH keys already exist
+    if [ -f ~/.ssh/id_rsa ]; then
+        print_note "SSH key already exists:"
+        ls -l ~/.ssh/id_rsa*
+        print_warning "Skipping SSH key generation."
+    else
+        # Prompt user for email address
+        read -p "Enter your email address for SSH key generation: " email
+        if [ -z "$email" ]; then
+            print_error "Email address cannot be empty. Exiting."
+            exit 1
+        fi
+
+        # Generate SSH key pair
+        print_note "Generating SSH key pair..."
+        ssh-keygen -t rsa -b 4096 -C "$email"
+        print_note "SSH key generated successfully:"
+        ls -l ~/.ssh/id_rsa*
+    fi
+
+    # Start SSH agent (if not running)
+    eval "$(ssh-agent -s)"
+
+    # Add SSH private key to SSH agent
+    ssh-add ~/.ssh/id_rsa
+
+    # Display SSH public key for easy copying
+    print_note "Your SSH public key (copy this to your remote server):"
+    cat ~/.ssh/id_rsa.pub
+
+    # Prompt user to wait
+    read -n 1 -s -r -p "Press any key to continue and add the SSH key to your server..."
+}
 
 # ========================================
 # Flow Start & Arguemnt Handling
@@ -345,6 +383,7 @@ fi;
 # ========================================
 # Interactions
 # ========================================
+confirm "Would you like to setup SSH keys?" && setup_ssh_keys
 
 confirm "Would you like to install Hyprland & Co?" && DO_HYPR=1
 
@@ -354,7 +393,7 @@ confirm "Would you like to install the Office Tools?" && DO_OFFICE=1
 
 confirm "Would you like to install the University Tools?" && DO_UNI=1
 
-confirm "Would you like to install the LaTex?" && DO_LATEX=1
+confirm "Would you like to install the LaTeX?" && DO_LATEX=1
 
 confirm "Would you like to checkout the provided repositories?" && DO_GIT=1
 
