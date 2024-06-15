@@ -293,7 +293,7 @@ install_benjavim(){
 }
 
 install_wallpapers() {
-    if [ -d "~/.config/nvim/.git" ]; then
+    if [ -d "~/.config/wallpapers/.git" ]; then
         print_warning "wallpapers already checked out"
     else
         git clone git@github.com:bitSheriff/wallpapers.git ~/.config/wallpapers
