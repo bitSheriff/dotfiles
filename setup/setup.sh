@@ -139,6 +139,10 @@ print_note(){
     echo ":::: $1 ::::"
 }
 
+print_warning(){
+    echo -e "$RED" ":::: $1 ::::" "$NC"
+}
+
 print_debug(){
 
     if [["$DEBUG" = 1]]; then
@@ -224,6 +228,22 @@ install_pkgfiles(){
     fi;
 }
 
+ensure_sddm_enabled() {
+    # Check if sddm is enabled
+    if systemctl is-enabled sddm &>/dev/null; then
+        print_note "sddm is already enabled."
+    else
+        print_note "sddm is not enabled. Enabling sddm..."
+        sudo systemctl enable sddm
+        # Check if the enable command succeeded
+        if [ $? -eq 0 ]; then
+            print_note "sddm has been enabled successfully."
+        else
+            print_warning "Failed to enable sddm. Please check the systemctl command and try again."
+        fi
+    fi
+}
+
 install_base(){
 
     print_h1 "Base"
@@ -236,8 +256,7 @@ install_hyprland(){
     install_pkgfiles "hyprland"
 
     # setup SDDM
-    print_note "SDDM has to be enabled"
-    sudo systemctl enable sddm
+    ensure_sdd_enabled
 
     DO_ZSH=1
 }
