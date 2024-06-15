@@ -1,3 +1,6 @@
 [submodule "dev/.config/nvim"]
 	path = dev/.config/nvim
 	url = git@github.com:bitSheriff/Benjavim.git
+[submodule "ricing/.config/wallpapers"]
+	path = ricing/.config/wallpapers
+	url = git@github.com:bitSheriff/wallpapers.git
