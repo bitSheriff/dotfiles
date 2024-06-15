@@ -1,6 +1,7 @@
 cava                        # Console-based Audio Visualizer for Alsa
 clipman
 hyprpicker                  # A simple and fast GTK color picker
+index-fm                    # newer KDE file manager
 jome-git                    # emoji picker
 peaclock                    # terminal clock
 tokyonight-gtk-theme-git    # gtk theme
