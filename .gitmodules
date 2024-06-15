@@ -1,0 +1,3 @@
+[submodule "dev/.config/nvim"]
+	path = dev/.config/nvim
+	url = git@github.com:bitSheriff/Benjavim.git
