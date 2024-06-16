@@ -46,6 +46,10 @@ window#waybar {
   color: @foreground;
 }
 
+#temperature.critical { 
+    color: @red; 
+}
+
 #idle_inhibitor,
 #custom-hypridle {
   padding: 0px;
