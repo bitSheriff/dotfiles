@@ -25,6 +25,7 @@
       "cpu",
       "memory",
       "temperature",
+      "disk"
     ],
   },
 

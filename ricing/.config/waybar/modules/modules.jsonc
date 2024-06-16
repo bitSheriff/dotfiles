@@ -21,6 +21,11 @@
     "on-scroll-down": "hyprctl dispatch workspace e-1"
   },
 
+  // Hyprland Window
+ "hyprland/window": {
+    "separate-outputs": true
+  },
+
   // Clock
   "clock": {
     "format": "{:%H:%M}",
@@ -187,5 +192,11 @@
    "format-icons": ["", "", ""]
 },
 
+// Harddisc space used
+  "disk": {
+    "interval": 30,
+    "format": "{percentage_used}% ",
+    "path": "/",
+},
 // global end
 }
