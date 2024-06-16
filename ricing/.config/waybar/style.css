@@ -54,7 +54,7 @@ window#waybar {
 #custom-hypridle {
   padding: 0px;
   padding-right: 16px;
-  color: rgba(255, 255, 255, 1);
+  color: @foreground;
 }
 
 #custom-dnd {
