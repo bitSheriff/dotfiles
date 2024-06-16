@@ -336,6 +336,18 @@ if [[ ${#ARGV[@]} = 0 ]]; then
     echo -e "please stand by ...\n\n"
 fi;
 
+if [[ "$ARG_MODE" = 'all' ]]; then
+    install_base
+    install_hyprland
+    install_dev_tools
+    install_office_tools
+    install_uni_tools
+
+    create_symlinks
+
+    exit 0
+fi;
+
 if [[ "$ARG_MODE" = 'backup' ]]; then
     do_backup
     exit 0
@@ -369,6 +381,8 @@ confirm "Would you like to install the LaTeX?" && DO_LATEX=1
 confirm "Would you like to checkout the provided repositories?" && DO_GIT=1
 
 confirm "[INTERACTIVE] Would you like to install the opional packages?" && DO_OPTIONALS=1
+
+confirm "Would you like to link the dotfiles?" && DO_SYMLINKS=1
 
 # ========================================
 # Actual Installation & Setup
@@ -414,6 +428,5 @@ if [[ "$DO_BACKUP" = 1 ]]; then
 fi;
 
 if [[ "$DO_SYMLINKS" = 1 ]]; then
-    print_note "[WIP] nothing will happen"
-    # create_symlinks # work in progress
+    create_symlinks
 fi;
