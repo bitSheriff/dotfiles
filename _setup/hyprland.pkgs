@@ -5,6 +5,7 @@ brightnessctl               # Brightness control
 cliphist                    # Clipboard manager for wayland (handles text and images)
 dunst                       # Notification daemon
 fuzzel                      # fuzzy finder for applications (app launcher)
+gnome-themes-extra          # themes for gnome & GTK applications
 grim                        # Screenshot utility
 hypridle                    # Idle manager
 hyprland                    # Hyprland
