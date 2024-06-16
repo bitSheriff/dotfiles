@@ -288,6 +288,8 @@ install_latex(){
 install_optionals(){
     print_h1 "Optional Packages"
 
+    confirm "Install LibreOffice Suite?" && pacman_install_single "libreoffice"
+
     confirm "Install Termius (SSH Client)?" && yay_install_single "termius"
 
     confirm "Install Mint WebApp Manager?" && yay_install_single "webapp-manager"
