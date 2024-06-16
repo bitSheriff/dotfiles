@@ -237,6 +237,14 @@ install_base(){
 
     print_h1 "Base"
     install_pkgfiles "base"
+
+    print_h2 "Nemo File Manager settings"
+
+    # set Nemo as default file manager
+    xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
+
+    # set kitty as defaul terminal
+    gsettings set org.cinnamon.desktop.default-applications.terminal exec kitty
 }
 
 install_hyprland(){

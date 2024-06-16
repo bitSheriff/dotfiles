@@ -1,4 +1,5 @@
 btop                                                                # tui system monitor
 git
 nemo                                                                # gtk file manager 
+nemo-compare                                                        # compare with meld in the file manager
 zsh
