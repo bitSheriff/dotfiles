@@ -9,6 +9,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 PURPLE='\033[0;35m'
 NC='\033[0m' # No Color
+
 # ========================================
 # FLAGS
 # ========================================
@@ -56,7 +57,7 @@ confirm() {
 }
 
 print_h1(){
-    echo -e "\n========== [$1] ==========\n"
+    echo -e "$PURPLE\n========== [$1] ==========\n$NC"
 }
 
 print_h2(){
@@ -68,11 +69,11 @@ print_note(){
 }
 
 print_warning(){
-    echo -e "$YELLOW" ":::: $1 ::::" "$NC"
+    echo -e "$YELLOW:::: $1 ::::$NC"
 }
 
 print_error(){
-    echo -e "$RED" ":::: $1 ::::" "$NC"
+    echo -e "$RED:::: $1 ::::$NC"
 }
 
 print_debug(){
