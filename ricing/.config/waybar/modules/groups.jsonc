@@ -18,4 +18,14 @@
       "custom/power",
     ],
   },
+
+ "group/system": {
+    "orientation": "horizontal",
+    "modules": [
+      "cpu",
+      "memory",
+      "temperature",
+    ],
+  },
+
 }

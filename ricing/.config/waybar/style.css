@@ -18,11 +18,6 @@ window#waybar {
 }
 
 #end-right-module,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#network,
 #wireplumber,
 #pulseaudio,
 #custom-media,
@@ -32,10 +27,21 @@ window#waybar {
 #bluetooth,
 #mpd {
   padding: 0px 6px;
-  color: rgba(255, 255, 255, 1);
   border-radius: 20px;
   border: 0.19em solid @purple;
-  /* border: 0.19em solid rgba(203, 75, 22, 1); */
+  background-color: @background;
+  color: @foreground;
+}
+
+/* System Group */
+#cpu,
+#memory,
+#disk,
+#temperature,
+#network {
+  padding: 0px 14px;
+  border-radius: 20px;
+  border: 0.19em solid @neon-purple;
   background-color: @background;
   color: @foreground;
 }
