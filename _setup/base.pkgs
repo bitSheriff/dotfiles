@@ -1,3 +1,4 @@
 btop                                                                # tui system monitor
 git
+nemo                                                                # gtk file manager 
 zsh
