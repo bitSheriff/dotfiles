@@ -27,6 +27,8 @@ alias term="kitty . &; disown" # open a new terminal at the same location
 # open file with standard program
 alias open="xdg-open"
 
+# quick switch to the dotfiles
+alias dots="cd ~/code/dotfiles"
 
 ## better cat command
 alias cat="bat"
