@@ -1,5 +1,5 @@
 drawio-desktop              # Draw.io desktop app (now called diagrams.net)
 fast                        # Fast.com internet speed test
 gitkraken                   # visual git tool
-ltex-ls                     # Markdown/LaTeX Langauage Server
+#ltex-ls                     # Markdown/LaTeX Langauage Server
 visual-studio-code-bin      # Visual Studio Code
