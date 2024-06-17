@@ -6,7 +6,7 @@
   "margin": "4px 5px",
   "exclusive": true,
   "fixed-center": true,
-  "modules-left": ["pulseaudio", "custom/media"],
+  "modules-left": ["pulseaudio", "hyprland/submap" ,"custom/media"],
   "modules-center": ["hyprland/workspaces"],
   "modules-right": ["group/systray", "group/system", "group/end-right-module"],
   "include": [

@@ -33,6 +33,14 @@ window#waybar {
   color: @foreground;
 }
 
+#submap {
+  padding: 0px 6px;
+  border-radius: 20px;
+  border: 0.19em solid @yellow;
+  background-color: @background;
+  color: @foreground;
+}
+
 /* System Group */
 #cpu,
 #memory,

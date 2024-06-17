@@ -5,7 +5,7 @@ INBOX_PRE=""
 INBOX_POST=""
 
 # Journal File where the memo gets added
-INBOX_FILE=~/notes/Inbox/Inbox.md
+INBOX_FILE=${INBOX}
 
 OPTSTRING=":c"
 
