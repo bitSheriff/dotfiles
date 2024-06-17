@@ -7,6 +7,18 @@ INBOX_POST=""
 # Journal File where the memo gets added
 INBOX_FILE=~/notes/Inbox/Inbox.md
 
+OPTSTRING=":c"
+
+while getopts ${OPTSTRING} opt; do
+  case ${opt} in
+    c) # clipboard option
+      echo -e "\n$(wl-paste)" >> "$INBOX_FILE"
+      exit 0
+      ;;
+  esac
+done
+
+
 # decide if the input was given as a positional argument or parsed into (stdin)
 if [ $# -gt 0 ]; then
   # If there are arguments, join them into a single string and process
