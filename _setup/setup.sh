@@ -131,9 +131,7 @@ create_symlinks(){
     pacman_install_single stow
 
     # stow the packages (no idea why it does not work with $FLAGS)
-    stow  --adopt --restow -t ~ -d ..  ricing
-    stow  --adopt --restow -t ~ -d ..  dev
-    stow  --adopt --restow -t ~ -d ..  misc
+    stow  --adopt --restow -t ~ -d ..  configuration
 }
 
 remove_symlinks() {
