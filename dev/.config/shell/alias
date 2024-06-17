@@ -119,7 +119,7 @@ todo(){
 
 # add a note in the inbox note
 inbox() {
-    nvim ~/notes/Inbox/Inbox.md
+    ~/.config/shell/inbox.sh $@
 }
 
 # add a note in the inbox note
