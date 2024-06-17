@@ -1,5 +1,6 @@
 calibre                     # ebook manager
 ghostwriter                 # markdown editor
+glow                        # cli markdown renderer
 gwenview                    # image viewer
 haruna                      # video player
 okular                      # document viewer
@@ -8,4 +9,3 @@ poppler-glib                # pdf rendering library
 signal-desktop              # secure messaging
 telegram-desktop            # (not so) secure messaging
 veracrypt                   # encryption software   
-
