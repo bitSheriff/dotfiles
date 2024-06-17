@@ -26,10 +26,12 @@
     "separate-outputs": true
   },
 
+  // Hyprland Submaps
   "hyprland/submap": {
     "format": "{}",
     "max-length": 30,
-    "tooltip": false
+    "tooltip": false,
+    "on-click" : "hyprctl dispatch submap reset"
   },
 
   // Clock
