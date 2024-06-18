@@ -256,7 +256,7 @@ install_hyprland(){
     install_pkgfiles "hyprland"
 
     # setup SDDM
-    ensure_sdd_enabled
+    ensure_sddm_enabled
 
     DO_ZSH=1
 }
@@ -354,6 +354,7 @@ setup_bluetooth(){
 
 setup_wifi(){
 
+    print_h3 "WiFi Setup"
 }
 
 setup_hardware(){
