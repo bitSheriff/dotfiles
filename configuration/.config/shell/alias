@@ -36,6 +36,7 @@ alias cat="bat"
 ## change directories
 alias go2conf="cd ~/.config"
 alias go2code="cd ~/code"
+alias .="ls -la"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
