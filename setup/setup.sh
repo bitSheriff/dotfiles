@@ -352,11 +352,17 @@ setup_bluetooth(){
     sudo systemctl start bluetooth
 }
 
+setup_wifi(){
+
+}
+
 setup_hardware(){
 
     print_h2 "Hardware Setup"
 
-    confirm "Would you like a general hardware setup?" && setup_bluetooth
+    confirm "Would you like to setup bluetooth?" && setup_bluetooth
+
+    confirm "Would you like to setup wifi?" && setup_wifi
 }
 
 # ========================================
