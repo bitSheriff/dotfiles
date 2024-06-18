@@ -36,6 +36,7 @@ DO_OPTIONALS=0
 DO_ZSH=0
 DO_GIT=0
 DO_SYMLINKS=0
+DO_HARDWARE=0
 
 
 
@@ -62,6 +63,10 @@ print_h1(){
 
 print_h2(){
     echo -e "\n---------- [$1] ----------\n"
+}
+
+print_h3(){
+    echo -e "\n.......... [$1] ..........\n"
 }
 
 print_note(){
@@ -333,6 +338,27 @@ setup_ssh_keys() {
     read -n 1 -s -r -p "Press any key to continue and add the SSH key to your server..."
 }
 
+setup_bluetooth(){
+
+    print_h3 "Bluetooth Setup"
+
+    # install needed packages
+    pacman_install_single "bluez"
+    pacman_install_single "bluetoothctl"
+    pacman_install_single "blueman"         # bluetooth manager, GUI
+
+    # activate the service
+    sudo systemctl enable bluetooth
+    sudo systemctl start bluetooth
+}
+
+setup_hardware(){
+
+    print_h2 "Hardware Setup"
+
+    confirm "Would you like a general hardware setup?" && setup_bluetooth
+}
+
 # ========================================
 # Flow Start & Arguemnt Handling
 # ========================================
@@ -391,6 +417,9 @@ confirm "[INTERACTIVE] Would you like to install the opional packages?" && DO_OP
 
 confirm "Would you like to link the dotfiles?" && DO_SYMLINKS=1
 
+confirm "Would you like a general hardware setup?" && DO_HARDWARE=1
+
+
 # ========================================
 # Actual Installation & Setup
 # ========================================
@@ -437,3 +466,8 @@ fi;
 if [[ "$DO_SYMLINKS" = 1 ]]; then
     create_symlinks
 fi;
+
+if [[ "$DO_HARDWARE" = 1 ]]; then
+    setup_hardware
+fi;
+
