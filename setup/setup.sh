@@ -403,6 +403,12 @@ if [[ "$ARG_MODE" = 'unlink' ]]; then
     exit 0
 fi;
 
+if [[ "$ARG_MODE" = 'debug' ]]; then
+    DEBUG=1
+    exit 0
+fi;
+
+
 # ========================================
 # Interactions
 # ========================================
