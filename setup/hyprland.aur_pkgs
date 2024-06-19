@@ -1,11 +1,12 @@
+#index-fm                    # newer KDE file manager
 adwaita-qt5-git             # dark themes for qt5 apps
 adwaita-qt6-git             # dark themes for qt6 apps
 cava                        # Console-based Audio Visualizer for Alsa
 clipman
 hyprpicker                  # A simple and fast GTK color picker
-#index-fm                    # newer KDE file manager
 jome-git                    # emoji picker
 peaclock                    # terminal clock
+timer-bin                   # simple terminal timer with progressbar
 tokyonight-gtk-theme-git    # gtk theme
 wayland-logout              # logout from wayland session
 waypaper                    # wallpaper chooser
