@@ -4,5 +4,5 @@ anki                        # flashcard learning app
 localsend-bin               # Send files to other devices on the same network
 parabolic                   # youtube-dl frontend
 peazip-qt-bin               # .zip/ .rar  client
-superfile                   # File manager (very new from KDE)
+# superfile                   # File manager (very new from KDE)
 ticktick                    # Task manager

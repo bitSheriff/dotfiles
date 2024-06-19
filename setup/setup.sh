@@ -357,6 +357,34 @@ setup_wifi(){
     print_h3 "WiFi Setup"
 }
 
+setup_nvidia(){
+
+    print_h3 "Nvidia Setup"
+
+    pacman_install_single "linux-headers"
+    pacman_install_single "nvidia-dkms"
+    pacman_install_single "nvidia-utils"
+    pacman_install_single "ib32-nvidia-utils"
+    pacman_install_single "egl-wayland"
+    pacman_install_single "libva-nvidia-driver"
+
+}
+
+setup_yay(){
+
+    # install needed packages to build yay
+    pacman_install_single "base-devel"
+
+    # check out the repository
+    gti clone https://aur.archlinux.org/yay.git
+
+    # build and install
+    sh -c "cd yay && makepkg -si"
+
+    # remove the yay repository
+    rm -rf yay
+}
+
 setup_hardware(){
 
     print_h2 "Hardware Setup"
@@ -364,6 +392,9 @@ setup_hardware(){
     confirm "Would you like to setup bluetooth?" && setup_bluetooth
 
     confirm "Would you like to setup wifi?" && setup_wifi
+
+    confirm "Would you like to setup a nvidia gpu?" && setup_nvidia
+
 }
 
 print_welcome(){
@@ -380,7 +411,6 @@ echo "░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░  ░▒▓█
 echo "░▒▓███████▓▒░░▒▓█▓▒░  ░▒▓█▓▒░  ░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░     ░▒▓███████▓▒░        ░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓██████▓▒░  ";
 echo "                                                                                                                                                                                                               ";
 echo "                                                                                                                                                                                                               ";
-
 
 }
 
@@ -459,6 +489,14 @@ confirm "Would you like a general hardware setup?" && DO_HARDWARE=1
 
 # base is mandatory
 install_base
+
+# check if yay is installed
+if ! command -v yay &> /dev/null
+then
+    print_warning "yay is not installed, it going to be setup now..."
+    setup_yay
+fi
+
 
 if [[ "$DO_HYPR" = 1 ]]; then
     install_hyprland

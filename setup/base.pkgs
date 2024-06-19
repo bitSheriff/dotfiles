@@ -3,3 +3,5 @@ git
 nemo                                                                # gtk file manager 
 nemo-compare                                                        # compare with meld in the file manager
 zsh
+ttf-jetbrains-mono-nerd
+ttf-nerd-fonts-symbols-mono
