@@ -12,7 +12,7 @@ echo "\n\n"
 
 # Remove unused packages (autoclean)
 echo "Pacman autocleaning..."
-sudo pacman -R $(pacman -Qdtq)
+sudo pacman -Rcns $(pacman -Qdtq)
 
 # Update flatpak applications
 echo "Updating flatpak applications..."
