@@ -8,7 +8,6 @@ print_logo_system_update
 # Update the system with pacman
 print_h2 "Updating system with pacman"
 sudo pacman -Syu --noconfirm
-echo "\n\n"
 
 # Update the AUR packages with yay
 print_h2 "Updating AUR packages with yay"
