@@ -1,8 +1,9 @@
 #!/bin/bash 
 
 source my_lib.sh
+source logos.sh
 
-print_h1 "System Update"
+print_logo_system_update
 
 # Update the system with pacman
 print_h2 "Updating system with pacman"

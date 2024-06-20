@@ -1,4 +1,5 @@
 btop                                                                # tui system monitor
+coreutils                                                           # much needed core packages (md5sum, ...)
 git
 nemo                                                                # gtk file manager 
 nemo-compare                                                        # compare with meld in the file manager
