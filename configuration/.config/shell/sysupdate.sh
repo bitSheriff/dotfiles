@@ -12,7 +12,12 @@ echo "\n\n"
 
 # Remove unused packages (autoclean)
 echo "Pacman autocleaning..."
-sudo pacman -Rcns $(pacman -Qdtq)
+# check if there are packages to clean
+if pacman -Qdtq; then
+  sudo pacman -Rcns $(pacman -Qdtq)
+else
+  echo "nothing to clean"
+fi
 
 # Update flatpak applications
 echo "Updating flatpak applications..."
