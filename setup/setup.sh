@@ -351,6 +351,8 @@ setup_hardware(){
 
     confirm "Would you like to setup a nvidia gpu?" && setup_nvidia
 
+    confirm "Would you like to update firmware of different devices?" && fwupdmgr update
+
 }
 
 # ========================================
