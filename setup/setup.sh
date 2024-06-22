@@ -1,7 +1,9 @@
 #!/bin/bash
 
-source ../configuration/.config/shell/my_lib.sh 
-source ../configuration/.config/shell/logos.sh 
+DIR_NAME=$(dirname "$0")
+
+source "$DIR_NAME/../configuration/.config/shell/my_lib.sh"
+source "$DIR_NAME/../configuration/.config/shell/logos.sh"
 
 # ========================================
 # FLAGS
@@ -92,7 +94,7 @@ create_symlinks(){
     pacman_install_single stow
 
     # stow the packages (no idea why it does not work with $FLAGS)
-    stow  --adopt --restow -t ~ -d ..  configuration
+    stow  --adopt --restow -t ~ -d $DIR_NAME/..  configuration
 }
 
 remove_symlinks() {
