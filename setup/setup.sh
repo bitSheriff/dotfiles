@@ -67,7 +67,7 @@ pacman_install_file(){
 pacman_install_single(){
 
     # Check if the package is installed using yay
-    if ! pacman -Qi "$package_name" &> /dev/null; then
+    if ! pacman -Qi "$1" &> /dev/null; then
         sudo pacman $PACMAN_FLAGS -S "$1"
     fi
 }
