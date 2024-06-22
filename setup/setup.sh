@@ -259,6 +259,8 @@ install_optionals(){
 
     confirm "Install KDEConnect?" && pacman_install_single "kdeconnect"
 
+    confirm "Install MEGAsync (Mega Upload client)?" && yay_install_single "megasync"
+
 }
 
 setup_ssh_keys() {
