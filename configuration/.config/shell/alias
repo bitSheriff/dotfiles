@@ -40,6 +40,9 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 
+# my setup
+alias setup="bash $DOTFILES_DIR/setup/setup.sh"
+
 ## general linux commands simplified
 # param alias
 search_man() {
