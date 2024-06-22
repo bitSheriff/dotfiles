@@ -1,8 +1,9 @@
 btop                                                                # tui system monitor
 coreutils                                                           # much needed core packages (md5sum, ...)
+fzf                                                                 # fuzzy finder
 git
 nemo                                                                # gtk file manager 
 nemo-compare                                                        # compare with meld in the file manager
-zsh
 ttf-jetbrains-mono-nerd
 ttf-nerd-fonts-symbols-mono
+zsh
