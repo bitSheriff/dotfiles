@@ -22,6 +22,9 @@ else
   print_note "nothing to clean"
 fi
 
+print_h2 "Remove yay and pacman cache"
+yay -Scc --noconfirm
+
 # Update flatpak applications
 print_h2 "Updating flatpak applications"
 flatpak update -y
