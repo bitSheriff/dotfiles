@@ -386,6 +386,20 @@ if [[ "$ARG_MODE" = 'backup' ]]; then
     exit 0
 fi;
 
+if [[ "$ARG_MODE" = 'update' ]]; then
+
+    print_h1 "Update Setup"
+
+
+    # pull updates if possible
+    git -C "$DOTFILES_DIR" pull
+
+    # upadte the symlinks
+    create_symlinks
+    exit 0
+fi;
+
+
 if [[ "$ARG_MODE" = 'link' ]]; then
     create_symlinks
     exit 0
