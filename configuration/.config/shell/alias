@@ -113,8 +113,7 @@ memo(){
 
 # quick todo to daily note
 todo(){
-    echo "\n- [ ] $@" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
-    # echo "" >> ~/notes/Journal/Entries/Daily/$(date +"%F").md
+    ~/.config/shell/todo.sh $@
 }
 
 # add a note in the inbox note
