@@ -74,3 +74,20 @@ print_error(){
     echo -e "$BOLD_RED:::: $1 ::::$NC"
 }
 
+toggle_process(){
+
+    PROCESS_NAME="$1"
+
+    # Try to kill the process
+    killall "$PROCESS_NAME"
+
+    # Check the exit status of killall
+    if [ $? -eq 0 ]; then
+        echo "Process $PROCESS_NAME was running and has been killed."
+    else
+        echo "Process $PROCESS_NAME was not running. Starting it now."
+        # Start the process
+        $PROCESS_NAME &
+    fi
+
+}
