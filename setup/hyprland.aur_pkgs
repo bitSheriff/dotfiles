@@ -1,4 +1,5 @@
 #index-fm                    # newer KDE file manager
+adwaita-dark
 adwaita-qt5-git             # dark themes for qt5 apps
 adwaita-qt6-git             # dark themes for qt6 apps
 cava                        # Console-based Audio Visualizer for Alsa
