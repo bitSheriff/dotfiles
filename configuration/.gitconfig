@@ -5,6 +5,12 @@
 [core]
   editor = nvim
 
+[merge]
+  tool = meld
+
+[diff]
+  tool = meld
+
 [advice]
   addIgnoredFile = false
 
