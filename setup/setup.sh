@@ -4,6 +4,7 @@ DIR_NAME=$(dirname "$0")
 
 source "$DIR_NAME/../configuration/.config/shell/lib/my_lib.sh"
 source "$DIR_NAME/../configuration/.config/shell/lib/logos.sh"
+source "$DIR_NAME/../configuration/.config/shell/lib/cache.sh"
 
 # ========================================
 # FLAGS
@@ -13,6 +14,8 @@ PACMAN_FLAGS=" --needed "
 YAY_FLAGS=" --needed --answerdiff None --answerclean None --noconfirm"
 
 DEBUG=0
+
+APP_NAME="bitsheriff-setup"
 
 # get the arguemnts
 ARGV=("$@")
@@ -396,6 +399,29 @@ if [[ "$ARG_MODE" = 'update' ]]; then
     # pull updates if possible
     git -C "$DOTFILES_DIR" pull
 
+
+    # update the packages from the used bundles
+    if check_cache_option "$APP_NAME" "hyprland"; then
+        print_note "Hyprland Bundle detected"
+        install_hyprland
+    fi
+
+    if check_cache_option "$APP_NAME" "dev-tools"; then
+        print_note "Development Bundle detected"
+        install_dev_tools
+    fi
+
+    if check_cache_option "$APP_NAME" "office-tools"; then
+        print_note "Office Bundle detected"
+        install_office_tools
+    fi
+
+    if check_cache_option "$APP_NAME" "uni-tools"; then
+        print_note "University Bundle detected"
+        install_uni_tools
+    fi
+
+
     # upadte the symlinks
     create_symlinks
     exit 0
@@ -458,18 +484,22 @@ fi
 
 
 if [[ "$DO_HYPR" = 1 ]]; then
+    write_cache_option "$APP_NAME" "hyprland"
     install_hyprland
 fi;
 
 if [[ "$DO_DEV" = 1 ]]; then
+    write_cache_option "$APP_NAME" "dev-tools"
     install_dev_tools
 fi;
 
 if [[ "$DO_OFFICE" = 1 ]]; then
+    write_cache_option "$APP_NAME" "office-tools"
     install_office_tools
 fi;
 
 if [[ "$DO_UNI" = 1 ]]; then
+    write_cache_option "$APP_NAME" "uni-tools"
     install_uni_tools
 fi;
 
