@@ -447,6 +447,32 @@ if [[ "$ARG_MODE" = 'debug' ]]; then
     exit 0
 fi;
 
+if [[ "$ARG_MODE" = 'help' ||  "$ARG_MODE" = '--help' ||  "$ARG_MODE" = '-h' ]]; then
+    echo -e "
+SYNOPSIS
+  setup.sh [OPTIONS] [COMMAND]
+
+DESCRIPTION
+  This script is used to build NixOS styled application declaration to Arch.
+
+COMMANDS
+  update         Update the existing setup and configurations.
+  link           Create symbolic links for the project dependencies.
+  unlink         Remove symbolic links for the project dependencies.
+
+OPTIONS
+  -h, --help     Display this help message and exit.
+
+EXAMPLES
+  ./setup.sh update
+  ./setup.sh link
+  ./setup.sh unlink
+  ./setup.sh -h
+  ./setup.sh --help
+    ";
+
+    exit 0
+fi;
 
 # ========================================
 # Interactions
