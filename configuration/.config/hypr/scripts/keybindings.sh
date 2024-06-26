@@ -1,33 +1,13 @@
 #!/bin/bash
-#  _              _     _           _ _                  
-# | | _____ _   _| |__ (_)_ __   __| (_)_ __   __ _ ___  
-# | |/ / _ \ | | | '_ \| | '_ \ / _` | | '_ \ / _` / __| 
-# |   <  __/ |_| | |_) | | | | | (_| | | | | | (_| \__ \ 
-# |_|\_\___|\__, |_.__/|_|_| |_|\__,_|_|_| |_|\__, |___/ 
-#           |___/                             |___/      
-# by Stephan Raabe (2023) 
-# ----------------------------------------------------- 
+# Format JSON proper;y
+JSON=$(hyprkeys --from-ctl --json | jq -r --slurp "[.[]][0]");
 
-# ----------------------------------------------------- 
-# Get keybindings location based on variation
-# ----------------------------------------------------- 
-config_file=$(cat ~/.config/hypr/modules/keybindings.conf)
+USER_SELECTED=$(echo $JSON | jq -r '.[] | "\(.mods) \(.key) \(.dispatcher) \(.arg)"' | wofi --dmenu -p 'Keybinds' --define "dmenu-print_line_num=true");
 
-# ----------------------------------------------------- 
-# Path to keybindings config file
-# ----------------------------------------------------- 
-# config_file="/home/$USER$config_file"
-# echo "Reading from: $config_file"
+if [ -z "$USER_SELECTED" ]; then
+    exit 0;
+fi
 
-# ----------------------------------------------------- 
-# Parse keybindings
-# ----------------------------------------------------- 
-# keybinds=$(grep -oP '(?<=bind = ).*' $config_file)
-keybinds=$(echo "$config_files" | grep -oP '(?<=bind = ).*')
-keybinds=$(echo "$keybinds" | sed 's/$mainMod/SUPER/g'| sed 's/,\([^,]*\)$/ = \1/' | sed 's/, exec//g' | sed 's/^,//g')
-# ----------------------------------------------------- 
-# Show keybindings in rofi
-# ----------------------------------------------------- 
-echo "$keybinds"
-sleep 0.2
-wofi --show=dmenu "Keybinds" <<< "$keybinds"
+EVENT=$(echo $JSON | jq -r "[.[]] | .[$USER_SELECTED]" | jq -r '"\(.dispatcher) \(.arg)"');
+
+hyprctl dispatch "$EVENT";
