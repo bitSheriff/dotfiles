@@ -464,6 +464,7 @@ OPTIONS
   -h, --help     Display this help message and exit.
 
 EXAMPLES
+  ./setup.sh                    # interactive setup
   ./setup.sh update
   ./setup.sh link
   ./setup.sh unlink
