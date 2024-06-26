@@ -16,6 +16,10 @@ YAY_FLAGS=" --needed --answerdiff None --answerclean None --noconfirm"
 DEBUG=0
 
 APP_NAME="bitsheriff-setup"
+CACHE_HYPRLAND="hyprland"
+CACHE_DEV="dev-tools"
+CACHE_OFFICE="office-tools"
+CACHE_UNI="uni-tools"
 
 # get the arguemnts
 ARGV=("$@")
@@ -401,22 +405,22 @@ if [[ "$ARG_MODE" = 'update' ]]; then
 
 
     # update the packages from the used bundles
-    if check_cache_option "$APP_NAME" "hyprland"; then
+    if check_cache_option "$APP_NAME" "$CACHE_HYPRLAND"; then
         print_note "Hyprland Bundle detected"
         install_hyprland
     fi
 
-    if check_cache_option "$APP_NAME" "dev-tools"; then
+    if check_cache_option "$APP_NAME" "$CACHE_DEV"; then
         print_note "Development Bundle detected"
         install_dev_tools
     fi
 
-    if check_cache_option "$APP_NAME" "office-tools"; then
+    if check_cache_option "$APP_NAME" "$CACHE_OFFICE"; then
         print_note "Office Bundle detected"
         install_office_tools
     fi
 
-    if check_cache_option "$APP_NAME" "uni-tools"; then
+    if check_cache_option "$APP_NAME" "$CACHE_UNI"; then
         print_note "University Bundle detected"
         install_uni_tools
     fi
@@ -484,22 +488,22 @@ fi
 
 
 if [[ "$DO_HYPR" = 1 ]]; then
-    write_cache_option "$APP_NAME" "hyprland"
+    write_cache_option "$APP_NAME" "$CACHE_HYPRLAND"
     install_hyprland
 fi;
 
 if [[ "$DO_DEV" = 1 ]]; then
-    write_cache_option "$APP_NAME" "dev-tools"
+    write_cache_option "$APP_NAME" "$CACHE_DEV"
     install_dev_tools
 fi;
 
 if [[ "$DO_OFFICE" = 1 ]]; then
-    write_cache_option "$APP_NAME" "office-tools"
+    write_cache_option "$APP_NAME" "$CACHE_OFFICE"
     install_office_tools
 fi;
 
 if [[ "$DO_UNI" = 1 ]]; then
-    write_cache_option "$APP_NAME" "uni-tools"
+    write_cache_option "$APP_NAME" "$CACHE_UNI"
     install_uni_tools
 fi;
 
