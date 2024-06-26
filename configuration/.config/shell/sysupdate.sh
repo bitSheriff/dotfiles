@@ -1,7 +1,7 @@
 #!/bin/bash 
 
-source ~/.config/shell/my_lib.sh
-source ~/.config/shell/logos.sh
+source ~/.config/shell/lib/my_lib.sh
+source ~/.config/shell/lib/logos.sh
 
 print_logo_system_update
 
