@@ -268,6 +268,8 @@ install_optionals(){
 
     confirm "Install MEGAsync (Mega Upload client)?" && yay_install_single "megasync"
 
+    confirm "Install MATLAB?" && bash ./matlab.sh
+
 }
 
 setup_ssh_keys() {
