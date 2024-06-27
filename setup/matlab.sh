@@ -8,10 +8,10 @@ DESTINATION="$HOME/Applications/Matlab_$VERSION"
 wget -P "$HOME/Downloads" https://www.mathworks.com/mpm/glnxa64/mpm
 
 # make it executable
-chmod +x "$HOME/mpm"
+chmod +x "$HOME/Downloads/mpm"
 
 # call the setup with version
-bash "$HOME/Downloads/mpm" --release="$VERSION" --products "$PRODUCTS" --destination="$DESTINATION"
+bash "$HOME/Downloads/mpm" install --release="$VERSION" --products "$PRODUCTS" --destination="$DESTINATION"
 
 # create desktop file
 
@@ -25,4 +25,4 @@ Icon=matlab
 Categories=Development;Math;Science
 Comment=Scientific computing environment
 StartupNotify=true
-" > /usr/share/applications/matlab.desktop
+" > "$HOME/.local/share/applications/matlab.desktop"
