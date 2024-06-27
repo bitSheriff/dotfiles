@@ -472,6 +472,10 @@
    urgency = normal
    frame_color = "#50fa7b"
 
+[WhatsApp]
+   appname = whatsapp-for-linux
+   urgency = normal
+   frame_color = "#206431"
 
 [Matrix]
    appname = Element
@@ -488,7 +492,7 @@
    urgency = normal
    frame_color = "#00b8ff"
 
-[signal]
+[ticktick]
    appname = ticktick
    urgency = normal
    frame_color = "#00fff9"
