@@ -6,8 +6,36 @@ INBOX_POST=""
 
 # Journal File where the memo gets added
 INBOX_FILE="$INBOX"
+INBOX_DIR="$(dirname -- $INBOX_FILE)"
 
-OPTSTRING=":c"
+OPTSTRING=":cn"
+
+create_inbox_file() {
+
+  # line conter
+  count=0
+  filename=""
+
+  while IFS= read -r line; do
+
+    # just print the preamble on the first line
+    if [ $count -eq 0 ]; then
+      # the first line is the name of the file
+      filename="$INBOX_DIR/$line.md"
+
+      # write the name of the file as first Heading
+      echo -e "# $line" >> "$filename"
+
+    else
+      # Process the remaining lines
+      echo -e "$line" >> "$filename"
+    fi
+
+    # Increment the counter
+    count=$((count + 1))
+  done
+}
+
 
 while getopts ${OPTSTRING} opt; do
   case ${opt} in
@@ -15,6 +43,9 @@ while getopts ${OPTSTRING} opt; do
       echo -e "\n$(wl-paste)" >> "$INBOX_FILE"
       exit 0
       ;;
+    n) # create new file
+      create_inbox_file
+      exit 0;
   esac
 done
 
@@ -28,7 +59,7 @@ else
   # Otherwise, read from stdin
   
   # line conter
-  count=0
+  local count=0
 
   while IFS= read -r line; do
 
