@@ -272,6 +272,8 @@ install_optionals(){
 
     confirm "Install MATLAB?" && bash ./matlab.sh
 
+    confirm "Install Maple?" && bash ./maple.sh
+
 }
 
 setup_ssh_keys() {
