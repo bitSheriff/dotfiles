@@ -2,6 +2,8 @@ btop                                                                # tui system
 coreutils                                                           # much needed core packages (md5sum, ...)
 fzf                                                                 # fuzzy finder
 git
+glibc
+ld-lsb                                                              # Linux Standard Base Runtime
 nemo                                                                # gtk file manager 
 ttf-jetbrains-mono-nerd
 ttf-nerd-fonts-symbols-mono
