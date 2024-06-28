@@ -8,4 +8,5 @@ pdfgrep                     # search through pdf files in terminal
 poppler-glib                # pdf rendering library
 signal-desktop              # secure messaging
 telegram-desktop            # (not so) secure messaging
+thunderbird                 # email client
 veracrypt                   # encryption software   
