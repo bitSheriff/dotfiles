@@ -9,7 +9,6 @@ doxygen                     # documentation engine
 element-desktop             # Matrix Client
 eza
 fastfetch                   # neofetch alternative
-filezilla                   # ftp client
 firefox
 flatpak
 glow                        # cli markdown renderer
