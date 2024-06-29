@@ -23,6 +23,7 @@ alias clock="peaclock --config-dir ~/.config/peaclock" # cli-clock
 alias cp="cp -r" # always copy recursive
 alias py="python3"
 alias term="kitty . &; disown" # open a new terminal at the same location
+alias hugo-server="cd ~/code/bitSheriff.github.io && hugo server --buildDrafts" # hugo server
 
 # open file with standard program
 alias open="xdg-open"
