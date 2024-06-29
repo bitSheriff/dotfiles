@@ -13,6 +13,7 @@ firefox
 flatpak
 glow                        # cli markdown renderer
 gnome-boxes                 # qemu/kvm frontend
+hugo                        # static blogging engine
 jupyterlab
 kate                        # file editor
 kitty                       # best terminal in the world

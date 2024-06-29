@@ -3,6 +3,7 @@ ghostwriter                 # markdown editor
 glow                        # cli markdown renderer
 gwenview                    # image viewer
 haruna                      # video player
+hugo                        # static blogging engine
 okular                      # document viewer
 pdfgrep                     # search through pdf files in terminal
 poppler-glib                # pdf rendering library
