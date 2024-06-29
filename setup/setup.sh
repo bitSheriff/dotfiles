@@ -39,6 +39,7 @@ DO_ZSH=0
 DO_GIT=0
 DO_SYMLINKS=0
 DO_HARDWARE=0
+DO_NIX_PKGS=0
 
 
 
@@ -66,6 +67,10 @@ install_from_backup(){
 
     echo "Install AUR Packages"
     yay $YAY_FLAGS -S - < pkglist_aur.txt
+}
+
+nix_install_file(){
+    nix-env -irf "$1"
 }
 
 pacman_install_file(){
@@ -167,6 +172,12 @@ setup_repositories(){
 }
 
 install_pkgfiles(){
+
+    # install nix packages if enabled
+    if [[ -f "$1.nix" && "$DO_NIX_PKGS" = 1 ]]; then
+        print_h2 "Installing nix packages from $1"
+        nix_install_file "$1.nix"
+    fi;
 
     # check if the pacman file in the first arguemnt exists
     if [[ -f "$1.pkgs" ]]; then
