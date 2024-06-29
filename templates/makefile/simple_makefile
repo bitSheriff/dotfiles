@@ -1,0 +1,41 @@
+# Makefile for compiling main.c and setting a define for the latest Git tag
+
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c11
+
+# Find the latest Git tag using git describe
+GIT_TAG := $(shell git describe --abbrev=0 --tags)
+
+# Define for the latest Git tag
+CFLAGS += -DVERSION=\"$(GIT_TAG)\"
+
+# Source files directory
+SRC_DIR = src
+
+# Main source file (change as needed)
+MAIN_SRC = $(SRC_DIR)/main.c
+
+# Get all .c files from src/ directory except main.c
+SRCS = $(filter-out $(MAIN_SRC), $(wildcard $(SRC_DIR)/*.c))
+
+# Object files
+OBJS = $(SRCS:.c=.o)
+
+# Executable name
+EXEC = myprogram
+
+# Default target
+all: $(EXEC)
+
+$(EXEC): $(OBJS) $(MAIN_SRC)
+    $(CC) $(CFLAGS) -o $@ $^
+
+# Compile .c to .o
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
+    $(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+    rm -f $(SRC_DIR)/*.o $(EXEC)
+
+.PHONY: all clean
+
