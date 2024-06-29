@@ -69,9 +69,6 @@ install_from_backup(){
     yay $YAY_FLAGS -S - < pkglist_aur.txt
 }
 
-nix_install_file(){
-    nix-env -irf "$1"
-}
 
 pacman_install_file(){
     # remove comments and spaces at the end of the line
@@ -98,6 +95,13 @@ yay_install_single(){
 flatpak_install(){
     # remove comments and spaces at the end of the line
     grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | xargs flatpak install -y 
+}
+
+nix_install_file(){
+
+    pacman_install_single "nix"
+
+    nix-env -irf "$1"
 }
 
 create_symlinks(){
