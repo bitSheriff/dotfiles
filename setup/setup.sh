@@ -101,9 +101,9 @@ create_symlinks(){
     pacman_install_single stow
 
     # stow the packages (no idea why it does not work with $FLAGS)
-    stow  --adopt --restow -t ~ -d $DIR_NAME/..  configuration
+    stow -t ~ -d $DIR_NAME/..  configuration
 
-    stow  --adopt --restow -t ~/Templates -d $DIR_NAME/..  templates
+    stow -t ~/Templates -d $DIR_NAME/..  templates
 }
 
 remove_symlinks() {
