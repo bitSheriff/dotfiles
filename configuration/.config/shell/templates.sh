@@ -16,9 +16,6 @@ if [ -z "$selected_file" ]; then
     exit 1
 fi
 
-# Prompt for a new filename
-read -p "Enter new filename (leave empty to use original name): " new_filename
-
 # Determine the actual file to copy if it's a symlink
 if [ -L "$selected_file" ]; then
     target_file=$(readlink -f "$selected_file")
@@ -29,6 +26,10 @@ if [ -L "$selected_file" ]; then
 else
     target_file="$selected_file"
 fi
+
+# Prompt for a new filename
+echo "Enter new filename (leave empty to use original name): "
+read new_filename
 
 # Set the destination filename
 if [ -z "$new_filename" ]; then
