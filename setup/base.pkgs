@@ -1,6 +1,7 @@
 atuin                                                               # better shell history
 btop                                                                # tui system monitor
 coreutils                                                           # much needed core packages (md5sum, ...)
+fd                                                                  # better and faster find tool
 fzf                                                                 # fuzzy finder
 git
 glibc

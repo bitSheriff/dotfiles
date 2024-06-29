@@ -7,8 +7,8 @@ if [ ! -d "$TEMPLATE_DIR" ]; then
     exit 1
 fi
 
-# Use fzf to select a file or symlink from the ~/Templates directory
-selected_file=$(find "$TEMPLATE_DIR" -type f -o -type l | fzf --height=10 --reverse --border)
+# Use fd to recursively select only files and symlinks (excluding directories)
+selected_file=$(fd --type f --type l --follow --exclude .git . "$TEMPLATE_DIR" | fzf --height=10 --reverse --border --bind 'tab:accept')
 
 # Check if a file was selected
 if [ -z "$selected_file" ]; then
@@ -16,16 +16,28 @@ if [ -z "$selected_file" ]; then
     exit 1
 fi
 
-# If the selected file is a symlink, copy the target of the symlink
+# Prompt for a new filename
+read -p "Enter new filename (leave empty to use original name): " new_filename
+
+# Determine the actual file to copy if it's a symlink
 if [ -L "$selected_file" ]; then
     target_file=$(readlink -f "$selected_file")
     if [ ! -f "$target_file" ]; then
         echo "The target of the symlink $selected_file does not exist or is not a regular file."
         exit 1
     fi
-    cp "$target_file" .
-    echo "Copied $(basename "$target_file") to $(pwd) (target of symlink)"
 else
-    cp "$selected_file" .
-    echo "Copied $(basename "$selected_file") to $(pwd)"
+    target_file="$selected_file"
 fi
+
+# Set the destination filename
+if [ -z "$new_filename" ]; then
+    dest_filename=$(basename "$target_file")
+else
+    dest_filename="$new_filename"
+fi
+
+# Copy the file
+cp "$target_file" "./$dest_filename"
+
+echo "Copied $(basename "$target_file") to $(pwd) as $dest_filename"
