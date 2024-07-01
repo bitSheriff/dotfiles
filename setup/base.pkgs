@@ -5,8 +5,10 @@ fd                                                                  # better and
 fzf                                                                 # fuzzy finder
 git
 glibc
+gum                                                                 # shell library for user
 ld-lsb                                                              # Linux Standard Base Runtime
 nemo                                                                # gtk file manager 
+python
 ripgrep
 ttf-jetbrains-mono-nerd
 ttf-nerd-fonts-symbols-mono
