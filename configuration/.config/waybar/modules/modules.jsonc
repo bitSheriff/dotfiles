@@ -247,9 +247,14 @@
   "format" : "󰨞",
   "on-click" : "code",
   "tooltip" : "Open the Code"
+},
+
+
+"custom/app-waypaper" : {
+  "format" : "",
+  "on-click" : "waypaper",
+  "tooltip" : "Change the Wallpaper"
 }
-
-
 
 // global end
 }
