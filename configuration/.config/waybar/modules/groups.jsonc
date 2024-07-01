@@ -1,4 +1,20 @@
 {
+
+  "group/apps": {
+    "orientation": "inherit",
+    "drawer": {
+        "transition-duration": 500,
+        "transition-left-to-right": true,
+        "children-class": "systray",
+    },
+    "modules": [
+      "custom/app-launcher", 
+      "custom/app-calc", 
+      "custom/app-code", 
+    ]
+  },
+
+
   "group/systray": {
     "orientation": "horizontal",
     "modules": [
@@ -8,6 +24,7 @@
       "custom/dnd"
     ],
   },
+
   "group/end-right-module": {
     "orientation": "horizontal",
     "modules": [

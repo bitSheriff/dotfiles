@@ -229,5 +229,27 @@
     "format": "{percentage_used}% ",
     "path": "/",
 },
+
+
+"custom/app-launcher" : {
+  "format" : "",
+  "on-click" : "fuzzel",
+  "tooltip" : "Opent the App Launcher"
+},
+
+"custom/app-calc" : {
+  "format" : "󰪚",
+  "on-click" : "speedcrunch",
+  "tooltip" : "Open the Calculator"
+},
+
+"custom/app-code" : {
+  "format" : "󰨞",
+  "on-click" : "code",
+  "tooltip" : "Open the Code"
+}
+
+
+
 // global end
 }

@@ -55,9 +55,8 @@ window#waybar {
 #disk,
 #temperature,
 #network {
-  padding: 0px 14px;
   border-radius: 20px;
-  border: 0.19em solid @neon-purple;
+  padding: 0px 8px;
   background-color: @background;
   color: @foreground;
 }
@@ -258,4 +257,17 @@ window#waybar {
   padding: 0px 6px;
   color: @red;
   opacity: 1.0;
+}
+
+#apps {
+  padding: 0px 8px;
+  border-radius: 20px;
+  border: 0.19em solid @neon-cyan;
+  background-color: @background;
+  color: @foreground;
+}
+
+#custom-app-launcher,
+#custom-app-calc {
+  padding: 0px 8px;
 }
