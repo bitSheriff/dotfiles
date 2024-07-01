@@ -38,6 +38,11 @@
 
  "group/system": {
     "orientation": "horizontal",
+    "drawer": {
+        "transition-duration": 500,
+        "transition-left-to-right": false,
+        "children-class": "systray",
+    },
     "modules": [
       "cpu",
       "memory",
