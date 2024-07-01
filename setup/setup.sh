@@ -273,23 +273,23 @@ install_latex(){
 install_optionals(){
     print_h1 "Optional Packages"
 
-    confirm "Install LibreOffice Suite?" && pacman_install_single "libreoffice"
+    gum confirm --default=false  "Install LibreOffice Suite?" && pacman_install_single "libreoffice"
 
-    confirm "Install Termius (SSH Client)?" && yay_install_single "termius"
+    gum confirm --default=false  "Install Termius (SSH Client)?" && yay_install_single "termius"
 
-    confirm "Install Mint WebApp Manager?" && yay_install_single "webapp-manager"
+    gum confirm --default=false  "Install Mint WebApp Manager?" && yay_install_single "webapp-manager"
 
-    confirm "Install fake hacker tool 'hollywood'?" && yay_install_single "hollywood"
+    gum confirm --default=false  "Install fake hacker tool 'hollywood'?" && yay_install_single "hollywood"
 
-    confirm "Install KDEConnect?" && pacman_install_single "kdeconnect"
+    gum confirm --default=false  "Install KDEConnect?" && pacman_install_single "kdeconnect"
 
-    confirm "Install MEGAsync (Mega Upload client)?" && yay_install_single "megasync"
+    gum confirm --default=false  "Install MEGAsync (Mega Upload client)?" && yay_install_single "megasync"
 
-    confirm "Install WhatsApp?" && yay_install_single "whatsapp-for-linux"
+    gum confirm --default=false  "Install WhatsApp?" && yay_install_single "whatsapp-for-linux"
 
-    confirm "Install MATLAB?" && bash ./matlab.sh
+    gum confirm --default=false  "Install MATLAB?" && bash ./matlab.sh
 
-    confirm "Install Maple?" && bash ./maple.sh
+    gum confirm --default=false  "Install Maple?" && bash ./maple.sh
 
 }
 
@@ -379,23 +379,22 @@ setup_hardware(){
 
     print_h2 "Hardware Setup"
 
-    confirm "Would you like to setup bluetooth?" && setup_bluetooth
+    gum confirm --default=false  "Would you like to setup bluetooth?" && setup_bluetooth
 
-    confirm "Would you like to setup wifi?" && setup_wifi
+    gum confirm --default=false  "Would you like to setup wifi?" && setup_wifi
 
-    confirm "Would you like to setup a nvidia gpu?" && setup_nvidia
+    gum confirm --default=false  "Would you like to setup a nvidia gpu?" && setup_nvidia
 
-    confirm "Would you like to update firmware of different devices?" && fwupdmgr update
-
-}
-
-# ========================================
-# Flow Start & Arguemnt Handling
-# ========================================
-
-if [[ ${#ARGV[@]} = 0 ]]; then
-    print_logo_config
-
+    gum confirm --default=false  "Would you like to update firmware of different devices?" && fwupdmgr update
+} 
+           
+# ==confirm======================================
+# Fl       ow Start & Arguemnt Handling
+# ==confirm======================================
+           
+if [confirm[ ${#ARGV[@]} = 0 ]]; then
+           print_logo_config
+    confirm
     print_h1 "Welcome to my setup script"
     echo "the interactive setup will start now"
     echo -e "please stand by ...\n\n"
@@ -501,25 +500,25 @@ fi;
 # ========================================
 # Interactions
 # ========================================
-confirm "Would you like to setup SSH keys?" && setup_ssh_keys
+gum confirm --default=false  "Would you like to setup SSH keys?" && setup_ssh_keys
 
-confirm "Would you like to install Hyprland & Co?" && DO_HYPR=1
+gum confirm --default=false  "Would you like to install Hyprland & Co?" && DO_HYPR=1
 
-confirm "Would you like to install the Development Tools?" && DO_DEV=1
+gum confirm --default=false  "Would you like to install the Development Tools?" && DO_DEV=1
 
-confirm "Would you like to install the Office Tools?" && DO_OFFICE=1
+gum confirm --default=false  "Would you like to install the Office Tools?" && DO_OFFICE=1
 
-confirm "Would you like to install the University Tools?" && DO_UNI=1
+gum confirm --default=false  "Would you like to install the University Tools?" && DO_UNI=1
 
-confirm "Would you like to install the LaTeX?" && DO_LATEX=1
+gum confirm --default=false  "Would you like to install the LaTeX?" && DO_LATEX=1
 
-confirm "Would you like to checkout the provided repositories?" && DO_GIT=1
+gum confirm --default=false  "Would you like to checkout the provided repositories?" && DO_GIT=1
 
-confirm "[INTERACTIVE] Would you like to install the opional packages?" && DO_OPTIONALS=1
+gum confirm --default=false  "[INTERACTIVE] Would you like to install the opional packages?" && DO_OPTIONALS=1
 
-confirm "Would you like to link the dotfiles?" && DO_SYMLINKS=1
+gum confirm --default=false  "Would you like to link the dotfiles?" && DO_SYMLINKS=1
 
-confirm "Would you like a general hardware setup?" && DO_HARDWARE=1
+gum confirm --default=false  "Would you like a general hardware setup?" && DO_HARDWARE=1
 
 
 # ========================================
