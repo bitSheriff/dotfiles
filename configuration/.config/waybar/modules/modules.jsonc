@@ -249,12 +249,18 @@
   "tooltip" : "Open the Code"
 },
 
-
 "custom/app-waypaper" : {
   "format" : "",
   "on-click" : "waypaper",
   "tooltip" : "Change the Wallpaper"
+},
+
+"custom/app-clipboard" : {
+  "format" : "",
+  "on-click" : "cliphist list | wofi --dmenu | cliphist decode | wl-copy",
+  "tooltip" : "Open the Clipboard"
 }
+
 
 // global end
 }
