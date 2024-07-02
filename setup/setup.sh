@@ -243,27 +243,25 @@ install_hyprland(){
     DO_ZSH=1
 }
 
-setup_github(){
-
-    pacman_install_single "github-cli"
-
-    print_h2 "GitHub"
-    print_note "Authentication"
-    gh auth login
-
-    print_note "Adding ssh-keys to GitHub"
-
-    local title=$(gum input --placeholder "ssh title for GitHub")
-
-    gh ssh-key add ~/.ssh/id_ed25519.pub -t "$title"
-}
-
 install_dev_tools(){
 
     print_h1 "Development Tools"
     install_pkgfiles "dev"
 
-    gum confirm --default=false  "Setup GitHub connection?" && setup_github
+    gum confirm --default=false  "Setup GitHub connection?" && (
+        print_h2 "GitHub"
+        pacman_install_single "github-cli"
+
+        print_note "Authentication"
+        gh auth login
+
+        print_note "Adding ssh-keys to GitHub"
+
+        local title=$(gum input --placeholder "ssh title for GitHub")
+
+        gh ssh-key add ~/.ssh/id_ed25519.pub -t "$title"
+
+    )
 
     DO_ZSH=1
 }
@@ -282,9 +280,8 @@ install_uni_tools(){
 
 install_latex(){
 
-    ^
     print_note "LaTeX installation needs a lot of space"
-    install_pkgfiles "latex"
+    gum confirm --default=true "Continue anyways?" && install_pkgfiles "latex"
 }
 
 
@@ -346,38 +343,6 @@ setup_ssh_keys() {
     read -n 1 -s -r -p "Press any key to continue and add the SSH key to your server..."
 }
 
-setup_bluetooth(){
-
-    print_h3 "Bluetooth Setup"
-
-    # install needed packages
-    pacman_install_single "bluez"
-    pacman_install_single "bluetoothctl"
-    pacman_install_single "blueman"         # bluetooth manager, GUI
-
-    # activate the service
-    sudo systemctl enable bluetooth
-    sudo systemctl start bluetooth
-}
-
-setup_wifi(){
-
-    print_h3 "WiFi Setup"
-}
-
-setup_nvidia(){
-
-    print_h3 "Nvidia Setup"
-
-    pacman_install_single "linux-headers"
-    pacman_install_single "nvidia-dkms"
-    pacman_install_single "nvidia-utils"
-    pacman_install_single "ib32-nvidia-utils"
-    pacman_install_single "egl-wayland"
-    pacman_install_single "libva-nvidia-driver"
-
-}
-
 setup_yay(){
 
     # install needed packages to build yay
@@ -397,11 +362,36 @@ setup_hardware(){
 
     print_h2 "Hardware Setup"
 
-    gum confirm --default=false  "Would you like to setup bluetooth?" && setup_bluetooth
+    gum confirm --default=false  "Would you like to setup bluetooth?" && (
+        print_h3 "Bluetooth Setup"
 
-    gum confirm --default=false  "Would you like to setup wifi?" && setup_wifi
+        # install needed packages
+        pacman_install_single "bluez"
+        pacman_install_single "bluetoothctl"
+        pacman_install_single "blueman"         # bluetooth manager, GUI
 
-    gum confirm --default=false  "Would you like to setup a nvidia gpu?" && setup_nvidia
+        # activate the service
+        sudo systemctl enable bluetooth
+        sudo systemctl start bluetooth
+
+    )
+
+    gum confirm --default=false  "Would you like to setup wifi?" && (
+        print_h3 "WiFi Setup"
+
+    )
+
+    gum confirm --default=false  "Would you like to setup a nvidia gpu?" && (
+        print_h3 "Nvidia Setup"
+
+        pacman_install_single "linux-headers"
+        pacman_install_single "nvidia-dkms"
+        pacman_install_single "nvidia-utils"
+        pacman_install_single "ib32-nvidia-utils"
+        pacman_install_single "egl-wayland"
+        pacman_install_single "libva-nvidia-driver"
+
+    )
 
     gum confirm --default=false  "Would you like to update firmware of different devices?" && fwupdmgr update
 } 
