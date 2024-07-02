@@ -11,6 +11,7 @@ eza
 fastfetch                   # neofetch alternative
 firefox
 flatpak
+github-cli                  # github in the terminal
 glow                        # cli markdown renderer
 gnome-boxes                 # qemu/kvm frontend
 hugo                        # static blogging engine
