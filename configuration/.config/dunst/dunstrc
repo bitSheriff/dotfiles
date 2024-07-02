@@ -477,6 +477,12 @@
    urgency = normal
    frame_color = "#206431"
 
+[WhatsApp] # WhatsApp Schatz
+   appname = whatsapp-for-linux
+   summary = Schatz
+   urgency = critical
+   frame_color = "#ff5555"
+
 [Matrix]
    appname = Element
    urgency = normal
@@ -502,4 +508,12 @@
 #    set_stack_tag = "volume"
 #
 # vim: ft=cfg
+
+###############
+# IGNORE LIST
+###############
+
+[skip-rule] 
+appname=Toggl Track
+skip_display=true
 
