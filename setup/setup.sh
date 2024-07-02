@@ -243,10 +243,25 @@ install_hyprland(){
     DO_ZSH=1
 }
 
+setup_github(){
+
+    pacman_install_single "github-cli"
+
+    print_h2 "GitHub"
+    print_note "Authentication"
+    gh auth login
+
+    print_note "Adding ssh-keys to GitHub"
+    gh ssh-key add ~/.ssh/id_ed25519.pub
+}
+
 install_dev_tools(){
 
     print_h1 "Development Tools"
     install_pkgfiles "dev"
+
+    gum confirm --default=false  "Setup GitHub connection?" && setup_github
+
     DO_ZSH=1
 }
 
