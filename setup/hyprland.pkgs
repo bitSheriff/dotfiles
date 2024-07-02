@@ -13,6 +13,8 @@ hyprland                    # Hyprland
 hyprlock                    # Lockscreen
 hyprpaper                   # Wallpaper manager
 kvantum                     # Theme manager for KDE applications
+kwallet
+kwalletmanager              # GUI to edit KWallet
 mpv                         # Video player (minimalistic)
 network-manager-applet      # Network manager applet
 networkmanager              # Network manager
