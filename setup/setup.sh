@@ -261,7 +261,12 @@ install_dev_tools(){
 
         gh ssh-key add ~/.ssh/id_ed25519.pub -t "$title"
 
+        gum confirm --default=false "Install extensions for github-cli?" && (
+            gum confirm --default=false "Graph" &&  gh extension install kawarimidoll/gh-graph
+            gum confirm --default=false "Dash (Issue/Pull-Request viewer)" &&  gh extension install dlvhdr/gh-dash
+        )
     )
+
 
     DO_ZSH=1
 }
