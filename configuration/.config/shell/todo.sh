@@ -13,7 +13,9 @@ if [ $# -gt 0 ]; then
   input="$*"
   echo "$TODO_PRE" "$input" >> "$JOURNAL"
 else
-  # Otherwise, read from stdin
+
+  # Otherwise, use gum write to get the input
+  input=$(gum write --header "Todo" --show-line-numbers --width 100 --height 200 )
   
   # line conter
   count=0
@@ -31,5 +33,5 @@ else
 
     # Increment the counter
     count=$((count + 1))
-  done
+  done <<< "$input"
 fi
