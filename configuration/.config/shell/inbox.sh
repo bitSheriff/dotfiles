@@ -57,7 +57,7 @@ if [ $# -gt 0 ]; then
   echo -e "\n$input\n" >> "$INBOX_FILE"
 else
   # Otherwise, use gum write to get the input (stdin)
-  input=$(gum write --header "Inbox" --show-line-numbers)
+  input=$(gum write --header "Inbox" --show-line-numbers --width 100 --height 200 )
 
   # line conter
   local count=0
