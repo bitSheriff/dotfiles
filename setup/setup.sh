@@ -252,7 +252,10 @@ setup_github(){
     gh auth login
 
     print_note "Adding ssh-keys to GitHub"
-    gh ssh-key add ~/.ssh/id_ed25519.pub
+
+    local title=$(gum input --placeholder "ssh title for GitHub")
+
+    gh ssh-key add ~/.ssh/id_ed25519.pub -t "$title"
 }
 
 install_dev_tools(){
@@ -407,9 +410,8 @@ setup_hardware(){
 # Fl       ow Start & Arguemnt Handling
 # ==confirm======================================
            
-if [confirm[ ${#ARGV[@]} = 0 ]]; then
-           print_logo_config
-    confirm
+if [[ ${#ARGV[@]} = 0 ]]; then
+    print_logo_config
     print_h1 "Welcome to my setup script"
     echo "the interactive setup will start now"
     echo -e "please stand by ...\n\n"
