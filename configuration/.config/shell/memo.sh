@@ -13,13 +13,15 @@ if [ $# -gt 0 ]; then
   input="$*"
   echo "$MEMO_PRE" "$input" >> "$JOURNAL"
 else
-  # Otherwise, read from stdin
-  
-  # line conter
+
+  # Otherwise, use gum write to get the input
+  input=$(gum write --header "Memo" --show-line-numbers)
+
+  # line counter
   count=0
 
+  # Process the input line by line
   while IFS= read -r line; do
-
     # just print the preamble on the first line
     if [ $count -eq 0 ]; then
       # Process the first line differently
@@ -31,5 +33,5 @@ else
 
     # Increment the counter
     count=$((count + 1))
-  done
+  done <<< "$input"
 fi

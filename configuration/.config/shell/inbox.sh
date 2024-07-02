@@ -56,8 +56,9 @@ if [ $# -gt 0 ]; then
   input="$*"
   echo -e "\n$input\n" >> "$INBOX_FILE"
 else
-  # Otherwise, read from stdin
-  
+  # Otherwise, use gum write to get the input (stdin)
+  input=$(gum write --header "Inbox" --show-line-numbers)
+
   # line conter
   local count=0
 
@@ -75,7 +76,8 @@ else
 
     # Increment the counter
     count=$((count + 1))
-  done
+  done <<< "$input"
+
   echo -e "\n" >> "$INBOX_FILE"
 
 fi
