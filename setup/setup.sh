@@ -41,6 +41,8 @@ DO_SYMLINKS=0
 DO_HARDWARE=0
 DO_NIX_PKGS=0
 
+PLEASE_REBOOT=0
+
 
 
 # ========================================
@@ -400,7 +402,16 @@ setup_hardware(){
 
     gum confirm --default=false  "Would you like to update firmware of different devices?" && fwupdmgr update
 
-    gum confirm --default=false  "Would you like to use Logitech devices?" && pacman_install_single "solaar"
+    gum confirm --default=false  "Would you like to use Logitech devices?" && (
+        # install the GUI application to manage logitech devices
+        pacman_install_single "solaar"
+
+        # relaod the rules
+        sudo udevadm control --reload-rules
+
+        # set flag for user message
+        PLEASE_REBOOT=1;
+    )
 } 
            
 # ==confirm======================================
@@ -598,3 +609,8 @@ if [[ "$DO_HARDWARE" = 1 ]]; then
     setup_hardware
 fi;
 
+if [[ "$PLEASE_REBOOT" = 1 ]]; then
+    print_warning "Please reboot your computer"
+    gum confirm --default=false  "Do you want to reboot now?" && sudo reboot
+
+fi;
