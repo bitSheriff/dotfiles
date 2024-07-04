@@ -399,6 +399,8 @@ setup_hardware(){
     )
 
     gum confirm --default=false  "Would you like to update firmware of different devices?" && fwupdmgr update
+
+    gum confirm --default=false  "Would you like to use Logitech devices?" && pacman_install_single "solaar"
 } 
            
 # ==confirm======================================
