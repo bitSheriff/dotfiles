@@ -8,6 +8,9 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+
 ### ---- history config -------------------------------------
 export HISTFILE=$ZSH/.zsh_history
 
