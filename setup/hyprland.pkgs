@@ -18,6 +18,8 @@ kwalletmanager              # GUI to edit KWallet
 mpv                         # Video player (minimalistic)
 network-manager-applet      # Network manager applet
 networkmanager              # Network manager
+nwg-displays                # Monitor configurator
+nwg-look                    # GTK3 Theme editor
 pavucontrol
 pipewire
 polkit-kde-agent            # Polkit agent for KDE
