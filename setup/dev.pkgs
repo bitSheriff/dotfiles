@@ -11,6 +11,7 @@ eza
 fastfetch                   # neofetch alternative
 firefox
 flatpak
+ghex                        # binary hex editor
 github-cli                  # github in the terminal
 glow                        # cli markdown renderer
 gnome-boxes                 # qemu/kvm frontend
@@ -24,6 +25,7 @@ meld                        # graphical diff and merge tool
 mesa-utils
 neovim                      # best cli editor (well more than that)
 npm
+obsidian                    # Note Taking
 openssh
 pacman-contrib              # needed for AUR and stuff
 pandoc-cli
@@ -32,6 +34,7 @@ python
 qbittorrent                 # torrent gui
 qt5ct
 qt6ct
+remmina                     # SSH client
 ripgrep
 rsync
 speedcrunch                 # best scientific calculator

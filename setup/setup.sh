@@ -277,6 +277,9 @@ install_office_tools(){
 
     print_h1 "Office Tools"
     install_pkgfiles "office"
+
+    gum confirm --default=false  "Install OnlyOffice?" && yay_install_single "onlyoffice-bin"
+
 }
 
 install_uni_tools(){
@@ -295,7 +298,7 @@ install_latex(){
 install_optionals(){
     print_h1 "Optional Packages"
 
-    gum confirm --default=false  "Install LibreOffice Suite?" && pacman_install_single "libreoffice"
+    gum confirm --default=false  "Install LibreOffice Suite?" && pacman_install_single "libreoffice-fresh"
 
     gum confirm --default=false  "Install Termius (SSH Client)?" && yay_install_single "termius"
 
@@ -312,6 +315,12 @@ install_optionals(){
     gum confirm --default=false  "Install MATLAB?" && bash ./matlab.sh
 
     gum confirm --default=false  "Install Maple?" && bash ./maple.sh
+
+    gum confirm --default=false  "Install Cozy Audiobook-Player?" && yay_install_single "cozy-audiobooks"
+
+    gum confirm --default=false  "Install Pocket Casts?" && yay_install_single "pocket-casts-linux"
+
+    gum confirm --default=false  "Install Plex Desktop?" && yay_install_single "plex-desktop"
 
 }
 

@@ -8,6 +8,7 @@ glibc
 gum                                                                 # shell library for user
 ld-lsb                                                              # Linux Standard Base Runtime
 nemo                                                                # gtk file manager 
+pkgfile                                                             # search for packages
 python
 ripgrep
 ttf-jetbrains-mono-nerd
