@@ -41,6 +41,7 @@ tldr
 torbrowser-launcher
 tree
 veracrypt
+wine                        # not an emulator
 yt-dlp
 zellij
 zoxide
