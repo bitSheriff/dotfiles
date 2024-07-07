@@ -4,3 +4,4 @@ drawio-desktop              # Draw.io desktop app (now called diagrams.net)
 fast                        # Fast.com internet speed test
 gitkraken                   # visual git tool
 visual-studio-code-bin      # Visual Studio Code
+wifi-qr                     # share wifi with a QR Code
