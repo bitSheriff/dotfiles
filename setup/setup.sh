@@ -385,6 +385,7 @@ setup_hardware(){
 
     gum confirm --default=false  "Would you like to setup wifi?" && (
         print_h3 "WiFi Setup"
+        gum confirm --default=false "Install tool to share WiFi with QR?" && yay_install_single "wifi-qr"
 
     )
 

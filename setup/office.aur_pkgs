@@ -1,8 +1,9 @@
+#superfile                   # File manager (very new from KDE)
+#index-fm                    # newer KDE file manager
 1password                   # Password manager
 anki                        # flashcard learning app
-#index-fm                    # newer KDE file manager
 localsend-bin               # Send files to other devices on the same network
 parabolic                   # youtube-dl frontend
 peazip-qt-bin               # .zip/ .rar  client
-# superfile                   # File manager (very new from KDE)
 ticktick                    # Task manager
+wifi-qr                     # share wifi with a QR Code
