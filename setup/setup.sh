@@ -269,6 +269,7 @@ install_dev_tools(){
         )
     )
 
+    gum confirm --default=false  "Install LazyDocker?" && yay_install_single "lazydocker"
 
     DO_ZSH=1
 }
@@ -423,6 +424,17 @@ setup_hardware(){
         PLEASE_REBOOT=1;
     )
 } 
+
+change_hostname() {
+    local oldHostname=$(hostname)
+    local newHostname=$(gum input --value "$oldHostname")
+
+    gum confirm --default=false  "Would you like to change the hostname to $newHostname" && (
+        sudo hostnamectl set-hostname "$newHostname"
+
+        PLEASE_REBOOT=1
+    )
+}
            
 # ==confirm======================================
 # Fl       ow Start & Arguemnt Handling
@@ -536,6 +548,8 @@ fi;
 # Interactions
 # ========================================
 gum confirm --default=false  "Would you like to setup SSH keys?" && setup_ssh_keys
+
+gum confirm --default=false  "Wouldyou like to change the hostname?" && change_hostname
 
 gum confirm --default=false  "Would you like to install Hyprland & Co?" && DO_HYPR=1
 
