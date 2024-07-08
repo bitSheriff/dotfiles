@@ -319,9 +319,7 @@ install_optionals(){
 
     gum confirm --default=false  "Install Cozy Audiobook-Player?" && yay_install_single "cozy-audiobooks"
 
-    gum confirm --default=false  "Install Pocket Casts?" && yay_install_single "pocket-casts-linux"
-
-    gum confirm --default=false  "Install Plex Desktop?" && yay_install_single "plex-desktop"
+    gum confirm --default=false  "Install Pocket Casts?" && yay_install_single "pocket-casts-desktop-bin"
 
 }
 
