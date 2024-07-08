@@ -1,6 +1,7 @@
 [user]
   name = bitSheriff
   email = bitSheriff@protonmail.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK1Q6Xk/KKttdTLAWBnDFHbpxh/+T07TndvnMV+7gelJ
 
 [core]
   editor = nvim
@@ -26,6 +27,7 @@
 
 [commit]
     verbose = false
+	gpgsign = true
 
 [alias]
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
@@ -36,3 +38,7 @@
   ignore = update-index --assume-unchanged
   no-ignore = update-index --no-assume-unchanged
 
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /opt/1Password/op-ssh-sign
