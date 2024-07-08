@@ -2,6 +2,7 @@
 
 source ~/.config/shell/autostart
 source ~/.config/shell/alias
+source ~/.config/shell/secrets
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Auto completion
