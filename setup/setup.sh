@@ -321,6 +321,8 @@ install_optionals(){
 
     gum confirm --default=false  "Install Pocket Casts?" && yay_install_single "pocket-casts-desktop-bin"
 
+    gum confirm --default=false  "Install Mullvad VPN?" && yay_install_single "mullvad-vpn"
+
 }
 
 setup_ssh_keys() {
