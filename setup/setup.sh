@@ -472,6 +472,8 @@ if [[ "$ARG_MODE" = 'update' ]]; then
     # pull updates if possible
     git -C "$DOTFILES_DIR" pull
 
+    install_base
+
 
     # update the packages from the used bundles
     if check_cache_option "$APP_NAME" "$CACHE_HYPRLAND"; then
