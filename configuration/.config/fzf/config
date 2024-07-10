@@ -1,0 +1,2 @@
+-m
+--preview 'bat --style=numbers --color=always {}'
