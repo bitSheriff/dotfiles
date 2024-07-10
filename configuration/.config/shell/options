@@ -1,4 +1,6 @@
 # Option File for some Tools
 
 ## fzf
+export FZF_DEFAULT_COMMAND="fd"
 export FZF_DEFAULT_OPTS="--multi --preview 'bat --style=numbers --color=always {}'"
+export FZF_ALT_C_COMMAND="rg --sort-files --files --null 2> /dev/null | xargs -0 dirname | uniq"
