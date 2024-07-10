@@ -124,6 +124,7 @@
   "backlight": {
     "format": "{percent}% {icon}",
     "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "on-click-right" : "nwg-displays"
   },
 
   // System Tray
