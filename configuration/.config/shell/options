@@ -1,4 +1,4 @@
 # Option File for some Tools
 
 ## fzf
-export FZF_DEFAULT_OPTS_FILE=~/.config/fzf/config
+export FZF_DEFAULT_OPTS="--multi --preview 'bat --style=numbers --color=always {}'"
