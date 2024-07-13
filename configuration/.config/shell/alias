@@ -13,6 +13,7 @@ alias nvim-gui="kitty nvim"
 ## shortcuts
 alias nv="nvim"
 alias benjavim="nvim"
+alias v="NVIM_APPNAME=nvim-vanilla nvim"
 alias hx="helix"
 alias ls="exa"
 alias lsl="exa -a --long --header --icons" 
