@@ -3,7 +3,7 @@
 import subprocess
 import os
 
-WOFI_SIZE = "--width=450 --height=180"
+WOFI_SIZE = "--width=200 --height=180"
 WOFI_OPTS = "--allow-iamges --insensitive"
 
 appBundle = [
