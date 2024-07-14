@@ -25,7 +25,6 @@ CACHE_UNI="uni-tools"
 ARGV=("$@")
 ARG_MODE=("${ARGV[0]}")
 
-
 # Flags for selective installation
 DO_DEV=0
 DO_OFFICE=0
@@ -43,78 +42,74 @@ DO_NIX_PKGS=0
 
 PLEASE_REBOOT=0
 
-
-
 # ========================================
 # Functions
 # ========================================
 
-print_debug(){
+print_debug() {
 
     if [["$DEBUG" = 1]]; then
         echo "?!?! $1 ?!?!"
-    fi;
+    fi
 }
 
-
-do_backup(){
+do_backup() {
     echo "Backing up installed packages"
-    pacman -Qqen > pkglist.txt
-    pacman -Qqem > pkglist_aur.txt
+    pacman -Qqen >pkglist.txt
+    pacman -Qqem >pkglist_aur.txt
 }
 
-install_from_backup(){
+install_from_backup() {
     echo "Install Pacman Packages"
-    sudo pacman $PACMAN_FLAGS -S - < pkglist.txt
+    sudo pacman $PACMAN_FLAGS -S - <pkglist.txt
 
     echo "Install AUR Packages"
-    yay $YAY_FLAGS -S - < pkglist_aur.txt
+    yay $YAY_FLAGS -S - <pkglist_aur.txt
 }
 
-
-pacman_install_file(){
+pacman_install_file() {
     # remove comments and spaces at the end of the line
     grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | sudo pacman $PACMAN_FLAGS -S -
 }
 
-pacman_install_single(){
+pacman_install_single() {
 
     # Check if the package is installed using yay
-    if ! pacman -Qi "$1" &> /dev/null; then
+    if ! pacman -Qi "$1" &>/dev/null; then
         sudo pacman $PACMAN_FLAGS -S "$1"
     fi
 }
 
-yay_install_file(){
+yay_install_file() {
     # remove comments and spaces at the end of the line
     grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | yay $YAY_FLAGS -S -
 }
 
-yay_install_single(){
+yay_install_single() {
     yay $YAY_FLAGS -S "$1"
 }
 
-flatpak_install(){
+flatpak_install() {
     # remove comments and spaces at the end of the line
-    grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | xargs flatpak install -y 
+    grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | xargs flatpak install -y
 }
 
-nix_install_file(){
+nix_install_file() {
 
     pacman_install_single "nix"
 
     nix-env -irf "$1"
 }
 
-create_symlinks(){
+create_symlinks() {
 
     # make sure stow is installed
     pacman_install_single stow
 
     # stow the packages (no idea why it does not work with $FLAGS)
-    stow --adopt -t ~ -d $DIR_NAME/..  configuration
+    stow --adopt -t ~ -d $DIR_NAME/.. configuration
 
-    stow --adopt -t ~/Templates -d $DIR_NAME/..  templates
+    stow --adopt -t ~/Templates -d $DIR_NAME/.. templates
 }
 
 remove_symlinks() {
@@ -122,7 +117,7 @@ remove_symlinks() {
 
 }
 
-setup_shell(){
+setup_shell() {
 
     print_h2 "Shell"
 
@@ -132,17 +127,15 @@ setup_shell(){
     else
         # set zsh as default shell
         chsh -s /bin/zsh
-    fi;
+    fi
 }
 
-setup_repositories(){
-
+setup_repositories() {
 
     print_h1 "Setup Repositories"
 
     file="$(pwd)/repositories.list"
     target_dir="$HOME/code"
-
 
     # Create the directory if it doesn't exist
     if [ ! -d "$target_dir" ]; then
@@ -150,7 +143,7 @@ setup_repositories(){
         mkdir -p "$target_dir"
     else
         print_note "code folder does exist"
-    fi;
+    fi
 
     # Loop through each line in the file
     while IFS= read -r url; do
@@ -171,37 +164,37 @@ setup_repositories(){
         fi
 
         echo "Cloning $repo_name"
-        
+
         # Clone the repository
         git clone "$url" "$target_dir/$repo_name"
-    done < $file
+    done <$file
 }
 
-install_pkgfiles(){
+install_pkgfiles() {
 
     # install nix packages if enabled
     if [[ -f "$1.nix" && "$DO_NIX_PKGS" = 1 ]]; then
         print_h2 "Installing nix packages from $1"
         nix_install_file "$1.nix"
-    fi;
+    fi
 
     # check if the pacman file in the first arguemnt exists
     if [[ -f "$1.pkgs" ]]; then
         print_h2 "Installing packages from $1"
         pacman_install_file "$1.pkgs"
-    fi;
+    fi
 
     # check if the aur file in the first arguemnt exists
     if [[ -f "$1.aur_pkgs" ]]; then
         print_h2 "Installing AUR packages from $1"
         yay_install_file "$1.aur_pkgs"
-    fi;
+    fi
 
     # check if the flatpak file in the first arguemnt exists
     if [[ -f "$1.flatpak_pkgs" ]]; then
         print_h2 "Installing flatpak packages from $1"
         flatpak_install "$1.flatpak_pkgs"
-    fi;
+    fi
 }
 
 ensure_sddm_enabled() {
@@ -220,7 +213,7 @@ ensure_sddm_enabled() {
     fi
 }
 
-install_base(){
+install_base() {
 
     print_h1 "Base"
     install_pkgfiles "base"
@@ -234,7 +227,7 @@ install_base(){
     gsettings set org.cinnamon.desktop.default-applications.terminal exec kitty
 }
 
-install_hyprland(){
+install_hyprland() {
 
     print_h1 "Hyprland"
     install_pkgfiles "hyprland"
@@ -245,12 +238,12 @@ install_hyprland(){
     DO_ZSH=1
 }
 
-install_dev_tools(){
+install_dev_tools() {
 
     print_h1 "Development Tools"
     install_pkgfiles "dev"
 
-    gum confirm --default=false  "Setup GitHub connection?" && (
+    gum confirm --default=false "Setup GitHub connection?" && (
         print_h2 "GitHub"
         pacman_install_single "github-cli"
 
@@ -264,64 +257,64 @@ install_dev_tools(){
         gh ssh-key add ~/.ssh/id_ed25519.pub -t "$title"
 
         gum confirm --default=false "Install extensions for github-cli?" && (
-            gum confirm --default=false "Graph" &&  gh extension install kawarimidoll/gh-graph
-            gum confirm --default=false "Dash (Issue/Pull-Request viewer)" &&  gh extension install dlvhdr/gh-dash
+            gum confirm --default=false "Graph" && gh extension install kawarimidoll/gh-graph
+            gum confirm --default=false "Dash (Issue/Pull-Request viewer)" && gh extension install dlvhdr/gh-dash
         )
     )
 
-    gum confirm --default=false  "Install LazyDocker?" && yay_install_single "lazydocker"
+    gum confirm --default=false "Install LazyDocker?" && yay_install_single "lazydocker"
+    gum confirm --default=false "Install Gnome Connections (VNC/RDP Client)?" && pacman_install_single "gnome-connections"
 
     DO_ZSH=1
 }
 
-install_office_tools(){
+install_office_tools() {
 
     print_h1 "Office Tools"
     install_pkgfiles "office"
 
-    gum confirm --default=false  "Install OnlyOffice?" && yay_install_single "onlyoffice-bin"
+    gum confirm --default=false "Install OnlyOffice?" && yay_install_single "onlyoffice-bin"
 
 }
 
-install_uni_tools(){
+install_uni_tools() {
 
     print_h1 "University Tools"
     install_pkgfiles "uni"
 }
 
-install_latex(){
+install_latex() {
 
     print_note "LaTeX installation needs a lot of space"
     gum confirm --default=true "Continue anyways?" && install_pkgfiles "latex"
 }
 
-
-install_optionals(){
+install_optionals() {
     print_h1 "Optional Packages"
 
-    gum confirm --default=false  "Install LibreOffice Suite?" && pacman_install_single "libreoffice-fresh"
+    gum confirm --default=false "Install LibreOffice Suite?" && pacman_install_single "libreoffice-fresh"
 
-    gum confirm --default=false  "Install Termius (SSH Client)?" && yay_install_single "termius"
+    gum confirm --default=false "Install Termius (SSH Client)?" && yay_install_single "termius"
 
-    gum confirm --default=false  "Install Mint WebApp Manager?" && yay_install_single "webapp-manager"
+    gum confirm --default=false "Install Mint WebApp Manager?" && yay_install_single "webapp-manager"
 
-    gum confirm --default=false  "Install fake hacker tool 'hollywood'?" && yay_install_single "hollywood"
+    gum confirm --default=false "Install fake hacker tool 'hollywood'?" && yay_install_single "hollywood"
 
-    gum confirm --default=false  "Install KDEConnect?" && pacman_install_single "kdeconnect"
+    gum confirm --default=false "Install KDEConnect?" && pacman_install_single "kdeconnect"
 
-    gum confirm --default=false  "Install MEGAsync (Mega Upload client)?" && yay_install_single "megasync"
+    gum confirm --default=false "Install MEGAsync (Mega Upload client)?" && yay_install_single "megasync"
 
-    gum confirm --default=false  "Install WhatsApp?" && yay_install_single "whatsapp-for-linux"
+    gum confirm --default=false "Install WhatsApp?" && yay_install_single "whatsapp-for-linux"
 
-    gum confirm --default=false  "Install MATLAB?" && bash ./matlab.sh
+    gum confirm --default=false "Install MATLAB?" && bash ./matlab.sh
 
-    gum confirm --default=false  "Install Maple?" && bash ./maple.sh
+    gum confirm --default=false "Install Maple?" && bash ./maple.sh
 
-    gum confirm --default=false  "Install Cozy Audiobook-Player?" && yay_install_single "cozy-audiobooks"
+    gum confirm --default=false "Install Cozy Audiobook-Player?" && yay_install_single "cozy-audiobooks"
 
-    gum confirm --default=false  "Install Pocket Casts?" && yay_install_single "pocket-casts-desktop-bin"
+    gum confirm --default=false "Install Pocket Casts?" && yay_install_single "pocket-casts-desktop-bin"
 
-    gum confirm --default=false  "Install Mullvad VPN?" && yay_install_single "mullvad-vpn"
+    gum confirm --default=false "Install Mullvad VPN?" && yay_install_single "mullvad-vpn"
 
 }
 
@@ -360,7 +353,7 @@ setup_ssh_keys() {
     read -n 1 -s -r -p "Press any key to continue and add the SSH key to your server..."
 }
 
-setup_yay(){
+setup_yay() {
 
     # install needed packages to build yay
     pacman_install_single "base-devel"
@@ -375,17 +368,17 @@ setup_yay(){
     rm -rf yay
 }
 
-setup_hardware(){
+setup_hardware() {
 
     print_h2 "Hardware Setup"
 
-    gum confirm --default=false  "Would you like to setup bluetooth?" && (
+    gum confirm --default=false "Would you like to setup bluetooth?" && (
         print_h3 "Bluetooth Setup"
 
         # install needed packages
         pacman_install_single "bluez"
         pacman_install_single "bluetoothctl"
-        pacman_install_single "blueman"         # bluetooth manager, GUI
+        pacman_install_single "blueman" # bluetooth manager, GUI
 
         # activate the service
         sudo systemctl enable bluetooth
@@ -393,13 +386,13 @@ setup_hardware(){
 
     )
 
-    gum confirm --default=false  "Would you like to setup wifi?" && (
+    gum confirm --default=false "Would you like to setup wifi?" && (
         print_h3 "WiFi Setup"
         gum confirm --default=false "Install tool to share WiFi with QR?" && yay_install_single "wifi-qr"
 
     )
 
-    gum confirm --default=false  "Would you like to setup a nvidia gpu?" && (
+    gum confirm --default=false "Would you like to setup a nvidia gpu?" && (
         print_h3 "Nvidia Setup"
 
         pacman_install_single "linux-headers"
@@ -411,9 +404,9 @@ setup_hardware(){
 
     )
 
-    gum confirm --default=false  "Would you like to update firmware of different devices?" && fwupdmgr update
+    gum confirm --default=false "Would you like to update firmware of different devices?" && fwupdmgr update
 
-    gum confirm --default=false  "Would you like to use Logitech devices?" && (
+    gum confirm --default=false "Would you like to use Logitech devices?" && (
         # install the GUI application to manage logitech devices
         pacman_install_single "solaar"
 
@@ -421,31 +414,31 @@ setup_hardware(){
         sudo udevadm control --reload-rules
 
         # set flag for user message
-        PLEASE_REBOOT=1;
+        PLEASE_REBOOT=1
     )
-} 
+}
 
 change_hostname() {
     local oldHostname=$(hostname)
     local newHostname=$(gum input --value "$oldHostname")
 
-    gum confirm --default=false  "Would you like to change the hostname to $newHostname" && (
+    gum confirm --default=false "Would you like to change the hostname to $newHostname" && (
         sudo hostnamectl set-hostname "$newHostname"
 
         PLEASE_REBOOT=1
     )
 }
-           
+
 # ==confirm======================================
 # Fl       ow Start & Arguemnt Handling
 # ==confirm======================================
-           
+
 if [[ ${#ARGV[@]} = 0 ]]; then
     print_logo_config
     print_h1 "Welcome to my setup script"
     echo "the interactive setup will start now"
     echo -e "please stand by ...\n\n"
-fi;
+fi
 
 if [[ "$ARG_MODE" = 'all' ]]; then
     install_base
@@ -457,23 +450,21 @@ if [[ "$ARG_MODE" = 'all' ]]; then
     create_symlinks
 
     exit 0
-fi;
+fi
 
 if [[ "$ARG_MODE" = 'backup' ]]; then
     do_backup
     exit 0
-fi;
+fi
 
 if [[ "$ARG_MODE" = 'update' ]]; then
 
     print_h1 "Update Setup"
 
-
     # pull updates if possible
     git -C "$DOTFILES_DIR" pull
 
     install_base
-
 
     # update the packages from the used bundles
     if check_cache_option "$APP_NAME" "$CACHE_HYPRLAND"; then
@@ -496,29 +487,27 @@ if [[ "$ARG_MODE" = 'update' ]]; then
         install_uni_tools
     fi
 
-
     # upadte the symlinks
     create_symlinks
     exit 0
-fi;
-
+fi
 
 if [[ "$ARG_MODE" = 'link' ]]; then
     create_symlinks
     exit 0
-fi;
+fi
 
 if [[ "$ARG_MODE" = 'unlink' ]]; then
     remove_symlinks
     exit 0
-fi;
+fi
 
 if [[ "$ARG_MODE" = 'debug' ]]; then
     DEBUG=1
     exit 0
-fi;
+fi
 
-if [[ "$ARG_MODE" = 'help' ||  "$ARG_MODE" = '--help' ||  "$ARG_MODE" = '-h' ]]; then
+if [[ "$ARG_MODE" = 'help' || "$ARG_MODE" = '--help' || "$ARG_MODE" = '-h' ]]; then
     echo -e "
 SYNOPSIS
   setup.sh [OPTIONS] [COMMAND]
@@ -541,36 +530,35 @@ EXAMPLES
   ./setup.sh unlink
   ./setup.sh -h
   ./setup.sh --help
-    ";
+    "
 
     exit 0
-fi;
+fi
 
 # ========================================
 # Interactions
 # ========================================
-gum confirm --default=false  "Would you like to setup SSH keys?" && setup_ssh_keys
+gum confirm --default=false "Would you like to setup SSH keys?" && setup_ssh_keys
 
-gum confirm --default=false  "Wouldyou like to change the hostname?" && change_hostname
+gum confirm --default=false "Wouldyou like to change the hostname?" && change_hostname
 
-gum confirm --default=false  "Would you like to install Hyprland & Co?" && DO_HYPR=1
+gum confirm --default=false "Would you like to install Hyprland & Co?" && DO_HYPR=1
 
-gum confirm --default=false  "Would you like to install the Development Tools?" && DO_DEV=1
+gum confirm --default=false "Would you like to install the Development Tools?" && DO_DEV=1
 
-gum confirm --default=false  "Would you like to install the Office Tools?" && DO_OFFICE=1
+gum confirm --default=false "Would you like to install the Office Tools?" && DO_OFFICE=1
 
-gum confirm --default=false  "Would you like to install the University Tools?" && DO_UNI=1
+gum confirm --default=false "Would you like to install the University Tools?" && DO_UNI=1
 
-gum confirm --default=false  "Would you like to install the LaTeX?" && DO_LATEX=1
+gum confirm --default=false "Would you like to install the LaTeX?" && DO_LATEX=1
 
-gum confirm --default=false  "Would you like to checkout the provided repositories?" && DO_GIT=1
+gum confirm --default=false "Would you like to checkout the provided repositories?" && DO_GIT=1
 
-gum confirm --default=false  "[INTERACTIVE] Would you like to install the opional packages?" && DO_OPTIONALS=1
+gum confirm --default=false "[INTERACTIVE] Would you like to install the opional packages?" && DO_OPTIONALS=1
 
-gum confirm --default=false  "Would you like to link the dotfiles?" && DO_SYMLINKS=1
+gum confirm --default=false "Would you like to link the dotfiles?" && DO_SYMLINKS=1
 
-gum confirm --default=false  "Would you like a general hardware setup?" && DO_HARDWARE=1
-
+gum confirm --default=false "Would you like a general hardware setup?" && DO_HARDWARE=1
 
 # ========================================
 # Actual Installation & Setup
@@ -580,63 +568,61 @@ gum confirm --default=false  "Would you like a general hardware setup?" && DO_HA
 install_base
 
 # check if yay is installed
-if ! command -v yay &> /dev/null
-then
+if ! command -v yay &>/dev/null; then
     print_warning "yay is not installed, it going to be setup now..."
     setup_yay
 fi
 
-
 if [[ "$DO_HYPR" = 1 ]]; then
     write_cache_option "$APP_NAME" "$CACHE_HYPRLAND"
     install_hyprland
-fi;
+fi
 
 if [[ "$DO_DEV" = 1 ]]; then
     write_cache_option "$APP_NAME" "$CACHE_DEV"
     install_dev_tools
-fi;
+fi
 
 if [[ "$DO_OFFICE" = 1 ]]; then
     write_cache_option "$APP_NAME" "$CACHE_OFFICE"
     install_office_tools
-fi;
+fi
 
 if [[ "$DO_UNI" = 1 ]]; then
     write_cache_option "$APP_NAME" "$CACHE_UNI"
     install_uni_tools
-fi;
+fi
 
 if [[ "$DO_LATEX" = 1 ]]; then
     install_latex
-fi;
+fi
 
 if [[ "$DO_OPTIONALS" = 1 ]]; then
     install_optionals
-fi;
+fi
 
 if [[ "$DO_ZSH" = 1 ]]; then
     setup_shell
-fi;
+fi
 
 if [[ "$DO_GIT" = 1 ]]; then
     setup_repositories
-fi;
+fi
 
 if [[ "$DO_BACKUP" = 1 ]]; then
     do_backup
-fi;
+fi
 
 if [[ "$DO_SYMLINKS" = 1 ]]; then
     create_symlinks
-fi;
+fi
 
 if [[ "$DO_HARDWARE" = 1 ]]; then
     setup_hardware
-fi;
+fi
 
 if [[ "$PLEASE_REBOOT" = 1 ]]; then
     print_warning "Please reboot your computer"
-    gum confirm --default=false  "Do you want to reboot now?" && sudo reboot
+    gum confirm --default=false "Do you want to reboot now?" && sudo reboot
 
-fi;
+fi
