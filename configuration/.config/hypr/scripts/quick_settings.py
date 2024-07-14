@@ -3,13 +3,17 @@
 import subprocess
 import os
 
-WOFI_SIZE = "--width=200 --height=180"
-WOFI_OPTS = "--allow-iamges --insensitive"
+WOFI_SIZE = "--width=200 --lines=5"
+WOFI_OPTS = "--allow-images --insensitive --dmenu --prompt='Quick Settings' --sort-order=default"
 
+# Same Order as in the Quick Settings Menu
 appBundle = [
-    ["🖼", "Waypaper", "waypaper"],
-    ["📺", "Monitor", "nwg-displays"]
+    ["🖼", "Wallpaper", "waypaper"],
+    ["📺", "Monitor Settings", "nwg-displays"],
+    ["💉", "Color Picker", "hyprpicker -a"],
+    ["😀", "Emoji Picker", "jome | wl-copy"],
 ]
+
 
 def get_concat_name(i):
     return f"{appBundle[i][0]} {appBundle[i][1]}"
@@ -23,8 +27,8 @@ def get_selection():
     return selected.rstrip()
 
 
+# main function
 def main():
-    # main function
 
     selectedName = get_selection()
 
