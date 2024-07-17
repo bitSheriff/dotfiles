@@ -1,6 +1,7 @@
-1password-cli               # CLI password manager
 #ltex-ls                     # Markdown/LaTeX Langauage Server
+1password-cli               # CLI password manager
 bottles                     # manage wine enviroments
+devtoys-bin                 # collection of simple tools for developers
 drawio-desktop              # Draw.io desktop app (now called diagrams.net)
 fast                        # Fast.com internet speed test
 gitkraken                   # visual git tool
