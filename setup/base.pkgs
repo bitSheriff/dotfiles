@@ -2,6 +2,7 @@ atuin                                                               # better she
 btop                                                                # tui system monitor
 coreutils                                                           # much needed core packages (md5sum, ...)
 fd                                                                  # better and faster find tool
+findutils                                                           # collection of more find tools and options
 fzf                                                                 # fuzzy finder
 git
 glibc
