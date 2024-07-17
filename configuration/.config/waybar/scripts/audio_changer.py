@@ -1,6 +1,9 @@
 #!/usr/bin/env python 
 import subprocess
 
+WOFI_OPTS = "--show=dmenu --hide-scroll --allow-markup --define=hide_search=true"
+WOFI_SIZE_POS = "--location=top_right --width=450 --lines=5 --xoffset=-10"
+
 # function to parse output of command "wpctl status" and return a dictionary of sinks with their id and name.
 def parse_wpctl_status():
     # Execute the wpctl status command and store the output in a variable.
@@ -47,7 +50,7 @@ for items in sinks:
         output += f"{items['sink_name']}\n"
 
 # Call wofi and show the list. take the selected sink name and set it as the default sink
-wofi_command = f"echo '{output}' | wofi --show=dmenu --hide-scroll --allow-markup --define=hide_search=true --location=top_right --width=450 --height=120 --xoffset=-10"
+wofi_command = f"echo '{output}' | wofi {WOFI_OPTS} {WOFI_SIZE_POS} "
 wofi_process = subprocess.run(wofi_command, shell=True, encoding='utf-8', stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 if wofi_process.returncode != 0:
