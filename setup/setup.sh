@@ -244,20 +244,32 @@ install_hyprland() {
 install_language_specific() {
 
     # read the wanted languages
-    local selection=$(gum choose --no-limit "C" "Rust" "Python")
+    local selection=$(gum choose --no-limit "C" "Rust" "Python" "LaTeX")
 
     # Converting list from `gum choose` output to an array
     IFS=$'\n' read -rd '' -a array <<<"$selection"
 
     if array_contains "${array[@]}" "C"; then
         print_note "Language C"
-        pacman_install_single "cunit"
+        pacman_install_single "clang"
+        pacman_install_single "cunit" # test-framework for c
     fi
 
     if array_contains "${array[@]}" "Rust"; then
         print_note "Language Rust"
         pacman_install_single "rust"
         pacman_install_single "rust-analyzer"
+    fi
+
+    if array_contains "${array[@]}" "Python"; then
+        print_note "Language Python"
+        pacman_install_single "python"
+        pacman_install_single "python-pyqt5"
+    fi
+
+    if array_contains "${array[@]}" "LaTeX"; then
+        print_note "Language LaTeX"
+        install_latex
     fi
 }
 
