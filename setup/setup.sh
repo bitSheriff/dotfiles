@@ -106,6 +106,9 @@ create_symlinks() {
     # make sure stow is installed
     pacman_install_single stow
 
+    # find broken symlinks and remove them
+    find ~/.config -xtype l -delete
+
     # stow the packages (no idea why it does not work with $FLAGS)
     stow --adopt -t ~ -d $DIR_NAME/.. configuration
 
