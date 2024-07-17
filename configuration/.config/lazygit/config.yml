@@ -2,3 +2,6 @@ customCommands:
   - key: 'I'
     context: 'files'
     command: 'git update-index --assume-unchanged {{.SelectedFile.Name}}'
+  - key: 'Q'
+    context: 'global'
+    command: 'exit'
