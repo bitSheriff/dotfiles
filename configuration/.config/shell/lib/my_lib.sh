@@ -2,7 +2,6 @@
 # CONSTANTS
 # ========================================
 
-
 # ========================================
 #  --- COLORS ---
 # ========================================
@@ -41,40 +40,40 @@ confirm() {
     # call with a prompt string or use a default
     read -r -p "$1 - [y/N] " response
     case "$response" in
-        [yY][eE][sS]|[yY]) 
-            true
-            ;;
-        *)
-            false
-            ;;
+    [yY][eE][sS] | [yY])
+        true
+        ;;
+    *)
+        false
+        ;;
     esac
 }
 
-print_h1(){
+print_h1() {
     echo -e "$BOLD_PURPLE\n========== [$1] ==========\n$NC"
 }
 
-print_h2(){
+print_h2() {
     echo -e "$BOLD_BLUE\n---------- [$1] ----------\n$NC"
 }
 
-print_h3(){
+print_h3() {
     echo -e "$BOLD_CYAN\n.......... [$1] ..........\n$NC"
 }
 
-print_note(){
+print_note() {
     echo ":::: $1 ::::"
 }
 
-print_warning(){
+print_warning() {
     echo -e "$BOLD_YELLOW:::: $1 ::::$NC"
 }
 
-print_error(){
+print_error() {
     echo -e "$BOLD_RED:::: $1 ::::$NC"
 }
 
-toggle_process(){
+toggle_process() {
 
     PROCESS_NAME="$1"
 
@@ -90,4 +89,19 @@ toggle_process(){
         $PROCESS_NAME &
     fi
 
+}
+
+# Function to check if a list contains a value
+array_contains() {
+    local list=("$@")
+    local item="${list[-1]}"
+    unset list[-1]
+
+    for element in "${list[@]}"; do
+        if [[ "$element" == "$item" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
 }

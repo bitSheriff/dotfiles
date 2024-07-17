@@ -241,10 +241,33 @@ install_hyprland() {
     DO_ZSH=1
 }
 
+install_language_specific() {
+
+    # read the wanted languages
+    local selection=$(gum choose --no-limit "C" "Rust" "Python")
+
+    # Converting list from `gum choose` output to an array
+    IFS=$'\n' read -rd '' -a array <<<"$selection"
+
+    if array_contains "${array[@]}" "C"; then
+        print_note "Language C"
+        pacman_install_single "cunit"
+    fi
+
+    if array_contains "${array[@]}" "Rust"; then
+        print_note "Language Rust"
+        pacman_install_single "rust"
+        pacman_install_single "rust-analyzer"
+    fi
+}
+
 install_dev_tools() {
 
     print_h1 "Development Tools"
     install_pkgfiles "dev"
+
+    # install packages and languages
+    install_language_specific
 
     gum confirm --default=false "Setup GitHub connection?" && (
         print_h2 "GitHub"
