@@ -37,6 +37,8 @@ qt6ct
 remmina                     # SSH client
 ripgrep
 rsync
+rust
+rust-analyzer
 speedcrunch                 # best scientific calculator
 spotify-launcher
 thefuck
