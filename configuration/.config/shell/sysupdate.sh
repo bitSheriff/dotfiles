@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 
 source ~/.config/shell/lib/my_lib.sh
 source ~/.config/shell/lib/logos.sh
@@ -11,15 +11,15 @@ sudo pacman -Syu --noconfirm
 
 # Update the AUR packages with yay
 print_h2 "Updating AUR packages with yay"
-yay -Syu --noconfirm
+yay --noconfirm
 
 # Remove unused packages (autoclean)
 print_h2 "Pacman autocleaning"
 # check if there are packages to clean
 if pacman -Qdtq; then
-  sudo pacman -Rcns $(pacman -Qdtq)
+    sudo pacman -Rcns $(pacman -Qdtq)
 else
-  print_note "nothing to clean"
+    print_note "nothing to clean"
 fi
 
 print_h2 "Remove yay and pacman cache"
@@ -28,4 +28,3 @@ yay -Scc --noconfirm
 # Update flatpak applications
 print_h2 "Updating flatpak applications"
 flatpak update -y
-
