@@ -354,6 +354,8 @@ install_optionals() {
 
     gum confirm --default=false "Install Mullvad VPN?" && yay_install_single "mullvad-vpn"
 
+    gum confirm --default=false "Install SpeechNote (voice-to-text)?" && yay_install_single "dsnote"
+
 }
 
 setup_ssh_keys() {
