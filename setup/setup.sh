@@ -243,6 +243,9 @@ install_hyprland() {
 
 install_language_specific() {
 
+    # check if languages have been installed already
+    if [ -z ${DONE_LANGUAGE_SPECIF+1} ]; then DONE_LANGUAGE_SPECIF=1; else exit 0; fi
+
     # read the wanted languages
     local selection=$(gum choose --no-limit "C" "Rust" "Python" "LaTeX")
 
@@ -271,6 +274,7 @@ install_language_specific() {
         print_note "Language LaTeX"
         install_latex
     fi
+
 }
 
 install_dev_tools() {
@@ -319,6 +323,8 @@ install_uni_tools() {
 
     print_h1 "University Tools"
     install_pkgfiles "uni"
+
+    install_language_specific
 }
 
 install_latex() {
@@ -547,6 +553,11 @@ if [[ "$ARG_MODE" = 'debug' ]]; then
     exit 0
 fi
 
+if [[ "$ARG_MODE" = 'langs' ]]; then
+    install_language_specific
+    exit 0
+fi
+
 if [[ "$ARG_MODE" = 'help' || "$ARG_MODE" = '--help' || "$ARG_MODE" = '-h' ]]; then
     echo -e "
 SYNOPSIS
@@ -590,8 +601,6 @@ gum confirm --default=false "Would you like to install the Office Tools?" && DO_
 
 gum confirm --default=false "Would you like to install the University Tools?" && DO_UNI=1
 
-gum confirm --default=false "Would you like to install the LaTeX?" && DO_LATEX=1
-
 gum confirm --default=false "Would you like to checkout the provided repositories?" && DO_GIT=1
 
 gum confirm --default=false "[INTERACTIVE] Would you like to install the opional packages?" && DO_OPTIONALS=1
@@ -631,10 +640,6 @@ fi
 if [[ "$DO_UNI" = 1 ]]; then
     write_cache_option "$APP_NAME" "$CACHE_UNI"
     install_uni_tools
-fi
-
-if [[ "$DO_LATEX" = 1 ]]; then
-    install_latex
 fi
 
 if [[ "$DO_OPTIONALS" = 1 ]]; then
