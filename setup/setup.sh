@@ -258,6 +258,10 @@ install_language_specific() {
         print_note "Language C"
         pacman_install_single "clang"
         pacman_install_single "cunit" # test-framework for c
+
+        # CLI debugging Tools
+        pacman_install_single "lldb"
+        pacman_install_single "codelldb"
     fi
 
     if array_contains "${array[@]}" "Rust"; then
@@ -267,10 +271,15 @@ install_language_specific() {
         pacman_install_single "rust" #rustup is inside this package
         pacman_install_single "rust-analyzer"
 
+        # CLI debugging Tools
+        pacman_install_single "lldb"
+        pacman_install_single "codelldb"
+
         # optional IDE
         gum confirm --default=false "Install RustRover IDE?" && yay_install_single "rustrover"
         # add the formatter component
         rustup component add rustfmt
+        rustup component add clippy
     fi
 
     if array_contains "${array[@]}" "Python"; then
