@@ -246,6 +246,8 @@ install_language_specific() {
     # check if languages have been installed already
     if [ -z ${DONE_LANGUAGE_SPECIF+1} ]; then DONE_LANGUAGE_SPECIF=1; else exit 0; fi
 
+    print_h2 "Languages and langauge-specific Tooling"
+
     # read the wanted languages
     local selection=$(gum choose --no-limit "C" "Rust" "Python" "LaTeX")
 
@@ -260,14 +262,24 @@ install_language_specific() {
 
     if array_contains "${array[@]}" "Rust"; then
         print_note "Language Rust"
-        pacman_install_single "rust"
+
+        # Language and LSP
+        pacman_install_single "rust" #rustup is inside this package
         pacman_install_single "rust-analyzer"
+
+        # optional IDE
+        gum confirm --default=false "Install RustRover IDE?" && yay_install_single "rustrover"
+        # add the formatter component
+        rustup component add rustfmt
     fi
 
     if array_contains "${array[@]}" "Python"; then
         print_note "Language Python"
         pacman_install_single "python"
         pacman_install_single "python-pyqt5"
+        pacman_install_single "jupyterlab"
+
+        gum confirm --default=false "Install PyCharm Community?" && pacman_install_single "pycharm-community-edition"
     fi
 
     if array_contains "${array[@]}" "LaTeX"; then
@@ -361,6 +373,8 @@ install_optionals() {
     gum confirm --default=false "Install Mullvad VPN?" && yay_install_single "mullvad-vpn"
 
     gum confirm --default=false "Install SpeechNote (voice-to-text)?" && yay_install_single "dsnote"
+
+    gum confirm --default=false "Install OpenAI Whisper?" && yay_install_single "whisper-git"
 
 }
 
