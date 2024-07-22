@@ -500,6 +500,10 @@ setup_hardware() {
         PLEASE_REBOOT=1
     )
 
+    gum confirm --default=false "Would you like to setup a zsa keyboard?" && (
+        # install keymapping application
+        yay_install_single "zsa-keymapp-bin"
+    )
 }
 
 change_hostname() {
