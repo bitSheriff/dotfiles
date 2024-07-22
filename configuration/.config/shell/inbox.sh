@@ -7,77 +7,96 @@ INBOX_POST=""
 # Journal File where the memo gets added
 INBOX_FILE="$INBOX"
 INBOX_DIR="$(dirname -- $INBOX_FILE)"
+SAVE_FILE="$INBOX_DIR/Save 4 Later.md"
 
-OPTSTRING=":cn"
+OPTSTRING=":cnl"
 
 create_inbox_file() {
 
-  # line conter
-  count=0
-  filename=""
+    # line conter
+    count=0
+    filename=""
 
-  while IFS= read -r line; do
+    while IFS= read -r line; do
 
-    # just print the preamble on the first line
-    if [ $count -eq 0 ]; then
-      # the first line is the name of the file
-      filename="$INBOX_DIR/$line.md"
+        # just print the preamble on the first line
+        if [ $count -eq 0 ]; then
+            # the first line is the name of the file
+            filename="$INBOX_DIR/$line.md"
 
-      # write the name of the file as first Heading
-      echo -e "# $line" >> "$filename"
+            # write the name of the file as first Heading
+            echo -e "# $line" >>"$filename"
 
-    else
-      # Process the remaining lines
-      echo -e "$line" >> "$filename"
-    fi
+        else
+            # Process the remaining lines
+            echo -e "$line" >>"$filename"
+        fi
 
-    # Increment the counter
-    count=$((count + 1))
-  done
+        # Increment the counter
+        count=$((count + 1))
+    done
 }
 
+save_link() {
+    local title=$(gum input --placeholder "Title")
+    local url=$(gum input --placeholder "URL")
+    local notes=$(gum input --placeholder "Notes")
+
+    echo -e "- [ ] [$title]($url)" >>"$SAVE_FILE"
+
+    # add notes if provided
+    if [[ ! -z "$notes" ]]; then
+        echo -e "    - $notes" >>"$SAVE_FILE"
+    fi
+
+    echo -e "\n" >>"$SAVE_FILE"
+}
 
 while getopts ${OPTSTRING} opt; do
-  case ${opt} in
+    case ${opt} in
     c) # clipboard option
-      echo -e "\n$(wl-paste)" >> "$INBOX_FILE"
-      exit 0
-      ;;
+        echo -e "\n$(wl-paste)" >>"$INBOX_FILE"
+        exit 0
+        ;;
     n) # create new file
-      create_inbox_file
-      exit 0;
-  esac
+        create_inbox_file
+        exit 0
+        ;;
+    l) # save link
+        save_link
+        exit 0
+        ;;
+    esac
 done
-
 
 # decide if the input was given as a positional argument or parsed into (stdin)
 if [ $# -gt 0 ]; then
-  # If there are arguments, join them into a single string and process
-  input="$*"
-  echo -e "\n$input\n" >> "$INBOX_FILE"
+    # If there are arguments, join them into a single string and process
+    input="$*"
+    echo -e "\n$input\n" >>"$INBOX_FILE"
 else
-  # Otherwise, use gum write to get the input (stdin)
-  input=$(gum write --header "Inbox" --show-line-numbers --width 100 --height 200 --char-limit 0 )
+    # Otherwise, use gum write to get the input (stdin)
+    input=$(gum write --header "Inbox" --show-line-numbers --width 100 --height 200 --char-limit 0)
 
-  # line conter
-  local count=0
+    # line conter
+    local count=0
 
-  while IFS= read -r line; do
+    while IFS= read -r line; do
 
-    # just print the preamble on the first line
-    if [ $count -eq 0 ]; then
-      # Process the first line differently
-      echo -e "\n$line" >> "$INBOX_FILE"
+        # just print the preamble on the first line
+        if [ $count -eq 0 ]; then
+            # Process the first line differently
+            echo -e "\n$line" >>"$INBOX_FILE"
 
-    else
-      # Process the remaining lines
-      echo -e "$line" >> "$INBOX_FILE"
-    fi
+        else
+            # Process the remaining lines
+            echo -e "$line" >>"$INBOX_FILE"
+        fi
 
-    # Increment the counter
-    count=$((count + 1))
-  done <<< "$input"
+        # Increment the counter
+        count=$((count + 1))
+    done <<<"$input"
 
-  echo -e "\n" >> "$INBOX_FILE"
+    echo -e "\n" >>"$INBOX_FILE"
 
 fi
