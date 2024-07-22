@@ -485,6 +485,21 @@ setup_hardware() {
         # set flag for user message
         PLEASE_REBOOT=1
     )
+
+    gum confirm --default=false "Would you like to setup a Portable Monitor?" && (
+
+        # install drivers
+        yay_install_single "evdi"
+        yay_install_single "displaylink"
+
+        # enable and start the displaylink service
+        sudo systemctl enable displaylink
+        sudo systemctl start displaylink
+
+        # set flag for user message
+        PLEASE_REBOOT=1
+    )
+
 }
 
 change_hostname() {
