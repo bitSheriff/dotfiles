@@ -268,15 +268,16 @@ install_language_specific() {
         print_note "Language Rust"
 
         # Language and LSP
-        pacman_install_single "rust" #rustup is inside this package
+        pacman_install_single "rustup"
         pacman_install_single "rust-analyzer"
 
         # CLI debugging Tools
         pacman_install_single "lldb"
-        pacman_install_single "codelldb"
+        yay_install_single "codelldb"
 
         # optional IDE
         gum confirm --default=false "Install RustRover IDE?" && yay_install_single "rustrover"
+
         # add the formatter component
         rustup component add rustfmt
         rustup component add clippy
