@@ -278,6 +278,9 @@ install_language_specific() {
         # optional IDE
         gum confirm --default=false "Install RustRover IDE?" && yay_install_single "rustrover"
 
+        # set rust version
+        rustup default stable
+
         # add the formatter component
         rustup component add rustfmt
         rustup component add clippy
