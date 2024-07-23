@@ -631,17 +631,16 @@ fi
 # ========================================
 # Interactions
 # ========================================
+
+# select the tools to install
+tool_selection=$(gum choose --no-limit "Hyprland" "Development" "University" "LaTeX" "Office")
+
+# Converting list from `gum choose` output to an array
+IFS=$'\n' read -rd '' -a array <<<"$tool_selection"
+
 gum confirm --default=false "Would you like to setup SSH keys?" && setup_ssh_keys
 
 gum confirm --default=false "Wouldyou like to change the hostname?" && change_hostname
-
-gum confirm --default=false "Would you like to install Hyprland & Co?" && DO_HYPR=1
-
-gum confirm --default=false "Would you like to install the Development Tools?" && DO_DEV=1
-
-gum confirm --default=false "Would you like to install the Office Tools?" && DO_OFFICE=1
-
-gum confirm --default=false "Would you like to install the University Tools?" && DO_UNI=1
 
 gum confirm --default=false "Would you like to checkout the provided repositories?" && DO_GIT=1
 
@@ -664,22 +663,22 @@ if ! command -v yay &>/dev/null; then
     setup_yay
 fi
 
-if [[ "$DO_HYPR" = 1 ]]; then
+if array_contains "${array[@]}" "Hyprland" || [ "$DO_HYPR" = 1 ]; then
     write_cache_option "$APP_NAME" "$CACHE_HYPRLAND"
     install_hyprland
 fi
 
-if [[ "$DO_DEV" = 1 ]]; then
+if array_contains "${array[@]}" "Development" || [ "$DO_DEV" = 1 ]; then
     write_cache_option "$APP_NAME" "$CACHE_DEV"
     install_dev_tools
 fi
 
-if [[ "$DO_OFFICE" = 1 ]]; then
+if array_contains "${array[@]}" "Office" || [ "$DO_OFFICE" = 1 ]; then
     write_cache_option "$APP_NAME" "$CACHE_OFFICE"
     install_office_tools
 fi
 
-if [[ "$DO_UNI" = 1 ]]; then
+if array_contains "${array[@]}" "University" || [ "$DO_UNI" = 1 ]; then
     write_cache_option "$APP_NAME" "$CACHE_UNI"
     install_uni_tools
 fi
