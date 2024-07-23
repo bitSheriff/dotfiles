@@ -3,7 +3,7 @@
 import subprocess
 import os
 
-WOFI_SIZE = "--width=200 --lines=5"
+WOFI_SIZE = "--width=200 "
 WOFI_OPTS = "--allow-images --insensitive --dmenu --prompt='Quick Settings' --sort-order=default"
 
 # Same Order as in the Quick Settings Menu
@@ -12,6 +12,7 @@ appBundle = [
     ["📺", "Monitor Settings", "nwg-displays"],
     ["💉", "Color Picker", "hyprpicker -a"],
     ["😀", "Emoji Picker", "jome | wl-copy"],
+    ["🎧", "Audio Chooser", "~/.config/waybar/scripts/audio_changer.py"],
 ]
 
 
@@ -23,7 +24,7 @@ def get_selection():
     for i in range(len(appBundle)):
         nameList.append(get_concat_name(i))
 
-    selected = os.popen(f"echo \"%s\" | wofi {WOFI_OPTS} {WOFI_SIZE} -S dmenu"%("\n".join(nameList))).read()
+    selected = os.popen(f"echo \"%s\" | wofi {WOFI_OPTS} {WOFI_SIZE} --lines={len(appBundle)+1} -S dmenu"%("\n".join(nameList))).read()
     return selected.rstrip()
 
 
