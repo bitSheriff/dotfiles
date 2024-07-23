@@ -13,6 +13,7 @@ appBundle = [
     ["💉", "Color Picker", "hyprpicker -a"],
     ["😀", "Emoji Picker", "jome | wl-copy"],
     ["🎧", "Audio Chooser", "~/.config/waybar/scripts/audio_changer.py"],
+    ["⚡", "Power Menu", "wlogout"],
 ]
 
 
