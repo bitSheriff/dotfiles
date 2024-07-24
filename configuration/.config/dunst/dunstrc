@@ -502,6 +502,11 @@
    appname = ticktick
    urgency = normal
    frame_color = "#00fff9"
+
+[kde connect]
+   appname = kde connect
+   urgency = normal
+   frame_color = "#9933ff"
 #
 #[stack-volumes]
 #    appname = "some_volume_notifiers"
