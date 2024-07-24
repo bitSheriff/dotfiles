@@ -369,7 +369,15 @@ install_optionals() {
 
     gum confirm --default=false "Install fake hacker tool 'hollywood'?" && yay_install_single "hollywood"
 
-    gum confirm --default=false "Install KDEConnect?" && pacman_install_single "kdeconnect"
+    gum confirm --default=false "Install KDEConnect?" && (
+
+        # install the package
+        pacman_install_single "kdeconnect"
+
+        # allow kdeconnect
+        sudo firewall-cmd --permanent --zone=public --add-service=kdeconnect
+        sudo firewall-cmd --reload
+    )
 
     gum confirm --default=false "Install MEGAsync (Mega Upload client)?" && yay_install_single "megasync"
 
