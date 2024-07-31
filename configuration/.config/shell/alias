@@ -5,6 +5,7 @@ alias gti="git"
 alias lg="lazygit"
 alias gb+="git pull; git backup"
 alias gb="git branch | fzf --preview 'git show --color=always {-1}' --bind 'enter:become(git checkout {-1})'"
+alias gg="serie" # git graph
 
 ## kitty
 alias icat="kitty +kitten icat --align=left"
