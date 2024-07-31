@@ -38,6 +38,7 @@ ripgrep
 rsync
 rust
 rust-analyzer
+serie                       # git graph viewer in the terminal
 speedcrunch                 # best scientific calculator
 spotify-launcher
 thefuck
