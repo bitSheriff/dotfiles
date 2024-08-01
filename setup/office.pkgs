@@ -8,6 +8,7 @@ hugo                        # static blogging engine
 obsidian                    # Note Taking
 okular                      # document viewer
 pdfgrep                     # search through pdf files in terminal
+pinta                       # MS Paint alternative
 poppler-glib                # pdf rendering library
 signal-desktop              # secure messaging
 telegram-desktop            # (not so) secure messaging
