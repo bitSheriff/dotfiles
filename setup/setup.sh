@@ -550,12 +550,24 @@ post_install() {
 secret_encrypt() {
     print_h1 "Secret: Encrypt"
 
-    gpg --symmetric secret.sh
+    # check if the enviroment varaible with the passphrase is set
+    if [ -z "$GPG_DOTFILES_PASSWORD" ]; then
+        gpg --symmetric --batch --yes --armor -o "secret.sh.gpg" "secret.sh"
+    else
+        gpg --symmetric --passphrase "$GPG_DOTFILES_PASSWORD" --batch --yes --armor -o "secret.sh.gpg" "secret.sh"
+    fi
+
 }
 
 secret_dectypt() {
     print_h1 "Secret: Decrypt"
-    gpg --output secret.sh --decrypt secret.sh.gpg
+
+    # check if the enviroment varaible with the passphrase is set
+    if [ -z "$GPG_DOTFILES_PASSWORD" ]; then
+        gpg --decrypt --batch --yes -o "secret.sh" "secret.sh.gpg"
+    else
+        gpg --decrypt --passphrase "$GPG_DOTFILES_PASSWORD" --batch --yes -o "secret.sh" "secret.sh.gpg"
+    fi
 }
 
 # ==confirm======================================
