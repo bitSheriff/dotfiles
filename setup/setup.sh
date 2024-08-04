@@ -545,6 +545,9 @@ setup_default_apps() {
 post_install() {
     print_h1 "Post Installation"
     setup_default_apps
+
+    gum confirm --default=false "Would you like to run the secrets?" && secret_run
+
 }
 
 secret_encrypt() {
@@ -567,6 +570,28 @@ secret_dectypt() {
         gpg --decrypt --batch --yes -o "secret.sh" "secret.sh.gpg"
     else
         gpg --decrypt --passphrase "$GPG_DOTFILES_PASSWORD" --batch --yes -o "secret.sh" "secret.sh.gpg"
+    fi
+}
+
+secret_run() {
+    # Überprüfen, ob die Datei secret.sh existiert
+    if [ -f "secret.sh" ]; then
+        print_debug "Secret already encrypted"
+    else
+        print_debug "Decrypt the Secret file"
+        secret_dectypt
+    fi
+
+    # check if the secret file was correct decrypted -> the main function exists
+    if grep -q "^secret_main()" secret.sh; then
+
+        # source the file and execute the function
+        source secret.sh
+        secret_main
+
+    else
+        print_debug "Something went wrong with decryption"
+        exit 1
     fi
 }
 
