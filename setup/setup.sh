@@ -547,6 +547,17 @@ post_install() {
     setup_default_apps
 }
 
+secret_encrypt() {
+    print_h1 "Secret: Encrypt"
+
+    gpg --symmetric secret.sh
+}
+
+secret_dectypt() {
+    print_h1 "Secret: Decrypt"
+    gpg --output secret.sh --decrypt secret.sh.gpg
+}
+
 # ==confirm======================================
 # Fl       ow Start & Arguemnt Handling
 # ==confirm======================================
@@ -627,6 +638,16 @@ fi
 
 if [[ "$ARG_MODE" = 'langs' ]]; then
     install_language_specific
+    exit 0
+fi
+
+if [[ "$ARG_MODE" = 'encrypt' ]]; then
+    secret_encrypt
+    exit 0
+fi
+
+if [[ "$ARG_MODE" = 'decrypt' ]]; then
+    secret_dectypt
     exit 0
 fi
 
