@@ -221,13 +221,6 @@ install_base() {
     print_h1 "Base"
     install_pkgfiles "base"
 
-    print_h2 "Nemo File Manager settings"
-
-    # set Nemo as default file manager
-    xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
-
-    # set kitty as defaul terminal
-    gsettings set org.cinnamon.desktop.default-applications.terminal exec kitty
 }
 
 install_hyprland() {
@@ -400,6 +393,10 @@ install_optionals() {
 }
 
 setup_ssh_keys() {
+
+    # check if SSH keys were already set up
+    if [ -z ${DONE_SSH_KEYS+1} ]; then DONE_SSH_KEYS=1; else exit 0; fi
+
     # Check if SSH keys already exist
     if [ -f ~/.ssh/id_rsa ]; then
         print_note "SSH key already exists:"
@@ -527,6 +524,23 @@ change_hostname() {
 
         PLEASE_REBOOT=1
     )
+}
+
+setup_default_apps() {
+    print_h2 "Set Defaul Applications"
+
+    xdg-settings set default-web-browser firefox.desktop
+
+    # set Nemo as default file manager
+    xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
+
+    # set kitty as defaul terminal
+    gsettings set org.cinnamon.desktop.default-applications.terminal exec kitty
+}
+
+post_install() {
+    print_h1 "Post Installation"
+    setup_default_apps
 }
 
 # ==confirm======================================
@@ -718,6 +732,8 @@ fi
 if [[ "$DO_HARDWARE" = 1 ]]; then
     setup_hardware
 fi
+
+post_install
 
 if [[ "$PLEASE_REBOOT" = 1 ]]; then
     print_warning "Please reboot your computer"
