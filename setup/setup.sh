@@ -529,6 +529,10 @@ change_hostname() {
 setup_default_apps() {
     print_h2 "Set Defaul Applications"
 
+    # avoid complications, so unset the envvars for now
+    # else the xdg-setting would fail
+    unset BROWSER
+
     xdg-settings set default-web-browser firefox.desktop
 
     # set Nemo as default file manager
