@@ -34,7 +34,7 @@
   lgall = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --reflog
   winner = shortlog -sn
   pfusch = push -f
-  backup = push --all backup
+  backup = "! git push --all backup && git push --tags backup"
   ignore = update-index --assume-unchanged
   no-ignore = update-index --no-assume-unchanged
 
