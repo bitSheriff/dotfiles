@@ -6,6 +6,7 @@ findutils                                                           # collection
 fzf                                                                 # fuzzy finder
 git
 glibc
+gnupg                                                               # GNU encryption
 gum                                                                 # shell library for user
 ld-lsb                                                              # Linux Standard Base Runtime
 nemo                                                                # gtk file manager 

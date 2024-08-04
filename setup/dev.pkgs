@@ -18,6 +18,7 @@ hugo                        # static blogging engine
 jupyterlab
 kate                        # file editor
 kitty                       # best terminal in the world
+kleopatra                   # encryption GUI
 lazygit                     # git tui
 marksman                    # Markdown Language Server
 meld                        # graphical diff and merge tool
