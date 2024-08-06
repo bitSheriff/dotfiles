@@ -39,6 +39,7 @@ alias dots="cd ~/code/dotfiles"
 alias cat="bat"
 
 ## change directories
+alias cd!='cd $(fd  --type d --hidden --exclude .git | fzf --ignore-case)'
 alias go2conf="cd ~/.config"
 alias go2code="cd ~/code"
 alias ..="cd .."
