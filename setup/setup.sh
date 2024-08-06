@@ -254,7 +254,7 @@ install_language_specific() {
 
         # CLI debugging Tools
         pacman_install_single "lldb"
-        pacman_install_single "codelldb"
+        yay_install_single "codelldb"
     fi
 
     if array_contains "${array[@]}" "Rust"; then
