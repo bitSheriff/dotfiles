@@ -2,10 +2,6 @@
 
 # Ensure the ~/Templates directory exists
 TEMPLATE_DIR="$HOME/Templates"
-if [ ! -d "$TEMPLATE_DIR" ]; then
-    echo "Template directory $TEMPLATE_DIR does not exist."
-    exit 1
-fi
 
 # Function to copy file content to clipboard using wl-copy
 copy_content_to_clipboard() {
@@ -26,7 +22,17 @@ copy_content_to_clipboard() {
 }
 
 # Use fd to recursively select only files and symlinks (excluding directories)
+export FZF_DEFAULT_COMMAND="fd . $TEMPLATE_DIR"
 selected_file=$(fd --type f --type l --follow --exclude .git . "$TEMPLATE_DIR" | fzf --height=10 --reverse --border --bind 'ctrl-c:abort,esc:abort,tab:accept')
+
+#######################################
+##########   MAIN   ###################
+#######################################
+
+if [ ! -d "$TEMPLATE_DIR" ]; then
+    echo "Template directory $TEMPLATE_DIR does not exist."
+    exit 1
+fi
 
 # Check if a file was selected
 if [ -z "$selected_file" ]; then
@@ -66,3 +72,5 @@ else
 
     echo "Copied $(basename "$target_file") to $(pwd) as $dest_filename"
 fi
+
+exit 0
