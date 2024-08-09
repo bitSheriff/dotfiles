@@ -516,6 +516,9 @@ setup_hardware() {
     gum confirm --default=false "Would you like to setup a zsa keyboard?" && (
         # install keymapping application
         yay_install_single "zsa-keymapp-bin"
+
+        # tool to flash (alternative to chromium-based web-tool)
+        gum confirm --default=false "Install QMK? Or do you only flash with chromium-based?" && pacman_install_single "qmk"
     )
 }
 
