@@ -28,3 +28,16 @@ yay -Scc --noconfirm
 # Update flatpak applications
 print_h2 "Updating flatpak applications"
 flatpak update -y
+
+# check if dotfiles directory is known
+if [ -z "$DOTFILES_DIR" ]; then
+    # confirm if the user wants to update them
+    gum confirm --default=false "Update dotfiles?" && (
+        print_h2 "Updating dotfiles"
+        cd "$DOTFILES_DIR"
+        print_debug "pulling changes from git"
+        git pull
+        print_debug "updating symlinks"
+        setup link
+    )
+fi
