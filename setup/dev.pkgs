@@ -15,6 +15,7 @@ github-cli                  # github in the terminal
 glow                        # cli markdown renderer
 gnome-boxes                 # qemu/kvm frontend
 hugo                        # static blogging engine
+imagemagick                 # image tool
 jupyterlab
 kate                        # file editor
 kitty                       # best terminal in the world
