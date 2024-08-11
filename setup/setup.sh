@@ -557,27 +557,44 @@ post_install() {
 
 }
 
-secret_encrypt() {
-    print_h1 "Secret: Encrypt"
+generic_encrypt() {
+    input=$1
+    output=$2
 
     # check if the enviroment varaible with the passphrase is set
     if [ -z "$GPG_DOTFILES_PASSWORD" ]; then
-        gpg --symmetric --batch --yes --armor -o "secret.sh.gpg" "secret.sh"
+        gpg --symmetric --batch --yes --armor -o "$output" "$input"
     else
-        gpg --symmetric --passphrase "$GPG_DOTFILES_PASSWORD" --batch --yes --armor -o "secret.sh.gpg" "secret.sh"
+        gpg --symmetric --passphrase "$GPG_DOTFILES_PASSWORD" --batch --yes --armor -o "$output" "$input"
     fi
 
 }
 
-secret_dectypt() {
-    print_h1 "Secret: Decrypt"
+secret_encrypt() {
+    print_h1 "Secret: Encrypt"
+
+    generic_encrypt "secret.sh" "secret.sh.gpg"
+    generic_encrypt "$HOME/.ssh/hosts" "ssh_hosts.gpg"
+}
+
+generic_decrypt() {
+    input=$1
+    output=$2
 
     # check if the enviroment varaible with the passphrase is set
     if [ -z "$GPG_DOTFILES_PASSWORD" ]; then
-        gpg --decrypt --batch --yes -o "secret.sh" "secret.sh.gpg"
+        gpg --decrypt --batch --yes -o "$output" "$input"
     else
-        gpg --decrypt --passphrase "$GPG_DOTFILES_PASSWORD" --batch --yes -o "secret.sh" "secret.sh.gpg"
+        gpg --decrypt --passphrase "$GPG_DOTFILES_PASSWORD" --batch --yes --armor -o "$output" "$input"
     fi
+
+}
+
+secret_decrypt() {
+    print_h1 "Secret: Decrypt"
+
+    generic_decrypt "secret.sh.gpg" "secret.sh"
+    generic_encrypt "ssh_hosts.gpg" "$HOME/.ssh/hosts"
 }
 
 secret_run() {
@@ -691,7 +708,7 @@ if [[ "$ARG_MODE" = 'encrypt' ]]; then
 fi
 
 if [[ "$ARG_MODE" = 'decrypt' ]]; then
-    secret_dectypt
+    secret_decrypt
     exit 0
 fi
 
