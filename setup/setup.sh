@@ -13,7 +13,7 @@ source "$DIR_NAME/../configuration/.config/shell/lib/cache.sh"
 PACMAN_FLAGS=" --needed "
 YAY_FLAGS=" --needed --answerdiff None --answerclean None --noconfirm"
 
-DEBUG=0
+DEBUG=1
 
 APP_NAME="bitsheriff-setup"
 CACHE_HYPRLAND="hyprland"
@@ -48,7 +48,7 @@ PLEASE_REBOOT=0
 
 print_debug() {
 
-    if [["$DEBUG" = 1]]; then
+    if [[ "$DEBUG" = 1 ]]; then
         echo "?!?! $1 ?!?!"
     fi
 }
@@ -561,6 +561,8 @@ generic_encrypt() {
     input=$1
     output=$2
 
+    print_debug "encrypting $input > $output"
+
     # check if the enviroment varaible with the passphrase is set
     if [ -z "$GPG_DOTFILES_PASSWORD" ]; then
         gpg --symmetric --batch --yes --armor -o "$output" "$input"
@@ -581,11 +583,12 @@ generic_decrypt() {
     input=$1
     output=$2
 
+    print_debug "decrypting $input > $output"
     # check if the enviroment varaible with the passphrase is set
     if [ -z "$GPG_DOTFILES_PASSWORD" ]; then
         gpg --decrypt --batch --yes -o "$output" "$input"
     else
-        gpg --decrypt --passphrase "$GPG_DOTFILES_PASSWORD" --batch --yes --armor -o "$output" "$input"
+        gpg --decrypt --passphrase "$GPG_DOTFILES_PASSWORD" --batch --yes -o "$output" "$input"
     fi
 
 }
@@ -594,7 +597,7 @@ secret_decrypt() {
     print_h1 "Secret: Decrypt"
 
     generic_decrypt "secret.sh.gpg" "secret.sh"
-    generic_encrypt "ssh_hosts.gpg" "$HOME/.ssh/hosts"
+    generic_decrypt "ssh_hosts.gpg" "$HOME/.ssh/hosts"
 }
 
 secret_run() {
