@@ -28,7 +28,8 @@ alias py="python3"
 alias term="kitty . &; disown" # open a new terminal at the same location
 alias hugo-server="(cd ~/code/bitSheriff.github.io && hugo server --buildDrafts)" # hugo server
 alias neofetch="fastfetch"
-
+alias sshs="sshs --config ~/.ssh/hosts" # use own file for the SSH Hosts
+ 
 # open file with standard program
 alias open="xdg-open"
 
