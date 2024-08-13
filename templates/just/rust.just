@@ -28,4 +28,4 @@ test $RUST_BACKTRACE="1":
 
 # Count the number of code lines
 sloc:
-  @echo "`wc -l *.rs` lines of code"
+  @echo "`find . -name '*.rs' | xargs wc -l | sort -nr` lines of code"
