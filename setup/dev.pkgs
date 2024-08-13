@@ -17,6 +17,7 @@ gnome-boxes                 # qemu/kvm frontend
 hugo                        # static blogging engine
 imagemagick                 # image tool
 jupyterlab
+just                        # command runner like Makefile
 kate                        # file editor
 kitty                       # best terminal in the world
 kleopatra                   # encryption GUI
