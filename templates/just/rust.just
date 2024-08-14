@@ -1,5 +1,4 @@
 
-
 # List all recipes
 default:
     just --list
@@ -17,9 +16,7 @@ run:
     cargo run
 
 # Clean build the application
-rebuild:
-    clean
-    build
+rebuild: clean build
 
 # Run all tests
 test $RUST_BACKTRACE="1":
