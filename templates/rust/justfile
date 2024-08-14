@@ -1,7 +1,7 @@
 
 # List all recipes
 default:
-    just --list
+    just --choose
 
 # Build the application
 build:
