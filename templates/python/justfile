@@ -1,0 +1,26 @@
+# Define the virtual environment directory
+VENV_DIR := ".venv"
+
+default:
+    just --choose
+
+# Create the virtual environment if it doesn't exist
+init-venv:
+    python3 -m venv {{VENV_DIR}}
+
+# Enter the virtual environment (just for reference)
+enter-venv:
+    . {{VENV_DIR}}/bin/activate
+
+# Install all packages from requirements.txt into the virtual environment
+install-requirements: init-venv
+    {{VENV_DIR}}/bin/pip install -r requirements.txt
+
+# Run a Python script within the virtual environment, script name is passed as an argument
+run script="main.py": init-venv
+    {{VENV_DIR}}/bin/python {{script}}
+
+# Clean the virtual environment (optional)
+clean:
+    rm -rf {{VENV_DIR}}
+
