@@ -24,5 +24,5 @@ test $RUST_BACKTRACE="1":
     cargo test
 
 # Count the number of code lines
-sloc:
+count:
   @echo "`find . -name '*.rs' | xargs wc -l | sort -nr` lines of code"
