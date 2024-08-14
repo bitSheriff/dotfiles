@@ -1,3 +1,5 @@
+set shell := ["bash", "-uc"]
+
 # Define the virtual environment directory
 VENV_DIR := ".venv"
 
