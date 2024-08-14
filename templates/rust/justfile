@@ -26,3 +26,7 @@ test $RUST_BACKTRACE="1":
 # Count the number of code lines
 count:
   @echo "`find . -name '*.rs' | xargs wc -l | sort -nr` lines of code"
+
+# Format the code
+format:
+    cargo fmt
