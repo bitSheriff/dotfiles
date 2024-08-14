@@ -1,0 +1,8 @@
+
+# List all recipes
+default:
+    just --list
+
+# Start the server, build drafts too
+serve:
+    hugo server --buildDrafts
