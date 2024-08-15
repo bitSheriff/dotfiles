@@ -2,12 +2,13 @@ format = """
 [](#2D2B55)\
 $status\
 $username\
-[](bg:#A599E9 fg:#2D2B55)\
+$os\
+[](bg:#9600ff fg:#ff00c1)\
 $directory\
-[](fg:#A599E9 bg:#FF628C)\
+[](fg:#9600ff bg:#4900ff)\
 $git_branch\
 $git_status\
-[](fg:#FF628C bg:#86BBD8)\
+[](fg:#4900ff bg:#00b8ff)\
 $c\
 $golang\
 $haskell\
@@ -16,7 +17,7 @@ $julia\
 $rust\
 $lua\
 $python\
-[](fg:#86BBD8 bg:#06969A)\
+[](fg:#00b8ff bg:#06969A)\
 $docker_context\
 [](fg:#06969A bg:#33658A)\
 $time\
@@ -32,7 +33,7 @@ $battery\
 # and use the os module below
 [username]
 show_always = true
-style_user = "bg:#2D2B55"
+style_user = "bg:#ff00c1"
 style_root = "bg:#2D2B55"
 format = '[$user ]($style)'
 disabled = false
@@ -40,11 +41,11 @@ disabled = false
 # An alternative to the username module which displays a symbol that
 # represents the current operating system
 [os]
-style = "bg:#2D2B55"
+style = "bg:#ff00c1"
 disabled = false # Disabled by default
 
 [directory]
-style = "bg:#A599E9"
+style = "bg:#9600ff"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -59,6 +60,7 @@ truncation_symbol = "…/"
 "notes" = ""
 "code" = ""
 ".config" = ""
+
 # Keep in mind that the order matters. For example:
 # "Important Documents" = "  "
 # will not be replaced, because "Documents" was already substituted before.
@@ -77,11 +79,11 @@ format = '[ $symbol $context ]($style) $path'
 
 [git_branch]
 symbol = " "
-style = "bg:#FF628C"
+style = "bg:#4900ff"
 format = '[ $symbol $branch ]($style)'
 
 [git_status]
-style = "bg:#FF628C"
+style = "bg:#4900ff"
 conflicted = "⚔️ "
 ahead = " ×${count} "
 behind = " ×${count} "
@@ -99,24 +101,14 @@ symbol = " "
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
-[haskell]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
 [java]
 symbol = " "
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
-[julia]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
 [rust]
 symbol = "⚙️ "
-style = "bg:#86BBD8"
+style = "bg:#00b8ff"
 format = '[ $symbol ($version) ]($style)'
 
 [lua]
