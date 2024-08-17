@@ -31,6 +31,12 @@ $battery\
 
 # You can also replace your username with a neat symbol like   or disable this
 # and use the os module below
+ 
+[character]
+success_symbol = "[>](bold #50fa7b)"
+error_symbol = "[x](bold  #ff5555)"
+vimcmd_symbol = "[<](bold #50fa7b)"
+
 [username]
 show_always = true
 style_user = "bg:#CC16C3 bold"
@@ -43,6 +49,51 @@ disabled = false
 [os]
 style = "bg:#CC16C3"
 disabled = false # Disabled by default
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+AlmaLinux = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+RockyLinux = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Void = " "
+Windows = "󰍲 "
 
 [directory]
 style = "bg:#9600ff bold"
