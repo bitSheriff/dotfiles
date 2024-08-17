@@ -36,6 +36,20 @@
 @define-color sop-strings          #A5FF90;
 @define-color sop-templates        #3AD900;
 @define-color sop-definitions      #FB94FF;
-/* @define-color sop-invalid          #EC3A37F5; */
-/* @define-color sop-diff-added       #00FF009A; */
-/* @define-color sop-diff-removed     #FF000D81; */
+@define-color sop-invalid          #EC3A37;
+@define-color sop-diff-added       #00FF00;
+@define-color sop-diff-removed     #FF000D;
+
+/* Eldritch Theme (Lovecraftian Horror) */
+@define-color eldritch-background        #212337
+@define-color eldritch-currentline       #323449
+@define-color eldritch-foreground        #ebfafa
+@define-color eldritch-comment           #7081d0
+@define-color eldritch-cyan              #04d1f9
+@define-color eldritch-green             #37f499
+@define-color eldritch-orange            #f7c67f
+@define-color eldritch-pink              #f265b5
+@define-color eldritch-purple            #a48cf2
+@define-color eldritch-red               #f16c75
+@define-color eldritch-yellow            #f1fc79
+
