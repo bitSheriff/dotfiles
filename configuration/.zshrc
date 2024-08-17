@@ -6,6 +6,8 @@ source ~/.config/shell/secrets
 source ~/.config/shell/options
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # Auto completion
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -38,6 +40,8 @@ setopt HIST_FIND_NO_DUPS
 # after drawing the prompt. This ensures that the timing for one command is only
 # ever drawn once (for the prompt immediately after it is run).
 
+### ---- starship config -------------------------------------
+ 
 zmodload zsh/parameter  # Needed to access jobstates variable for STARSHIP_JOBS_COUNT
 
 # Defines a function `__starship_get_time` that sets the time since epoch in millis in STARSHIP_CAPTURED_TIME.
