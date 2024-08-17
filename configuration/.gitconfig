@@ -1,7 +1,7 @@
 [user]
   name = bitSheriff
   email = bitSheriff@protonmail.com
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK1Q6Xk/KKttdTLAWBnDFHbpxh/+T07TndvnMV+7gelJ
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK1Q6Xk/KKttdTLAWBnDFHbpxh/+T07TndvnMV+7gelJ
 
 [core]
   editor = nvim
