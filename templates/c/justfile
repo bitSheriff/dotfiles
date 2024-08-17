@@ -15,6 +15,9 @@ format:
     clang-format -i *.c
     # Formal the .h files
     clang-format -i *.h
+    # Convert tabs to 4 spaces
+    find ./ -iname '*.c' -type f -exec bash -c 'expand -t 4 "$0" | sponge "$0"' {} \;
+    find ./ -iname '*.h' -type f -exec bash -c 'expand -t 4 "$0" | sponge "$0"' {} \;
 
 # Generate doxygen documentation
 docs:

@@ -21,7 +21,7 @@ rebuild: clean build
 
 # Run all tests
 test $RUST_BACKTRACE="1":
-    # will print a stack trace if it crashes
+    @# will print a stack trace if it crashes
     cargo test
 
 # Count the number of code lines
@@ -30,4 +30,8 @@ count:
 
 # Format the code
 format:
+    # Format with rustfmt
     cargo fmt
+    # Convert tabs to 4 spaces
+    find ./ -iname '*.rs' -type f -exec bash -c 'expand -t 4 "$0" | sponge "$0"' {} \;
+
