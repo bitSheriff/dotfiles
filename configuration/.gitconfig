@@ -37,6 +37,7 @@
   backup = "! git push --all backup && git push --tags backup"
   ignore = update-index --assume-unchanged
   no-ignore = update-index --no-assume-unchanged
+  sync = "! git pull && git push"
 
 [gpg]
 	format = ssh
