@@ -1,0 +1,30 @@
+set shell := ["bash", "-uc"]
+
+# List all recipes
+default:
+    just --choose
+
+# Check if all tools are installed
+check:
+    echo "Doxygen Version: $(shell doxygen --version)"
+    echo $(shell clang-format --version)
+
+# Format the Code
+format:
+    # Format the .c Files
+    clang-format -i *.c
+    # Formal the .h files
+    clang-format -i *.h
+
+# Generate doxygen documentation
+docs:
+    # Generating doxygen documentation
+    @doxygen doc/doxy.dox
+
+# Build the application with make
+build TARGET="all":
+    make {{TARGET}}
+
+# Clean
+clean: 
+    make clean
