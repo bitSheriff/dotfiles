@@ -3,7 +3,7 @@ format = """
 $status\
 $username\
 $os\
-[](bg:#9600ff fg:#ff00c1)\
+[](bg:#9600ff fg:#CC16C3)\
 $directory\
 [](fg:#9600ff bg:#4900ff)\
 $git_branch\
@@ -33,19 +33,19 @@ $battery\
 # and use the os module below
 [username]
 show_always = true
-style_user = "bg:#ff00c1"
-style_root = "bg:#2D2B55"
+style_user = "bg:#CC16C3 bold"
+style_root = "bg:#2D2B55 bold"
 format = '[$user ]($style)'
 disabled = false
 
 # An alternative to the username module which displays a symbol that
 # represents the current operating system
 [os]
-style = "bg:#ff00c1"
+style = "bg:#CC16C3"
 disabled = false # Disabled by default
 
 [directory]
-style = "bg:#9600ff"
+style = "bg:#9600ff bold"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -79,7 +79,7 @@ format = '[ $symbol $context ]($style) $path'
 
 [git_branch]
 symbol = " "
-style = "bg:#4900ff"
+style = "bg:#4900ff bold"
 format = '[ $symbol $branch ]($style)'
 
 [git_status]
@@ -98,12 +98,7 @@ format = '[$all_status$ahead_behind ]($style)'
 
 [golang]
 symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[java]
-symbol = " "
-style = "bg:#86BBD8"
+style = "bg:#00b8ff"
 format = '[ $symbol ($version) ]($style)'
 
 [rust]
@@ -113,14 +108,14 @@ format = '[ $symbol ($version) ]($style)'
 
 [lua]
 symbol = "🌕 "
-style = "bg:#86BBD8"
+style = "bg:#00b8ff"
 format = '[ $symbol ($version) ]($style)'
 
 [python]
 symbol = ' '
 pyenv_version_name = true
 python_binary = 'python3'
-style = "bg:#86BBD8"
+style = "bg:#00b8ff"
 format = '[ $symbol ($version) ]($style)'
 
 [time]
