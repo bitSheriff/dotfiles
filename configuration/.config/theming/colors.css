@@ -52,4 +52,20 @@
 @define-color eldritch-purple            #a48cf2
 @define-color eldritch-red               #f16c75
 @define-color eldritch-yellow            #f1fc79
+@define-color eldritch-g_dark            #171928
+@define-color eldritch-bg_highlight      #292e42
+@define-color eldritch-terminal_black    #414868
+@define-color eldritch-fg_dark           #ABB4DA
+@define-color eldritch-fg_gutter         #3b4261
+@define-color eldritch-dark3             #6473B7
+@define-color eldritch-comment           #7081d0
+@define-color eldritch-dark5             #5866A2
+@define-color eldritch-visual            #76639e
+@define-color eldritch-dark_cyan         #10A1BD
+@define-color eldritch-magenta2          #bf4f8e
+@define-color eldritch-magenta3          #722f55
+@define-color eldritch-dark_yellow       #c0c95f
+@define-color eldritch-dark_green        #33C57F
+@define-color eldritch-bright_red        #f0313e
+
 
