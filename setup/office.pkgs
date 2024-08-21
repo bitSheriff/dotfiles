@@ -5,6 +5,7 @@ glow                        # cli markdown renderer
 gwenview                    # image viewer
 haruna                      # video player
 hugo                        # static blogging engine
+inkscape                    # vector editor
 imagemagick                 # image tool
 kleopatra                   # encryption GUI
 obsidian                    # Note Taking
