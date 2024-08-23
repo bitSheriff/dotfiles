@@ -114,8 +114,10 @@ create_symlinks() {
     # stow the packages (no idea why it does not work with $FLAGS)
     stow --adopt -t ~ -d $DIR_NAME/.. configuration
 
+    # link the templates
     stow --adopt -t ~/Templates -d $DIR_NAME/.. templates
 
+    # link the binaries and scripts which cannot be linked to a specific application (Hyprland, Waybar,...)
     stow --adopt -t ~/bin -d $DIR_NAME/.. bin
 }
 
