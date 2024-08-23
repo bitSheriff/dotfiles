@@ -396,6 +396,8 @@ install_optionals() {
 
     gum confirm --default=false "Install OpenAI Whisper?" && yay_install_single "whisper-git"
 
+    gum confirm --default=false "Install Zen Browser (Firefox)?" && yay_install_single "zen-browser"
+
 }
 
 setup_ssh_keys() {
