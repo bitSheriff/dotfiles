@@ -10,7 +10,6 @@ include ~/.config/shell/autostart
 include ~/.config/shell/alias
 include ~/.config/shell/secrets
 include ~/.config/shell/options
-include ~/.config/shell/path
 
 # Plugins (mostly installed through Arch Packages/AUR)
 include /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

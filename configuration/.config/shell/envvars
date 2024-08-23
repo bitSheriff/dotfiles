@@ -12,3 +12,19 @@ export CACHE_DIR=$HOME/.cache                                       # define the
 # use 1Password as the SSH Agent
 export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
 
+
+### ---- path config -------------------------------------
+setopt extended_glob null_glob
+
+path=(
+    $path                           # Keep existing PATH entries
+    $HOME/bin
+    $HOME/.local/bin
+    /var/lib/flatpak/exports/share/applications
+)
+
+# Remove duplicate entries and non-existent directories
+typeset -U path
+path=($^path(N-/))
+
+export PATH
