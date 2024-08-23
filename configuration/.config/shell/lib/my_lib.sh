@@ -36,6 +36,11 @@ BG_WHITE='\033[47m'
 # Functions
 # ========================================
 
+# failsafe source method, only source if file exists
+include() {
+    [[ -f "$1" ]] && source "$1"
+}
+
 confirm() {
     # call with a prompt string or use a default
     read -r -p "$1 - [y/N] " response
