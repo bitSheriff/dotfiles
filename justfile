@@ -10,5 +10,8 @@ update:
     # link the new files
     @bash setup/setup.sh link
 
+    # update zsh
+    @exec zsh
+
     # start a system update
     @bash ~/bin/sysupdate
