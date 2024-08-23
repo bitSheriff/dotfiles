@@ -29,26 +29,15 @@ alias term="kitty . &; disown" # open a new terminal at the same location
 alias hugo-server="(cd ~/code/bitSheriff.github.io && hugo server --buildDrafts)" # hugo server
 alias neofetch="fastfetch"
 alias sshs="sshs --config ~/.ssh/hosts" # use own file for the SSH Hosts
- 
-# open file with standard program
-alias open="xdg-open"
-
-# quick switch to the dotfiles
-alias dots="cd ~/code/dotfiles"
-
-## better cat command
-alias cat="bat"
-
-## change directories
-alias cd!='cd $(fd  --type d --hidden --exclude .git | fzf --ignore-case --no-preview )'
+alias open="xdg-open" # open file with standard program
+alias cat="bat" # better cat command
+alias setup="bash $DOTFILES_DIR/setup/setup.sh"
+alias cd!='cd $(fd  --type d --hidden --exclude .git | fzf --ignore-case --no-preview )' # change directory with fuzzy finder
 alias go2conf="cd ~/.config"
 alias go2code="cd ~/code"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
-
-# my setup
-alias setup="bash $DOTFILES_DIR/setup/setup.sh"
 
 ## general linux commands simplified
 # param alias
@@ -149,7 +138,7 @@ qf()
     formatted_file_name=$(date "+%Y-%m-%d")_${file_name}.md
     cd ~/notes
     touch "Inbox/${formatted_file_name}"
-    nvim "Inbox/${formatted_file_name}"        
+    nvim "Inbox/${formatted_file_name}"
 }
 
 # backup: clone a file and add ".bk" at the end
@@ -159,7 +148,7 @@ bk() {
 
 # print md5 hashsum for string
 md5(){
-    echo -n $1 | md5sum        
+    echo -n $1 | md5sum
 }
 
 # start mpv with the wanted file and be able to kill the terminal instance
