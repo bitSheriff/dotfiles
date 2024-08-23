@@ -1,13 +1,19 @@
 
+# failsafe source method, only source if file exists
+include () {
+    [[ -f "$1" ]] && source "$1"
+}
 
-source ~/.config/shell/autostart
-source ~/.config/shell/alias
-source ~/.config/shell/secrets
-source ~/.config/shell/options
+include ~/.config/shell/autostart
+include ~/.config/shell/alias
+include ~/.config/shell/secrets
+include ~/.config/shell/options
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+# Plugins (mostly installed through Arch Packages/AUR)
+include /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+include /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+include /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+ 
 # Auto completion
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
