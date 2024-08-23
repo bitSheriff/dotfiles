@@ -1,0 +1,14 @@
+# define standard programs
+export TERMINAL=kitty
+export EDITOR=nvim
+export VISUAL=nvim
+
+# define important files & directories
+export INBOX=$HOME/notes/Inbox/Inbox.md                           # define the inbox file
+export INBOX_DIR=$HOME/notes/Inbox
+export DOTFILES_DIR=$HOME/code/dotfiles                             # define the folder where the dotfiles are located
+export CACHE_DIR=$HOME/.cache                                       # define the folder for temporary cache files
+
+# use 1Password as the SSH Agent
+export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
+
