@@ -15,6 +15,22 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
+### ---- path config -------------------------------------
+setopt extended_glob null_glob
+
+path=(
+    $path                           # Keep existing PATH entries
+    $HOME/bin
+    $HOME/.local/bin
+)
+
+# Remove duplicate entries and non-existent directories
+typeset -U path
+path=($^path(N-/))
+
+export PATH
+
+
 ### ---- history config -------------------------------------
 export HISTFILE=$ZSH/.zsh_history
 
@@ -30,15 +46,6 @@ setopt HIST_IGNORE_ALL_DUPS
 # History won't show duplicates on search.
 setopt HIST_FIND_NO_DUPS
 
-# End of lines configured by zsh-newuser-install
-# ZSH has a quirk where `preexec` is only run if a command is actually run (i.e
-# pressing ENTER at an empty command line will not cause preexec to fire). This
-# can cause timing issues, as a user who presses "ENTER" without running a command
-# will see the time to the start of the last command, which may be very large.
-
-# To fix this, we create STARSHIP_START_TIME upon preexec() firing, and destroy it
-# after drawing the prompt. This ensures that the timing for one command is only
-# ever drawn once (for the prompt immediately after it is run).
 
 ### ---- starship config -------------------------------------
  
