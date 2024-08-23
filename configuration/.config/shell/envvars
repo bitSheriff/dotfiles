@@ -20,6 +20,7 @@ path=(
     $path                           # Keep existing PATH entries
     $HOME/bin
     $HOME/.local/bin
+    $HOME/.cargo/bin
     /var/lib/flatpak/exports/share/applications
 )
 
