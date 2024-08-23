@@ -8,6 +8,7 @@ include ~/.config/shell/autostart
 include ~/.config/shell/alias
 include ~/.config/shell/secrets
 include ~/.config/shell/options
+include ~/.config/shell/path
 
 # Plugins (mostly installed through Arch Packages/AUR)
 include /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -20,22 +21,6 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
-
-### ---- path config -------------------------------------
-setopt extended_glob null_glob
-
-path=(
-    $path                           # Keep existing PATH entries
-    $HOME/bin
-    $HOME/.local/bin
-)
-
-# Remove duplicate entries and non-existent directories
-typeset -U path
-path=($^path(N-/))
-
-export PATH
-
 
 ### ---- history config -------------------------------------
 export HISTFILE=$ZSH/.zsh_history
