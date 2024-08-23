@@ -51,13 +51,6 @@ search_man() {
 # alias code="flatpak run com.visualstudio.code"
 alias notes="cd ~/notes && nv"
 
-## scripts
-alias updir=". ~/bin/updir.sh"
-alias sysupdate=". ~/bin/sysupdate.sh"
-alias stopwatch=". ~/bin/stopwatch.sh"
-alias templates=". ~/bin/templates.sh"
-alias pyenv=". ~/bin/pyenv.sh"
-
 # list only mounted devices
 alias mnt="mount | awk -F' ' '{ printf \"%s\t%s\n\",\$1,\$3; }' | column -t | egrep ^/dev/ | sort"
 
@@ -102,21 +95,6 @@ daily() {
 daily-gw()
 {
     ghostwriter ~/notes/Journal/Entries/Daily/$(date +"%F").md &
-}
-
-# quick note to daily note
-memo(){
-    ~/bin/memo.sh $@
-}
-
-# quick todo to daily note
-todo(){
-    ~/bin/todo.sh $@
-}
-
-# add a note in the inbox note
-inbox() {
-    ~/bin/inbox.sh $@
 }
 
 # add a note in the inbox note
