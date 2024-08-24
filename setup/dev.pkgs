@@ -1,6 +1,7 @@
 base-devel
 bash-completion
 bat                         # better cat alternative
+chromium
 clang
 cloc                        # 'count lines of code'
 cool-retro-term             # just what the name says
