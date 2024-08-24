@@ -20,7 +20,7 @@ if [ $# -gt 0 ]; then
 else
 
     # Otherwise, use gum write to get the input
-    input=$(gum write --header "Memo" --show-line-numbers --width 100 --height 200 --char-limit 0)
+    input=$(gum write --header "Memo" --show-line-numbers --char-limit 0)
 
     # line counter
     count=0
