@@ -30,7 +30,6 @@ DO_DEV=0
 DO_OFFICE=0
 DO_UNI=0
 DO_HYPR=0
-DO_LATEX=0
 DO_OPTIONALS=0
 
 # Flags for additional installations / setups
