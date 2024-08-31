@@ -39,3 +39,19 @@ commit:
 
     # open lazygit to view the changes
     @lazygit
+
+# Commit in all directories
+commit-all:
+    # nvim
+    (cd $DOTFILES_DIR/configuration/.config/nvim/ && lazygit)
+
+    # wallpapers
+    (cd $DOTFILES_DIR/configuration/.config/wallpapers/ && lazygit)
+
+    # secrets
+    if [ -d "$DOTFILES_DIR/secrets" ]; then \
+        (cd "$DOTFILES_DIR/secrets" && lazygit) \
+    fi
+ 
+    # main repository
+    lazygit
