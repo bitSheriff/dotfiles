@@ -3,4 +3,7 @@
 	url = git@github.com:bitSheriff/Benjavim.git
 [submodule "configuration/.config/wallpapers"]
 	path = configuration/.config/wallpapers
-	url = git@github.com:bitSheriff/wallpapers.git
+    url = git@github.com:bitSheriff/wallpapers.git
+[submodule "secrets"]
+	path = secrets
+    url = git@github.com:bitSheriff/dotfiles-secrets.git
