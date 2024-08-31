@@ -118,6 +118,11 @@ create_symlinks() {
 
     # link the binaries and scripts which cannot be linked to a specific application (Hyprland, Waybar,...)
     stow --adopt -t ~/bin -d $DIR_NAME/.. bin
+
+    # link the secrets if the file is found
+    if [ -d "$DOTFILES_DIR/secrets" ]; then
+        bash $DOTFILES_DIR/secrets/link.sh
+    fi
 }
 
 remove_symlinks() {
