@@ -12,16 +12,16 @@ alias gd="(cd $DOTFILES_DIR && just commit-all)" # switch for a subshell into th
 alias icat="kitty +kitten icat --align=left"
 alias nvim-gui="kitty nvim"
 
-## shortcuts
+## application shortcuts
 alias nv="nvim"
 alias benjavim="nvim"
 alias v="NVIM_APPNAME=nvim-vanilla nvim"
 alias hx="helix"
-alias ls="exa"
-alias ll="exa -a --long --header --icons" 
-alias exat="exa -a --long --header --icons --tree"
-alias exat2="exa -a --long --header --icons --tree --level=2"
-alias exat3="exa -a --long --header --icons --tree --level=3"
+alias ls="eza"
+alias ll="eza -a --long --header --icons" 
+alias ezat="eza -a --long --header --icons --tree"
+alias ezat2="eza -a --long --header --icons --tree --level=2"
+alias ezat3="eza -a --long --header --icons --tree --level=3"
 alias gw="ghostwriter"
 alias clock="peaclock --config-dir ~/.config/peaclock" # cli-clock
 alias cp="cp -r" # always copy recursive
@@ -50,9 +50,6 @@ search_man() {
 ## applications
 # alias code="flatpak run com.visualstudio.code"
 alias notes="cd ~/notes && nv"
-
-# list only mounted devices
-alias mnt="mount | awk -F' ' '{ printf \"%s\t%s\n\",\$1,\$3; }' | column -t | egrep ^/dev/ | sort"
 
 # count files in current directory 
 alias count='find . -type f | wc -l'
@@ -88,19 +85,12 @@ mkdir!() { mkdir -p "$1" && cd "$1"; }
 disown!() { exec "$1" & ; disown }
 
 # add a note in the daily note
-daily() {
-    nvim ~/notes/Journal/Entries/Daily/$(date +"%F").md
-}
+daily() { nvim ~/notes/Journal/Entries/Daily/$(date +"%F").md }
 
-daily-gw()
-{
-    ghostwriter ~/notes/Journal/Entries/Daily/$(date +"%F").md &
-}
+daily-gw() { ghostwriter ~/notes/Journal/Entries/Daily/$(date +"%F").md & }
 
 # add a note in the inbox note
-inbox-gw() {
-    ghostwriter ~/notes/Inbox/Inbox.md &
-}
+inbox-gw() { ghostwriter ~/notes/Inbox/Inbox.md & }
 
 # quickly create file in the Inbox folder and open it with nvim
 qf()
@@ -119,14 +109,10 @@ qf()
 }
 
 # backup: clone a file and add ".bk" at the end
-bk() {
-    cp "$1" "$1.bk"
-}
+bk() { cp "$1" "$1.bk" }
 
 # print md5 hashsum for string
-md5(){
-    echo -n $1 | md5sum
-}
+md5() { echo -n $1 | md5sum }
 
 # start mpv with the wanted file and be able to kill the terminal instance
 mpv_disown()
