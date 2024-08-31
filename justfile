@@ -43,14 +43,20 @@ commit:
 # Commit in all directories
 commit-all:
     # nvim
-    (cd $DOTFILES_DIR/configuration/.config/nvim/ && lazygit)
+    if [[ -n $(git -C $DOTFILES_DIR/configuration/.config/nvim/ status --porcelain) ]]; then \
+        (cd $DOTFILES_DIR/configuration/.config/nvim/ && lazygit) \
+    fi
 
     # wallpapers
-    (cd $DOTFILES_DIR/configuration/.config/wallpapers/ && lazygit)
+    if [[ -n $(git -C $DOTFILES_DIR/configuration/.config/wallpapers/ status --porcelain) ]]; then \
+        (cd $DOTFILES_DIR/configuration/.config/wallpapers/ && lazygit) \
+    fi
 
     # secrets
     if [ -d "$DOTFILES_DIR/secrets" ]; then \
-        (cd "$DOTFILES_DIR/secrets" && lazygit) \
+        if [[ -n $(git -C "$DOTFILES_DIR/secrets" status --porcelain) ]]; then \
+            (cd "$DOTFILES_DIR/secrets" && lazygit) \
+        fi \
     fi
  
     # main repository
