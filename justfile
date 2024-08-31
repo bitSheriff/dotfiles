@@ -6,6 +6,7 @@ default: update
 update:
     # pull the newest changes
     @git pull
+    @git submodule update
 
     # link the new files
     @bash setup/setup.sh link
@@ -16,14 +17,14 @@ update:
     # start a system update
     @bash ~/bin/sysupdate
 
-# Encrypt the secrets
+# (depricated) Encrypt the secrets
 encrypt:
     #!/bin/bash
     cd setup
     # encrypt the secrets and the ssh hosts
     op run -- bash ./setup.sh encrypt
 
-# Decrypt the secrets
+# (depricated) Decrypt the secrets
 decrypt:
     #!/bin/bash
     cd setup
@@ -33,9 +34,6 @@ decrypt:
 
 # Commit the new changes
 commit:
-    # Encrypt the new stuff
-    @just encrypt
-
     # add the changed files
     @git add -U
 
