@@ -4,6 +4,7 @@
 decoder                     # scan and generate QR codes
 anki                        # flashcard learning app
 localsend-bin               # Send files to other devices on the same network
+morgen-bin                  # calender
 parabolic                   # youtube-dl frontend
 peazip-qt-bin               # .zip/ .rar  client
 ticktick                    # Task manager
