@@ -42,5 +42,14 @@ set recolor-keephue "true"
 
 # keybindings
 
-# toggle dark mode
-map <C-r> recolor
+map <C-r> recolor # toggle dark mode
+
+map f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen    # exit fullscreen
+map [fullscreen] <Up> scroll half-up
+map [fullscreen] <Down> scroll half-down
+map [fullscreen] j scroll full-down
+map [fullscreen] k scroll full-up
+map [fullscreen] <Right> scroll full-down
+map [fullscreen] <Left> scroll full-up
+
