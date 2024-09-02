@@ -1,0 +1,14 @@
+set shell := ["bash", "-uc"]
+
+# default target
+default: build
+
+# build all .tex files once
+build:
+    latexmk -pdf
+
+# start a process that builds all files on change
+building:
+    #!/bin/bash
+    nohup latexmk -pdf -pvc &>/dev/null &
+    disown
