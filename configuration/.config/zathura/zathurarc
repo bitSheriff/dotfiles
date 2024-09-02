@@ -44,6 +44,10 @@ set recolor-keephue "true"
 
 map <C-r> recolor # toggle dark mode
 
+# scroll a whole page
+map <Right> scroll full-down
+map <Left> scroll full-up
+
 map f toggle_fullscreen
 map [fullscreen] f toggle_fullscreen    # exit fullscreen
 map [fullscreen] <Up> scroll half-up
