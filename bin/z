@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# add this to `$HOME/.local/bin` or somewhere in your $PATH
+# TODO: implement hash-based caching system to prevent unnecessary pandoc conversion calls
+
+print_usage() {
+    echo "Zathura wrapper for displaying md and pdf files"
+    echo -e "Usage:\n\tz FILENAME"
+}
+
+if [[ $# == 0 ]]
+then
+    print_usage
+    exit 1
+fi
+
+if [[ ("$1" == "-h") || ("$1" == "--help") ]]
+then
+    print_usage
+    exit 0
+fi
+
+EXT=${1##*.}
+
+if [[ "$EXT" == "pdf" ]]
+then
+    zathura $1
+elif [[ "$EXT" == "md" ]]
+then
+    tempFile="/tmp/${1%%.*}.pdf"
+    pandoc $1 -o $tempFile
+    zathura $tempFile
+else
+    echo "Only PDF or MD files!"
+    exit 1
+fi
+
+
