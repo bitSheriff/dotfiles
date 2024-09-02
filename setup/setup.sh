@@ -381,7 +381,13 @@ install_optionals() {
     # read the wanted languages
     local selection=$(
         gum choose --no-limit \
+            "Calibre" \
             "Cozy Audiobook-Player" \
+            "Chromium" \
+            "Decoder (QR)" \
+            "DevToys" \
+            "Doxygen" \
+            "Draw.io" \
             "KDEConnect" \
             "LibreOffice Suite" \
             "MATLAB" \
@@ -399,7 +405,13 @@ install_optionals() {
 
     IFS=$'\n' read -rd '' -a array <<<"$selection"
 
+    if array_contains "${array[@]}" "Calibre"; then { pacman_install_single "calibre"; }; fi
+    if array_contains "${array[@]}" "Chromium"; then { pacman_install_single "chromium"; }; fi
+    if array_contains "${array[@]}" "Decoder (QR)"; then { yay_install_single "decoder"; }; fi
+    if array_contains "${array[@]}" "DevToys"; then { yay_install_single "devtoys-bin"; }; fi
+    if array_contains "${array[@]}" "Draw.io"; then { pacman_install_single "drawio-desktop"; }; fi
     if array_contains "${array[@]}" "LibreOffice Suite"; then { pacman_install_single "libreoffice-fresh"; }; fi
+    if array_contains "${array[@]}" "Doxygen"; then { pacman_install_single "doxygen"; }; fi
     if array_contains "${array[@]}" "Termius ssh-client"; then { yay_install_single "termius"; }; fi
     if array_contains "${array[@]}" "WebApp Manager"; then { yay_install_single "webapp-manager"; }; fi
 
@@ -754,6 +766,11 @@ fi
 
 if [[ "$ARG_MODE" = 'decrypt' ]]; then
     secret_decrypt
+    exit 0
+fi
+
+if [[ "$ARG_MODE" = 'selection' ]]; then
+    install_optionals
     exit 0
 fi
 
