@@ -252,10 +252,24 @@ install_language_specific() {
     print_h2 "Languages and langauge-specific Tooling"
 
     # read the wanted languages
-    local selection=$(gum choose --no-limit "C" "Rust" "Python" "LaTeX")
+    local selection=$(
+        gum choose --no-limit \
+            "Bash" \
+            "C" \
+            "Rust" \
+            "Python" \
+            "LaTeX"
+    )
 
     # Converting list from `gum choose` output to an array
     IFS=$'\n' read -rd '' -a array <<<"$selection"
+
+    if array_contains "${array[@]}" "Bash"; then
+        print_note "Language Bash"
+        pacman_install_single "bash"
+        pacman_install_single "bash-completion"
+        pacman_install_single "bash-language-server"
+    fi
 
     if array_contains "${array[@]}" "C"; then
         print_note "Language C"
@@ -376,17 +390,17 @@ install_optionals() {
             "OpenAI Whisper" \
             "Pocket Casts" \
             "SpeechNote" \
+            "Termius ssh-client" \
             "WebApp Manager" \
             "WhatsApp" \
-            "Zen-Browser" \
-            "[Collection] Fun Apps" \
-            "termius ssh-client"
+            "Zathura" \
+            "Zen-Browser"
     )
 
     IFS=$'\n' read -rd '' -a array <<<"$selection"
 
     if array_contains "${array[@]}" "LibreOffice Suite"; then { pacman_install_single "libreoffice-fresh"; }; fi
-    if array_contains "${array[@]}" "termius ssh-client"; then { yay_install_single "termius"; }; fi
+    if array_contains "${array[@]}" "Termius ssh-client"; then { yay_install_single "termius"; }; fi
     if array_contains "${array[@]}" "WebApp Manager"; then { yay_install_single "webapp-manager"; }; fi
 
     if array_contains "${array[@]}" "KDEConnect"; then
@@ -409,8 +423,14 @@ install_optionals() {
     if array_contains "${array[@]}" "OpenAI Whisper"; then { yay_install_single "whisper-git"; }; fi
     if array_contains "${array[@]}" "Zen-Browser"; then { yay_install_single "zen-browser"; }; fi
 
-    if array_contains "${array[@]}" "[Collection] Fun Apps"; then
-        gum confirm --default=false "Install fake hacker tool 'hollywood'?" && yay_install_single "hollywood"
+    if array_contains "${array[@]}" "Zathura"; then
+
+        # install the main package
+        pacman_install_single "zathura"
+        # very versatile engine (epub, pdf, ...)
+        pacman_install_single "zathura-pdf-mupdf"
+
+        gum confirm --default=false "Do you read Comic Books?" && pacman_install_single "zathura-cb"
     fi
 }
 
