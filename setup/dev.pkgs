@@ -9,6 +9,7 @@ doxygen                     # documentation engine
 element-desktop             # Matrix Client
 eza
 fastfetch                   # neofetch alternative
+fd                          # better find command
 firefox
 flatpak
 ghex                        # binary hex editor

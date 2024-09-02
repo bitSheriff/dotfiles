@@ -4,6 +4,7 @@ bluez                       # Bluetooth stack
 brightnessctl               # Brightness control
 cliphist                    # Clipboard manager for wayland (handles text and images)
 dunst                       # Notification daemon
+fastfetch                   # newer neofetch
 fuzzel                      # fuzzy finder for applications (app launcher)
 gcolor3                     # GUI color picker
 gnome-themes-extra          # themes for gnome & GTK applications
