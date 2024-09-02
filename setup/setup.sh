@@ -88,7 +88,7 @@ yay_install_single() {
     yay $YAY_FLAGS -S "$1"
 }
 
-flatpak_install() {
+flatpak_install_file() {
     # remove comments and spaces at the end of the line
     grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | xargs flatpak install -y
 }
@@ -206,7 +206,7 @@ install_pkgfiles() {
     # check if the flatpak file in the first arguemnt exists
     if [[ -f "$1.flatpak_pkgs" ]]; then
         print_h2 "Installing flatpak packages from $1"
-        flatpak_install "$1.flatpak_pkgs"
+        flatpak_install_file "$1.flatpak_pkgs"
     fi
 }
 
@@ -290,6 +290,7 @@ install_language_specific() {
         pacman_install_single "glow"
 
         gum confirm --default=false "Install Hugo Server?" && pacman_install_single "hugo"
+        gum confirm --default=false "Install Obsidian?" && yay_install_single "obsidian"
     fi
 
     if array_contains "${array[@]}" "Rust"; then
