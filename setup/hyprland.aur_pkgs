@@ -8,6 +8,7 @@ hyprpicker                  # A simple and fast GTK color picker
 hyprswitch                  # gui window switcher
 jome-git                    # emoji picker
 nwg-displays                # gui display manager
+pacseek                     # tui package search engine
 peaclock                    # terminal clock
 timer-bin                   # simple terminal timer with progressbar
 tokyonight-gtk-theme-git    # gtk theme
