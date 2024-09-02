@@ -364,15 +364,32 @@ install_latex() {
 install_optionals() {
     print_h1 "Optional Packages"
 
-    gum confirm --default=false "Install LibreOffice Suite?" && pacman_install_single "libreoffice-fresh"
+    # read the wanted languages
+    local selection=$(
+        gum choose --no-limit \
+            "Cozy Audiobook-Player" \
+            "KDEConnect" \
+            "LibreOffice Suite" \
+            "MATLAB" \
+            "Maple" \
+            "Mullvad VPN" \
+            "OpenAI Whisper" \
+            "Pocket Casts" \
+            "SpeechNote" \
+            "WebApp Manager" \
+            "WhatsApp" \
+            "Zen-Browser" \
+            "[Collection] Fun Apps" \
+            "termius ssh-client"
+    )
 
-    gum confirm --default=false "Install Termius (SSH Client)?" && yay_install_single "termius"
+    IFS=$'\n' read -rd '' -a array <<<"$selection"
 
-    gum confirm --default=false "Install Mint WebApp Manager?" && yay_install_single "webapp-manager"
+    if array_contains "${array[@]}" "LibreOffice Suite"; then { pacman_install_single "libreoffice-fresh"; }; fi
+    if array_contains "${array[@]}" "termius ssh-client"; then { yay_install_single "termius"; }; fi
+    if array_contains "${array[@]}" "WebApp Manager"; then { yay_install_single "webapp-manager"; }; fi
 
-    gum confirm --default=false "Install fake hacker tool 'hollywood'?" && yay_install_single "hollywood"
-
-    gum confirm --default=false "Install KDEConnect?" && (
+    if array_contains "${array[@]}" "KDEConnect"; then
 
         # install the package
         pacman_install_single "kdeconnect"
@@ -380,28 +397,21 @@ install_optionals() {
         # allow kdeconnect
         sudo firewall-cmd --permanent --zone=public --add-service=kdeconnect
         sudo firewall-cmd --reload
-    )
+    fi
 
-    gum confirm --default=false "Install MEGAsync (Mega Upload client)?" && yay_install_single "megasync"
+    if array_contains "${array[@]}" "WhatsApp"; then { yay_install_single "whatsapp-for-linux"; }; fi
+    if array_contains "${array[@]}" "MATLAB"; then { bash ./matlab.sh; }; fi
+    if array_contains "${array[@]}" "Maple"; then { bash ./maple.sh; }; fi
+    if array_contains "${array[@]}" "Cozy Audiobook-Player"; then { yay_install_single "cozy-audiobooks"; }; fi
+    if array_contains "${array[@]}" "Pocket Casts"; then { yay_install_single "pocket-casts-desktop-bin"; }; fi
+    if array_contains "${array[@]}" "Mullvad VPN"; then { yay_install_single "mullvad-vpn"; }; fi
+    if array_contains "${array[@]}" "SpeechNote"; then { yay_install_single "dsnote"; }; fi
+    if array_contains "${array[@]}" "OpenAI Whisper"; then { yay_install_single "whisper-git"; }; fi
+    if array_contains "${array[@]}" "Zen-Browser"; then { yay_install_single "zen-browser"; }; fi
 
-    gum confirm --default=false "Install WhatsApp?" && yay_install_single "whatsapp-for-linux"
-
-    gum confirm --default=false "Install MATLAB?" && bash ./matlab.sh
-
-    gum confirm --default=false "Install Maple?" && bash ./maple.sh
-
-    gum confirm --default=false "Install Cozy Audiobook-Player?" && yay_install_single "cozy-audiobooks"
-
-    gum confirm --default=false "Install Pocket Casts?" && yay_install_single "pocket-casts-desktop-bin"
-
-    gum confirm --default=false "Install Mullvad VPN?" && yay_install_single "mullvad-vpn"
-
-    gum confirm --default=false "Install SpeechNote (voice-to-text)?" && yay_install_single "dsnote"
-
-    gum confirm --default=false "Install OpenAI Whisper?" && yay_install_single "whisper-git"
-
-    gum confirm --default=false "Install Zen Browser (Firefox)?" && yay_install_single "zen-browser"
-
+    if array_contains "${array[@]}" "[Collection] Fun Apps"; then
+        gum confirm --default=false "Install fake hacker tool 'hollywood'?" && yay_install_single "hollywood"
+    fi
 }
 
 setup_ssh_keys() {
