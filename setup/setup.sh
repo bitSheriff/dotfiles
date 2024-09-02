@@ -256,6 +256,7 @@ install_language_specific() {
         gum choose --no-limit \
             "Bash" \
             "C" \
+            "Markdown" \
             "Rust" \
             "Python" \
             "LaTeX"
@@ -279,6 +280,16 @@ install_language_specific() {
         # CLI debugging Tools
         pacman_install_single "lldb"
         yay_install_single "codelldb"
+    fi
+
+    if array_contains "${array[@]}" "Markdown"; then
+        print_note "Language Markdown"
+        pacman_install_single "neovim"
+        pacman_install_single "ghostwriter"
+        # CLI Markdown Rederer
+        pacman_install_single "glow"
+
+        gum confirm --default=false "Install Hugo Server?" && pacman_install_single "hugo"
     fi
 
     if array_contains "${array[@]}" "Rust"; then
@@ -306,10 +317,15 @@ install_language_specific() {
     if array_contains "${array[@]}" "Python"; then
         print_note "Language Python"
         pacman_install_single "python"
-        pacman_install_single "python-pyqt5"
-        pacman_install_single "jupyterlab"
+
+        gum confirm --default=false "Install Qt Framework?" && (
+            pacman_install_single "python-pyqt5"
+            pacman_install_single "python-pyqt6"
+        )
 
         gum confirm --default=false "Install PyCharm Community?" && pacman_install_single "pycharm-community-edition"
+
+        gum confirm --default=false "Install Jupyter?" && pacman_install_single "jupyterlab"
     fi
 
     if array_contains "${array[@]}" "LaTeX"; then
@@ -382,12 +398,14 @@ install_optionals() {
     local selection=$(
         gum choose --no-limit \
             "Calibre" \
-            "Cozy Audiobook-Player" \
             "Chromium" \
+            "Cozy Audiobook-Player" \
             "Decoder (QR)" \
             "DevToys" \
             "Doxygen" \
             "Draw.io" \
+            "FileZilla" \
+            "Foliate" \
             "KDEConnect" \
             "LibreOffice Suite" \
             "MATLAB" \
@@ -395,8 +413,14 @@ install_optionals() {
             "Mullvad VPN" \
             "OpenAI Whisper" \
             "Pocket Casts" \
+            "QBitTorrent" \
+            "Qalc" \
+            "Signal" \
             "SpeechNote" \
+            "Spotify" \
             "Termius ssh-client" \
+            "TickTick" \
+            "VeraCrypt" \
             "WebApp Manager" \
             "WhatsApp" \
             "Zathura" \
@@ -409,11 +433,19 @@ install_optionals() {
     if array_contains "${array[@]}" "Chromium"; then { pacman_install_single "chromium"; }; fi
     if array_contains "${array[@]}" "Decoder (QR)"; then { yay_install_single "decoder"; }; fi
     if array_contains "${array[@]}" "DevToys"; then { yay_install_single "devtoys-bin"; }; fi
-    if array_contains "${array[@]}" "Draw.io"; then { pacman_install_single "drawio-desktop"; }; fi
-    if array_contains "${array[@]}" "LibreOffice Suite"; then { pacman_install_single "libreoffice-fresh"; }; fi
     if array_contains "${array[@]}" "Doxygen"; then { pacman_install_single "doxygen"; }; fi
+    if array_contains "${array[@]}" "Draw.io"; then { pacman_install_single "drawio-desktop"; }; fi
+    if array_contains "${array[@]}" "FileZilla"; then { pacman_install_single "filezilla"; }; fi
+    if array_contains "${array[@]}" "Foliate"; then { pacman_install_single "foliate"; }; fi
+    if array_contains "${array[@]}" "LibreOffice Suite"; then { pacman_install_single "libreoffice-fresh"; }; fi
     if array_contains "${array[@]}" "Termius ssh-client"; then { yay_install_single "termius"; }; fi
     if array_contains "${array[@]}" "WebApp Manager"; then { yay_install_single "webapp-manager"; }; fi
+    if array_contains "${array[@]}" "Qalc"; then { pacman_install_single "qalculate-gtk"; }; fi
+    if array_contains "${array[@]}" "QBitTorrent"; then { pacman_install_single "qbittorrent"; }; fi
+    if array_contains "${array[@]}" "Signal"; then { pacman_install_single "signal-desktop"; }; fi
+    if array_contains "${array[@]}" "Spotify"; then { pacman_install_single "spotify-launcher"; }; fi
+    if array_contains "${array[@]}" "VeraCrypt"; then { pacman_install_single "veracrypt"; }; fi
+    if array_contains "${array[@]}" "TickTick"; then { yay_install_single "ticktick"; }; fi
 
     if array_contains "${array[@]}" "KDEConnect"; then
 
@@ -433,7 +465,7 @@ install_optionals() {
     if array_contains "${array[@]}" "Mullvad VPN"; then { yay_install_single "mullvad-vpn"; }; fi
     if array_contains "${array[@]}" "SpeechNote"; then { yay_install_single "dsnote"; }; fi
     if array_contains "${array[@]}" "OpenAI Whisper"; then { yay_install_single "whisper-git"; }; fi
-    if array_contains "${array[@]}" "Zen-Browser"; then { yay_install_single "zen-browser"; }; fi
+    if array_contains "${array[@]}" "Zen-Browser"; then { yay_install_single "zen-browser-bin"; }; fi
 
     if array_contains "${array[@]}" "Zathura"; then
 
@@ -754,7 +786,7 @@ if [[ "$ARG_MODE" = 'debug' ]]; then
     exit 0
 fi
 
-if [[ "$ARG_MODE" = 'langs' ]]; then
+if [[ "$ARG_MODE" = 'languages' ]]; then
     install_language_specific
     exit 0
 fi
