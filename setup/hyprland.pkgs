@@ -39,4 +39,6 @@ xbindkeys                   # Media keys and stuff
 xdg-desktop-portal-hyprland 
 yazi                        # terminal file explorer
 zathura                     # PDF viewer (minimalistic)
-zathura-pdf-poppler         # PDF plugin for zathura
+zathura-cb                  # Plugin for comic books
+zathura-pdf-mupdf           # PDF plugin for zathura
+zathura-ps                  # Plugin for photoshopA
