@@ -43,7 +43,7 @@ reveal = [
 	{ run = '''exiftool "$1"u echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
 extract = [
-	{ run = 'unar "$1"', desc = "Extract here", for = "unix" },
+	{ run = 'peazip "$1"', desc = "Extract here", for = "unix" },
 	{ run = 'unar "%1"', desc = "Extract here", for = "windows" },
 ]
 play = [
@@ -66,7 +66,7 @@ rules = [
 
 	{ mime = "application/*zip", use = [ "extract", "reveal" ] },
 	{ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", use = [ "extract", "reveal" ] },
-	{ mime = "application/*pdf", use = [ "viewPDF" ] },
+	{ mime = "application/*pdf", use = [ "viewPDF", "reveal" ] },
 
 	{ mime = "application/json", use = [ "edit", "reveal" ] },
 	{ mime = "*/javascript",     use = [ "edit", "reveal" ] },
