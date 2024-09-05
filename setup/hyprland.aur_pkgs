@@ -12,6 +12,7 @@ pacseek                     # tui package search engine
 peaclock                    # terminal clock
 timer-bin                   # simple terminal timer with progressbar
 tokyonight-gtk-theme-git    # gtk theme
+unipicker                   # picker for unicode symbols
 wayland-logout              # logout from wayland session
 waypaper                    # wallpaper chooser
 webapp-manager              # create webapps
