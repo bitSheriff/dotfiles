@@ -256,10 +256,11 @@ install_language_specific() {
         gum choose --no-limit \
             "Bash" \
             "C" \
+            "LaTeX" \
             "Markdown" \
-            "Rust" \
             "Python" \
-            "LaTeX"
+            "Rust" \
+            "Typst"
     )
 
     # Converting list from `gum choose` output to an array
@@ -334,6 +335,11 @@ install_language_specific() {
         install_latex
     fi
 
+    if array_contains "${array[@]}" "Typst"; then
+        print_note "Language Typst"
+        pacman_install_single "typst"
+        pacman_install_single "typst-lsp"
+    fi
 }
 
 install_dev_tools() {
