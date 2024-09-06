@@ -7,6 +7,7 @@ dunst                       # Notification daemon
 fastfetch                   # newer neofetch
 fuzzel                      # fuzzy finder for applications (app launcher)
 gcolor3                     # GUI color picker
+gnome-disk-utility          # Partition and Disk Manager
 gnome-themes-extra          # themes for gnome & GTK applications
 grim                        # Screenshot utility
 hypridle                    # Idle manager
