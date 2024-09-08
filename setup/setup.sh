@@ -547,6 +547,15 @@ setup_hardware() {
 
     print_h2 "Hardware Setup"
 
+    gum confirm --default=false "Would you like to tweak the Battery?" && (
+        # install the package
+        pacman_install_single "tlp"
+        # start the service for the next boot
+        sudo systemctl enable tlp.service
+        # start now to use it withour rebooting
+        sudo tlp start
+    )
+
     gum confirm --default=false "Would you like to setup bluetooth?" && (
         print_h3 "Bluetooth Setup"
 
