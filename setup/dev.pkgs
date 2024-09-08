@@ -28,6 +28,7 @@ marksman                    # Markdown Language Server
 meld                        # graphical diff and merge tool
 mesa-utils
 neovim                      # best cli editor (well more than that)
+netscanner                  # TUI network scanner tool
 nmap                        # ip tool
 npm
 obsidian                    # Note Taking
