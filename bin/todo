@@ -17,6 +17,12 @@ else
     # Otherwise, use gum write to get the input
     input=$(gum write --header "Todo" --show-line-numbers)
 
+    # check if the TickTick CLI is configured, if so use this insetead of local MD note
+    if [[ -n "${TICKTICK_CLIENT_ID}" ]]; then
+        op run -- bash ~/bin/ticktask "$input"
+        exit 0
+    fi
+
     # line conter
     count=0
 
