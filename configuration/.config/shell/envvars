@@ -2,6 +2,7 @@
 export TERMINAL=kitty
 export EDITOR=nvim
 export VISUAL=nvim
+export BROWSER=zen-browser
 
 # define important files & directories
 export INBOX=$HOME/notes/Inbox/Inbox.md                             # define the inbox file
