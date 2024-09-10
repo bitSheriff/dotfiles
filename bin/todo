@@ -1,5 +1,9 @@
 #!/bin/bash
 
+source ~/.config/shell/lib/my_lib.sh
+
+include "~/.config/shell/secrets"
+
 # Preamble of the Memo
 TODO_PRE="- [ ] "
 LINES_PRE="    - "
@@ -11,33 +15,31 @@ JOURNAL=~/notes/Journal/Entries/Daily/$(date +"%F").md
 if [ $# -gt 0 ]; then
     # If there are arguments, join them into a single string and process
     input="$*"
-    echo "$TODO_PRE" "$input" >>"$JOURNAL"
 else
-
     # Otherwise, use gum write to get the input
     input=$(gum write --header "Todo" --show-line-numbers)
+fi
 
-    # check if the TickTick CLI is configured, if so use this insetead of local MD note
-    if [[ -n "${TICKTICK_CLIENT_ID}" ]]; then
-        op run -- bash ~/bin/ticktask "$input"
-        exit 0
+# check if the TickTick CLI is configured, if so use this insetead of local MD note
+if [[ -n "$TICKTICK_CLIENT_ID" ]]; then
+    op run -- bash ~/bin/ticktask "$input"
+    exit 0
+fi
+
+# line conter
+count=0
+
+while IFS= read -r line; do
+
+    # just print the preamble on the first line
+    if [ $count -eq 0 ]; then
+        # Process the first line differently
+        echo "$TODO_PRE" "$line" >>"$JOURNAL"
+    else
+        # Process the remaining lines
+        echo "$LINES_PRE" "$line" >>"$JOURNAL"
     fi
 
-    # line conter
-    count=0
-
-    while IFS= read -r line; do
-
-        # just print the preamble on the first line
-        if [ $count -eq 0 ]; then
-            # Process the first line differently
-            echo "$TODO_PRE" "$line" >>"$JOURNAL"
-        else
-            # Process the remaining lines
-            echo "$LINES_PRE" "$line" >>"$JOURNAL"
-        fi
-
-        # Increment the counter
-        count=$((count + 1))
-    done <<<"$input"
-fi
+    # Increment the counter
+    count=$((count + 1))
+done <<<"$input"
