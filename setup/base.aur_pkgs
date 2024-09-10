@@ -1,3 +1,4 @@
+downgrade                                                           # helper to downgrade packages
 gearlever                                                           # manage appimages
 nemo-compare
 pacseek                                                             # search for packages (official & AUR)
