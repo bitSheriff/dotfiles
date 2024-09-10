@@ -14,7 +14,7 @@
   },
 
   // Workspaces
-  "hyprland/workspaces": {
+  "hyprland/workspaces#minimal": {
     "active-only": false,
     "format": "{icon}",
     // "show-special" : true,
@@ -43,7 +43,54 @@
       
     },
   },
+// NUMBERS and ICONS style with window rewrite
+"hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    // "warp-on-scroll": false,
+    "sort-by-number": true,
+    "show-special": false,
+    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "format": "{icon} {windows}",
+    // "persistent-workspaces": {"*": 25},
+    "format-window-separator": " ",
+    "window-rewrite-default": " ",
+    "window-rewrite": {
 
+        // Browser and Websites
+        "title<.*youtube.*>": " ",	
+        "title<.*amazon.*>": " ",
+        "title<.*reddit.*>": " ",
+        "title<.*github.*>": " ",
+        "title<.*[sS]potify.*>": " ",
+        "title<.*Picture-in-Picture.*>": " ",
+        "class<freetube>": " ",
+        "class<firefox>": " ",
+        "class<zen-alpha>": " ",
+        "class<brave-browser-beta>": " ",
+        "class<brave-browser>": " ",
+
+        // Productivity Apps
+        "class<ticktick>": " ",
+        "class<obsidian>": "󱞁 ",
+
+        // Coding & Co
+        "class<kitty>": " ",
+        "class<kitty-dropterm>": " ",
+        "class<org.gnome.Console>": " ",
+        "class<Chromium>": "<span font='12'> </span>",
+        "class<Code|code-url-handler>": "󰨞 ",
+
+        // Basic Office Stuff
+        "class<thunar>": "󰝰 ",
+        "class<org.gnome.Nautilus>": "󰝰 ",
+        "class<discord>": " ",
+        "class<virt-manager>": " ",
+        "class<com.obsproject.Studio>": " "
+    }
+},
   // Hyprland Window
  "hyprland/window": {
     "separate-outputs": true
