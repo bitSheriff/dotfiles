@@ -128,9 +128,9 @@
   },
 
   "custom/clock": {
-        "format": "  {}",
-        "interval": 60,
-        "exec": "date +'%d %a %H:%M'",
+        "format": "{}",
+        "interval": 30,
+        "exec": "date +'%d.%m %H:%M'",
   },
   // Battery
   "battery": {

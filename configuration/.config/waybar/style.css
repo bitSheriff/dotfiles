@@ -175,6 +175,7 @@ window#waybar {
   border: 0.19em solid @orange;
 }
 
+#custom-clock,
 #clock {
   padding: 0px 4px 0px 0px;
 }
