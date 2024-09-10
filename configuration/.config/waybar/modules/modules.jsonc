@@ -43,11 +43,12 @@
       
     },
   },
-// NUMBERS and ICONS style with window rewrite
-"hyprland/workspaces": {
+
+  // NUMBERS and ICONS style with window rewrite
+  "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
-    // "warp-on-scroll": false,
+    "warp-on-scroll": true,
     "sort-by-number": true,
     "show-special": false,
     "on-click": "activate",
@@ -64,31 +65,45 @@
         "title<.*amazon.*>": " ",
         "title<.*reddit.*>": " ",
         "title<.*github.*>": " ",
+        "title<.*Twitch.*>": " ",
+        "title<.*plex.*>": "󰚺 ",
         "title<.*[sS]potify.*>": " ",
         "title<.*Picture-in-Picture.*>": " ",
-        "class<freetube>": " ",
+        "title<.*Endel.*>": " ",
         "class<firefox>": " ",
         "class<zen-alpha>": " ",
-        "class<brave-browser-beta>": " ",
-        "class<brave-browser>": " ",
 
         // Productivity Apps
         "class<ticktick>": " ",
-        "class<obsidian>": "󱞁 ",
+        "class<obsidian>": "<span font='12'> </span>", // some icons need to be increased in size
+        "class<1Password>": "󰟵 ",
+        "class<Signal>": "󰈎 ",
+        "class<localsend>": "<span font='12'>󰷹 </span>",
+        "class<.*ghostwriter.*>": "󰊠 ",
+        "class<.*zathura.*>": " ",
+        "class<.*okular.*>": " ",
 
         // Coding & Co
         "class<kitty>": " ",
-        "class<kitty-dropterm>": " ",
-        "class<org.gnome.Console>": " ",
         "class<Chromium>": "<span font='12'> </span>",
         "class<Code|code-url-handler>": "󰨞 ",
+        "class<GitKraken>": " ",
+        "class<filezilla>": " ",
+        "class<.*Meld.*>": " ",
+        "class<.*Termius.*>": "<span font='12'>󰢹 </span>",
+        "class<.*qalculate.*>": "<span font='12'>󰪚 </span>",
+        "class<.*speedcrunch.*>": "<span font='12'>󰪚 </span>",
 
         // Basic Office Stuff
-        "class<thunar>": "󰝰 ",
-        "class<org.gnome.Nautilus>": "󰝰 ",
+        "class<.*gwenview.*>": "󰋩 ",
+        "class<thunar|nemo>": "󰝰 ",
+        "class<.*calibre.*>": "󱉟 ",
         "class<discord>": " ",
         "class<virt-manager>": " ",
-        "class<com.obsproject.Studio>": " "
+        "class<.*qbittorrent.*>": " ",
+        "class<.*tubeconverter.*>": " ",
+        "class<com.obsproject.Studio>": " ",
+        "class<anki>": "󰘸 "
     }
 },
   // Hyprland Window
