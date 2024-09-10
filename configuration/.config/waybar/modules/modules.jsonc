@@ -100,7 +100,7 @@
         "class<.*gwenview.*>": "󰋩 ",
         "class<.*qbittorrent.*>": " ",
         "class<.*tubeconverter.*>": " ",
-        "class<anki>": "󰘸 "
+        "class<anki>": "󰘸 ",
         "class<com.obsproject.Studio>": " ",
         "class<discord>": " ",
         "class<thunar|nemo>": "󰝰 ",
@@ -127,6 +127,11 @@
     "format-alt": "{:%Y-%m-%d}",
   },
 
+  "custom/clock": {
+        "format": "  {}",
+        "interval": 60,
+        "exec": "date +'%d %a %H:%M'",
+  },
   // Battery
   "battery": {
     "states": {

@@ -31,7 +31,7 @@
     "orientation": "horizontal",
     "modules": [
       // "hyprland/language",
-      "clock",
+      "custom/clock",
       "backlight",
       "battery",
       "custom/power",
