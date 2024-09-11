@@ -56,6 +56,7 @@ torbrowser-launcher
 tree
 veracrypt
 wine                        # not an emulator
+yq                          # commandline YAML, JSON parser
 yt-dlp
 zellij
 zoxide
