@@ -548,6 +548,11 @@ setup_hardware() {
     print_h2 "Hardware Setup"
 
     gum confirm --default=false "Would you like to tweak the Battery?" && (
+
+        print_note "Install powertop for gerneral tuning"
+        pacman_install_single "powertop"
+        sudo powertop --auto-tune
+
         print_note "TLP is only recommended vor Lenovo Laptops"
 
         # read the wanted package, only one is allowed
