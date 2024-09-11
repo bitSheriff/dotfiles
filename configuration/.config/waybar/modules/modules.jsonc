@@ -94,6 +94,7 @@
         "class<GitKraken>": " ",
         "class<filezilla>": " ",
         "class<kitty>": " ",
+        "class<org.gnome.Boxes>": " ",
 
         // Basic Office Stuff
         "class<.*calibre.*>": "󱉟 ",
