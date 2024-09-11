@@ -548,12 +548,33 @@ setup_hardware() {
     print_h2 "Hardware Setup"
 
     gum confirm --default=false "Would you like to tweak the Battery?" && (
-        # install the package
-        pacman_install_single "tlp"
-        # start the service for the next boot
-        sudo systemctl enable tlp.service
-        # start now to use it withour rebooting
-        sudo tlp start
+        print_note "TLP is only recommended vor Lenovo Laptops"
+
+        # read the wanted package, only one is allowed
+        local selection=$(
+            gum choose \
+                "TLP" \
+                "Power-Profiles-Daemon"
+        )
+
+        # Converting list from `gum choose` output to an array
+        IFS=$'\n' read -rd '' -a array <<<"$selection"
+
+        if array_contains "${array[@]}" "TLP"; then
+            pacman_install_single "tlp"
+            # start the service for the next boot
+            sudo systemctl enable tlp.service
+            # start now to use it withour rebooting
+            sudo tlp start
+        fi
+
+        if array_contains "${array[@]}" "Power-Profiles-Daemon"; then
+            pacman_install_single "power-profiles-daemon"
+
+            # start the service for the next boot
+            sudo systemctl start power-profiles-daemon.service
+        fi
+
     )
 
     gum confirm --default=false "Would you like to setup bluetooth?" && (
