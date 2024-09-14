@@ -120,3 +120,14 @@ mpv_disown()
     mpv "$1" &
     disown
 }
+
+compress()
+{
+    zip -9 -r "$1" "$1.zip"
+}
+
+decompress()
+{
+    unzip "$1"
+}
+

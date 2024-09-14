@@ -16,4 +16,6 @@ python
 ripgrep
 ttf-jetbrains-mono-nerd
 ttf-nerd-fonts-symbols-mono
+unzip                                                               # unzip archives
+zip                                                                 # zip files and directories
 zsh
