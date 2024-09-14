@@ -12,3 +12,8 @@ building:
     #!/bin/bash
     nohup latexmk -pdf -pvc &>/dev/null &
     disown
+
+# clean the build files
+clean:
+    # remove the files created by latexmk
+    @rm -rf *.aux *.lof *. log *.out *.toc
