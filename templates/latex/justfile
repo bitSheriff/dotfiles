@@ -10,7 +10,7 @@ build:
 # start a process that builds all files on change
 building:
     #!/bin/bash
-    nohup latexmk -pdf -pvc &>/dev/null &
+    nohup latexmk -pdf -pvc -interaction=nonstopmode &>/dev/null &
     disown
 
 # clean the build files

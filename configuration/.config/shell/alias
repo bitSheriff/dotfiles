@@ -131,3 +131,9 @@ decompress()
     unzip "$1"
 }
 
+# Continous latexmk compiling
+latexmk!()
+{
+    latexmk -pdf -pvc -interaction=nonstopmode "$1"
+}
+
