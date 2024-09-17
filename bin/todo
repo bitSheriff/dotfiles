@@ -22,7 +22,7 @@ fi
 
 # check if the TickTick CLI is configured, if so use this insetead of local MD note
 if [[ -n "$TICKTICK_CLIENT_ID" ]]; then
-    op run -- bash ~/bin/ticktask "$input"
+    bash ~/bin/ticktask "$input"
     exit 0
 fi
 
