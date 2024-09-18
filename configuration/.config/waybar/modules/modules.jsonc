@@ -96,6 +96,7 @@
         "class<filezilla>": " ",
         "class<kitty>": " ",
         "class<org.gnome.Boxes>": " ",
+        "class<.*cool-retro-term.*>": "󰍹 ",
 
         // Basic Office Stuff
         "class<.*calibre.*>": "󱉟 ",
