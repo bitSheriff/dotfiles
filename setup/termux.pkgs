@@ -1,11 +1,11 @@
-neovim
+eza
 git
+just
 lazygit
+neovim
+rust
+starship
 stow
 yazi
 zoxide
 zsh
-starship
-eza
-just
-rust
