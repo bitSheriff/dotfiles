@@ -777,6 +777,10 @@ setup_android() {
     # Deactivate GPG because 1Password is not available on Termux, and else committing is not possible
     deactivate_gpg_signing
 
+    # grant termux access to storage
+    termux-setup-storage
+    print_note "Termux has no access to the storage (~/storage/)"
+
     # create the symlinks
     create_symlinks
 }
