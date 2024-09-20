@@ -797,6 +797,9 @@ setup_android() {
     termux-setup-storage
     print_note "Termux has no access to the storage (~/storage/)"
 
+    # set ZSH to default shell
+    chsh -s $(which zsh)
+
     gum confirm --default=false "Would you like to copy the SSH keys?" && (
         bash ../secrets/ssh-copy.sh
     )

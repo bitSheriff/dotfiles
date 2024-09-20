@@ -3,9 +3,11 @@ git
 just
 lazygit
 neovim
+openssh-sftp-server
 rust
 starship
 stow
+termux-api
 yazi
 zoxide
 zsh
