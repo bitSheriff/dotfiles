@@ -754,7 +754,7 @@ secret_run() {
 
 setup_android() {
     # android setup with termux
-    grep -v '^#' "termux.pkgs" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | pkg install -S -
+    grep -v '^#' "termux.pkgs" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | pkg install -
 
 }
 
