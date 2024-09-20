@@ -752,6 +752,10 @@ secret_run() {
     fi
 }
 
+setup_android() {
+    # android setup with termux
+}
+
 # ==confirm======================================
 # Fl       ow Start & Arguemnt Handling
 # ==confirm======================================
@@ -847,6 +851,14 @@ fi
 
 if [[ "$ARG_MODE" = 'selection' ]]; then
     install_optionals
+    exit 0
+fi
+
+if [[ "$ARG_MODE" = 'android' ]]; then
+    setup_android
+
+    create_symlinks
+
     exit 0
 fi
 
