@@ -32,7 +32,6 @@ alias neofetch="fastfetch"
 alias sshs="sshs --config ~/.ssh/hosts" # use own file for the SSH Hosts
 alias open="xdg-open" # open file with standard program
 alias cat="bat" # better cat command
-alias setup="bash $DOTFILES_DIR/setup/setup.sh"
 alias dots="cd $DOTFILES_DIR" # change to the dotfiles directory
 alias cd!='cd $(fd  --type d --hidden --exclude .git | fzf --ignore-case --no-preview )' # change directory with fuzzy finder
 alias go2conf="cd ~/.config"
@@ -40,6 +39,16 @@ alias go2code="cd ~/code"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
+
+setup() {
+    params="$@"
+
+    # own sub shell
+    (
+        cd $DOTFILES_DIR/setup
+        bash setup.sh "$params"
+    )
+}
 
 ## general linux commands simplified
 # param alias
