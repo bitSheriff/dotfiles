@@ -1,2 +1,3 @@
 setup/secret.sh
 configuration/.termux/shell
+configuration/.config/shell/secrets
