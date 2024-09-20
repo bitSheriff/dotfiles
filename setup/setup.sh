@@ -152,12 +152,9 @@ setup_shell() {
     fi
 }
 
-setup_repositories() {
-
-    print_h1 "Setup Repositories"
-
+clone_repositories_from_file() {
+    target_dir="$1"
     file="$(pwd)/repositories.list"
-    target_dir="$HOME/code"
 
     # Create the directory if it doesn't exist
     if [ ! -d "$target_dir" ]; then
@@ -190,6 +187,21 @@ setup_repositories() {
         # Clone the repository
         git clone "$url" "$target_dir/$repo_name"
     done <$file
+}
+
+setup_repositories() {
+
+    print_h1 "Setup Repositories"
+    target_dir="$HOME/code"
+
+    if [[ "$1" = 'all' ]]; then
+        clone_repositories_from_file
+        exit 0
+    fi
+
+    # only execute the file if it exists
+    safe_exec ../secrets/clone-repositories.sh
+
 }
 
 install_pkgfiles() {
@@ -801,7 +813,7 @@ setup_android() {
     chsh -s $(which zsh)
 
     gum confirm --default=false "Would you like to copy the SSH keys?" && (
-        bash ../secrets/ssh-copy.sh
+        safe_exec ../secrets/ssh-copy.sh
     )
 
     # create the symlinks
@@ -908,6 +920,16 @@ fi
 
 if [[ "$ARG_MODE" = 'android' ]]; then
     setup_android
+    exit 0
+fi
+
+if [[ "$ARG_MODE" = 'repo' ]]; then
+    setup_repositories
+    exit 0
+fi
+
+if [[ "$ARG_MODE" = 'repos' ]]; then
+    setup_repositories "all"
     exit 0
 fi
 
