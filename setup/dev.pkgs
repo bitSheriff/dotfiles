@@ -44,6 +44,7 @@ qt5ct
 qt6ct
 remmina                     # SSH client
 ripgrep
+ripgrep-all                 # search trough all kind of files
 rsync
 rust
 rust-analyzer
