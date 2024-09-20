@@ -114,11 +114,11 @@ create_symlinks() {
     stow --adopt -t ~ -d $DIR_NAME/.. configuration
 
     # link the templates
-    mkdir ~/Templates/
+    mkdir -p ~/Templates/
     stow --adopt -t ~/Templates -d $DIR_NAME/.. templates
 
     # link the binaries and scripts which cannot be linked to a specific application (Hyprland, Waybar,...)
-    mkdir ~/bin
+    mkdir -p ~/bin
     stow --adopt -t ~/bin -d $DIR_NAME/.. bin
 
     # link the secrets if the file is found
