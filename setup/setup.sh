@@ -752,14 +752,33 @@ secret_run() {
     fi
 }
 
+deactivate_gpg_signing() {
+    print_h2 "Deactivate GPG"
+    print_debug "this is needed if 1Password is not available"
+
+    # deactivate signing
+    git config --global commit.gpgSign false
+
+    # ignore the changed file because it should not be commited (signing is important on other devices)
+    git update-index --assume-unchanged ../configuration/.gitconfig
+}
+
 setup_android() {
+
+    print_h1 "Android Setup"
 
     # fake the sudo command
     alias sudo=""
 
+    print_h2 "Install packages"
     # android setup with termux
     grep -v '^#' "termux.pkgs" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | pkg install -
 
+    # Deactivate GPG because 1Password is not available on Termux, and else committing is not possible
+    deactivate_gpg_signing
+
+    # create the symlinks
+    create_symlinks
 }
 
 # ==confirm======================================
@@ -862,9 +881,6 @@ fi
 
 if [[ "$ARG_MODE" = 'android' ]]; then
     setup_android
-
-    create_symlinks
-
     exit 0
 fi
 
