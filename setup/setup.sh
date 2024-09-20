@@ -774,12 +774,20 @@ setup_android() {
     # android setup with termux
     grep -v '^#' "termux.pkgs" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | pkg install -
 
+    # more packages which are not in the repository
+    print_note "install SSHS"
+    cargo install --git https://github.com/quantumsheep/sshs
+
     # Deactivate GPG because 1Password is not available on Termux, and else committing is not possible
     deactivate_gpg_signing
 
     # grant termux access to storage
     termux-setup-storage
     print_note "Termux has no access to the storage (~/storage/)"
+
+    gum confirm --default=false "Would you like to copy the SSH keys?" && (
+        bash ../secrets/ssh-copy.sh
+    )
 
     # create the symlinks
     create_symlinks
