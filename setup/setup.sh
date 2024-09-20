@@ -125,6 +125,13 @@ create_symlinks() {
     if [ -d "$DOTFILES_DIR/secrets" ]; then
         bash $DOTFILES_DIR/secrets/link.sh
     fi
+
+    # check if running on Android
+    if [[ -z "$TERMUX_VERSION" ]]; then
+        # unlink the .termux directory (not needed)
+        rm ~/.termux
+    fi
+
 }
 
 remove_symlinks() {
@@ -766,6 +773,11 @@ deactivate_gpg_signing() {
 setup_android() {
 
     print_h1 "Android Setup"
+
+    # update the database
+    pkg updatate
+    # upgrade the packages
+    pkg upgrade
 
     # fake the sudo command
     alias sudo=""
