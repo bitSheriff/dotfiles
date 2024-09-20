@@ -43,17 +43,17 @@ commit:
 # Commit in all directories
 commit-all:
     # nvim
-    if [[ -n $(git -C $DOTFILES_DIR/configuration/.config/nvim/ status --porcelain) ]]; then \
+    @if [[ -n $(git -C $DOTFILES_DIR/configuration/.config/nvim/ status --porcelain) ]]; then \
         (cd $DOTFILES_DIR/configuration/.config/nvim/ && lazygit) \
     fi
 
     # wallpapers
-    if [[ -n $(git -C $DOTFILES_DIR/configuration/.config/wallpapers/ status --porcelain) ]]; then \
+    @if [[ -n $(git -C $DOTFILES_DIR/configuration/.config/wallpapers/ status --porcelain) ]]; then \
         (cd $DOTFILES_DIR/configuration/.config/wallpapers/ && lazygit) \
     fi
 
     # secrets
-    if [ -d "$DOTFILES_DIR/secrets" ]; then \
+    @if [ -d "$DOTFILES_DIR/secrets" ]; then \
         if [[ -n $(git -C "$DOTFILES_DIR/secrets" status --porcelain) ]]; then \
             (cd "$DOTFILES_DIR/secrets" && lazygit) \
         fi \
