@@ -900,6 +900,12 @@ fi
 # Interactions
 # ========================================
 
+# Check if it is executed on android
+if [[ -z "$TERMUX_VERSION" ]]; then
+    setup_android
+    exit 0
+fi
+
 # select the tools to install
 tool_selection=$(gum choose --no-limit "Hyprland" "Development" "University" "LaTeX" "Office")
 
