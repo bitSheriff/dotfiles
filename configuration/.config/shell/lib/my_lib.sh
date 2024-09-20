@@ -41,6 +41,11 @@ include() {
     [[ -f "$1" ]] && source "$1"
 }
 
+# failsafe exec method, only execute if file exists
+safe_exec() {
+    [[ -f "$1" ]] && bash "$1"
+}
+
 confirm() {
     # call with a prompt string or use a default
     read -r -p "$1 - [y/N] " response
