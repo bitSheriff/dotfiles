@@ -753,6 +753,10 @@ secret_run() {
 }
 
 setup_android() {
+
+    # fake the sudo command
+    alias sudo=""
+
     # android setup with termux
     grep -v '^#' "termux.pkgs" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | pkg install -
 
