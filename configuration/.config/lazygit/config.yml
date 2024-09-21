@@ -1,5 +1,5 @@
 customCommands:
-  - key: 'I'
+  - key: '<delete>'
     context: 'files'
     command: 'git update-index --assume-unchanged {{.SelectedFile.Name}}'
   - key: 'Q'
@@ -8,5 +8,5 @@ customCommands:
   - key: "M"
     command: "git mergetool {{ .SelectedFile.Name }}"
     context: "files"
-    loadingText: "opening git mergetool"
+    loadingText: "opening mergetool"
     subprocess: true
