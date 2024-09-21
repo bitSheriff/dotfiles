@@ -118,7 +118,7 @@ array_contains() {
 
 # Checks if a provided IP address is present on the local network
 ip_present() {
-    local ip="$1"
+    local ip=$1
     # Ping the IP address with a timeout of 1 second and count of 1 packet
     if ping -c 1 -W 1 $ip &>/dev/null; then
         exit 0
