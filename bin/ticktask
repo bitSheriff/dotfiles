@@ -5,14 +5,17 @@
 ACCESS_TOKEN_FILE="$HOME/.local/share/ticktask/token"
 FOLDER_ERROR_TASKS="$HOME/.local/share/ticktask/error_tasks/"
 
-if [ -z "$1" ]; then
-    echo "Usage: $0 your task title"
+input=""
 
-    exit 1
+# if not input is provided, get it from a gum input field
+if [ -z "$1" ]; then
+    input=$(gum input)
+else
+    input="$@"
 fi
 
 # escape \ and " symbols
-task_title=$(echo "$@" | sed 's/\\/\\\\/g; s/"/\\"/g')
+task_title=$(echo "$input" | sed 's/\\/\\\\/g; s/"/\\"/g')
 
 if [ -f $ACCESS_TOKEN_FILE ]; then
     access_token=$(<$ACCESS_TOKEN_FILE)
