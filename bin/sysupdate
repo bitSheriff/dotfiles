@@ -3,6 +3,10 @@
 source ~/.config/shell/lib/my_lib.sh
 source ~/.config/shell/lib/logos.sh
 
+# get the arguemnts
+ARGV=("$@")
+ARG_MODE=("${ARGV[0]}")
+
 print_logo_system_update
 
 # Update the system with pacman
@@ -29,15 +33,8 @@ yay -Scc --noconfirm
 print_h2 "Updating flatpak applications"
 flatpak update -y
 
-# check if dotfiles directory is known
-if [ -z "$DOTFILES_DIR" ]; then
-    # confirm if the user wants to update them
-    gum confirm --default=false "Update dotfiles?" && (
-        print_h2 "Updating dotfiles"
-        cd "$DOTFILES_DIR"
-        print_debug "pulling changes from git"
-        git pull
-        print_debug "updating symlinks"
-        setup link
-    )
+if [[ "$ARG_MODE" = '--all' ]]; then
+    print_h2 "Updating Language specific"
+    print_h3 "Rust"
+    rustup update
 fi
