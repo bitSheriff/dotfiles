@@ -5,3 +5,8 @@ customCommands:
   - key: 'Q'
     context: 'global'
     command: 'exit'
+  - key: "M"
+    command: "git mergetool {{ .SelectedFile.Name }}"
+    context: "files"
+    loadingText: "opening git mergetool"
+    subprocess: true
