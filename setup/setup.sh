@@ -821,9 +821,9 @@ setup_android() {
     create_symlinks
 }
 
-# ==confirm======================================
-# Fl       ow Start & Arguemnt Handling
-# ==confirm======================================
+# ===============================================
+# Flow Start & Arguemnt Handling
+# ===============================================
 
 if [[ ${#ARGV[@]} = 0 ]]; then
     print_logo_config
@@ -963,7 +963,7 @@ EXAMPLES
 fi
 
 # ========================================
-# Interactions
+# Preconditions
 # ========================================
 
 # Check if it is executed on android
@@ -971,6 +971,15 @@ if is_android; then
     setup_android
     exit 0
 fi
+
+if ! is_arch; then
+    print_error "Sadly, currently only Arch Linux (and derivates) are supported"
+    exit 1
+fi
+
+# ========================================
+# Interactions
+# ========================================
 
 # select the tools to install
 tool_selection=$(gum choose --no-limit "Hyprland" "Development" "University" "LaTeX" "Office")
