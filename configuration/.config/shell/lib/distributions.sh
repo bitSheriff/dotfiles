@@ -29,11 +29,9 @@ is_fedora() {
 
 # Functio to check if the system is Andrroid (run with Termux)
 is_android() {
-    if [[ -n "$TERMUX_VERSION" ]]; then
+    if [[ -f /system/build.prop || -n "$TERMUX_VERSION" ]]; then
         exit 0
     else
         return 1
     fi
-fi
-
 }
