@@ -35,3 +35,12 @@ is_android() {
         return 1
     fi
 }
+
+# Function to check if the system is macOS
+is_macos() {
+    if [[ -f /System/Library/CoreServices/SystemVersion.plist ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
