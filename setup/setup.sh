@@ -825,7 +825,8 @@ setup_android() {
 # Flow Start & Arguemnt Handling
 # ===============================================
 
-if [[ ${#ARGV[@]} = 0 ]]; then
+# check if no argument is given (arg[0] is the script name itself)
+if [[ ${#ARGV[@]} = 1 ]]; then
     print_logo_config
     print_h1 "Welcome to my setup script"
     echo "the interactive setup will start now"
