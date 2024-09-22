@@ -5,7 +5,8 @@ export VISUAL=nvim
 export BROWSER=zen-browser
 
 # define important files & directories
-export INBOX=$HOME/notes/Inbox/Inbox.md                             # define the inbox file
+export NOTES_DIR=$HOME/notes
+export INBOX=$NOTES_DIR/Inbox/Inbox.md                             # define the inbox file
 export INBOX_DIR=$(dirname $INBOX)
 export DOTFILES_DIR=$HOME/code/dotfiles                             # define the folder where the dotfiles are located
 export CACHE_DIR=$HOME/.cache                                       # define the folder for temporary cache files

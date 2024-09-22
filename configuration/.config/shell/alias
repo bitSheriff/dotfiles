@@ -7,6 +7,7 @@ alias gb+="git pull; git backup"
 alias gb="git branch | fzf --preview 'git show --color=always {-1}' --bind 'enter:become(git checkout {-1})'"
 alias gg="serie" # git graph
 alias gd="(cd $DOTFILES_DIR && just commit-all)" # switch for a subshell into the dotfiles directory and open git
+alias gn="(cd $NOTES_DIR && lazygit)"           # switch to notes directory and open git TUI
 
 ## kitty
 alias icat="kitty +kitten icat --align=left"
