@@ -110,6 +110,7 @@
         "class<virt-manager>": " ",
         "class<Morgen>": "<span font='12'>󰃭 </span>",
         "class<mpv>": "<span font='12'> </span>",
+        "class<thunderbird>": "<span font='11'> </span>",
     }
 },
   // Hyprland Window
