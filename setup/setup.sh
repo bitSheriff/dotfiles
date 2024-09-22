@@ -208,27 +208,27 @@ setup_repositories() {
 install_pkgfiles() {
 
     # install nix packages if enabled
-    if [[ -f "$1.nix" && "$DO_NIX_PKGS" = 1 ]]; then
+    if [[ -f "pkgs/$1.nix" && "$DO_NIX_PKGS" = 1 ]]; then
         print_h2 "Installing nix packages from $1"
-        nix_install_file "$1.nix"
+        nix_install_file "pkgs/$1.nix"
     fi
 
     # check if the pacman file in the first arguemnt exists
-    if [[ -f "$1.pkgs" ]]; then
+    if [[ -f "pkgs/$1.pkgs" ]]; then
         print_h2 "Installing packages from $1"
-        pacman_install_file "$1.pkgs"
+        pacman_install_file "pkgs/$1.pkgs"
     fi
 
     # check if the aur file in the first arguemnt exists
-    if [[ -f "$1.aur_pkgs" ]]; then
+    if [[ -f "pkgs/$1.aur_pkgs" ]]; then
         print_h2 "Installing AUR packages from $1"
-        yay_install_file "$1.aur_pkgs"
+        yay_install_file "pkgs/$1.aur_pkgs"
     fi
 
     # check if the flatpak file in the first arguemnt exists
-    if [[ -f "$1.flatpak_pkgs" ]]; then
+    if [[ -f "pkgs/$1.flatpak_pkgs" ]]; then
         print_h2 "Installing flatpak packages from $1"
-        flatpak_install_file "$1.flatpak_pkgs"
+        flatpak_install_file "pkgs/$1.flatpak_pkgs"
     fi
 }
 
@@ -487,8 +487,8 @@ install_optionals() {
     fi
 
     if array_contains "${array[@]}" "WhatsApp"; then { yay_install_single "whatsapp-for-linux"; }; fi
-    if array_contains "${array[@]}" "MATLAB"; then { bash ./matlab.sh; }; fi
-    if array_contains "${array[@]}" "Maple"; then { bash ./maple.sh; }; fi
+    if array_contains "${array[@]}" "MATLAB"; then { bash ./scripts/matlab.sh; }; fi
+    if array_contains "${array[@]}" "Maple"; then { bash ./scripts/maple.sh; }; fi
     if array_contains "${array[@]}" "Cozy Audiobook-Player"; then { yay_install_single "cozy-audiobooks"; }; fi
     if array_contains "${array[@]}" "Pocket Casts"; then { yay_install_single "pocket-casts-desktop-bin"; }; fi
     if array_contains "${array[@]}" "Mullvad VPN"; then { yay_install_single "mullvad-vpn"; }; fi
@@ -797,7 +797,7 @@ setup_android() {
 
     print_h2 "Install packages"
     # android setup with termux
-    grep -v '^#' "termux.pkgs" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | pkg install -
+    grep -v '^#' "pkgs/termux.pkgs" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | pkg install -
 
     # more packages which are not in the repository
     print_note "install SSHS"
