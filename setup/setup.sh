@@ -5,6 +5,7 @@ DIR_NAME=$(dirname "$0")
 source "$DIR_NAME/../configuration/.config/shell/lib/my_lib.sh"
 source "$DIR_NAME/../configuration/.config/shell/lib/logos.sh"
 source "$DIR_NAME/../configuration/.config/shell/lib/cache.sh"
+source "$DIR_NAME/../configuration/.config/shell/lib/distributions.sh"
 
 # ========================================
 # FLAGS
@@ -966,7 +967,7 @@ fi
 # ========================================
 
 # Check if it is executed on android
-if [[ -n "$TERMUX_VERSION" ]]; then
+if is_android; then
     setup_android
     exit 0
 fi
