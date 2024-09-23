@@ -150,6 +150,7 @@
     "format-plugged": "{capacity}% ",
     "format-alt": "{time} {icon}",
     "format-icons": ["", "", "", "", ""],
+    "interval": 10,
   },
 
   // Power Profiles Daemon
