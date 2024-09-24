@@ -2,10 +2,13 @@
 
 DIR_NAME=$(dirname "$0")
 
-source "$DIR_NAME/../configuration/.config/shell/lib/my_lib.sh"
-source "$DIR_NAME/../configuration/.config/shell/lib/logos.sh"
-source "$DIR_NAME/../configuration/.config/shell/lib/cache.sh"
-source "$DIR_NAME/../configuration/.config/shell/lib/distributions.sh"
+source "$DIR_NAME/../lib/my_lib.sh"
+source "$DIR_NAME/../lib/logos.sh"
+source "$DIR_NAME/../lib/cache.sh"
+source "$DIR_NAME/../lib/distributions.sh"
+
+# include the enviroment varaibles (needed for some paths)
+include "$DIR_NAME/../configuration/.config/shell/envvars"
 
 # ========================================
 # FLAGS
@@ -119,8 +122,10 @@ create_symlinks() {
     stow --adopt -t ~/Templates -d $DIR_NAME/.. templates
 
     # link the binaries and scripts which cannot be linked to a specific application (Hyprland, Waybar,...)
-    mkdir -p ~/bin
-    stow --adopt -t ~/bin -d $DIR_NAME/.. bin
+    mkdir -p $BIN_PATH
+    mkdir -p $LIB_PATH
+    stow --adopt -t $BIN_PATH -d $DIR_NAME/.. bin
+    stow --adopt -t $LIB_PATH -d $DIR_NAME/.. lib
 
     # link the secrets if the file is found
     if [ -d "$DOTFILES_DIR/secrets" ]; then

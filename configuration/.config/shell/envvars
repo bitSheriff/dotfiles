@@ -12,6 +12,9 @@ export DOTFILES_DIR=$HOME/code/dotfiles                             # define the
 export CACHE_DIR=$HOME/.cache                                       # define the folder for temporary cache files
 export CODE_DIR=$HOME/code                                          # define the folder for the most coding projects
 
+export BIN_PATH=$HOME/bin/                                     # path for own binaries/scripts
+export LIB_PATH=$HOME/lib/                                     # path for own libraries
+
 # use 1Password as the SSH Agent
 export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
 
@@ -21,7 +24,7 @@ setopt extended_glob null_glob
 
 path=(
     $path                           # Keep existing PATH entries
-    $HOME/bin
+    $BIN_PATH
     $HOME/.local/bin
     $HOME/.cargo/bin
     /var/lib/flatpak/exports/share/applications

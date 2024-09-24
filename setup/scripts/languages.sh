@@ -2,10 +2,10 @@
 
 DIR_NAME=$(dirname "$0")
 
-source "$DIR_NAME/../../configuration/.config/shell/lib/my_lib.sh"
-source "$DIR_NAME/../../configuration/.config/shell/lib/logos.sh"
-source "$DIR_NAME/../../configuration/.config/shell/lib/cache.sh"
-source "$DIR_NAME/../../configuration/.config/shell/lib/distributions.sh"
+source "$DIR_NAME/../../lib/my_lib.sh"
+source "$DIR_NAME/../../lib/logos.sh"
+source "$DIR_NAME/../../lib/cache.sh"
+source "$DIR_NAME/../../lib/distributions.sh"
 
 print_h2 "Languages and langauge-specific Tooling"
 
