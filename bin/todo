@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.config/shell/lib/my_lib.sh
+source "$LIB_PATH/my_lib.sh"
 
 include "~/.config/shell/secrets"
 

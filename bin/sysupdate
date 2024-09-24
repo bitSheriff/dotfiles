@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source ~/.config/shell/lib/my_lib.sh
-source ~/.config/shell/lib/logos.sh
+source "$LIB_PATH/my_lib.sh"
+source "$LIB_PATH/logos.sh"
 
 # get the arguemnts
 ARGV=("$@")
