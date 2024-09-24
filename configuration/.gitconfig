@@ -43,3 +43,5 @@
 	format = ssh
 [gpg "ssh"]
 	program = /opt/1Password/op-ssh-sign
+[init]
+	defaultBranch = main

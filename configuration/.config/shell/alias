@@ -40,6 +40,7 @@ alias go2code="cd ~/code"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
+alias iqalc="qalc -i" # interactive mode of Qalculator
 
 setup() {
     params="$@"
