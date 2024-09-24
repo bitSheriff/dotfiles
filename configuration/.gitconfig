@@ -16,7 +16,7 @@
   addIgnoredFile = false
 
 [pull]
-  rebase = true
+	rebase = true
 
 [credential "https://github.com"]
 	helper = 
@@ -45,3 +45,5 @@
 	program = /opt/1Password/op-ssh-sign
 [init]
 	defaultBranch = main
+[push]
+	default = current
