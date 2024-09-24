@@ -8,7 +8,7 @@ source "$DIR_NAME/../lib/cache.sh"
 source "$DIR_NAME/../lib/distributions.sh"
 
 # include the enviroment varaibles (needed for some paths)
-include "$DIR_NAME/../configuration/.config/shell/envvars"
+include "$DIR_NAME/../configuration/.config/shell/envvars" 2>/dev/null
 
 # ========================================
 # FLAGS
