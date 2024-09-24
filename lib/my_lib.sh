@@ -126,3 +126,11 @@ ip_present() {
         exit 1
     fi
 }
+
+source_all_libs() {
+    local dir="$LIB_PATH"
+    if [ -d "$dir" ]; then
+        find "$dir" -type f -name "*.sh" -exec bash -c 'source "$0"' {} \;
+    fi
+}
+
