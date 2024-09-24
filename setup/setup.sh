@@ -193,16 +193,9 @@ clone_repositories_from_file() {
 setup_repositories() {
 
     print_h1 "Setup Repositories"
-    target_dir="$HOME/code"
-
-    if [[ "$1" = 'all' ]]; then
-        clone_repositories_from_file
-        exit 0
-    fi
 
     # only execute the file if it exists
     safe_exec ../secrets/clone-repositories.sh
-
 }
 
 install_pkgfiles() {
@@ -728,13 +721,8 @@ if [[ "$ARG_MODE" = 'android' ]]; then
     exit 0
 fi
 
-if [[ "$ARG_MODE" = 'repo' ]]; then
+if [[ "$ARG_MODE" = 'repo' || "$ARG_MODE" = 'repos' ]]; then
     setup_repositories
-    exit 0
-fi
-
-if [[ "$ARG_MODE" = 'repos' ]]; then
-    setup_repositories "all"
     exit 0
 fi
 
