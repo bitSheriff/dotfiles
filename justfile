@@ -61,3 +61,8 @@ commit-all:
  
     # main repository
     lazygit
+
+# Backup to different gits
+backup:
+    @# add a timeout if a local git server cannot be reached
+    timeout 30s git backup
