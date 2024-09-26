@@ -6,6 +6,7 @@ findutils                                                           # collection
 firefox                                                             # default browser
 fzf                                                                 # fuzzy finder
 git
+git-lfs                                                             # git large file system
 glibc
 gnupg                                                               # GNU encryption
 gum                                                                 # shell library for user
