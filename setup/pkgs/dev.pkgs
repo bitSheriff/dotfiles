@@ -1,5 +1,6 @@
 base-devel
 bash-completion
+binsider                    # TUI for analyzing binaries
 bat                         # better cat alternative
 chromium
 clang
