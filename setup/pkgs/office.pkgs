@@ -7,7 +7,6 @@ haruna                      # video player
 hugo                        # static blogging engine
 inkscape                    # vector editor
 imagemagick                 # image tool
-kleopatra                   # encryption GUI
 obsidian                    # Note Taking
 okular                      # document viewer
 pdfgrep                     # search through pdf files in terminal
