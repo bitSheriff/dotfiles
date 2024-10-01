@@ -14,6 +14,7 @@ fd                          # better find command
 firefox
 flatpak
 ghex                        # binary hex editor
+git-crypt                   # encryption for repositories
 github-cli                  # github in the terminal
 glow                        # cli markdown renderer
 gnome-boxes                 # qemu/kvm frontend
