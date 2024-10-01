@@ -27,6 +27,7 @@ polkit-kde-agent            # Polkit agent for KDE
 qt5ct                       # Qt5 configuration tool
 qt6ct                       # Qt6 configuration tool
 sddm                        # Display manager
+seahorse                    # Gnome Seahorse for GnuPG management
 slurp                       # Screenshot utility
 spotify-launcher            # Spotify launcher
 starship                    # Shell prompt
