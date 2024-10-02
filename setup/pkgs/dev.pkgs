@@ -39,7 +39,7 @@ pacman-contrib              # needed for AUR and stuff
 pandoc-cli
 powertop                    # battery and power management
 python
-qalculate-gtl               # another calculator
+qalculate-gtk               # another calculator
 qbittorrent                 # torrent gui
 qt5ct
 qt6ct

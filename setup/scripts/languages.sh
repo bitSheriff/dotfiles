@@ -10,7 +10,7 @@ source "$DIR_NAME/../../lib/distributions.sh"
 print_h2 "Languages and langauge-specific Tooling"
 
 # read the wanted languages
-local selection=$(
+selection=$(
     gum choose --no-limit \
         "Bash" \
         "C" \
