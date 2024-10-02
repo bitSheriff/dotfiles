@@ -79,7 +79,7 @@ pacman_install_single() {
 
     # Check if the package is installed using yay
     if ! pacman -Qi "$1" &>/dev/null; then
-        sudo pacman $PACMAN_FLAGS -S "$1"
+        sudo pacman $PACMAN_FLAGS -S "$@"
     fi
 }
 
@@ -89,7 +89,7 @@ yay_install_file() {
 }
 
 yay_install_single() {
-    yay $YAY_FLAGS -S "$1"
+    yay $YAY_FLAGS -S "$@"
 }
 
 flatpak_install_file() {
@@ -330,6 +330,9 @@ install_latex() {
 
 install_optionals() {
     print_h1 "Optional Packages"
+    # Initialize strings to collect packages
+    pacman_packages=()
+    yay_packages=()
 
     # read the wanted languages
     local selection=$(
@@ -366,23 +369,23 @@ install_optionals() {
 
     IFS=$'\n' read -rd '' -a array <<<"$selection"
 
-    if array_contains "${array[@]}" "Calibre"; then { pacman_install_single "calibre"; }; fi
-    if array_contains "${array[@]}" "Chromium"; then { pacman_install_single "chromium"; }; fi
-    if array_contains "${array[@]}" "Decoder (QR)"; then { yay_install_single "decoder"; }; fi
-    if array_contains "${array[@]}" "DevToys"; then { yay_install_single "devtoys-bin"; }; fi
-    if array_contains "${array[@]}" "Doxygen"; then { pacman_install_single "doxygen"; }; fi
-    if array_contains "${array[@]}" "Draw.io"; then { pacman_install_single "drawio-desktop"; }; fi
-    if array_contains "${array[@]}" "FileZilla"; then { pacman_install_single "filezilla"; }; fi
-    if array_contains "${array[@]}" "Foliate"; then { pacman_install_single "foliate"; }; fi
-    if array_contains "${array[@]}" "LibreOffice Suite"; then { pacman_install_single "libreoffice-fresh"; }; fi
-    if array_contains "${array[@]}" "Termius ssh-client"; then { yay_install_single "termius"; }; fi
-    if array_contains "${array[@]}" "WebApp Manager"; then { yay_install_single "webapp-manager"; }; fi
-    if array_contains "${array[@]}" "Qalc"; then { pacman_install_single "qalculate-gtk"; }; fi
-    if array_contains "${array[@]}" "QBitTorrent"; then { pacman_install_single "qbittorrent"; }; fi
-    if array_contains "${array[@]}" "Signal"; then { pacman_install_single "signal-desktop"; }; fi
-    if array_contains "${array[@]}" "Spotify"; then { pacman_install_single "spotify-launcher"; }; fi
-    if array_contains "${array[@]}" "VeraCrypt"; then { pacman_install_single "veracrypt"; }; fi
-    if array_contains "${array[@]}" "TickTick"; then { yay_install_single "ticktick"; }; fi
+    if array_contains "${array[@]}" "Calibre"; then pacman_packages+=("calibre"); fi
+    if array_contains "${array[@]}" "Chromium"; then pacman_packages+=("chromium"); fi
+    if array_contains "${array[@]}" "Decoder (QR)"; then yay_packages+=("decoder"); fi
+    if array_contains "${array[@]}" "DevToys"; then yay_packages+=("devtoys-bin"); fi
+    if array_contains "${array[@]}" "Doxygen"; then pacman_packages+=("doxygen"); fi
+    if array_contains "${array[@]}" "Draw.io"; then pacman_packages+=("drawio-desktop"); fi
+    if array_contains "${array[@]}" "FileZilla"; then pacman_packages+=("filezilla"); fi
+    if array_contains "${array[@]}" "Foliate"; then pacman_packages+=("foliate"); fi
+    if array_contains "${array[@]}" "LibreOffice Suite"; then pacman_packages+=("libreoffice-fresh"); fi
+    if array_contains "${array[@]}" "Termius ssh-client"; then yay_packages+=("termius"); fi
+    if array_contains "${array[@]}" "WebApp Manager"; then yay_packages+=("webapp-manager"); fi
+    if array_contains "${array[@]}" "Qalc"; then pacman_packages+=("qalculate-gtk"); fi
+    if array_contains "${array[@]}" "QBitTorrent"; then pacman_packages+=("qbittorrent"); fi
+    if array_contains "${array[@]}" "Signal"; then pacman_packages+=("signal-desktop"); fi
+    if array_contains "${array[@]}" "Spotify"; then pacman_packages+=("spotify-launcher"); fi
+    if array_contains "${array[@]}" "VeraCrypt"; then pacman_packages+=("veracrypt"); fi
+    if array_contains "${array[@]}" "TickTick"; then yay_packages+=("ticktick"); fi
 
     if array_contains "${array[@]}" "KDEConnect"; then
 
@@ -394,15 +397,15 @@ install_optionals() {
         sudo firewall-cmd --reload
     fi
 
-    if array_contains "${array[@]}" "WhatsApp"; then { yay_install_single "whatsapp-for-linux"; }; fi
-    if array_contains "${array[@]}" "MATLAB"; then { bash ./scripts/matlab.sh; }; fi
-    if array_contains "${array[@]}" "Maple"; then { bash ./scripts/maple.sh; }; fi
-    if array_contains "${array[@]}" "Cozy Audiobook-Player"; then { yay_install_single "cozy-audiobooks"; }; fi
-    if array_contains "${array[@]}" "Pocket Casts"; then { yay_install_single "pocket-casts-desktop-bin"; }; fi
-    if array_contains "${array[@]}" "Mullvad VPN"; then { yay_install_single "mullvad-vpn"; }; fi
-    if array_contains "${array[@]}" "SpeechNote"; then { yay_install_single "dsnote"; }; fi
-    if array_contains "${array[@]}" "OpenAI Whisper"; then { yay_install_single "whisper-git"; }; fi
-    if array_contains "${array[@]}" "Zen-Browser"; then { yay_install_single "zen-browser-bin"; }; fi
+    if array_contains "${array[@]}" "WhatsApp"; then yay_packages+=("whatsapp-for-linux"); fi
+    if array_contains "${array[@]}" "MATLAB"; then bash ./scripts/matlab.sh; fi
+    if array_contains "${array[@]}" "Maple"; then bash ./scripts/maple.sh; fi
+    if array_contains "${array[@]}" "Cozy Audiobook-Player"; then yay_packages+=("cozy-audiobooks"); fi
+    if array_contains "${array[@]}" "Pocket Casts"; then yay_packages+=("pocket-casts-desktop-bin"); fi
+    if array_contains "${array[@]}" "Mullvad VPN"; then yay_packages+=("mullvad-vpn"); fi
+    if array_contains "${array[@]}" "SpeechNote"; then yay_packages+=("dsnote"); fi
+    if array_contains "${array[@]}" "OpenAI Whisper"; then yay_packages+=("whisper-git"); fi
+    if array_contains "${array[@]}" "Zen-Browser"; then yay_packages+=("zen-browser-bin"); fi
 
     if array_contains "${array[@]}" "Zathura"; then
 
@@ -412,6 +415,15 @@ install_optionals() {
         pacman_install_single "zathura-pdf-mupdf"
 
         gum confirm --default=false "Do you read Comic Books?" && pacman_install_single "zathura-cb"
+    fi
+
+    if [ ${#pacman_packages[@]} -ne 0 ]; then
+        pacman_install_single "${pacman_packages[@]}"
+    fi
+
+    # Install all collected yay packages at once
+    if [ ${#yay_packages[@]} -ne 0 ]; then
+        yay_install_single "${yay_packages[@]}"
     fi
 }
 
