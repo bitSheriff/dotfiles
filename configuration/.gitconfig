@@ -1,6 +1,6 @@
 [user]
-  name = bitSheriff
-  email = root@bitsheriff.dev
+	name = bitSheriff
+	email = root@bitsheriff.dev
   signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKaKM4Dwfago4s/0Ap9hFHZMmqoly90mS/3rEl+7prJx
 
 [core]
@@ -39,6 +39,7 @@
   ignore = update-index --assume-unchanged
   no-ignore = update-index --no-assume-unchanged
   sync = "! git pull && git push"
+  dangling = "! git fsck --lost-found | grep "^dangling commit" | sed "s/^dangling commit //g" | xargs git show -s --oneline"
 
 [gpg]
 	format = ssh
