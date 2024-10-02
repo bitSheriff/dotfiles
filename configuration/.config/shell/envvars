@@ -31,6 +31,7 @@ path=(
     $HOME/.local/bin
     $HOME/.cargo/bin
     /var/lib/flatpak/exports/share/applications
+    /usr/bin/
 )
 
 # Remove duplicate entries and non-existent directories
