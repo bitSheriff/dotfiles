@@ -1,17 +1,31 @@
 #!/bin/bash
 
-VERSION="R2024a"
+DIR_NAME=$(dirname "$0")
+source "$DIR_NAME/../../lib/my_lib.sh"
+source "$DIR_NAME/../../lib/logos.sh"
+source "$DIR_NAME/../../lib/cache.sh"
+source "$DIR_NAME/../../lib/distributions.sh"
+
+VERSION="R2024b"
 PRODUCTS="MATLAB"
 DESTINATION="$HOME/Applications/Matlab_$VERSION"
 
-# download the installer
-wget -P "$HOME/Downloads" https://www.mathworks.com/mpm/glnxa64/mpm
+if [ -f "$HOME/Downloads/mpm" ]; then
+    print_note "Matlab Package Manager already downloaded"
+else
+    # download the installer
+    wget -P "$HOME/Downloads" https://www.mathworks.com/mpm/glnxa64/mpm
+fi
 
 # make it executable
 chmod +x "$HOME/Downloads/mpm"
 
 # call the setup with version
-bash "$HOME/Downloads/mpm" install --release="$VERSION" --products "$PRODUCTS" --destination="$DESTINATION"
+"$HOME/Downloads/mpm" install --release="$VERSION" --products "$PRODUCTS" --destination="$DESTINATION"
+
+gum confirm --default=false "Install Simulink?" && (
+    "$HOME/Downloads/mpm" install --release="$VERSION" --products "Simulink" --destination="$DESTINATION"
+)
 
 # create desktop file (not needed anymore, does the setup)
 
