@@ -7,6 +7,14 @@ source "$DIR_NAME/../../lib/logos.sh"
 source "$DIR_NAME/../../lib/cache.sh"
 source "$DIR_NAME/../../lib/distributions.sh"
 
+pacman_install_single() {
+
+    # Check if the package is installed using yay
+    if ! pacman -Qi "$1" &>/dev/null; then
+        sudo pacman $PACMAN_FLAGS -S "$1"
+    fi
+}
+
 print_h2 "Languages and langauge-specific Tooling"
 
 # read the wanted languages

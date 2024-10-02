@@ -701,7 +701,7 @@ if [[ "$ARG_MODE" = 'debug' ]]; then
     exit 0
 fi
 
-if [[ "$ARG_MODE" = 'languages' ]]; then
+if [[ "$ARG_MODE" = 'languages' || "$ARG_MODE" = 'lang' ]]; then
     install_language_specific
     exit 0
 fi
@@ -716,7 +716,7 @@ if [[ "$ARG_MODE" = 'decrypt' ]]; then
     exit 0
 fi
 
-if [[ "$ARG_MODE" = 'selection' ]]; then
+if [[ "$ARG_MODE" = 'selection' || "$ARG_MODE" = 'apps' ]]; then
     install_optionals
     exit 0
 fi
