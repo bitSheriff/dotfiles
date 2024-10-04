@@ -4,6 +4,7 @@ adwaita-qt5-git             # dark themes for qt5 apps
 adwaita-qt6-git             # dark themes for qt6 apps
 cava                        # Console-based Audio Visualizer for Alsa
 clipman
+hyprnome                    # switch workspaces like gnome
 hyprpicker                  # A simple and fast GTK color picker
 hyprswitch                  # gui window switcher
 jome-git                    # emoji picker
