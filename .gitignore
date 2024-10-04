@@ -3,3 +3,4 @@ configuration/.termux/shell
 configuration/.config/shell/secrets
 configuration/.config/hypr/monitors.conf
 configuration/.config/hypr/workspaces.conf
+**/**.log
