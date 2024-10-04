@@ -46,6 +46,13 @@ DO_NIX_PKGS=0
 PLEASE_REBOOT=0
 
 # ========================================
+# Global Variables
+# ========================================
+# Initialize strings to collect packages
+pacman_packages=()
+yay_packages=()
+
+# ========================================
 # Functions
 # ========================================
 
@@ -330,9 +337,6 @@ install_latex() {
 
 install_optionals() {
     print_h1 "Optional Packages"
-    # Initialize strings to collect packages
-    pacman_packages=()
-    yay_packages=()
 
     # read the wanted languages
     local selection=$(
@@ -421,11 +425,15 @@ install_optionals() {
 
     if [ ${#pacman_packages[@]} -ne 0 ]; then
         pacman_install_single "${pacman_packages[@]}"
+        # reset the packages because they have been installed
+        pacman_packages=()
     fi
 
     # Install all collected yay packages at once
     if [ ${#yay_packages[@]} -ne 0 ]; then
         yay_install_single "${yay_packages[@]}"
+        # reset the packages because they have been installed
+        yay_packages=()
     fi
 }
 
@@ -865,6 +873,19 @@ fi
 
 if [[ "$DO_HARDWARE" = 1 ]]; then
     bash ./scripts/hardware.sh
+fi
+
+if [ ${#pacman_packages[@]} -ne 0 ]; then
+    pacman_install_single "${pacman_packages[@]}"
+    # reset the packages because they have been installed
+    pacman_packages=()
+fi
+
+# Install all collected yay packages at once
+if [ ${#yay_packages[@]} -ne 0 ]; then
+    yay_install_single "${yay_packages[@]}"
+    # reset the packages because they have been installed
+    yay_packages=()
 fi
 
 post_install
