@@ -73,6 +73,7 @@
         "title<.*plex.*>": "󰚺 ",
         "title<.*reddit.*>": " ",
         "title<.*youtube.*>": " ",	
+        "title<.*[mM]astodon.*>": " ",	
 
         // Productivity Apps
         "class<.*ghostwriter.*>": "󰊠 ",
@@ -112,6 +113,7 @@
         "class<Morgen>": "<span font='12'>󰃭 </span>",
         "class<mpv>": "<span font='12'> </span>",
         "class<thunderbird>": "<span font='11'> </span>",
+        "class<.*[tT]okodon.*>": " ",	
     }
 },
   // Hyprland Window

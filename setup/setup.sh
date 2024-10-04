@@ -360,6 +360,7 @@ install_optionals() {
             "Spotify" \
             "Termius ssh-client" \
             "TickTick" \
+            "Tokodon" \
             "VeraCrypt" \
             "WebApp Manager" \
             "WhatsApp" \
@@ -386,6 +387,7 @@ install_optionals() {
     if array_contains "${array[@]}" "Spotify"; then pacman_packages+=("spotify-launcher"); fi
     if array_contains "${array[@]}" "VeraCrypt"; then pacman_packages+=("veracrypt"); fi
     if array_contains "${array[@]}" "TickTick"; then yay_packages+=("ticktick"); fi
+    if array_contains "${array[@]}" "Tokodon"; then pacman_packages+=("tokodon"); fi
 
     if array_contains "${array[@]}" "KDEConnect"; then
 
