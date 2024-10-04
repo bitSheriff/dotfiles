@@ -67,6 +67,7 @@
         "title<.*Picture-in-Picture.*>": " ",
         "title<.*Twitch.*>": " ",
         "title<.*[sS]potify.*>": " ",
+        "class<.*[sS]potify.*>": " ",
         "title<.*amazon.*>": " ",
         "title<.*github.*>": " ",
         "title<.*plex.*>": "󰚺 ",
