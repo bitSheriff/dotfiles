@@ -306,8 +306,8 @@ install_dev_tools() {
         )
     )
 
-    gum confirm --default=false "Install LazyDocker?" && yay_install_single "lazydocker"
-    gum confirm --default=false "Install Gnome Connections (VNC/RDP Client)?" && pacman_install_single "gnome-connections"
+    gum confirm --default=false "Install LazyDocker?" && yay_packages+=("lazydocker")
+    gum confirm --default=false "Install Gnome Connections (VNC/RDP Client)?" && pacman_packages+=("gnome-connections")
 
     DO_ZSH=1
 }
@@ -317,7 +317,7 @@ install_office_tools() {
     print_h1 "Office Tools"
     install_pkgfiles "office"
 
-    gum confirm --default=false "Install OnlyOffice?" && yay_install_single "onlyoffice-bin"
+    gum confirm --default=false "Install OnlyOffice?" && yay_packages+=("onlyoffice-bin")
 
 }
 
