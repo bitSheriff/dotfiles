@@ -354,6 +354,7 @@ install_optionals() {
             "LibreOffice Suite" \
             "MATLAB" \
             "Maple" \
+            "Mission Center" \
             "Mullvad VPN" \
             "OpenAI Whisper" \
             "Pocket Casts" \
@@ -408,6 +409,7 @@ install_optionals() {
     if array_contains "${array[@]}" "Maple"; then bash ./scripts/maple.sh; fi
     if array_contains "${array[@]}" "Cozy Audiobook-Player"; then yay_packages+=("cozy-audiobooks"); fi
     if array_contains "${array[@]}" "Pocket Casts"; then yay_packages+=("pocket-casts-desktop-bin"); fi
+    if array_contains "${array[@]}" "Mission Center"; then yay_packages+=("mission-center"); fi
     if array_contains "${array[@]}" "Mullvad VPN"; then yay_packages+=("mullvad-vpn"); fi
     if array_contains "${array[@]}" "SpeechNote"; then yay_packages+=("dsnote"); fi
     if array_contains "${array[@]}" "OpenAI Whisper"; then yay_packages+=("whisper-git"); fi
