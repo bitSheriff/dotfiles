@@ -42,6 +42,10 @@ setup_battery() {
         # start the service for the next boot
         sudo systemctl start power-profiles-daemon.service
     fi
+
+    gum confirm --default=false "Are you using a Framework Laptop?" && (
+        yay_install_single fw-ectool-git
+    )
 }
 
 setup_bluetooth() {
