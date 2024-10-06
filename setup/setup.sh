@@ -356,6 +356,7 @@ install_optionals() {
             "Maple" \
             "Mission Center" \
             "Mullvad VPN" \
+            "Neovide" \
             "OpenAI Whisper" \
             "Pocket Casts" \
             "QBitTorrent" \
@@ -393,6 +394,7 @@ install_optionals() {
     if array_contains "${array[@]}" "VeraCrypt"; then pacman_packages+=("veracrypt"); fi
     if array_contains "${array[@]}" "TickTick"; then yay_packages+=("ticktick"); fi
     if array_contains "${array[@]}" "Tokodon"; then pacman_packages+=("tokodon"); fi
+    if array_contains "${array[@]}" "Neovide"; then pacman_packages+=("neovide"); fi
 
     if array_contains "${array[@]}" "KDEConnect"; then
 
