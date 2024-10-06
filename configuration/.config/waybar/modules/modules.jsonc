@@ -99,6 +99,7 @@
         "class<kitty>": " ",
         "class<org.gnome.Boxes>": " ",
         "class<.*cool-retro-term.*>": "󰍹 ",
+        "class<neovide>": " ",
 
         // Basic Office Stuff
         "class<.*calibre.*>": "󱉟 ",
