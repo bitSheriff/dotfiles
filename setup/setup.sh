@@ -399,12 +399,29 @@ install_optionals() {
     if array_contains "${array[@]}" "Neovide"; then pacman_packages+=("neovide"); fi
 
     if array_contains "${array[@]}" "espanso"; then
-        # install packages immediatly because some settings have to be made
-        yay_install_single "espanso-wayland"
-        yay_install_single "espanso-gui"
+        # build by source becaause AUR packages does not work
+        (
+            # create the folders if needed
+            mkdir -p "$HOME/code/"
+            mkdir -p "$HOME/bin"
 
-        # Register espanso as a systemd service (required only once)
-        espanso service register
+            # install the Rust Tools for that
+            cargo install --force cargo-make
+            # checkout the repository
+            git clone https://github.com/espanso/espanso
+            # build the application
+            cargo make --profile release --env NO_X11=true build-binary
+            # move the binary to the personal binary directory
+            sudo mv target/release/espanso "$HOME/bin/"
+            # update zsh to get the updated path
+            exec zsh
+            # give access
+            sudo setcap "cap_dac_override+p" $(which espanso)
+            # register the service and start it
+            espanso service register
+            espanso start
+
+        )
     fi
 
     if array_contains "${array[@]}" "KDEConnect"; then
