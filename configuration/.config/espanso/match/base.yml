@@ -24,11 +24,13 @@ matches:
         type: date
         params:
           format: "%F"
-
-
-
-
-
+  - trigger: ;now
+    replace: It's {{mytime}}
+    vars:
+      - name: mytime
+        type: date
+        params:
+          format: "%H:%M"
 
   ### just examples ###
   # - trigger: ":quote"
