@@ -348,6 +348,7 @@ install_optionals() {
             "DevToys" \
             "Doxygen" \
             "Draw.io" \
+            "espanso" \
             "FileZilla" \
             "Foliate" \
             "KDEConnect" \
@@ -396,6 +397,15 @@ install_optionals() {
     if array_contains "${array[@]}" "TickTick"; then yay_packages+=("ticktick"); fi
     if array_contains "${array[@]}" "Tokodon"; then pacman_packages+=("tokodon"); fi
     if array_contains "${array[@]}" "Neovide"; then pacman_packages+=("neovide"); fi
+
+    if array_contains "${array[@]}" "espanso"; then
+        # install packages immediatly because some settings have to be made
+        yay_install_single "espanso-wayland"
+        yay_install_single "espanso-gui"
+
+        # Register espanso as a systemd service (required only once)
+        espanso service register
+    fi
 
     if array_contains "${array[@]}" "KDEConnect"; then
 
