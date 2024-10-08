@@ -1,5 +1,8 @@
 matches:
+
+##########
 # Special Language Characters
+##########
 - trigger: ;ss
   replace: ß
   word: true
@@ -8,7 +11,9 @@ matches:
   replace: €
   word: true
 
+##########
 # Umlaute
+##########
 - trigger: ;a
   replace: ä
 - trigger: ;o
