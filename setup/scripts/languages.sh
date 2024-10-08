@@ -22,6 +22,7 @@ selection=$(
     gum choose --no-limit \
         "Bash" \
         "C" \
+        "Docker" \
         "LaTeX" \
         "Markdown" \
         "Python" \
@@ -47,6 +48,18 @@ if array_contains "${array[@]}" "C"; then
     # CLI debugging Tools
     pacman_install_single "lldb"
     yay_install_single "codelldb"
+fi
+
+if array_contains "${array[@]}" "Docker"; then
+    print_note "Language Docker"
+    pacman_install_single "docker"
+    pacman_install_single "docker-compose"
+
+    gum confirm --default=false "Install LazyDocker?" && yay_install_single "lazydocker"
+
+    # set no root is needed for docker
+    sudo usermod -aG docker $USER
+
 fi
 
 if array_contains "${array[@]}" "Markdown"; then
