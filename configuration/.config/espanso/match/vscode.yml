@@ -1,7 +1,0 @@
-# filter just visual studio
-filter_title: "Visual Studio Code"
-   
-matches:
-  # Simple text replacement
-  - trigger: ";espanso"
-    replace: "Hi there VSCode!"
