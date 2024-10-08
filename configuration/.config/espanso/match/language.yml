@@ -1,0 +1,5 @@
+matches:
+- trigger: ;ss
+  replace: ß
+- trigger: ;eu
+  replace: €
