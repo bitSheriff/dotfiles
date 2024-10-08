@@ -1,5 +1,8 @@
 matches:
 - trigger: ;ss
   replace: ß
+  word: true
 - trigger: ;eu
   replace: €
+  word: true
+
