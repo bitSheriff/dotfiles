@@ -14,16 +14,16 @@ matches:
 ##########
 # Umlaute
 ##########
-- trigger: ;a
+- trigger: ;a;
   replace: ä
-- trigger: ;o
+- trigger: ;o;
   replace: ö
-- trigger: ;u
+- trigger: ;u;
   replace: ü
 
-- trigger: ;A
+- trigger: ;A;
   replace: Ä
-- trigger: ;O
+- trigger: ;O;
   replace: Ö
-- trigger: ;U
+- trigger: ;U;
   replace: Ü
