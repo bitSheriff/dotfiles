@@ -2,9 +2,13 @@
 
 DIR_NAME=$(dirname "$0")
 
+# shellcheck source=/dev/null
 source "$DIR_NAME/../lib/my_lib.sh"
+# shellcheck source=/dev/null
 source "$DIR_NAME/../lib/logos.sh"
+# shellcheck source=/dev/null
 source "$DIR_NAME/../lib/cache.sh"
+# shellcheck source=/dev/null
 source "$DIR_NAME/../lib/distributions.sh"
 
 # include the enviroment varaibles (needed for some paths)
@@ -416,7 +420,7 @@ install_optionals() {
             # update zsh to get the updated path
             exec zsh
             # give access
-            sudo setcap "cap_dac_override+p" $(which espanso)
+            sudo setcap "cap_dac_override+p" "$(which espanso)"
             # register the service and start it
             espanso service register
             espanso start
@@ -667,7 +671,7 @@ setup_android() {
     print_note "Termux has no access to the storage (~/storage/)"
 
     # set ZSH to default shell
-    chsh -s $(which zsh)
+    chsh -s "$(which zsh)"
 
     gum confirm --default=false "Would you like to copy the SSH keys?" && (
         safe_exec ../secrets/ssh-copy.sh
