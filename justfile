@@ -66,3 +66,7 @@ commit-all:
 backup:
     @# add a timeout if a local git server cannot be reached
     timeout 30s git backup
+
+# Check the Setup
+check:
+    shellcheck "setup/setup.sh"
