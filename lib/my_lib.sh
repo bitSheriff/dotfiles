@@ -133,4 +133,3 @@ source_all_libs() {
         find "$dir" -type f -name "*.sh" -exec bash -c 'source "$0"' {} \;
     fi
 }
-
