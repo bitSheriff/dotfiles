@@ -69,4 +69,10 @@ backup:
 
 # Check the Setup
 check:
-    shellcheck "setup/setup.sh"
+    # Check the Main Setup
+    shellcheck ./setup/setup.sh
+    shellcheck ./setup/scripts/hardware.sh
+    shellcheck ./setup/scripts/languages.sh
+
+    # Check the Libraries
+    just --justfile ./lib/justfile check
