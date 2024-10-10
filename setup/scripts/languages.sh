@@ -6,14 +6,7 @@ source "$DIR_NAME/../../lib/my_lib.sh"
 source "$DIR_NAME/../../lib/logos.sh"
 source "$DIR_NAME/../../lib/cache.sh"
 source "$DIR_NAME/../../lib/distributions.sh"
-
-pacman_install_single() {
-
-    # Check if the package is installed using yay
-    if ! pacman -Qi "$1" &>/dev/null; then
-        sudo pacman $PACMAN_FLAGS -S "$1"
-    fi
-}
+source "$DIR_NAME/../../lib/package_manager.sh"
 
 print_h2 "Languages and langauge-specific Tooling"
 
@@ -38,6 +31,7 @@ if array_contains "${array[@]}" "Bash"; then
     pacman_install_single "bash"
     pacman_install_single "bash-completion"
     pacman_install_single "bash-language-server"
+    pacman_install_single "shellcheck"
 fi
 
 if array_contains "${array[@]}" "C"; then
