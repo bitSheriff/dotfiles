@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/bin/zsh
 
-source "$LIB_PATH/my_lib.sh"
+source "$HOME/.config/shell/envvars"
+source $LIB_PATH/my_lib.sh
 
 # Preamble of the Memo
 MEMO_PRE="- **$(date +%H:%M):** "

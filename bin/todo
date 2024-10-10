@@ -1,8 +1,9 @@
-#!/bin/bash
+#!/bin/zsh
 
+source "$HOME/.config/shell/envvars"
 source "$LIB_PATH/my_lib.sh"
+include "$HOME/.config/shell/secrets"
 
-include "~/.config/shell/secrets"
 
 # Preamble of the Memo
 TODO_PRE="- [ ] "
