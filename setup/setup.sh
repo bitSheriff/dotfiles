@@ -374,6 +374,7 @@ install_optionals() {
             "Termius ssh-client" \
             "TickTick" \
             "Tokodon" \
+            "Tuba (Mastodon)" \
             "VeraCrypt" \
             "WebApp Manager" \
             "WhatsApp" \
@@ -401,6 +402,7 @@ install_optionals() {
     if array_contains "${array[@]}" "VeraCrypt"; then pacman_packages+=("veracrypt"); fi
     if array_contains "${array[@]}" "TickTick"; then yay_packages+=("ticktick"); fi
     if array_contains "${array[@]}" "Tokodon"; then pacman_packages+=("tokodon"); fi
+    if array_contains "${array[@]}" "Tuba (Mastodon)"; then pacman_packages+=("tuba"); fi
     if array_contains "${array[@]}" "Neovide"; then pacman_packages+=("neovide"); fi
     if array_contains "${array[@]}" "iamb (TUI Matrix Client)"; then yay_packages+=("iamb"); fi
     if array_contains "${array[@]}" "espanso"; then
