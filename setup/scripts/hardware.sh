@@ -1,10 +1,16 @@
 #!/bin/bash
 
 DIR_NAME=$(dirname "$0")
+# shellcheck source=/dev/null
 source "$DIR_NAME/../../lib/my_lib.sh"
+# shellcheck source=/dev/null
 source "$DIR_NAME/../../lib/logos.sh"
+# shellcheck source=/dev/null
 source "$DIR_NAME/../../lib/cache.sh"
+# shellcheck source=/dev/null
 source "$DIR_NAME/../../lib/distributions.sh"
+# shellcheck source=/dev/null
+source "$DIR_NAME/../../lib/package_manager.sh"
 
 # ========================================
 # Funtions
@@ -80,21 +86,29 @@ setup_nvidia() {
 
 print_h2 "Hardware Setup"
 
-gum confirm --default=false "Would you like to tweak the Battery?" && setup_battery
-
-gum confirm --default=false "Would you like to setup bluetooth?" && setup_bluetooth
-
-gum confirm --default=false "Would you like to setup wifi?" && (
-    print_h3 "WiFi Setup"
-    gum confirm --default=false "Install tool to share WiFi with QR?" && yay_install_single "wifi-qr"
-
+selection=$(
+    gum choose --no-limit \
+        "Battery" \
+        "Bluetooth" \
+        "Logitech Devices" \
+        "Nvidia" \
+        "Portable Monitors" \
+        "WiFi" \
+        "ZSA Keyboards"
 )
 
-gum confirm --default=false "Would you like to setup a nvidia gpu?" && setup_nvidia
+IFS=$'\n' read -rd '' -a array <<<"$selection"
 
-gum confirm --default=false "Would you like to update firmware of different devices?" && fwupdmgr update
+if array_contains "${array[@]}" "Battery"; then setup_battery; fi
+if array_contains "${array[@]}" "Bluetooth"; then setup_bluetooth; fi
+if array_contains "${array[@]}" "Nvidia"; then setup_nvidia; fi
+if array_contains "${array[@]}" "WiFi"; then
+    print_h3 "WiFi Setup"
+    gum confirm --default=false "Install tool to share WiFi with QR?" && yay_install_single "wifi-qr"
+fi
 
-gum confirm --default=false "Would you like to use Logitech devices?" && (
+if array_contains "${array[@]}" "Logitech Devices"; then
+    print_h3 "Logitech Devies"
     # install the GUI application to manage logitech devices
     pacman_install_single "solaar"
 
@@ -103,10 +117,10 @@ gum confirm --default=false "Would you like to use Logitech devices?" && (
 
     # set flag for user message
     PLEASE_REBOOT=1
-)
+fi
 
-gum confirm --default=false "Would you like to setup a Portable Monitor?" && (
-
+if array_contains "${array[@]}" "Portable Monitors"; then
+    print_h3 "Portable Monitors"
     # install drivers
     yay_install_single "evdi"
     yay_install_single "displaylink"
@@ -117,12 +131,15 @@ gum confirm --default=false "Would you like to setup a Portable Monitor?" && (
 
     # set flag for user message
     PLEASE_REBOOT=1
-)
+fi
 
-gum confirm --default=false "Would you like to setup a zsa keyboard?" && (
+if array_contains "${array[@]}" "ZSA Keyboards"; then
+    print_h3 "ZSA Keyboards"
     # install keymapping application
     yay_install_single "zsa-keymapp-bin"
 
     # tool to flash (alternative to chromium-based web-tool)
     gum confirm --default=false "Install QMK? Or do you only flash with chromium-based?" && pacman_install_single "qmk"
-)
+fi
+
+gum confirm --default=false "Would you like to update firmware of different devices?" && fwupdmgr update
