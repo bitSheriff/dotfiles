@@ -357,6 +357,7 @@ install_optionals() {
             "Foliate" \
             "KDEConnect" \
             "LibreOffice Suite" \
+            "iamb (TUI Matrix Client)" \
             "MATLAB" \
             "Maple" \
             "Mission Center" \
@@ -401,7 +402,7 @@ install_optionals() {
     if array_contains "${array[@]}" "TickTick"; then yay_packages+=("ticktick"); fi
     if array_contains "${array[@]}" "Tokodon"; then pacman_packages+=("tokodon"); fi
     if array_contains "${array[@]}" "Neovide"; then pacman_packages+=("neovide"); fi
-
+    if array_contains "${array[@]}" "iamb (TUI Matrix Client)"; then yay_packages+=("iamb"); fi
     if array_contains "${array[@]}" "espanso"; then
         # build by source becaause AUR packages does not work
         (
