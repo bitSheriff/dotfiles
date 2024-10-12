@@ -1,5 +1,5 @@
-source "my_lib"
-source "distributions.sh"
+source "$LIB_PATH/my_lib.sh"
+source "$LIB_PATH/distributions.sh"
 
 pacman_install_file() {
     # remove comments and spaces at the end of the line
