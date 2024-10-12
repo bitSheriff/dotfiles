@@ -13,6 +13,13 @@ source "$DIR_NAME/../../lib/distributions.sh"
 source "$DIR_NAME/../../lib/package_manager.sh"
 
 # ========================================
+# CONSTANTS
+# ========================================
+
+NAME_iam="iam (Matrix TUI Client)"
+NAME_tuba="tuba (Mastodon GTK Client)"
+
+# ========================================
 # Global Variables
 # ========================================
 # Initialize strings to collect packages
@@ -26,7 +33,7 @@ yay_packages=()
 # ========================================
 # Main
 # ========================================
-#
+
 # read the wanted languages
 selection=$(
     gum choose --no-limit \
@@ -42,7 +49,7 @@ selection=$(
         "Foliate" \
         "KDEConnect" \
         "LibreOffice Suite" \
-        "iamb (TUI Matrix Client)" \
+        "$NAME_iam" \
         "MATLAB" \
         "Maple" \
         "Mission Center" \
@@ -59,7 +66,7 @@ selection=$(
         "Termius ssh-client" \
         "TickTick" \
         "Tokodon" \
-        "Tuba (Mastodon)" \
+        "$NAME_tuba" \
         "VeraCrypt" \
         "WebApp Manager" \
         "WhatsApp" \
@@ -87,9 +94,9 @@ if array_contains "${array[@]}" "Spotify"; then pacman_packages+=("spotify-launc
 if array_contains "${array[@]}" "VeraCrypt"; then pacman_packages+=("veracrypt"); fi
 if array_contains "${array[@]}" "TickTick"; then yay_packages+=("ticktick"); fi
 if array_contains "${array[@]}" "Tokodon"; then pacman_packages+=("tokodon"); fi
-if array_contains "${array[@]}" "Tuba (Mastodon)"; then pacman_packages+=("tuba"); fi
+if array_contains "${array[@]}" "$NAME_tuba"; then pacman_packages+=("tuba"); fi
 if array_contains "${array[@]}" "Neovide"; then pacman_packages+=("neovide"); fi
-if array_contains "${array[@]}" "iamb (TUI Matrix Client)"; then yay_packages+=("iamb"); fi
+if array_contains "${array[@]}" "$NAME_iam"; then yay_packages+=("iamb"); fi
 if array_contains "${array[@]}" "espanso"; then
     # build by source becaause AUR packages does not work
     (
