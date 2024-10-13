@@ -46,6 +46,7 @@ NAME_mullvadvpn="[Privacy] Mullvad VPN"
 NAME_mullvadbrowser="[Privacy] Mullvad Browser"
 NAME_veracrypt="[Privacy] VeraCrypt"
 NAME_qbittorrent="[Privacy] QBitTorrent"
+NAME_torbowser="[Privacy] TOR Browser"
 
 NAME_ticktick="[Productivity] TickTick"
 NAME_espanso="[Productivity] espanso"
@@ -158,6 +159,7 @@ packages=(
     "$NAME_webapp"
     "$NAME_whatsapp"
     "$NAME_zathura"
+    "$NAME_torbowser"
 )
 
 # sort the packages
@@ -207,6 +209,7 @@ if array_contains "${array[@]}" "$NAME_speechNote"; then yay_packages+=("dsnote"
 if array_contains "${array[@]}" "$NAME_whisper"; then yay_packages+=("whisper-git"); fi
 if array_contains "${array[@]}" "$NAME_zenbrowser"; then yay_packages+=("zen-browser-bin"); fi
 if array_contains "${array[@]}" "$NAME_zathura"; then setup_zathura; fi
+if array_contains "${array[@]}" "$NAME_torbowser"; then pacman_packages+=("torbrowser-launcher"); fi
 
 # Install all the collected oackages
 if [ ${#pacman_packages[@]} -ne 0 ]; then
