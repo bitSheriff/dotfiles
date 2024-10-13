@@ -23,6 +23,7 @@ NAME_signal="[Social] Signal"
 NAME_whatsapp="[Social] WhatsApp"
 NAME_tuba="[Social/Mastodon] tuba (GTK)"
 NAME_tokodon="[Social/Mastodon] Tokodon (QT)"
+NAME_toot="[Social/Mastodon] Toot (CLI/TUI)"
 
 NAME_termius="[Dev/Ops] Termius (SSH GUI Client)"
 NAME_filezilla="[Dev/Ops] FileZilla"
@@ -160,6 +161,7 @@ packages=(
     "$NAME_whatsapp"
     "$NAME_zathura"
     "$NAME_torbowser"
+    "$NAME_toot"
 )
 
 # sort the packages
@@ -210,6 +212,7 @@ if array_contains "${array[@]}" "$NAME_whisper"; then yay_packages+=("whisper-gi
 if array_contains "${array[@]}" "$NAME_zenbrowser"; then yay_packages+=("zen-browser-bin"); fi
 if array_contains "${array[@]}" "$NAME_zathura"; then setup_zathura; fi
 if array_contains "${array[@]}" "$NAME_torbowser"; then pacman_packages+=("torbrowser-launcher"); fi
+if array_contains "${array[@]}" "$NAME_toot"; then pacman_packages+=("toot"); fi
 
 # Install all the collected oackages
 if [ ${#pacman_packages[@]} -ne 0 ]; then
