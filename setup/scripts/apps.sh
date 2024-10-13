@@ -20,12 +20,13 @@ NAME_iam="[Social/Matrix] iam (TUI)"
 NAME_fractal="[Social/Matrix] Fractal (Gtk)"
 NAME_element="[Social/Matrix] Fractal (Gtk)"
 NAME_signal="[Social] Signal"
-
+NAME_whatsapp="[Social] WhatsApp"
 NAME_tuba="[Social/Mastodon] tuba (GTK)"
 NAME_tokodon="[Social/Mastodon] Tokodon (QT)"
 
 NAME_termius="[Dev/Ops] Termius (SSH GUI Client)"
 NAME_devtoys="[Dev] DevToys"
+NAME_doxygen="[Dev] Doxygen"
 
 NAME_cozy="[Media/Audio] Cozy Audiobook-Player"
 NAME_decoder="[Misc] Decoder (QR Scanner)"
@@ -33,9 +34,13 @@ NAME_decoder="[Misc] Decoder (QR Scanner)"
 NAME_mullvadvpn="[Privacy] Mullvad VPN"
 NAME_mullvadbrowser="[Privacy] Mullvad Browser"
 NAME_veracrypt="[Priacy] VeraCrypt"
+NAME_qbittorrent="[Privacy] QBitTorrent"
 
 NAME_ticktick="[Productivity] TickTick"
+NAME_espanso="[Productivity] espanso"
+
 NAME_calibre="[Office] Calibre"
+NAME_libreoffice="[Office] LibreOffice Suite"
 
 # ========================================
 # Global Variables
@@ -96,21 +101,21 @@ setup_zathura() {
 # Main
 # ========================================
 
-# read the wanted languages
-selection=$(
-    gum choose --no-limit \
+# add all the packages to a list
+
+packages=(
         "$NAME_calibre" \
         "Chromium" \
         "$NAME_cozy" \
         "$NAME_decoder" \
         "$NAME_devtoys" \
-        "Doxygen" \
+        "$NAME_doxygen" \
         "Draw.io" \
-        "espanso" \
+        "$NAME_espanso" \
         "FileZilla" \
         "Foliate" \
         "KDEConnect" \
-        "LibreOffice Suite" \
+        "$NAME_libreoffice" \
         "MATLAB" \
         "Maple" \
         "Mission Center" \
@@ -119,9 +124,10 @@ selection=$(
         "Neovide" \
         "OpenAI Whisper" \
         "Pocket Casts" \
-        "QBitTorrent" \
+        "$NAME_qbittorrent" \
         "Qalc" \
         "$NAME_signal" \
+        "Zen-Browser"
         "SpeechNote" \
         "Spotify" \
         "$NAME_termius" \
@@ -132,9 +138,18 @@ selection=$(
         "$NAME_iam" \
         "$NAME_veracrypt" \
         "WebApp Manager" \
-        "WhatsApp" \
+        "$NAME_whatsapp" \
         "Zathura" \
-        "Zen-Browser"
+)
+
+# sort the packages
+IFS=$'\n' sorted_packages=($(sort <<<"${packages[*]}"))
+unset IFS
+
+
+# read the wanted apps
+selection=$(
+    gum choose --no-limit "${sorted_packages[@]}"
 )
 
 IFS=$'\n' read -rd '' -a array <<<"$selection"
@@ -143,15 +158,15 @@ if array_contains "${array[@]}" "$NAME_calibre"; then pacman_packages+=("calibre
 if array_contains "${array[@]}" "Chromium"; then pacman_packages+=("chromium"); fi
 if array_contains "${array[@]}" "$NAME_decoder"; then yay_packages+=("decoder"); fi
 if array_contains "${array[@]}" "$NAME_devtoys"; then yay_packages+=("devtoys-bin"); fi
-if array_contains "${array[@]}" "Doxygen"; then pacman_packages+=("doxygen"); fi
+if array_contains "${array[@]}" "$NAME_doxygen"; then pacman_packages+=("doxygen"); fi
 if array_contains "${array[@]}" "Draw.io"; then pacman_packages+=("drawio-desktop"); fi
 if array_contains "${array[@]}" "FileZilla"; then pacman_packages+=("filezilla"); fi
 if array_contains "${array[@]}" "Foliate"; then pacman_packages+=("foliate"); fi
-if array_contains "${array[@]}" "LibreOffice Suite"; then pacman_packages+=("libreoffice-fresh"); fi
+if array_contains "${array[@]}" "$NAME_libreoffice"; then pacman_packages+=("libreoffice-fresh"); fi
 if array_contains "${array[@]}" "$NAME_termius"; then yay_packages+=("termius"); fi
 if array_contains "${array[@]}" "WebApp Manager"; then yay_packages+=("webapp-manager"); fi
 if array_contains "${array[@]}" "Qalc"; then pacman_packages+=("qalculate-gtk"); fi
-if array_contains "${array[@]}" "QBitTorrent"; then pacman_packages+=("qbittorrent"); fi
+if array_contains "${array[@]}" "$NAME_qbittorrent"; then pacman_packages+=("qbittorrent"); fi
 if array_contains "${array[@]}" "$NAME_signal"; then pacman_packages+=("signal-desktop"); fi
 if array_contains "${array[@]}" "Spotify"; then pacman_packages+=("spotify-launcher"); fi
 if array_contains "${array[@]}" "$NAME_veracrypt"; then pacman_packages+=("veracrypt"); fi
@@ -161,9 +176,9 @@ if array_contains "${array[@]}" "$NAME_tuba"; then pacman_packages+=("tuba"); fi
 if array_contains "${array[@]}" "Neovide"; then pacman_packages+=("neovide"); fi
 if array_contains "${array[@]}" "$NAME_iam"; then yay_packages+=("iamb"); fi
 if array_contains "${array[@]}" "$NAME_fractal"; then pacman_packages+=("fractal"); fi
-if array_contains "${array[@]}" "espanso"; then build_espanso; fi
+if array_contains "${array[@]}" "$NAME_espanso"; then build_espanso; fi
 if array_contains "${array[@]}" "KDEConnect"; then setup_kdeConnect; fi
-if array_contains "${array[@]}" "WhatsApp"; then yay_packages+=("whatsapp-for-linux"); fi
+if array_contains "${array[@]}" "$NAME_whatsapp"; then yay_packages+=("whatsapp-for-linux"); fi
 if array_contains "${array[@]}" "MATLAB"; then bash ./scripts/matlab.sh; fi
 if array_contains "${array[@]}" "Maple"; then bash ./scripts/maple.sh; fi
 if array_contains "${array[@]}" "$NAME_cozy"; then yay_packages+=("cozy-audiobooks"); fi
