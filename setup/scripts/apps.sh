@@ -19,13 +19,23 @@ source "$DIR_NAME/../../lib/package_manager.sh"
 NAME_iam="[Social/Matrix] iam (TUI)"
 NAME_fractal="[Social/Matrix] Fractal (Gtk)"
 NAME_element="[Social/Matrix] Fractal (Gtk)"
+NAME_signal="[Social] Signal"
 
 NAME_tuba="[Social/Mastodon] tuba (GTK)"
 NAME_tokodon="[Social/Mastodon] Tokodon (QT)"
 
 NAME_termius="[Dev/Ops] Termius (SSH GUI Client)"
+NAME_devtoys="[Dev] DevToys"
+
 NAME_cozy="[Media/Audio] Cozy Audiobook-Player"
 NAME_decoder="[Misc] Decoder (QR Scanner)"
+
+NAME_mullvadvpn="[Privacy] Mullvad VPN"
+NAME_mullvadbrowser="[Privacy] Mullvad Browser"
+NAME_veracrypt="[Priacy] VeraCrypt"
+
+NAME_ticktick="[Productivity] TickTick"
+NAME_calibre="[Office] Calibre"
 
 # ========================================
 # Global Variables
@@ -89,11 +99,11 @@ setup_zathura() {
 # read the wanted languages
 selection=$(
     gum choose --no-limit \
-        "Calibre" \
+        "$NAME_calibre" \
         "Chromium" \
         "$NAME_cozy" \
         "$NAME_decoder" \
-        "DevToys" \
+        "$NAME_devtoys" \
         "Doxygen" \
         "Draw.io" \
         "espanso" \
@@ -101,39 +111,38 @@ selection=$(
         "Foliate" \
         "KDEConnect" \
         "LibreOffice Suite" \
-        "$NAME_iam" \
         "MATLAB" \
         "Maple" \
         "Mission Center" \
-        "Mullvad Browser" \
-        "Mullvad VPN" \
+        "$NAME_mullvadbrowser" \
+        "$NAME_mullvadvpn" \
         "Neovide" \
         "OpenAI Whisper" \
         "Pocket Casts" \
         "QBitTorrent" \
         "Qalc" \
-        "Signal" \
+        "$NAME_signal" \
         "SpeechNote" \
         "Spotify" \
         "$NAME_termius" \
-        "TickTick" \
+        "$NAME_ticktick" \
         "$NAME_tokodon" \
         "$NAME_tuba" \
         "$NAME_fractal" \
-        "VeraCrypt" \
+        "$NAME_iam" \
+        "$NAME_veracrypt" \
         "WebApp Manager" \
         "WhatsApp" \
         "Zathura" \
-        "Zen-Browser" #Social \
-    # Socials \
+        "Zen-Browser"
 )
 
 IFS=$'\n' read -rd '' -a array <<<"$selection"
 
-if array_contains "${array[@]}" "Calibre"; then pacman_packages+=("calibre"); fi
+if array_contains "${array[@]}" "$NAME_calibre"; then pacman_packages+=("calibre"); fi
 if array_contains "${array[@]}" "Chromium"; then pacman_packages+=("chromium"); fi
 if array_contains "${array[@]}" "$NAME_decoder"; then yay_packages+=("decoder"); fi
-if array_contains "${array[@]}" "DevToys"; then yay_packages+=("devtoys-bin"); fi
+if array_contains "${array[@]}" "$NAME_devtoys"; then yay_packages+=("devtoys-bin"); fi
 if array_contains "${array[@]}" "Doxygen"; then pacman_packages+=("doxygen"); fi
 if array_contains "${array[@]}" "Draw.io"; then pacman_packages+=("drawio-desktop"); fi
 if array_contains "${array[@]}" "FileZilla"; then pacman_packages+=("filezilla"); fi
@@ -143,10 +152,10 @@ if array_contains "${array[@]}" "$NAME_termius"; then yay_packages+=("termius");
 if array_contains "${array[@]}" "WebApp Manager"; then yay_packages+=("webapp-manager"); fi
 if array_contains "${array[@]}" "Qalc"; then pacman_packages+=("qalculate-gtk"); fi
 if array_contains "${array[@]}" "QBitTorrent"; then pacman_packages+=("qbittorrent"); fi
-if array_contains "${array[@]}" "Signal"; then pacman_packages+=("signal-desktop"); fi
+if array_contains "${array[@]}" "$NAME_signal"; then pacman_packages+=("signal-desktop"); fi
 if array_contains "${array[@]}" "Spotify"; then pacman_packages+=("spotify-launcher"); fi
-if array_contains "${array[@]}" "VeraCrypt"; then pacman_packages+=("veracrypt"); fi
-if array_contains "${array[@]}" "TickTick"; then yay_packages+=("ticktick"); fi
+if array_contains "${array[@]}" "$NAME_veracrypt"; then pacman_packages+=("veracrypt"); fi
+if array_contains "${array[@]}" "$NAME_ticktick"; then yay_packages+=("ticktick"); fi
 if array_contains "${array[@]}" "$NAME_tokodon"; then pacman_packages+=("tokodon"); fi
 if array_contains "${array[@]}" "$NAME_tuba"; then pacman_packages+=("tuba"); fi
 if array_contains "${array[@]}" "Neovide"; then pacman_packages+=("neovide"); fi
@@ -160,8 +169,8 @@ if array_contains "${array[@]}" "Maple"; then bash ./scripts/maple.sh; fi
 if array_contains "${array[@]}" "$NAME_cozy"; then yay_packages+=("cozy-audiobooks"); fi
 if array_contains "${array[@]}" "Pocket Casts"; then yay_packages+=("pocket-casts-desktop-bin"); fi
 if array_contains "${array[@]}" "Mission Center"; then yay_packages+=("mission-center"); fi
-if array_contains "${array[@]}" "Mullvad VPN"; then yay_packages+=("mullvad-vpn"); fi
-if array_contains "${array[@]}" "Mullvad Browser"; then yay_packages+=("mullvad-browser"); fi
+if array_contains "${array[@]}" "$NAME_mullvadvpn"; then yay_packages+=("mullvad-vpn"); fi
+if array_contains "${array[@]}" "$NAME_mullvadbrowser"; then yay_packages+=("mullvad-browser"); fi
 if array_contains "${array[@]}" "SpeechNote"; then yay_packages+=("dsnote"); fi
 if array_contains "${array[@]}" "OpenAI Whisper"; then yay_packages+=("whisper-git"); fi
 if array_contains "${array[@]}" "Zen-Browser"; then yay_packages+=("zen-browser-bin"); fi
