@@ -161,7 +161,7 @@ packages=(
 )
 
 # sort the packages
-IFS=$'\n' sorted_packages=($(sort <<<"${packages[*]}"))
+IFS=$'\n' sorted_packages=($(sort -V <<<"${packages[*]}"))
 unset IFS
 
 # read the wanted apps
