@@ -32,6 +32,7 @@ NAME_doxygen="[Dev] Doxygen"
 NAME_matlab="[Dev/Math] Matlab"
 NAME_maple="[Dev/Math] Maple"
 NAME_neovide="[Dev/Editor] Neovide"
+NAME_wireshark="[Dev/Network] Wireshark (Qt)"
 
 NAME_cozy="[Media/Audio] Cozy Audiobook-Player"
 NAME_spotify="[Media/Audio] Spotify"
@@ -162,6 +163,7 @@ packages=(
     "$NAME_zathura"
     "$NAME_torbowser"
     "$NAME_toot"
+    "$NAME_wireshark"
 )
 
 # sort the packages
@@ -213,6 +215,7 @@ if array_contains "${array[@]}" "$NAME_zenbrowser"; then yay_packages+=("zen-bro
 if array_contains "${array[@]}" "$NAME_zathura"; then setup_zathura; fi
 if array_contains "${array[@]}" "$NAME_torbowser"; then pacman_packages+=("torbrowser-launcher"); fi
 if array_contains "${array[@]}" "$NAME_toot"; then pacman_packages+=("toot"); fi
+if array_contains "${array[@]}" "$NAME_wireshark"; then pacman_packages+=("wireshark-qt" "wireshark-cli"); fi
 
 # Install all the collected oackages
 if [ ${#pacman_packages[@]} -ne 0 ]; then
