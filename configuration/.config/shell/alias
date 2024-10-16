@@ -81,7 +81,7 @@ alias :r="exec zsh"
 alias y="yazi"
 
 # open nautilus (file explorer) in the current directory
-alias exp="nautilus ."
+alias exp="nemo ."
 
 # show weather information
 weather(){ curl -s "wttr.in/$1?m1"} 
