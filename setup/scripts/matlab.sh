@@ -10,6 +10,9 @@ VERSION="R2024b"
 PRODUCTS="MATLAB"
 DESTINATION="$HOME/Applications/Matlab_$VERSION"
 
+# install needed packages for Matlab
+sudo pacman -S libxcrypt libxcrypt-compat libcrypt libcrypt-compat
+
 if [ -f "$HOME/Downloads/mpm" ]; then
     print_note "Matlab Package Manager already downloaded"
 else
