@@ -148,10 +148,50 @@ latexmk!()
     latexmk -pdf -pvc -interaction=nonstopmode "$1"
 }
 
+mounts() {
+  MEDIA_PATH="/run/media/$USER"
+  
+  # Check if /run/media/$USER exists
+  if [ ! -d "$MEDIA_PATH" ]; then
+    echo "Media directory not found. Creating..."
+    mkdir -p "$MEDIA_PATH"
+  fi
+
+  # List all removable devices not mounted
+  UNMOUNTED=$(lsblk -rpo "NAME,TRAN,MOUNTPOINT" | awk '$2 == "usb" && $3 == "" {print $1}')
+
+  if [ -z "$UNMOUNTED" ]; then
+    echo "No unmounted USB devices found."
+  else
+    echo "The following USB devices are not mounted:"
+    echo "$UNMOUNTED"
+    for DEV in $UNMOUNTED; do
+      echo "Attempting to mount $DEV..."
+      udisksctl mount -b "$DEV"
+    done
+  fi
+
+  # Once devices are mounted, check if the media folder is populated
+  if [ ! "$(ls -A $MEDIA_PATH 2>/dev/null)" ]; then
+    echo "No media devices found in /run/media/$USER."
+    return 1
+  fi
+
+  # Use fzf to select a folder inside the media directory
+  SELECTION=$(find "$MEDIA_PATH" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | fzf --prompt="Select a folder: ")
+
+  if [ -z "$SELECTION" ]; then
+    echo "No folder selected."
+    return 1
+  fi
+
+  # Change to the selected directory
+  cd "$SELECTION" || return 1
+}
+
 # Alias only for Android
 if [[ -n "$TERMUX_VERSION" ]]; then
     # sudo is not available on termux/android
     alias sudo=""
 fi
-
 
