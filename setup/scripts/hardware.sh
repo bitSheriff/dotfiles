@@ -60,7 +60,6 @@ setup_bluetooth() {
 
     # install needed packages
     pacman_install_single "bluez"
-    pacman_install_single "bluetoothctl"
     pacman_install_single "blueman" # bluetooth manager, GUI
 
     # activate the service
