@@ -33,6 +33,7 @@ NAME_matlab="[Dev/Math] Matlab"
 NAME_maple="[Dev/Math] Maple"
 NAME_neovide="[Dev/Editor] Neovide"
 NAME_wireshark="[Dev/Network] Wireshark (Qt)"
+NAME_syncthing="[Dev/Network] Syncthing"
 
 NAME_cozy="[Media/Audio] Cozy Audiobook-Player"
 NAME_spotify="[Media/Audio] Spotify"
@@ -164,6 +165,7 @@ packages=(
     "$NAME_torbowser"
     "$NAME_toot"
     "$NAME_wireshark"
+    "$NAME_syncthing"
 )
 
 # sort the packages
@@ -216,6 +218,7 @@ if array_contains "${array[@]}" "$NAME_zathura"; then setup_zathura; fi
 if array_contains "${array[@]}" "$NAME_torbowser"; then pacman_packages+=("torbrowser-launcher"); fi
 if array_contains "${array[@]}" "$NAME_toot"; then pacman_packages+=("toot"); fi
 if array_contains "${array[@]}" "$NAME_wireshark"; then pacman_packages+=("wireshark-qt" "wireshark-cli"); fi
+if array_contains "${array[@]}" "$NAME_syncthing"; then pacman_packages+=("syncthing"); fi
 
 # Install all the collected oackages
 if [ ${#pacman_packages[@]} -ne 0 ]; then
