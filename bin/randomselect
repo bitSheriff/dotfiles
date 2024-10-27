@@ -1,0 +1,12 @@
+#!/bin/bash
+# Check if any arguments are passed
+if [ "$#" -eq 0 ]; then
+    echo "Usage: $0 string1 string2 ... stringN"
+    exit 1
+fi
+
+# Choose a random index from the arguments
+random_index=$((RANDOM % $#))
+
+# Print the randomly selected argument
+echo "${@:$((random_index + 1)):1}"
