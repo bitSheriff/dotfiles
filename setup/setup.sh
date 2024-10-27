@@ -123,7 +123,7 @@ create_symlinks() {
     # find broken symlinks and remove them
     find ~/.config -xtype l -delete
     find ~/Templates -xtype l -delete
-    find ~/bin -xtype l -delete
+    find ~/.local/bin -xtype l -delete
 
     # stow the packages (no idea why it does not work with $FLAGS)
     stow --adopt -t ~ -d $DIR_NAME/.. configuration
