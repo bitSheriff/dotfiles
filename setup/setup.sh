@@ -410,7 +410,7 @@ change_hostname() {
     local oldHostname=$(hostname)
     local newHostname=$(gum input --value "$oldHostname")
 
-    gum confirm --default=false "Would you like to change the hostname to $newHostname" && (
+    gum confirm --default=false --affirmative="Yes" --negative="Keep old one" "Would you like to change the hostname to $newHostname" && (
         sudo hostnamectl set-hostname "$newHostname"
 
         PLEASE_REBOOT=1
