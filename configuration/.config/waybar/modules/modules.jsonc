@@ -85,6 +85,7 @@
         "title<.*[W|w]hats[A|a]pp.*>": "<span font='12'>󰖣 </span>",
         "class<obsidian>": "<span font='12'> </span>", // some icons need to be increased in size
         "class<ticktick>": "<span font='11'> </span>",
+        "class<Beeper>": "<span font='11'>󰭻 </span>",
 
         // Coding & Co
         "class<.*Meld.*>": " ",

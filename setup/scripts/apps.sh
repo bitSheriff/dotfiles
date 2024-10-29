@@ -54,6 +54,7 @@ NAME_torbowser="[Privacy] TOR Browser"
 NAME_ticktick="[Productivity] TickTick"
 NAME_espanso="[Productivity] espanso"
 NAME_webapp="[Productivity] WebApp Manager"
+NAME_beeper="[Productivity] Beeper"
 
 NAME_calibre="[Office/Books] Calibre"
 NAME_foliate="[Office/Books] Foliate"
@@ -166,6 +167,7 @@ packages=(
     "$NAME_toot"
     "$NAME_wireshark"
     "$NAME_syncthing"
+    "$NAME_beeper"
 )
 
 # sort the packages
@@ -219,6 +221,7 @@ if array_contains "${array[@]}" "$NAME_torbowser"; then pacman_packages+=("torbr
 if array_contains "${array[@]}" "$NAME_toot"; then pacman_packages+=("toot"); fi
 if array_contains "${array[@]}" "$NAME_wireshark"; then pacman_packages+=("wireshark-qt" "wireshark-cli"); fi
 if array_contains "${array[@]}" "$NAME_syncthing"; then pacman_packages+=("syncthing"); fi
+if array_contains "${array[@]}" "$NAME_beeper"; then yay_packages+=("beeper-latest-bin"); fi
 
 # Install all the collected oackages
 if [ ${#pacman_packages[@]} -ne 0 ]; then
