@@ -26,6 +26,10 @@ $battery\
 [ ](fg:#33658A)\
 """
 
+# Timeout for commands executed by starship (in milliseconds).
+scan_timeout = 30
+command_timeout = 3600000
+
 # Disable the blank line at the start of the prompt
 # add_newline = false
 
