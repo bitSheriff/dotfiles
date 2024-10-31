@@ -96,12 +96,15 @@ mkdir!() { mkdir -p "$1" && cd "$1"; }
 disown!() { exec "$1" & ; disown }
 
 # add a note in the daily note
-daily() { nvim ~/notes/Journal/Entries/Daily/$(date +"%F").md }
+daily() {
+    editor="${1:-nvim}"  # Use the first argument if provided, otherwise default to nvim
+    "$editor" "$NOTES_DIR"/Journal/Entries/Daily/$(date +"%F").md
+}
 
-daily-gw() { ghostwriter ~/notes/Journal/Entries/Daily/$(date +"%F").md & }
+daily-gw() { ghostwriter "$NOTES_DIR"/Journal/Entries/Daily/$(date +"%F").md & }
 
 # add a note in the inbox note
-inbox-gw() { ghostwriter ~/notes/Inbox/Inbox.md & }
+inbox-gw() { ghostwriter "$INBOX" & }
 
 # quickly create file in the Inbox folder and open it with nvim
 qf()
@@ -109,14 +112,12 @@ qf()
 
     if [ -z "$1" ]; then
         echo "Error: A file name must be set, e.g. on \"the wonderful thing about tiggers\"."
-    exit 1
+        exit 1
     fi
 
     file_name=$(echo "$1" | tr ' ' '-')
     formatted_file_name=$(date "+%Y-%m-%d")_${file_name}.md
-    cd ~/notes
-    touch "Inbox/${formatted_file_name}"
-    nvim "Inbox/${formatted_file_name}"
+    nvim "$INBOX_DIR/${formatted_file_name}"
 }
 
 # backup: clone a file and add ".bk" at the end
