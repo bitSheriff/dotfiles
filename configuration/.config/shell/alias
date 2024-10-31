@@ -106,6 +106,12 @@ daily-gw() { ghostwriter "$NOTES_DIR"/Journal/Entries/Daily/$(date +"%F").md & }
 # add a note in the inbox note
 inbox-gw() { ghostwriter "$INBOX" & }
 
+# open the inbox with the wanted program
+inboxed() {
+    editor="${1:-nvim}"  # Use the first argument if provided, otherwise default to nvim
+    "$editor" "$INBOX"
+}
+
 # quickly create file in the Inbox folder and open it with nvim
 qf()
 {
