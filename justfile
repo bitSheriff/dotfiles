@@ -48,8 +48,8 @@ commit-all:
     fi
 
     # wallpapers
-    @if [[ -n $(git -C $DOTFILES_DIR/configuration/.config/wallpapers/ status --porcelain) ]]; then \
-        (cd $DOTFILES_DIR/configuration/.config/wallpapers/ && lazygit) \
+    @if [[ -n $(git -C $DOTFILES_DIR/wallpapers/ status --porcelain) ]]; then \
+        (cd $DOTFILES_DIR/wallpapers/ && lazygit) \
     fi
 
     # secrets
