@@ -39,8 +39,8 @@
 
 # For a list of all the available options, visit the official docs at: https://espanso.org/docs/
 keyboard_layout:
-  # layout: "us" # for ZSA Voyager
-  layout: "de" # for laptop keyboard
+  layout: "us" # for ZSA Voyager
+  # layout: "de" # for laptop keyboard
   
 
 # Change the Search Shortcut
