@@ -80,24 +80,27 @@ build_espanso() {
     # build by source becaause AUR packages does not work
     # create the folders if needed
     mkdir -p "$HOME/code/"
-    mkdir -p "$HOME/bin"
+    mkdir -p "$HOME/.local/bin"
 
-    # install the Rust Tools for that
-    cargo install --force cargo-make
-    # checkout the repository
-    git clone https://github.com/espanso/espanso
-    # build the application
-    cargo make --profile release --env NO_X11=true build-binary
-    # move the binary to the personal binary directory
-    sudo mv target/release/espanso "$HOME/bin/"
-    # update zsh to get the updated path
-    exec zsh
-    # give access
-    sudo setcap "cap_dac_override+p" "$(which espanso)"
-    # register the service and start it
-    espanso service register
-    espanso start
-
+    (
+        cd "$HOME/code/"
+        # install the Rust Tools for that
+        cargo install --force cargo-make
+        # checkout the repository
+        git clone https://github.com/espanso/espanso
+        cd "$HOME/code/espanso"
+        # build the application
+        cargo make --profile release --env NO_X11=true build-binary
+        # move the binary to the personal binary directory
+        sudo mv target/release/espanso "$HOME/.local/bin/"
+        # update zsh to get the updated path
+        exec zsh
+        # give access
+        sudo setcap "cap_dac_override+p" "$(which espanso)"
+        # register the service and start it
+        espanso service register
+        espanso start
+    )
 }
 
 setup_kdeConnect() {
