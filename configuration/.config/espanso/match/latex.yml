@@ -1,0 +1,8 @@
+matches:
+
+##########
+# LaTeX Stuff
+##########
+- trigger: ;it
+  replace: \textit{$|$}
+  word: false
