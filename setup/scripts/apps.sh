@@ -34,6 +34,7 @@ NAME_maple="[Dev/Math] Maple"
 NAME_neovide="[Dev/Editor] Neovide"
 NAME_wireshark="[Dev/Network] Wireshark (Qt)"
 NAME_syncthing="[Dev/Network] Syncthing"
+NAME_tailscale="[Dev/Network] Tailscale"
 
 NAME_cozy="[Media/Audio] Cozy Audiobook-Player"
 NAME_spotify="[Media/Audio] Spotify"
@@ -171,6 +172,7 @@ packages=(
     "$NAME_wireshark"
     "$NAME_syncthing"
     "$NAME_beeper"
+    "$NAME_tailscale"
 )
 
 # sort the packages
@@ -225,6 +227,11 @@ if array_contains "${array[@]}" "$NAME_toot"; then pacman_packages+=("toot"); fi
 if array_contains "${array[@]}" "$NAME_wireshark"; then pacman_packages+=("wireshark-qt" "wireshark-cli"); fi
 if array_contains "${array[@]}" "$NAME_syncthing"; then pacman_packages+=("syncthing"); fi
 if array_contains "${array[@]}" "$NAME_beeper"; then yay_packages+=("beeper-latest-bin"); fi
+if array_contains "${array[@]}" "$NAME_tailscale"; then
+    sudo pacman -S tailscale
+    sudo systemctl enable tailscaled
+    sudo systemctl start tailscaled
+fi
 
 # Install all the collected oackages
 if [ ${#pacman_packages[@]} -ne 0 ]; then
