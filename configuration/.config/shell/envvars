@@ -3,6 +3,7 @@ export TERMINAL=kitty
 export EDITOR=nvim
 export VISUAL=nvim
 export BROWSER=zen-browser
+export MANPAGER='nvim +Man!'
 
 # define important files & directories
 export NOTES_DIR=$HOME/notes
