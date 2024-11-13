@@ -273,7 +273,7 @@ install_hyprland() {
     ensure_sddm_enabled
 
     # install plugins
-    bash ./scripts/hyprpm.sh
+    bash $DIR_NAME/scripts/hyprpm.sh
 
     DO_ZSH=1
 }
