@@ -558,6 +558,29 @@ setup_android() {
     create_symlinks
 }
 
+setup_services() {
+    print_h2 "Setup Custom Services"
+
+    servs=("git-auto-fetch")
+
+    # read the wanted apps
+    selection=$(
+        gum choose --no-limit "${servs[@]}"
+    )
+
+    IFS=$'\n' read -rd '' -a array <<<"$selection"
+
+    if array_contains "${array[@]}" "git-auto-fetch"; then
+        print_h3 "git-auto-fetch"
+
+        # activate the service
+        systemctl --user daemon-reload
+        systemctl --user enable git-auto-fetch.timer
+        systemctl --user start git-auto-fetch.timer
+    fi
+
+}
+
 # ===============================================
 # Flow Start & Arguemnt Handling
 # ===============================================
@@ -654,6 +677,11 @@ fi
 
 if [[ "$ARG_MODE" = 'selection' || "$ARG_MODE" = 'apps' ]]; then
     install_optionals
+    exit 0
+fi
+
+if [[ "$ARG_MODE" = 'services' || "$ARG_MODE" = 'service' ]]; then
+    setup_services
     exit 0
 fi
 

@@ -1,0 +1,10 @@
+[Unit]
+Description=Automatically fetch Git repositories
+Wants=git-auto-fetch.timer
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/git-auto-fetch
+
+[Install]
+WantedBy=default.target
