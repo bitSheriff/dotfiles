@@ -564,6 +564,9 @@ setup_android() {
 setup_services() {
     print_h2 "Setup Custom Services"
 
+    # first link, because the services are located in a symlinked directory
+    create_symlinks
+
     bash $DIR_NAME/scripts/custom-services.sh
 }
 
