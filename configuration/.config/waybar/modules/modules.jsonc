@@ -87,6 +87,7 @@
         "class<ticktick>": "<span font='11'> </span>",
         "class<Beeper>": "<span font='11'>󰭻 </span>",
         "title<.*Readwise.*>": "<span font='11'> </span>",
+        "title<.*Overleaf.*>": "<span font='15'> </span>",
 
         // Coding & Co
         "class<.*Meld.*>": " ",
