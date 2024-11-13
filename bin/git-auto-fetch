@@ -4,6 +4,7 @@
 # Define a list of directories (repositories) where git fetch --all should be executed
 DIRS=(
     "$HOME/code/dotfiles/"
+    "$HOME/code/blog/"
 )
 
 # Loop through each directory in the list
