@@ -561,24 +561,7 @@ setup_android() {
 setup_services() {
     print_h2 "Setup Custom Services"
 
-    servs=("git-auto-fetch")
-
-    # read the wanted apps
-    selection=$(
-        gum choose --no-limit "${servs[@]}"
-    )
-
-    IFS=$'\n' read -rd '' -a array <<<"$selection"
-
-    if array_contains "${array[@]}" "git-auto-fetch"; then
-        print_h3 "git-auto-fetch"
-
-        # activate the service
-        systemctl --user daemon-reload
-        systemctl --user enable git-auto-fetch.timer
-        systemctl --user start git-auto-fetch.timer
-    fi
-
+    bash $DIR_NAME/scripts/custom-services.sh
 }
 
 # ===============================================
