@@ -12,11 +12,7 @@ source "$DIR_NAME/../../lib/distributions.sh"
 # shellcheck source=/dev/null
 source "$DIR_NAME/../../lib/package_manager.sh"
 
-# install (update) hyprpm, the plugin manager
-print_note "Updating existing plugins"
-hyprpm update --no-shallow
-
-plugins=("easymotion")
+plugins=("updates","easymotion")
 
 echo -e "\n\n"
 echo -e "$BOLD_BLUE" "easymotion" "$NC" "\tbetter window switching with vim-like hotkey switching"
@@ -34,5 +30,10 @@ if array_contains "${array[@]}" "easymotion"; then
     hyprpm add https://github.com/zakk4223/hyprland-easymotion
 
     hyprpm enable hyprEasymotion
+fi
 
+if array_contains "${array[@]}" "updates"; then
+    # install (update) hyprpm, the plugin manager
+    print_note "Updating existing plugins"
+    hyprpm update --no-shallow
 fi
