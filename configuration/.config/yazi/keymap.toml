@@ -310,3 +310,9 @@ keymap = [
 	# Filtering
 	{ on = [ "/" ], run = "filter", desc = "Apply a filter for the help items" },
 ]
+
+
+[[manager.prepend_keymap]]
+on   = "R"
+run  = "plugin rsync"
+desc = "Copy files using rsync"

@@ -1,0 +1,5 @@
+[plugin]
+deps = [{ use = "GianniBYoung/rsync", rev = "3f431aa" }]
+
+[flavor]
+deps = []
