@@ -139,7 +139,7 @@ create_symlinks() {
     stow --adopt -t $LIB_PATH -d $DIR_NAME/.. lib
 
     # link the wallpaper
-    ln -s $DOTFILES_DIR/wallpapers/ "$HOME/Pictures/wallpapers"
+    ln -sf $DOTFILES_DIR/wallpapers/ "$HOME/Pictures/"
 
     # link the secrets if the file is found
     if [ -d "$DOTFILES_DIR/secrets" ]; then
