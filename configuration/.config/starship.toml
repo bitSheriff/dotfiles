@@ -152,6 +152,7 @@ staged = " ×${count} "
 renamed = "󰑕 ×${count} "
 deleted = "🗑️×${count} "
 format = '[$all_status$ahead_behind ]($style)'
+ignore_submodules = false
 
 [git_metrics]
 added_style = "bg:#4900ff bold #47e99b"
@@ -167,9 +168,12 @@ style = "bg:#00b8ff"
 format = '[ $symbol ($version) ]($style)'
 
 [rust]
-symbol = "⚙️ "
+symbol = "🦀 "
 style = "bg:#00b8ff"
 format = '[ $symbol ($version) ]($style)'
+detect_extensions = ["rs"]
+detect_files = ["Cargo.toml"]
+detect_folders = []
 
 [lua]
 symbol = "🌕 "
