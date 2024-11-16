@@ -507,6 +507,11 @@
    appname = kde connect
    urgency = normal
    frame_color = "#9933ff"
+
+[beeper]
+   appname = Beeper
+   urgency = normal
+   frame_color = "#2b18e1"
 #
 #[stack-volumes]
 #    appname = "some_volume_notifiers"
