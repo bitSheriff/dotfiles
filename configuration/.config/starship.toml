@@ -8,6 +8,7 @@ $directory\
 [](fg:#9600ff bg:#4900ff)\
 $git_branch\
 $git_status\
+$git_metrics\
 [](fg:#4900ff bg:#00b8ff)\
 $c\
 $golang\
@@ -151,6 +152,14 @@ staged = " ×${count} "
 renamed = "󰑕 ×${count} "
 deleted = "🗑️×${count} "
 format = '[$all_status$ahead_behind ]($style)'
+
+[git_metrics]
+added_style = "bg:#4900ff bold #47e99b"
+deleted_style = "bg:#4900ff bold red"
+only_nonzero_diffs = true
+format = "([+$added]($added_style))([-$deleted]($deleted_style))"
+disabled = false
+ignore_submodules = false
 
 [golang]
 symbol = " "
