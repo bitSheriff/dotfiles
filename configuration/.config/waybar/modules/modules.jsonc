@@ -104,6 +104,7 @@
         "class<.*cool-retro-term.*>": "󰍹 ",
         "class<neovide>": " ",
         "class<MATLAB.*>": "󰍘 ",
+        "class<.*gcolor3.*>": " ", // Color Picker
 
         // Basic Office Stuff
         "class<.*calibre.*>": "󱉟 ",
