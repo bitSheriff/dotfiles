@@ -126,6 +126,7 @@
         "class<.*[tT]uba.*>": " ",	
         "class<.*Element.*>": "󰘨 ",	
         "class<.*Fractal.*>": "󰘨 ",	
+        "title<.*Bluesky.*>": " ",	
     }
 },
   // Hyprland Window
