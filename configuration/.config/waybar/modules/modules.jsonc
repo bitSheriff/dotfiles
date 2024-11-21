@@ -351,8 +351,12 @@
   "format" : "",
   "on-click" : "cliphist list | wofi --dmenu | cliphist decode | wl-copy",
   "tooltip" : "Open the Clipboard"
+},
+
+"custom/app-screenshot" : {
+  "format" : "󱣴",
+  "on-click" : "hyprshot -m region --freeze",
+  "tooltip" : "Take a Screenshot"
 }
-
-
 // global end
 }
