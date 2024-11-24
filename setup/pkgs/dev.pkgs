@@ -47,7 +47,7 @@ remmina                     # SSH client
 ripgrep
 ripgrep-all                 # search trough all kind of files
 rsync
-rust
+rustup
 rust-analyzer
 serie                       # git graph viewer in the terminal
 speedcrunch                 # best scientific calculator
