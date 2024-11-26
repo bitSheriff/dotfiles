@@ -7,29 +7,72 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "show_inline_completions": false,
-  "ui_font_size": 16,
-  "buffer_font_size": 16,
+    "show_inline_completions": false,
+    "ui_font_size": 16,
+    "buffer_font_size": 16,
 
-  // Vim mode settings
-  "vim_mode": true,
+    // Vim mode settings
+    "vim_mode": true,
+    "relative_line_numbers": true,
 
-  "soft_wrap": "editor_width",
+    "soft_wrap": "editor_width",
+    "tab_size": 4,
 
-  // Inlay hints preconfigured by Zed: Go, Rust, Typescript and Svelte
-  "inlay_hints": {
-    "enabled": true
-  },
-  // Theming
-  "theme": {
-    "mode": "dark",
-    "light": "One Light",
-    "dark": "Tokyo Night"
-  },
+    // color the indentation levels
+    "indent_guides": {
+        "enabled": true,
+        "coloring": "indent_aware"
+    },
 
-  // Turn off telemetry
-  "telemetry": {
-    "diagnostics": false,
-    "metrics": false
-  }
+    "tabs": {
+        "file_icons": true,
+        "git_status": true
+    },
+
+    // Inlay hints preconfigured by Zed: Go, Rust, Typescript and Svelte
+    "inlay_hints": {
+        "enabled": true
+    },
+    // Theming
+    "theme": {
+        "mode": "dark",
+        "light": "One Light",
+        "dark": "Tokyo Night"
+    },
+
+    // Turn off telemetry
+    "telemetry": {
+        "diagnostics": false,
+        "metrics": false
+    },
+
+    // Language Settings
+    "languages": {
+        "Markdown": {
+            "format_on_save": "on",
+            "tab_size": 4
+        }
+    },
+
+    // The key to use for adding multiple cursors
+    "multi_cursor_modifier": "alt",
+
+    // Git Features
+    "git": {
+        "enabled": true,
+        "autoFetch": true,
+        "autoFetchInterval": 300,
+        "autoFetchOnFocus": true,
+        "autoFetchOnWindowChange": true,
+        "autoFetchOnBuild": true,
+        "git_status": true,
+        "autoFetchOnBuildEvents": ["build", "run", "debug"],
+        "autoFetchOnBuildEventsDelay": 1500,
+        "autoFetchOnBuildDelay": 1500,
+        "git_gutter": "tracked_files",
+        "inline_blame": {
+            "enabled": false,
+            "position": "right"
+        }
+    }
 }
