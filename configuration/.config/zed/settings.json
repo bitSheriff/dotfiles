@@ -7,11 +7,29 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "show_inline_completions": false,
   "ui_font_size": 16,
   "buffer_font_size": 16,
+
+  // Vim mode settings
+  "vim_mode": true,
+
+  "soft_wrap": "editor_width",
+
+  // Inlay hints preconfigured by Zed: Go, Rust, Typescript and Svelte
+  "inlay_hints": {
+    "enabled": true
+  },
+  // Theming
   "theme": {
     "mode": "dark",
     "light": "One Light",
     "dark": "Tokyo Night"
+  },
+
+  // Turn off telemetry
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
   }
 }
