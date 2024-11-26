@@ -105,6 +105,7 @@
         "class<neovide>": " ",
         "class<MATLAB.*>": "󰍘 ",
         "class<.*gcolor3.*>": " ", // Color Picker
+        "class<.*Zed>": "󱚍 ",
 
         // Basic Office Stuff
         "class<.*calibre.*>": "󱉟 ",
