@@ -59,8 +59,14 @@ search_man() {
 }
 
 ## applications
-# alias code="flatpak run com.visualstudio.code"
-alias notes="cd ~/notes && nv"
+notes() {
+    editor="${1:-nvim}"  # Use the first argument if provided, otherwise default to nvim
+    (
+        cd "$NOTES_DIR"
+        "$editor" .
+    )
+}
+
 
 # count files in current directory 
 alias count='find . -type f | wc -l'
