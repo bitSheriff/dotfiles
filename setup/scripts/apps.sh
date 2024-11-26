@@ -35,6 +35,8 @@ NAME_neovide="[Dev/Editor] Neovide"
 NAME_wireshark="[Dev/Network] Wireshark (Qt)"
 NAME_syncthing="[Dev/Network] Syncthing"
 NAME_tailscale="[Dev/Network] Tailscale"
+NAME_xxd="[Dev/Reverse Engineering] xxd (tinyxxd)"
+NAME_xxd="[Dev/Reverse Engineering] netcat"
 
 NAME_cozy="[Media/Audio] Cozy Audiobook-Player"
 NAME_spotify="[Media/Audio] Spotify"
@@ -173,6 +175,8 @@ packages=(
     "$NAME_syncthing"
     "$NAME_beeper"
     "$NAME_tailscale"
+    "$NAME_xxd"
+    "$NAME_netcat"
 )
 
 # sort the packages
@@ -227,6 +231,8 @@ if array_contains "${array[@]}" "$NAME_toot"; then pacman_packages+=("toot"); fi
 if array_contains "${array[@]}" "$NAME_wireshark"; then pacman_packages+=("wireshark-qt" "wireshark-cli"); fi
 if array_contains "${array[@]}" "$NAME_syncthing"; then pacman_packages+=("syncthing"); fi
 if array_contains "${array[@]}" "$NAME_beeper"; then yay_packages+=("beeper-latest-bin"); fi
+if array_contains "${array[@]}" "$NAME_xxd"; then pacman_packages+=("tinyxxd"); fi
+if array_contains "${array[@]}" "$NAME_netcat"; then pacman_packages+=("gnu-netcat"); fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
     sudo systemctl enable tailscaled
