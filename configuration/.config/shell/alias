@@ -41,6 +41,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias iqalc="qalc -i" # interactive mode of Qalculator
+alias zed="zeditor" # dont know why they did not named it this in the first place
 
 setup() {
     params="$@"
