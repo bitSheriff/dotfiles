@@ -121,6 +121,7 @@
         "class<mpv>": "<span font='12'> </span>",
         "class<org.kde.haruna>": "<span font='12'> </span>",
         "class<thunderbird>": "<span font='11'> </span>",
+        "class<Typora>": "<span font='11'>󰬛 </span>",
 
         // Socials
         "class<.*[tT]okodon.*>": " ",	
