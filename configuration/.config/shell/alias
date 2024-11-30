@@ -102,12 +102,6 @@ mkdir!() { mkdir -p "$1" && cd "$1"; }
 # start a process and disown it
 disown!() { exec "$1" & ; disown }
 
-# add a note in the daily note
-daily() {
-    editor="${1:-nvim}"  # Use the first argument if provided, otherwise default to nvim
-    "$editor" "$NOTES_DIR"/Journal/Entries/Daily/$(date +"%F").md
-}
-
 daily-gw() { ghostwriter "$NOTES_DIR"/Journal/Entries/Daily/$(date +"%F").md & }
 
 # add a note in the inbox note
