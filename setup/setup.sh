@@ -570,6 +570,32 @@ setup_services() {
     bash $DIR_NAME/scripts/custom-services.sh
 }
 
+setup_debian() {
+   print_h2 "Debian Setup"
+       gum confirm --default=false "Would you like to switch to debian unstable packages (sid)" && (
+        sudo bash -c 'cat > /etc/apt/sources.list <<EOF
+deb http://deb.debian.org/debian unstable main contrib non-free
+deb-src http://deb.debian.org/debian unstable main contrib non-free
+EOF'
+        # do a full upgrade
+        sudo apt update && sudo apt full-upgrade
+    )
+
+    # update the database
+    sudo apt update
+    # upgrade the packages
+    sudo apt upgrade -y
+
+    # install the needed packages
+    sudo apt install -y $(cat pkgs/debian.pkgs)
+
+    # add the neovim repository
+   sudo add-apt-repository ppa:neovim-ppa/unstable -y
+
+    # create the symlinks
+    create_symlinks
+}
+
 # ===============================================
 # Flow Start & Arguemnt Handling
 # ===============================================
@@ -719,6 +745,12 @@ fi
 # Check if it is executed on android
 if is_android; then
     setup_android
+    exit 0
+fi
+
+if is_debian; then
+    # setup small debian setup
+    setup_debian
     exit 0
 fi
 
