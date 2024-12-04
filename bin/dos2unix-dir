@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Description: Recursively apply dos2unix to all .sh files in the given directory.
+
+# Check if a directory is provided as an argument
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <directory>"
+    exit 1
+fi
+
+# Assign the argument to a variable
+directory="$1"
+
+# Verify if the argument is a directory
+if [ ! -d "$directory" ]; then
+    echo "Error: $directory is not a valid directory."
+    exit 1
+fi
+
+# Find all .sh files and apply dos2unix
+find "$directory" -type f -name "*.sh" -exec dos2unix {} \;
+
+echo "Completed dos2unix on all .sh files in $directory."
