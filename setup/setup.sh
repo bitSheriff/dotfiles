@@ -115,10 +115,23 @@ nix_install_file() {
     nix-env -irf "$1"
 }
 
+apt_install_file() {
+    # remove comments, spaces at the end of the line, and line breaks
+    grep -v '^#' "$1" | grep -o '^[^#]*' | sed 's/[[:space:]]*$//' | tr '\n' ' ' | xargs sudo apt install -y
+}
+
 create_symlinks() {
 
-    # make sure stow is installed
-    pacman_install_single stow
+    if is_arch; then
+        # make sure stow is installed
+        pacman_install_single stow
+    fi
+
+    if is_debian; then
+        # make sure stow is installed
+        sudo apt install -y stow
+    fi
+
 
     # find broken symlinks and remove them
     find ~/.config -xtype l -delete
@@ -587,10 +600,7 @@ EOF'
     sudo apt upgrade -y
 
     # install the needed packages
-    sudo apt install -y $(cat pkgs/debian.pkgs)
-
-    # add the neovim repository
-   sudo add-apt-repository ppa:neovim-ppa/unstable -y
+    apt_install_file "$DIR_NAME/pkgs/debian.pkgs"
 
     # create the symlinks
     create_symlinks
