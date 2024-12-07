@@ -58,6 +58,8 @@ NAME_ticktick="[Productivity] TickTick"
 NAME_espanso="[Productivity] espanso"
 NAME_webapp="[Productivity] WebApp Manager"
 NAME_beeper="[Productivity] Beeper"
+NAME_typora="[Productivity/Writing] Typora"
+NAME_apostrophe="[Productivity/Writing] Apostrophe"
 
 NAME_calibre="[Office/Books] Calibre"
 NAME_foliate="[Office/Books] Foliate"
@@ -177,6 +179,8 @@ packages=(
     "$NAME_tailscale"
     "$NAME_xxd"
     "$NAME_netcat"
+    "$NAME_apostrophe"
+    "$NAME_typora"
 )
 
 # sort the packages
@@ -233,6 +237,8 @@ if array_contains "${array[@]}" "$NAME_syncthing"; then pacman_packages+=("synct
 if array_contains "${array[@]}" "$NAME_beeper"; then yay_packages+=("beeper-latest-bin"); fi
 if array_contains "${array[@]}" "$NAME_xxd"; then pacman_packages+=("tinyxxd"); fi
 if array_contains "${array[@]}" "$NAME_netcat"; then pacman_packages+=("gnu-netcat"); fi
+if array_contains "${array[@]}" "$NAME_apostrophe"; then pacman_packages+=("Apostrophe"); fi
+if array_contains "${array[@]}" "$NAME_typora"; then yay_packages+=("typora"); fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
     sudo systemctl enable tailscaled
