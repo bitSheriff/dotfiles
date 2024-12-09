@@ -204,6 +204,11 @@ aur_vote()
     ssh aur@aur.archlinux.org vote "$1"
 }
 
+# View all git repositories and open it later in Lazygit
+lgall(){
+        lazygit -p $(tv git-repos)
+}
+
 # Alias only for Android
 if [[ -n "$TERMUX_VERSION" ]]; then
     # sudo is not available on termux/android
