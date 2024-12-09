@@ -47,11 +47,12 @@ remmina                     # SSH client
 ripgrep
 ripgrep-all                 # search trough all kind of files
 rsync
-rustup
 rust-analyzer
+rustup
 serie                       # git graph viewer in the terminal
 speedcrunch                 # best scientific calculator
 spotify-launcher
+television                  # tui fuzzy finder (öike fzf)
 thefuck
 tldr
 torbrowser-launcher
