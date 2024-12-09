@@ -65,7 +65,7 @@ notes() {
     editor="${1:-nvim}"  # Use the first argument if provided, otherwise default to nvim
     (
         cd "$NOTES_DIR"
-        "$editor" $(tv files)
+        "$editor" "$NOTES_DIR/$(fzf)"
     )
 }
 
