@@ -105,7 +105,8 @@ fi
 
 if array_contains "${array[@]}" "LaTeX"; then
     print_note "Language LaTeX"
-    install_latex
+    pacman_install_file "pkgs/latex.pkgs"
+
 fi
 
 if array_contains "${array[@]}" "Typst"; then

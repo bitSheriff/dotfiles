@@ -132,7 +132,6 @@ create_symlinks() {
         sudo apt install -y stow
     fi
 
-
     # find broken symlinks and remove them
     find ~/.config -xtype l -delete
     find ~/Templates -xtype l -delete
@@ -584,8 +583,8 @@ setup_services() {
 }
 
 setup_debian() {
-   print_h2 "Debian Setup"
-       gum confirm --default=false "Would you like to switch to debian unstable packages (sid)" && (
+    print_h2 "Debian Setup"
+    gum confirm --default=false "Would you like to switch to debian unstable packages (sid)" && (
         sudo bash -c 'cat > /etc/apt/sources.list <<EOF
 deb http://deb.debian.org/debian unstable main contrib non-free
 deb-src http://deb.debian.org/debian unstable main contrib non-free
