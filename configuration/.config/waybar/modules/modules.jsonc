@@ -361,6 +361,13 @@
   "format" : "󱣴",
   "on-click" : "hyprshot -m region --freeze",
   "tooltip" : "Take a Screenshot"
+},
+
+"custom/app-blue-light" : {
+  "format" : "󰖔",
+  "on-click" : "hyprshade toggle blue-light-filter",
+  "tooltip" : "Toggle Blue-Light-Filter"
 }
+
 // global end
 }

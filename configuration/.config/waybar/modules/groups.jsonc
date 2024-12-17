@@ -13,7 +13,8 @@
       "custom/app-code", 
       "custom/app-waypaper", 
       "custom/app-clipboard", 
-      "custom/app-screenshot"
+      "custom/app-screenshot",
+      "custom/app-blue-light"
     ]
   },
 
