@@ -54,7 +54,7 @@ def check_programs_health(programs):
 
     def format_header(program_name, seperator):
         line = str(seperator) * HEADER_WIDTH
-        name_section = f" {program_name} "
+        name_section = f" {Fore.BLUE}{program_name}{Style.RESET_ALL} "
         start = (HEADER_WIDTH - len(name_section)) // 2
         end = start + len(name_section)
         return line[:start] + name_section + line[end:]
@@ -91,7 +91,9 @@ if __name__ == "__main__":
     node = Program("node")
     npm = Program("npm", dependencies=[node])
     neovim = Program("nvim", dependencies=[python, git])
+    hyprshade = Program("hyprshade")
+    hypr = Program("Hyprland", dependencies=[python, hyprshade])
 
-    programs_to_check = [python, neovim, curl, node, npm]
+    programs_to_check = [python, neovim, curl, hypr]
 
     check_programs_health(programs_to_check)
