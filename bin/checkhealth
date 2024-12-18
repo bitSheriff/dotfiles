@@ -3,6 +3,8 @@ import shutil
 import subprocess
 from colorama import Fore, Style
 
+############## CLASS FOR TREE NODE ##############
+
 class Program:
     def __init__(self, name, check_function=None, dependencies=None):
         self.name = name
@@ -35,6 +37,8 @@ class Program:
             self.checked = False
             return False
 
+############## CHECK PROGRAM LIST ##############
+
 def check_programs_health(programs):
     """
     Check if the given programs are installed on the system and execute associated functions if defined.
@@ -66,12 +70,16 @@ def check_programs_health(programs):
 def python_check():
     try:
         version = subprocess.check_output(["python", "--version"], stderr=subprocess.STDOUT, text=True).strip()
-        print(f"    {version}")
+        print(f"\t\t{version}")
     except Exception as e:
-        print(f"    {Fore.RED}ERROR{Style.RESET_ALL}: Could not retrieve Python version ({e})")
+        print(f"\t\t{Fore.RED}ERROR{Style.RESET_ALL}: Could not retrieve Python version ({e})")
 
 def git_check():
-    print("    Git is ready for version control!")
+    try:
+        version = subprocess.check_output(["git", "--version"], stderr=subprocess.STDOUT, text=True).strip()
+        print(f"\t\t{version}")
+    except Exception as e:
+        print(f"\t\t {Fore.RED}ERROR{Style.RESET_ALL}: Could not retrieve git version ({e})")
 
 ############## MAIN ##############
 if __name__ == "__main__":
@@ -82,8 +90,8 @@ if __name__ == "__main__":
     python = Program("python", check_function=python_check)
     node = Program("node")
     npm = Program("npm", dependencies=[node])
-    neovim = Program("nvim", dependencies=[python])
+    neovim = Program("nvim", dependencies=[python, git])
 
-    programs_to_check = [python, neovim, git, curl, node, npm]
+    programs_to_check = [python, neovim, curl, node, npm]
 
     check_programs_health(programs_to_check)
