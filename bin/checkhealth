@@ -8,24 +8,31 @@ class Program:
         self.name = name
         self.check_function = check_function if callable(check_function) else None
         self.dependencies = dependencies if dependencies else []
+        self.checked = False
 
     def is_working(self):
+        if self.checked:
+            print(f"  - {Fore.CYAN}SKIPPED{Style.RESET_ALL}: {self.name} already checked")
+            return True
         for dependency in self.dependencies:
             if not dependency.is_working():
                 print(f"  - {Fore.RED}ERROR{Style.RESET_ALL}: Dependency {dependency.name} failed for {self.name}")
                 return False
 
         if shutil.which(self.name):
-            print(f"  - {Fore.GREEN}OK{Style.RESET_ALL}: {self.name} Dependency Found")
+            print(f"  - {Fore.GREEN}OK{Style.RESET_ALL}: {self.name} Found")
             if self.check_function:
                 try:
                     self.check_function()
                 except Exception as e:
                     print(f"  - {Fore.YELLOW}WARNING{Style.RESET_ALL}: {self.name} function failed ({e})")
+                    self.checked = False
                     return False
+            self.checked = True
             return True
         else:
             print(f"  - {Fore.RED}ERROR{Style.RESET_ALL}: {self.name} Not Found")
+            self.checked = False
             return False
 
 def check_programs_health(programs):
@@ -54,17 +61,21 @@ def check_programs_health(programs):
         print(format_header(program.name, "-"))
         program.is_working()
 
+############## CHECK FUNCTIONS ##############
+
+def python_check():
+    try:
+        version = subprocess.check_output(["python", "--version"], stderr=subprocess.STDOUT, text=True).strip()
+        print(f"    {version}")
+    except Exception as e:
+        print(f"    {Fore.RED}ERROR{Style.RESET_ALL}: Could not retrieve Python version ({e})")
+
+def git_check():
+    print("    Git is ready for version control!")
+
+############## MAIN ##############
 if __name__ == "__main__":
     # Define the programs and their dependencies.
-    def python_check():
-        try:
-            version = subprocess.check_output(["python", "--version"], stderr=subprocess.STDOUT, text=True).strip()
-            print(f"    {version}")
-        except Exception as e:
-            print(f"    {Fore.RED}ERROR{Style.RESET_ALL}: Could not retrieve Python version ({e})")
-
-    def git_check():
-        print("    Git is ready for version control!")
 
     curl = Program("curl")
     git = Program("git", check_function=git_check)
