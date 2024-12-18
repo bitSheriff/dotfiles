@@ -6,11 +6,12 @@ from colorama import Fore, Style
 ############## CLASS FOR TREE NODE ##############
 
 class Program:
-    def __init__(self, name, check_function=None, dependencies=None):
+    def __init__(self, name, check_function=None, dependencies=None, description=None):
         self.name = name
         self.check_function = check_function if callable(check_function) else None
         self.dependencies = dependencies if dependencies else []
         self.checked = False
+        self.description = description
 
     def is_working(self):
         if self.checked:
@@ -36,6 +37,10 @@ class Program:
             print(f"  - {Fore.RED}ERROR{Style.RESET_ALL}: {self.name} Not Found")
             self.checked = False
             return False
+
+    def print_description(self):
+        if self.description is not None:
+            print(f"\t{self.description}")
 
 ############## CHECK PROGRAM LIST ##############
 
@@ -63,6 +68,7 @@ def check_programs_health(programs):
 
     for program in programs:
         print(format_header(program.name, "-"))
+        program.print_description()
         program.is_working()
 
 ############## CHECK FUNCTIONS ##############
@@ -90,7 +96,14 @@ if __name__ == "__main__":
     python = Program("python", check_function=python_check)
     node = Program("node")
     npm = Program("npm", dependencies=[node])
-    neovim = Program("nvim", dependencies=[python, git])
+
+    # Neovim section
+    fzf = Program("fzf")
+    fd = Program("fd")
+    rg = Program("rg", description="ripgrep") # ripgrep
+    neovim = Program("nvim", dependencies=[python, git, fzf, fd, rg])
+
+    # Hyprland section
     hyprshade = Program("hyprshade")
     hypr = Program("Hyprland", dependencies=[python, hyprshade])
 
