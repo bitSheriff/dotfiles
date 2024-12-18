@@ -1,0 +1,78 @@
+#! /usr/bin/python3
+import shutil
+import subprocess
+from colorama import Fore, Style
+
+class Program:
+    def __init__(self, name, check_function=None, dependencies=None):
+        self.name = name
+        self.check_function = check_function if callable(check_function) else None
+        self.dependencies = dependencies if dependencies else []
+
+    def is_working(self):
+        for dependency in self.dependencies:
+            if not dependency.is_working():
+                print(f"  - {Fore.RED}ERROR{Style.RESET_ALL}: Dependency {dependency.name} failed for {self.name}")
+                return False
+
+        if shutil.which(self.name):
+            print(f"  - {Fore.GREEN}OK{Style.RESET_ALL}: {self.name} Dependency Found")
+            if self.check_function:
+                try:
+                    self.check_function()
+                except Exception as e:
+                    print(f"  - {Fore.YELLOW}WARNING{Style.RESET_ALL}: {self.name} function failed ({e})")
+                    return False
+            return True
+        else:
+            print(f"  - {Fore.RED}ERROR{Style.RESET_ALL}: {self.name} Not Found")
+            return False
+
+def check_programs_health(programs):
+    """
+    Check if the given programs are installed on the system and execute associated functions if defined.
+
+    Args:
+        programs (list): A list of Program objects to check.
+
+    Prints:
+        Diagnosis results in a Neovim-style format.
+    """
+
+    HEADER_WIDTH = 60
+
+    def format_header(program_name, seperator):
+        line = str(seperator) * HEADER_WIDTH
+        name_section = f" {program_name} "
+        start = (HEADER_WIDTH - len(name_section)) // 2
+        end = start + len(name_section)
+        return line[:start] + name_section + line[end:]
+
+    print(format_header("Healthcheck", "="))
+
+    for program in programs:
+        print(format_header(program.name, "-"))
+        program.is_working()
+
+if __name__ == "__main__":
+    # Define the programs and their dependencies.
+    def python_check():
+        try:
+            version = subprocess.check_output(["python", "--version"], stderr=subprocess.STDOUT, text=True).strip()
+            print(f"    {version}")
+        except Exception as e:
+            print(f"    {Fore.RED}ERROR{Style.RESET_ALL}: Could not retrieve Python version ({e})")
+
+    def git_check():
+        print("    Git is ready for version control!")
+
+    curl = Program("curl")
+    git = Program("git", check_function=git_check)
+    python = Program("python", check_function=python_check)
+    node = Program("node")
+    npm = Program("npm", dependencies=[node])
+    neovim = Program("nvim", dependencies=[python])
+
+    programs_to_check = [python, neovim, git, curl, node, npm]
+
+    check_programs_health(programs_to_check)
