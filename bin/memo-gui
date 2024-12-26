@@ -1,0 +1,4 @@
+#! /usr/bin/bash
+
+kitty --class floating --title "Pop-up Terminal" -e ~/.local/bin/memo
+
