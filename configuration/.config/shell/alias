@@ -85,8 +85,15 @@ alias :c="clear"
 # update zsh
 alias :r="exec zsh"
 
-# newer file manager (similar to ranger)
-alias y="yazi"
+# newer file manager (similar to ranger), Move to CWD When Exiting Yazi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 
 # open nautilus (file explorer) in the current directory
 alias exp="nemo ."
