@@ -1,5 +1,5 @@
 # other config files (? means optional)
-config-file = ?keymap
+config-file = ?keybinds
 config-file = ?theming
 
 mouse-hide-while-typing = true
