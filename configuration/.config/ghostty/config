@@ -2,3 +2,4 @@
 config-file = ?keymap
 config-file = ?theming
 
+mouse-hide-while-typing = true
