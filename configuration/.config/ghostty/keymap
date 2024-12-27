@@ -1,1 +1,4 @@
 # here comes the keymaps
+
+# get a overview of all tabs
+keybind = ctrl+space=toggle_tab_overview

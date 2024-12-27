@@ -5,4 +5,7 @@ theme = purplepeter
 font-family = JetBrainsMono Nerd Font
 font-size = 11
 
+window-decoration = true
 gtk-titlebar = true
+gtk-adwaita = true
+adw-toolbar-style = flat
