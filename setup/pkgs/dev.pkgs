@@ -23,7 +23,7 @@ imagemagick                 # image tool
 jupyterlab
 just                        # command runner like Makefile
 kate                        # file editor
-kitty                       # best terminal in the world
+kitty                       # backup terminal for ghostty
 lazygit                     # git tui
 marksman                    # Markdown Language Server
 meld                        # graphical diff and merge tool

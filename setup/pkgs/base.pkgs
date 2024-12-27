@@ -5,6 +5,7 @@ fd                                                                  # better and
 findutils                                                           # collection of more find tools and options
 firefox                                                             # default browser
 fzf                                                                 # fuzzy finder
+ghostty                                                             # terminal
 git
 git-lfs                                                             # git large file system
 glibc
