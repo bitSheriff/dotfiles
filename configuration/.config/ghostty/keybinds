@@ -1,4 +1,5 @@
 # here comes the keymaps
+# all keys: https://github.com/ghostty-org/ghostty/blob/main/src/input/key.zig
 
 # get a overview of all tabs
 keybind = ctrl+tab=toggle_tab_overview
