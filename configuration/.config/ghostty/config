@@ -1,4 +1,4 @@
-# purplepeter, sakura, shades-of-purple, synthwavealpha
-theme = purplepeter
+# other config files (? means optional)
+config-file = ?keymap
+config-file = ?theming
 
-font-family = JetBrainsMono Nerd Font
