@@ -107,6 +107,7 @@
         "title<.*Maple.*>": " ",
         "class<.*gcolor3.*>": " ", // Color Picker
         "class<.*Zed>": "󱚍 ",
+        "class<.*[gG]hostty.*>": "<span font='12'>󰊠 </span>",
 
         // Basic Office Stuff
         "class<.*calibre.*>": "󱉟 ",
