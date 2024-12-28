@@ -91,7 +91,13 @@ fi
 
 if array_contains "${array[@]}" "Python"; then
     print_note "Language Python"
+
+    # base packages
     pacman_install_single "python" "python-pylint" "python-pytest"
+
+    # system wide python extensions
+    # `uv` ... declerative python package manager
+    pacman_install_single "uv"
 
     gum confirm --default=false "Install Qt Framework?" && (
         pacman_install_single "python-pyqt5"
