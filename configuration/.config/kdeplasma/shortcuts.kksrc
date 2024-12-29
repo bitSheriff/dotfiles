@@ -1,6 +1,10 @@
 [ActivityManager][Global Shortcuts]
 switch-to-activity-1acc7cc4-6b11-4c74-921d-dc68cfd049ac=
 
+[Custom Commands][net.local.ghostty.desktop]
+Exec=ghostty -e ~/.local/bin/memo\n
+Name=Memo
+
 [KDE Keyboard Layout Switcher][Global Shortcuts]
 Switch to Last-Used Keyboard Layout=Meta+Alt+L
 Switch to Next Keyboard Layout=Meta+Alt+K
@@ -12,7 +16,7 @@ Activate Next Tab=Ctrl+PgDown; Ctrl+]
 Activate Previous Tab=Ctrl+PgUp; Ctrl+[
 ActualSize=Ctrl+0
 AddBookmark=Ctrl+B
-Back=Alt+Left; Back
+Back=Back; Alt+Left
 BackwardWord=Ctrl+Left
 Begin=Ctrl+Home
 BeginningOfLine=Home
@@ -22,7 +26,7 @@ ConfigureNotifications=
 ConfigureToolbars=
 Copy=Ctrl+Ins; Ctrl+C
 CreateFolder=Ctrl+Shift+N
-Cut=Shift+Del; Ctrl+X
+Cut=Ctrl+X; Shift+Del
 DeleteFile=Shift+Del
 DeleteWordBack=Ctrl+Backspace
 DeleteWordForward=Ctrl+Del
@@ -54,7 +58,7 @@ New=Ctrl+N
 Next=PgDown
 NextCompletion=Ctrl+Down
 Open=Ctrl+O
-OpenContextMenu=Menu; Shift+F10
+OpenContextMenu=Shift+F10; Menu
 OpenMainMenu=F10
 OpenRecent=
 Paste=Shift+Ins; Ctrl+V
@@ -157,7 +161,7 @@ Switch Window Down=Meta+Alt+Down
 Switch Window Left=Meta+Alt+Left
 Switch Window Right=Meta+Alt+Right
 Switch Window Up=Meta+Alt+Up
-Switch to Desktop 1=Meta+1; Ctrl+F1
+Switch to Desktop 1=Ctrl+F1; Meta+1
 Switch to Desktop 10=
 Switch to Desktop 11=
 Switch to Desktop 12=
@@ -168,10 +172,10 @@ Switch to Desktop 16=
 Switch to Desktop 17=
 Switch to Desktop 18=
 Switch to Desktop 19=
-Switch to Desktop 2=Ctrl+F2; Meta+2
+Switch to Desktop 2=Meta+2; Ctrl+F2
 Switch to Desktop 20=
-Switch to Desktop 3=Ctrl+F3; Meta+3
-Switch to Desktop 4=Meta+4; Ctrl+F4
+Switch to Desktop 3=Meta+3; Ctrl+F3
+Switch to Desktop 4=Ctrl+F4; Meta+4
 Switch to Desktop 5=
 Switch to Desktop 6=
 Switch to Desktop 7=
@@ -205,7 +209,7 @@ Walk Through Windows of Current Application Alternative=
 Walk Through Windows of Current Application Alternative (Reverse)=
 Window Above Other Windows=
 Window Below Other Windows=
-Window Close=Meta+Shift+Q; Alt+F4
+Window Close=Alt+F4; Meta+Shift+Q
 Window Fullscreen=
 Window Grow Horizontal=
 Window Grow Vertical=
@@ -277,7 +281,7 @@ Window to Screen 5=
 Window to Screen 6=
 Window to Screen 7=
 view_actual_size=Meta+0
-view_zoom_in=Meta+=; Meta++
+view_zoom_in=Meta++; Meta+=
 view_zoom_out=Meta+-
 
 [mediacontrol][Global Shortcuts]
@@ -296,6 +300,9 @@ open-computer=
 open-home=
 open-trash=
 
+[net.local.ghostty.desktop][Global Shortcuts]
+_launch=Meta+Shift+A
+
 [obsidian.desktop][Global Shortcuts]
 _launch=Meta+O
 
@@ -312,7 +319,7 @@ _launch=Ctrl+Alt+T
 
 [org.kde.krunner.desktop][Global Shortcuts]
 RunClipboard=Alt+Shift+F2
-_launch=Alt+Space; Search; Alt+F2
+_launch=Search; Alt+F2; Alt+Space
 
 [org.kde.kscreen.desktop][Global Shortcuts]
 ShowOSD=Meta+P; Display
@@ -328,7 +335,7 @@ ActiveWindowScreenShot=Meta+Print
 CurrentMonitorScreenShot=
 FullScreenScreenShot=Shift+Print
 OpenWithoutScreenshot=
-RecordRegion=Meta+Shift+R; Meta+R
+RecordRegion=Meta+R; Meta+Shift+R
 RecordScreen=Meta+Alt+R
 RecordWindow=Meta+Ctrl+R
 RectangularRegionScreenShot=Meta+Shift+Print
@@ -348,10 +355,10 @@ PowerOff=Power Off
 Sleep=Sleep
 Toggle Keyboard Backlight=Keyboard Light On/Off
 Turn Off Screen=
-powerProfile=Battery; Meta+B
+powerProfile=Meta+B; Battery
 
 [plasmashell][Global Shortcuts]
-activate application launcher=Meta; Alt+F1
+activate application launcher=Alt+F1; Meta
 activate task manager entry 1=
 activate task manager entry 10=
 activate task manager entry 2=
