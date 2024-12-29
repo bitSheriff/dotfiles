@@ -51,6 +51,12 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
 
 
+### ---- ghostty -------------------------------------
+if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
+  source $GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration
+fi
+
+
 ### ---- starship config -------------------------------------
  
 zmodload zsh/parameter  # Needed to access jobstates variable for STARSHIP_JOBS_COUNT
