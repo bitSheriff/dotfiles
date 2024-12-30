@@ -213,7 +213,7 @@ aur_vote()
 
 # View all git repositories and open it later in Lazygit
 lgall(){
-        lazygit -p $(tv gitrepos)
+        lazygit -p $(tv git-repos)
 }
 
 # Alias only for Android
