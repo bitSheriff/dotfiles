@@ -118,6 +118,8 @@ toggle_help = "ctrl-g"
 "tail" = "files"
 "vim" = "files"
 "bat" = "files"
+"nvim" = "files"
+"nv" = "files"
 
 # git-branch channel
 "git checkout" = "git-branch"
@@ -125,6 +127,3 @@ toggle_help = "ctrl-g"
 
 # docker-images channel
 "docker run" = "docker-images"
-
-# gitrepos channel
-"nvim" = "git-repos"
