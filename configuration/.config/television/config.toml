@@ -100,6 +100,8 @@ toggle_send_to_channel = "ctrl-s"
 # Toggle the help bar
 toggle_help = "ctrl-g"
 
+
+# trigger with CTRL+T
 [shell_integration.commands]
 
 # environment variables
@@ -110,6 +112,7 @@ toggle_help = "ctrl-g"
 "cd" = "dirs"
 "ls" = "dirs"
 "rmdir" = "dirs"
+"nemo" = "dirs"
 
 # files channel
 "cat" = "files"
@@ -120,6 +123,7 @@ toggle_help = "ctrl-g"
 "bat" = "files"
 "nvim" = "files"
 "nv" = "files"
+"typora" = "files"
 
 # git-branch channel
 "git checkout" = "git-branch"
