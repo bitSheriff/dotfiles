@@ -99,3 +99,32 @@ select_entry = "enter"
 toggle_send_to_channel = "ctrl-s"
 # Toggle the help bar
 toggle_help = "ctrl-g"
+
+[shell_integration.commands]
+
+# environment variables
+"export" = "env"
+"unset" = "env"
+
+# dirs channel
+"cd" = "dirs"
+"ls" = "dirs"
+"rmdir" = "dirs"
+
+# files channel
+"cat" = "files"
+"less" = "files"
+"head" = "files"
+"tail" = "files"
+"vim" = "files"
+"bat" = "files"
+
+# git-branch channel
+"git checkout" = "git-branch"
+"git branch -d" = "git-branch"
+
+# docker-images channel
+"docker run" = "docker-images"
+
+# gitrepos channel
+"nvim" = "git-repos"
