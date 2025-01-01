@@ -3,7 +3,7 @@
 
 # get a overview of all tabs
 keybind = ctrl+shift+t=new_tab
-keybind = ctrl+alt+tab=toggle_tab_overview
+keybind = ctrl+alt+t=toggle_tab_overview
 keybind = ctrl+tab=next_tab
 keybind = ctrl+page_down=next_tab
 keybind = ctrl+shift+right=next_tab
