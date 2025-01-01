@@ -124,6 +124,7 @@ toggle_help = "ctrl-g"
 "nvim" = "files"
 "nv" = "files"
 "typora" = "files"
+"code" = "files"
 
 # git-branch channel
 "git checkout" = "git-branch"

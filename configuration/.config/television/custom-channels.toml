@@ -1,4 +1,4 @@
 [[cable_channel]]
-name = "dotfiles"
+name = "my-dotfiles"
 source_command = 'fd -t f . $DOTFILES_DIR'
 preview_command = ':files:'
