@@ -217,6 +217,12 @@ lgall(){
         lazygit -p $(tv git-repos)
 }
 
+# copy the selected file to clipboard
+yank()
+{
+    cat $(tv files) | wl-copy
+}
+
 # Alias only for Android
 if [[ -n "$TERMUX_VERSION" ]]; then
     # sudo is not available on termux/android
