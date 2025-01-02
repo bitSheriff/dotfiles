@@ -275,6 +275,8 @@ ensure_sddm_enabled() {
 install_base() {
 
     print_h1 "Base"
+    print_note "Synchronizing database"
+    sudo pacman -Syy
     install_pkgfiles "base"
 
 }
