@@ -114,9 +114,11 @@ toggle_help = "ctrl-g"
 "rmdir" = "dirs"
 "nemo" = "dirs"
 "tree" = "dirs"
+"rmrf" = "dirs"
 
 # files channel
 "cat" = "files"
+"rm" = "files"
 "less" = "files"
 "head" = "files"
 "tail" = "files"
