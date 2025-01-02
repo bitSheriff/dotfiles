@@ -245,6 +245,9 @@ if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo systemctl start tailscaled
 fi
 
+# synchronize database
+sudo pacman -Syy
+
 # Install all the collected oackages
 if [ ${#pacman_packages[@]} -ne 0 ]; then
     pacman_install_single "${pacman_packages[@]}"
