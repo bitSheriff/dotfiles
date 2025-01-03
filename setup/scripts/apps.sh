@@ -53,6 +53,7 @@ NAME_mullvadbrowser="[Privacy] Mullvad Browser"
 NAME_veracrypt="[Privacy] VeraCrypt"
 NAME_qbittorrent="[Privacy] QBitTorrent"
 NAME_torbowser="[Privacy] TOR Browser"
+NAME_ledgerlive="[Privacy] Ledger Live"
 
 NAME_ticktick="[Productivity] TickTick"
 NAME_espanso="[Productivity] espanso"
@@ -181,6 +182,7 @@ packages=(
     "$NAME_netcat"
     "$NAME_apostrophe"
     "$NAME_typora"
+    "$NAME_ledgerlive"
 )
 
 # sort the packages
@@ -239,6 +241,7 @@ if array_contains "${array[@]}" "$NAME_xxd"; then pacman_packages+=("tinyxxd"); 
 if array_contains "${array[@]}" "$NAME_netcat"; then pacman_packages+=("gnu-netcat"); fi
 if array_contains "${array[@]}" "$NAME_apostrophe"; then pacman_packages+=("Apostrophe"); fi
 if array_contains "${array[@]}" "$NAME_typora"; then yay_packages+=("typora"); fi
+if array_contains "${array[@]}" "$NAME_ledgerlive"; then yay_packages+=("ledger-live-bin"); fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
     sudo systemctl enable tailscaled
