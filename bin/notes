@@ -6,15 +6,13 @@ if [[ -z "$NOTES_DIR" ]]; then
     exit 1
 fi
 
-editor="${1:-nvim}"  # Use the first argument if provided, otherwise default to nvim
+editor="${1:-nvim}" # Use the first argument if provided, otherwise default to nvim
 
 (
-    cd "$NOTES_DIR" || exit 1  # Exit if NOTES_DIR cannot be changed to
-    file="$(tv files)"  # Capture the output of tv files
-    echo "DEBUG: Selected file is '$file'"  # Debugging line
+    cd "$NOTES_DIR" || exit 1 # Exit if NOTES_DIR cannot be changed to
+    file="$(tv files)"        # Capture the output of tv files
     # Trim and sanitize the file name
     sanitized_file=$(echo "$file" | sed 's/[{}]//g' | xargs)
-    echo "DEBUG: Sanitized file is '$sanitized_file'"  # Debugging line
     if [[ -n "$sanitized_file" && -f "$sanitized_file" ]]; then
         # Use the editor to open the selected file
         "$editor" "$sanitized_file"
@@ -22,4 +20,3 @@ editor="${1:-nvim}"  # Use the first argument if provided, otherwise default to 
         echo "Error: No valid file selected or file does not exist."
     fi
 )
-
