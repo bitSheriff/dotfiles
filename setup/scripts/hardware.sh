@@ -81,33 +81,34 @@ setup_nvidia() {
 
 setup_fingers() {
     print_h3 "Setup Fingers"
-    selection=$(
-        gum choose --no-limit \
-            "R Thumb" \
-            "R Index" \
-            "R Middle" \
-            "R Ring" \
-            "R Little" \
-            "L Thumb" \
-            "L Index" \
-            "L Middle" \
-            "L Ring" \
-            "L Little"
+
+    # Define a map of selections to their corresponding fprintd finger names
+    declare -A finger_map=(
+        ["R Thumb"]="right-thumb"
+        ["R Index"]="right-index-finger"
+        ["R Middle"]="right-middle-finger"
+        ["R Ring"]="right-ring-finger"
+        ["R Little"]="right-little-finger"
+        ["L Thumb"]="left-thumb"
+        ["L Index"]="left-index-finger"
+        ["L Middle"]="left-middle-finger"
+        ["L Ring"]="left-ring-finger"
+        ["L Little"]="left-little-finger"
     )
 
-    IFS=$'\n' read -rd '' -a array <<<"$selection"
+    # Display the options for selection using gum
+    selection=$(
+        gum choose --no-limit \
+            "${!finger_map[@]}"
+    )
 
-    if array_contains "${array[@]}" "R Thumb"; then fprintd-enroll -f right-thumb; fi
-    if array_contains "${array[@]}" "R Index"; then fprintd-enroll -f right-index-finger; fi
-    if array_contains "${array[@]}" "R Middle"; then fprintd-enroll -f right-middle-finger; fi
-    if array_contains "${array[@]}" "R Ring"; then fprintd-enroll -f right-ring-finger; fi
-    if array_contains "${array[@]}" "R Little"; then fprintd-enroll -f right-little-finger; fi
+    # Convert the multi-line selection into an array
+    IFS=$'\n' read -rd '' -a selected_fingers <<<"$selection"
 
-    if array_contains "${array[@]}" "L Thumb"; then fprintd-enroll -f left-thumb; fi
-    if array_contains "${array[@]}" "L Index"; then fprintd-enroll -f left-index-finger; fi
-    if array_contains "${array[@]}" "L Middle"; then fprintd-enroll -f left-middle-finger; fi
-    if array_contains "${array[@]}" "L Ring"; then fprintd-enroll -f left-ring-finger; fi
-    if array_contains "${array[@]}" "L Little"; then fprintd-enroll -f left-little-finger; fi
+    # Loop through the selected options and enroll each finger
+    for finger in "${selected_fingers[@]}"; do
+        fprintd-enroll -f "${finger_map[$finger]}"
+    done
 }
 
 setup_finger_functions() {
