@@ -89,6 +89,7 @@ selection=$(
     gum choose --no-limit \
         "Battery" \
         "Bluetooth" \
+        "Fingerprint" \
         "Logitech Devices" \
         "Nvidia" \
         "Portable Monitors" \
@@ -104,6 +105,11 @@ if array_contains "${array[@]}" "Nvidia"; then setup_nvidia; fi
 if array_contains "${array[@]}" "WiFi"; then
     print_h3 "WiFi Setup"
     gum confirm --default=false "Install tool to share WiFi with QR?" && yay_install_single "wifi-qr"
+fi
+
+if array_contains "${array[@]}" "Fingerprint"; then
+    print_h3 "Fingerprint"
+    pacman_install_single "fprintd"
 fi
 
 if array_contains "${array[@]}" "Logitech Devices"; then
