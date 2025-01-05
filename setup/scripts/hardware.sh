@@ -110,6 +110,22 @@ setup_fingers() {
     if array_contains "${array[@]}" "L Little"; then fprintd-enroll -f left-little-finger; fi
 }
 
+setup_finger_functions() {
+
+    gum confirm --default=false "Sudo Authentication" && (
+        print_h3 "Sudo Authentication"
+        sudo grep -qxF 'auth            sufficient      pam_unix.so try_first_pass likeauth nullok' /etc/pam.d/sudo || sudo sed -i '1i auth            sufficient      pam_unix.so try_first_pass likeauth nullok' /etc/pam.d/sudo
+        sudo grep -qxF 'auth            sufficient      pam_fprintd.so' /etc/pam.d/sudo || sudo sed -i '1i auth            sufficient      pam_fprintd.so' /etc/pam.d/sudo
+    )
+
+    gum confirm --default=false "KDE Authentication" && (
+        print_h3 "Sudo Authentication"
+        sudo grep -qxF 'auth            sufficient      pam_unix.so try_first_pass likeauth nullok' /etc/pam.d/kde || sudo sed -i '1i auth            sufficient      pam_unix.so try_first_pass likeauth nullok' /etc/pam.d/kde
+        sudo grep -qxF 'auth            sufficient      pam_fprintd.so' /etc/pam.d/kde || sudo sed -i '1i auth            sufficient      pam_fprintd.so' /etc/pam.d/kde
+    )
+
+}
+
 # ========================================
 # Main
 # ========================================
@@ -142,6 +158,7 @@ if array_contains "${array[@]}" "Fingerprint"; then
     print_h3 "Fingerprint Reader"
     pacman_install_single "fprintd"
     gum confirm --default=false "Do you want to setup your fingers right now?" && setup_fingers
+    gum confirm --default=false "Do you want to setup authentications?" && setup_finger_functions
 fi
 
 if array_contains "${array[@]}" "Logitech Devices"; then
