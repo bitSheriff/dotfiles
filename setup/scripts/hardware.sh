@@ -79,6 +79,37 @@ setup_nvidia() {
     pacman_install_single "libva-nvidia-driver"
 }
 
+setup_fingers() {
+    print_h3 "Setup Fingers"
+    selection=$(
+        gum choose --no-limit \
+            "R Thumb" \
+            "R Index" \
+            "R Middle" \
+            "R Ring" \
+            "R Little" \
+            "L Thumb" \
+            "L Index" \
+            "L Middle" \
+            "L Ring" \
+            "L Little"
+    )
+
+    IFS=$'\n' read -rd '' -a array <<<"$selection"
+
+    if array_contains "${array[@]}" "R Thumb"; then fprintd-enroll -f right-thumb; fi
+    if array_contains "${array[@]}" "R Index"; then fprintd-enroll -f right-index-finger; fi
+    if array_contains "${array[@]}" "R Middle"; then fprintd-enroll -f right-middle-finger; fi
+    if array_contains "${array[@]}" "R Ring"; then fprintd-enroll -f right-ring-finger; fi
+    if array_contains "${array[@]}" "R Little"; then fprintd-enroll -f right-little-finger; fi
+
+    if array_contains "${array[@]}" "L Thumb"; then fprintd-enroll -f left-thumb; fi
+    if array_contains "${array[@]}" "L Index"; then fprintd-enroll -f left-index-finger; fi
+    if array_contains "${array[@]}" "L Middle"; then fprintd-enroll -f left-middle-finger; fi
+    if array_contains "${array[@]}" "L Ring"; then fprintd-enroll -f left-ring-finger; fi
+    if array_contains "${array[@]}" "L Little"; then fprintd-enroll -f left-little-finger; fi
+}
+
 # ========================================
 # Main
 # ========================================
@@ -108,8 +139,9 @@ if array_contains "${array[@]}" "WiFi"; then
 fi
 
 if array_contains "${array[@]}" "Fingerprint"; then
-    print_h3 "Fingerprint"
+    print_h3 "Fingerprint Reader"
     pacman_install_single "fprintd"
+    gum confirm --default=false "Do you want to setup your fingers right now?" && setup_fingers
 fi
 
 if array_contains "${array[@]}" "Logitech Devices"; then
