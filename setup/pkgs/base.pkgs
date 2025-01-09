@@ -13,6 +13,7 @@ gnupg                                                               # GNU encryp
 gum                                                                 # shell library for user
 ld-lsb                                                              # Linux Standard Base Runtime
 nemo                                                                # gtk file manager 
+nemo-fileroller                                                     # nemo compressor (.zip)
 pkgfile                                                             # search for packages
 python
 ripgrep
