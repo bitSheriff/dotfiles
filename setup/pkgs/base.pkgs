@@ -14,6 +14,7 @@ gum                                                                 # shell libr
 ld-lsb                                                              # Linux Standard Base Runtime
 nemo                                                                # gtk file manager 
 nemo-fileroller                                                     # nemo compressor (.zip)
+nemo-preview                                                        # preview for nemo
 pkgfile                                                             # search for packages
 python
 ripgrep
