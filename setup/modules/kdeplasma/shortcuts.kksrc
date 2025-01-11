@@ -6,13 +6,15 @@ Exec=ghostty -e ~/.local/bin/memo\n
 Name=Memo
 
 [KDE Keyboard Layout Switcher][Global Shortcuts]
+Switch keyboard layout to English (US, intl., with dead keys)=
+Switch keyboard layout to German (Austria)=
 Switch to Last-Used Keyboard Layout=Meta+Alt+L
 Switch to Next Keyboard Layout=Meta+Alt+K
 
 [StandardShortcuts]
 AboutApp=
 AboutKDE=
-Activate Next Tab=Ctrl+PgDown; Ctrl+]
+Activate Next Tab=Ctrl+]; Ctrl+PgDown
 Activate Previous Tab=Ctrl+PgUp; Ctrl+[
 ActualSize=Ctrl+0
 AddBookmark=Ctrl+B
@@ -21,12 +23,12 @@ BackwardWord=Ctrl+Left
 Begin=Ctrl+Home
 BeginningOfLine=Home
 Clear=
-Close=Ctrl+Esc; Ctrl+W
+Close=Ctrl+W; Ctrl+Esc
 ConfigureNotifications=
 ConfigureToolbars=
-Copy=Ctrl+Ins; Ctrl+C
+Copy=Ctrl+C; Ctrl+Ins
 CreateFolder=Ctrl+Shift+N
-Cut=Ctrl+X; Shift+Del
+Cut=Shift+Del; Ctrl+X
 DeleteFile=Shift+Del
 DeleteWordBack=Ctrl+Backspace
 DeleteWordForward=Ctrl+Del
@@ -43,14 +45,14 @@ FindPrev=Shift+F3
 FitToHeight=
 FitToPage=
 FitToWidth=
-Forward=Forward; Alt+Right
+Forward=Alt+Right; Forward
 ForwardWord=Ctrl+Right
 FullScreen=Ctrl+Shift+F
 Goto=
 GotoLine=Ctrl+G
 GotoPage=
 Help=F1
-Home=Home Page; Alt+Home
+Home=Alt+Home; Home Page
 KeyBindings=Ctrl+Alt+,
 Mail=
 MoveToTrash=Del
@@ -58,7 +60,7 @@ New=Ctrl+N
 Next=PgDown
 NextCompletion=Ctrl+Down
 Open=Ctrl+O
-OpenContextMenu=Shift+F10; Menu
+OpenContextMenu=Menu; Shift+F10
 OpenMainMenu=F10
 OpenRecent=
 Paste=Shift+Ins; Ctrl+V
@@ -80,7 +82,7 @@ RotateUp=Up
 Save=Ctrl+S
 SaveAs=Ctrl+Shift+S
 SelectAll=Ctrl+A
-ShowHideHiddenFiles=Alt+.; Ctrl+H
+ShowHideHiddenFiles=Ctrl+H; Alt+.
 ShowMenubar=Ctrl+M
 ShowStatusbar=
 ShowToolbar=
@@ -92,7 +94,7 @@ Undo=Ctrl+Z
 Up=Alt+Up
 WhatsThis=Shift+F1
 Zoom=
-ZoomIn=Ctrl++; Ctrl+=
+ZoomIn=Ctrl+=; Ctrl++
 ZoomOut=Ctrl+-
 
 [com.mitchellh.ghostty.desktop][Global Shortcuts]
@@ -117,7 +119,7 @@ decrease_volume_small=Shift+Volume Down
 increase_microphone_volume=Microphone Volume Up
 increase_volume=Volume Up
 increase_volume_small=Shift+Volume Up
-mic_mute=Meta+Volume Mute; Microphone Mute
+mic_mute=Microphone Mute; Meta+Volume Mute
 mute=Volume Mute
 
 [ksmserver][Global Shortcuts]
@@ -137,11 +139,42 @@ Cycle Overview Opposite=
 Decrease Opacity=
 Edit Tiles=
 Expose=Ctrl+F9
-ExposeAll=Ctrl+F10; Launch (C)
+ExposeAll=Launch (C); Ctrl+F10
 ExposeClass=Ctrl+F7
 ExposeClassCurrentDesktop=
 Grid View=Meta+G
 Increase Opacity=
+KZones: Activate layout 1=Meta+Num+1
+KZones: Activate layout 2=Meta+Num+2
+KZones: Activate layout 3=Meta+Num+3
+KZones: Activate layout 4=Meta+Num+4
+KZones: Activate layout 5=Meta+Num+5
+KZones: Activate layout 6=Meta+Num+6
+KZones: Activate layout 7=Meta+Num+7
+KZones: Activate layout 8=Meta+Num+8
+KZones: Activate layout 9=Meta+Num+9
+KZones: Cycle layouts=Ctrl+Alt+D
+KZones: Cycle layouts (reversed)=Ctrl+Alt+Shift+D
+KZones: Move active window down=
+KZones: Move active window left=
+KZones: Move active window right=
+KZones: Move active window to next zone=Ctrl+Alt+Right
+KZones: Move active window to previous zone=Ctrl+Alt+Left
+KZones: Move active window to zone 1=Ctrl+Alt+Num+1
+KZones: Move active window to zone 2=Ctrl+Alt+Num+2
+KZones: Move active window to zone 3=Ctrl+Alt+Num+3
+KZones: Move active window to zone 4=Ctrl+Alt+Num+4
+KZones: Move active window to zone 5=Ctrl+Alt+Num+5
+KZones: Move active window to zone 6=Ctrl+Alt+Num+6
+KZones: Move active window to zone 7=Ctrl+Alt+Num+7
+KZones: Move active window to zone 8=Ctrl+Alt+Num+8
+KZones: Move active window to zone 9=Ctrl+Alt+Num+9
+KZones: Move active window up=
+KZones: Snap active window=Meta+Shift+Space
+KZones: Snap all windows=Meta+Space
+KZones: Switch to next window in current zone=Ctrl+Alt+Up
+KZones: Switch to previous window in current zone=Ctrl+Alt+Down
+KZones: Toggle zone overlay=Ctrl+Alt+C
 Kill Window=Meta+Ctrl+Esc
 Move Tablet to Next Output=
 MoveMouseToCenter=Meta+F6
@@ -209,7 +242,7 @@ Walk Through Windows of Current Application Alternative=
 Walk Through Windows of Current Application Alternative (Reverse)=
 Window Above Other Windows=
 Window Below Other Windows=
-Window Close=Alt+F4; Meta+Shift+Q
+Window Close=Meta+Shift+Q; Alt+F4
 Window Fullscreen=
 Window Grow Horizontal=
 Window Grow Vertical=
@@ -319,7 +352,7 @@ _launch=Ctrl+Alt+T
 
 [org.kde.krunner.desktop][Global Shortcuts]
 RunClipboard=Alt+Shift+F2
-_launch=Search; Alt+F2; Alt+Space
+_launch=Alt+F2; Search; Alt+Space
 
 [org.kde.kscreen.desktop][Global Shortcuts]
 ShowOSD=Meta+P; Display
@@ -328,7 +361,7 @@ ShowOSD=Meta+P; Display
 _launch=Meta+Esc
 
 [org.kde.plasma.emojier.desktop][Global Shortcuts]
-_launch=Meta+.; Meta+Ctrl+Alt+Shift+Space
+_launch=Meta+Ctrl+Alt+Shift+Space; Meta+.
 
 [org.kde.spectacle.desktop][Global Shortcuts]
 ActiveWindowScreenShot=Meta+Print
@@ -340,7 +373,7 @@ RecordScreen=Meta+Alt+R
 RecordWindow=Meta+Ctrl+R
 RectangularRegionScreenShot=Meta+Shift+Print
 WindowUnderCursorScreenShot=Meta+Ctrl+Print
-_launch=Meta+Shift+S; Print
+_launch=Print; Meta+Shift+S
 
 [org_kde_powerdevil][Global Shortcuts]
 Decrease Keyboard Brightness=Keyboard Brightness Down
