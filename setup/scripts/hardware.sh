@@ -125,6 +125,11 @@ setup_finger_functions() {
         sudo grep -qxF 'auth            sufficient      pam_fprintd.so' /etc/pam.d/kde || sudo sed -i '1i auth            sufficient      pam_fprintd.so' /etc/pam.d/kde
     )
 
+    gum confirm --default=false "System Authentication" && (
+        print_h3 "System Authentication"
+        sudo grep -qxF 'auth            sufficient      pam_fprintd.so' /etc/pam.d/system-auth || sudo sed -i '1i auth            sufficient      pam_fprintd.so' /etc/pam.d/system-auth
+    )
+
 }
 
 # ========================================
