@@ -113,6 +113,7 @@ if array_contains "${array[@]}" "LaTeX"; then
     print_note "Language LaTeX"
     pacman_install_file "pkgs/latex.pkgs"
 
+    gum confirm --default=false "LaTeX Beamer Presentation Tool" && yay_install_single "python-pympress"
 fi
 
 if array_contains "${array[@]}" "Typst"; then
