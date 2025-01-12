@@ -65,6 +65,7 @@ NAME_apostrophe="[Productivity/Writing] Apostrophe"
 NAME_calibre="[Office/Books] Calibre"
 NAME_foliate="[Office/Books] Foliate"
 NAME_libreoffice="[Office] LibreOffice Suite"
+NAME_onlyoffice="[Office] OnlyOffice"
 NAME_qalc="[Office] Qalc"
 NAME_zathura="[Office/PDF] Zathura"
 NAME_drawio="[Office] Draw.io"
@@ -183,6 +184,7 @@ packages=(
     "$NAME_apostrophe"
     "$NAME_typora"
     "$NAME_ledgerlive"
+    "$NAME_onlyoffice"
 )
 
 # sort the packages
@@ -242,6 +244,7 @@ if array_contains "${array[@]}" "$NAME_netcat"; then pacman_packages+=("gnu-netc
 if array_contains "${array[@]}" "$NAME_apostrophe"; then pacman_packages+=("Apostrophe"); fi
 if array_contains "${array[@]}" "$NAME_typora"; then yay_packages+=("typora"); fi
 if array_contains "${array[@]}" "$NAME_ledgerlive"; then yay_packages+=("ledger-live-bin"); fi
+if array_contains "${array[@]}" "$NAME_onlyoffice"; then yay_packages+=("onlyoffice-bin"); fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
     sudo systemctl enable tailscaled
