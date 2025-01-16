@@ -71,6 +71,7 @@ NAME_zathura="[Office/PDF] Zathura"
 NAME_drawio="[Office] Draw.io"
 NAME_whisper="[Office/AI] WhisperAI"
 NAME_speechNote="[Office/AI] Speech Note"
+NAME_vibe="[Office/AI] Vibe (Transcript)"
 
 # ========================================
 # Global Variables
@@ -185,6 +186,7 @@ packages=(
     "$NAME_typora"
     "$NAME_ledgerlive"
     "$NAME_onlyoffice"
+    "$NAME_vibe"
 )
 
 # sort the packages
@@ -245,6 +247,7 @@ if array_contains "${array[@]}" "$NAME_apostrophe"; then pacman_packages+=("Apos
 if array_contains "${array[@]}" "$NAME_typora"; then yay_packages+=("typora"); fi
 if array_contains "${array[@]}" "$NAME_ledgerlive"; then yay_packages+=("ledger-live-bin"); fi
 if array_contains "${array[@]}" "$NAME_onlyoffice"; then yay_packages+=("onlyoffice-bin"); fi
+if array_contains "${array[@]}" "$NAME_vibe"; then yay_packages+=("vibe-bin"); fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
     sudo systemctl enable tailscaled
