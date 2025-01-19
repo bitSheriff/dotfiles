@@ -1,3 +1,10 @@
+gui:
+  branchColorPatterns:
+    'master': 'magenta'
+    'main': 'magenta'
+    'bug/*': 'red'
+    'feature/*': 'blue'
+
 customCommands:
   - key: '<delete>'
     context: 'files'
