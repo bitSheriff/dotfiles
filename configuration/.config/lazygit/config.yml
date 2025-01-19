@@ -10,3 +10,6 @@ customCommands:
     context: "files"
     loadingText: "opening mergetool"
     subprocess: true
+  - key: 'O'
+    context: 'global'
+    command: 'nemo .'
