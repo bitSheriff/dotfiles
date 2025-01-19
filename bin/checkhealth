@@ -93,7 +93,8 @@ if __name__ == "__main__":
 
     curl = Program("curl")
     git = Program("git", check_function=git_check)
-    python = Program("python", check_function=python_check)
+    pipx = Program("pipx")
+    python = Program("python", check_function=python_check, dependencies=[pipx])
     node = Program("node")
     npm = Program("npm", dependencies=[node])
 
