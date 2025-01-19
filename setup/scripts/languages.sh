@@ -93,7 +93,7 @@ if array_contains "${array[@]}" "Python"; then
     print_note "Language Python"
 
     # base packages
-    pacman_install_single "python" "python-pylint" "python-pytest"
+    pacman_install_single "python" "python-pylint" "python-pytest python-pipx"
 
     # system wide python extensions
     # `uv` ... declerative python package manager
