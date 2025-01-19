@@ -65,9 +65,6 @@ search_man() {
 # count files in current directory 
 alias count='find . -type f | wc -l'
 
-# copy with progressbar 
-alias cpv='rsync -ah --info=progress2'
-
 ## Rsync with default flags
 # -h ... human readable sizes
 # -a ... archive (preserve attributes)
