@@ -71,7 +71,7 @@ alias count='find . -type f | wc -l'
 # -P ... partial files, if connection lost, not everything has to be copied again
 # --info=progress2 ... show progress of all files not only the current one
 # -z ... compress, better for remote transfer
-alias rsync!='rsync -ahpz --info=progress2'
+alias rsync!='rsync -ahPz --info=progress2'
 
 # quit terminal like vim
 alias :q="exit"
