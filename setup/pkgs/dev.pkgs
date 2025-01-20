@@ -8,7 +8,7 @@ cloc                        # 'count lines of code'
 cool-retro-term             # just what the name says
 doxygen                     # documentation engine
 element-desktop             # Matrix Client
-eza
+eza                         # better ls command
 fastfetch                   # neofetch alternative
 fd                          # better find command
 firefox
@@ -20,7 +20,7 @@ glow                        # cli markdown renderer
 gnome-boxes                 # qemu/kvm frontend
 hugo                        # static blogging engine
 imagemagick                 # image tool
-jupyterlab
+jupyterlab                  # jupyternotebook successor
 just                        # command runner like Makefile
 kate                        # file editor
 kitty                       # backup terminal for ghostty
@@ -32,7 +32,6 @@ moreutils                   # additional shell utils
 neovim                      # best cli editor (well more than that)
 netscanner                  # TUI network scanner tool
 nmap                        # ip tool
-npm
 obsidian                    # Note Taking
 openssh
 pacman-contrib              # needed for AUR and stuff
@@ -54,15 +53,15 @@ speedcrunch                 # best scientific calculator
 spotify-launcher
 television                  # tui fuzzy finder (öike fzf)
 thefuck
-tldr
+tldr                        # man alternative with examples
 torbrowser-launcher
 tree
 veracrypt
 wine                        # not an emulator
 yq                          # commandline YAML, JSON parser
 yt-dlp
-zellij
-zoxide
+zellij                      # like tmux but better
+zoxide                      # smarter cd command
 zsh
 zsh-autosuggestions
 zsh-completions
