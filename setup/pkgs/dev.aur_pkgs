@@ -5,6 +5,7 @@ devtoys-bin                 # collection of simple tools for developers
 drawio-desktop              # Draw.io desktop app (now called diagrams.net)
 fast                        # Fast.com internet speed test
 gitkraken                   # visual git tool
+gittyup                     # git gui
 gpgfrontend                 # beautiful frontend for GnuPG
 pacseek                     # tui package search engine
 # sshpass                     # ssh addition (connect with password directly)
