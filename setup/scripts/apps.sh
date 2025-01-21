@@ -40,6 +40,7 @@ NAME_xxd="[Dev/Reverse Engineering] netcat"
 
 NAME_cozy="[Media/Audio] Cozy Audiobook-Player"
 NAME_spotify="[Media/Audio] Spotify"
+NAME_spotube="[Media/Audio] Spotube"
 NAME_pocketcasts="[Media/Audio] Pocket Casts"
 
 NAME_decoder="[Misc] Decoder (QR Scanner)"
@@ -187,6 +188,7 @@ packages=(
     "$NAME_ledgerlive"
     "$NAME_onlyoffice"
     "$NAME_vibe"
+    "$NAME_spotube"
 )
 
 # sort the packages
@@ -248,6 +250,7 @@ if array_contains "${array[@]}" "$NAME_typora"; then yay_packages+=("typora"); f
 if array_contains "${array[@]}" "$NAME_ledgerlive"; then yay_packages+=("ledger-live-bin"); fi
 if array_contains "${array[@]}" "$NAME_onlyoffice"; then yay_packages+=("onlyoffice-bin"); fi
 if array_contains "${array[@]}" "$NAME_vibe"; then yay_packages+=("vibe-bin"); fi
+if array_contains "${array[@]}" "$NAME_spotube"; then yay_packages+=("spotube-bin"); fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
     sudo systemctl enable tailscaled
