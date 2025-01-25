@@ -117,6 +117,7 @@ truncation_symbol = "…/"
 "code" = ""
 ".config" = ""
 "SatanOS" = "󱙧"
+"blog" = ""
 
 # Keep in mind that the order matters. For example:
 # "Important Documents" = "  "
