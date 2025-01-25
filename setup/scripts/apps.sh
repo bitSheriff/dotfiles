@@ -55,6 +55,7 @@ NAME_veracrypt="[Privacy] VeraCrypt"
 NAME_qbittorrent="[Privacy] QBitTorrent"
 NAME_torbowser="[Privacy] TOR Browser"
 NAME_ledgerlive="[Privacy] Ledger Live"
+NAME_monerogui="[Privacy] Monero GUI"
 
 NAME_ticktick="[Productivity] TickTick"
 NAME_espanso="[Productivity] espanso"
@@ -189,6 +190,7 @@ packages=(
     "$NAME_onlyoffice"
     "$NAME_vibe"
     "$NAME_spotube"
+    "$NAME_monerogui"
 )
 
 # sort the packages
@@ -251,6 +253,7 @@ if array_contains "${array[@]}" "$NAME_ledgerlive"; then yay_packages+=("ledger-
 if array_contains "${array[@]}" "$NAME_onlyoffice"; then yay_packages+=("onlyoffice-bin"); fi
 if array_contains "${array[@]}" "$NAME_vibe"; then yay_packages+=("vibe-bin"); fi
 if array_contains "${array[@]}" "$NAME_spotube"; then yay_packages+=("spotube-bin"); fi
+if array_contains "${array[@]}" "$NAME_monerogui"; then pacman_packages+=("monero-gui"); fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
     sudo systemctl enable tailscaled
