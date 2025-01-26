@@ -3,7 +3,7 @@
 bottles                     # manage wine enviroments
 devtoys-bin                 # collection of simple tools for developers
 drawio-desktop              # Draw.io desktop app (now called diagrams.net)
-fast                        # Fast.com internet speed test
+fast-bin                    # Fast.com internet speed test
 gitkraken                   # visual git tool
 gittyup                     # git gui
 gpgfrontend                 # beautiful frontend for GnuPG
