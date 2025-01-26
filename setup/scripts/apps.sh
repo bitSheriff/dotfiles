@@ -42,6 +42,7 @@ NAME_cozy="[Media/Audio] Cozy Audiobook-Player"
 NAME_spotify="[Media/Audio] Spotify"
 NAME_spotube="[Media/Audio] Spotube"
 NAME_pocketcasts="[Media/Audio] Pocket Casts"
+NAME_kodi="[Media] Kodi"
 
 NAME_decoder="[Misc] Decoder (QR Scanner)"
 NAME_zenbrowser="[Misc] Zen-Browser"
@@ -133,6 +134,15 @@ setup_zathura() {
     gum confirm --default=false "Do you read Comic Books?" && pacman_install_single "zathura-cb"
 }
 
+setup_kodi() {
+
+    # install the normal application
+    pacman_install_single "kodi"
+
+    # another add-ons are essential on Arch to run
+    pacman_install_single "kodi-addon-inputstream-adaptive"
+}
+
 # ========================================
 # Main
 # ========================================
@@ -191,6 +201,7 @@ packages=(
     "$NAME_vibe"
     "$NAME_spotube"
     "$NAME_monerogui"
+    "$NAME_kodi"
 )
 
 # sort the packages
@@ -254,6 +265,7 @@ if array_contains "${array[@]}" "$NAME_onlyoffice"; then yay_packages+=("onlyoff
 if array_contains "${array[@]}" "$NAME_vibe"; then yay_packages+=("vibe-bin"); fi
 if array_contains "${array[@]}" "$NAME_spotube"; then yay_packages+=("spotube-bin"); fi
 if array_contains "${array[@]}" "$NAME_monerogui"; then pacman_packages+=("monero-gui"); fi
+if array_contains "${array[@]}" "$NAME_kodi"; then setup_kodi; fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
     sudo systemctl enable tailscaled
