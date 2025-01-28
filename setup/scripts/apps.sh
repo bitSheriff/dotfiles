@@ -49,6 +49,7 @@ NAME_zenbrowser="[Misc] Zen-Browser"
 NAME_chromium="[Misc] Chromium"
 NAME_missioncenter="[Misc] Mission Center"
 NAME_kdeconnect="[Misc] KDE Connect"
+NAME_gromit="[Misc] Gromit-MPX (Screen annotator)"
 
 NAME_mullvadvpn="[Privacy] Mullvad VPN"
 NAME_mullvadbrowser="[Privacy] Mullvad Browser"
@@ -202,6 +203,7 @@ packages=(
     "$NAME_spotube"
     "$NAME_monerogui"
     "$NAME_kodi"
+    "$NAME_gromit"
 )
 
 # sort the packages
@@ -266,6 +268,7 @@ if array_contains "${array[@]}" "$NAME_vibe"; then yay_packages+=("vibe-bin"); f
 if array_contains "${array[@]}" "$NAME_spotube"; then yay_packages+=("spotube-bin"); fi
 if array_contains "${array[@]}" "$NAME_monerogui"; then pacman_packages+=("monero-gui"); fi
 if array_contains "${array[@]}" "$NAME_kodi"; then setup_kodi; fi
+if array_contains "${array[@]}" "$NAME_gromit"; then yay_packages+=("gromit-mpx"); fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
     sudo systemctl enable tailscaled
