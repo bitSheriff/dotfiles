@@ -438,7 +438,7 @@ change_hostname() {
 }
 
 setup_default_apps() {
-    print_h2 "Set Defaul Applications"
+    print_h2 "Set Default Applications"
 
     # avoid complications, so unset the envvars for now
     # else the xdg-setting would fail
@@ -775,7 +775,7 @@ fi
 # ========================================
 
 # select the tools to install
-tool_selection=$(gum choose --no-limit "Hyprland" "Development" "University" "LaTeX" "Office")
+tool_selection=$(gum choose --no-limit "Hyprland" "Development" "University" "LaTeX" "Office" "Local AI's")
 
 # Converting list from `gum choose` output to an array
 IFS=$'\n' read -rd '' -a array <<<"$tool_selection"
@@ -825,6 +825,10 @@ if array_contains "${array[@]}" "University" || [ "$DO_UNI" = 1 ]; then
     install_uni_tools
 fi
 
+if array_contains "${array[@]}" "Local AI's"; then
+    bash $DIR_NAME/scripts/local-ai.sh
+fi
+
 if [[ "$DO_OPTIONALS" = 1 ]]; then
     install_optionals
 fi
@@ -846,7 +850,7 @@ if [[ "$DO_SYMLINKS" = 1 ]]; then
 fi
 
 if [[ "$DO_HARDWARE" = 1 ]]; then
-    bash ./scripts/hardware.sh
+    bash $DIR_NAME/scripts/hardware.sh
 fi
 
 if [ ${#pacman_packages[@]} -ne 0 ]; then
