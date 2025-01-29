@@ -45,6 +45,9 @@ print_h2 "Local AI Setup"
 # install ollama which is used to intract with different models
 print_note "Setup ollama"
 pacman_install_single "ollama"
+# enable and start the service
+sudo systemctl enable ollama
+sudo systemctl start ollama
 
 # setup the different models
 setup_models
