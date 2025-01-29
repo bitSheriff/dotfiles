@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Ensure gum and ollama are installed
+if ! command -v gum &> /dev/null; then
+    echo "Error: gum is not installed." >&2
+    exit 1
+fi
+
+if ! command -v ollama &> /dev/null; then
+    echo "Error: ollama is not installed." >&2
+    exit 1
+fi
+
+# Get the list of installed AIs
+AI_LIST=$(ollama list | awk '{print $1}' | tail -n +2)
+
+# Check if any AIs are installed
+if [ -z "$AI_LIST" ]; then
+    echo "No local AIs found." >&2
+    exit 1
+fi
+
+# Use gum to select an AI
+SELECTED_AI=$(echo "$AI_LIST" | gum choose)
+
+# Run the selected AI
+if [ -n "$SELECTED_AI" ]; then
+    ollama run "$SELECTED_AI"
+else
+    echo "No AI selected." >&2
+    exit 1
+fi
+
