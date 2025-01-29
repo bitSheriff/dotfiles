@@ -77,6 +77,9 @@ setup_nvidia() {
     pacman_install_single "ib32-nvidia-utils"
     pacman_install_single "egl-wayland"
     pacman_install_single "libva-nvidia-driver"
+
+    # GPU Top
+    pacman_install_single "nvtop"
 }
 
 setup_fingers() {
