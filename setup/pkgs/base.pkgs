@@ -12,6 +12,7 @@ glibc
 gnupg                                                               # GNU encryption
 gum                                                                 # shell library for user
 ld-lsb                                                              # Linux Standard Base Runtime
+linux-lts                                                           # LTS Kernel as backup
 nemo                                                                # gtk file manager 
 nemo-fileroller                                                     # nemo compressor (.zip)
 nemo-preview                                                        # preview for nemo
