@@ -786,7 +786,7 @@ fi
 # ========================================
 
 # select the tools to install
-tool_selection=$(gum choose --no-limit "Hyprland" "KDE Plasma" "Development" "University" "LaTeX" "Office" "Local AI's")
+tool_selection=$(gum choose --no-limit "Hyprland" "KDE Plasma" "Development" "University" "LaTeX" "Office" "Local AI")
 
 # Converting list from `gum choose` output to an array
 IFS=$'\n' read -rd '' -a array <<<"$tool_selection"
@@ -840,7 +840,7 @@ if array_contains "${array[@]}" "University" || [ "$DO_UNI" = 1 ]; then
     install_uni_tools
 fi
 
-if array_contains "${array[@]}" "Local AI's"; then
+if array_contains "${array[@]}" "Local AI"; then
     bash $DIR_NAME/scripts/local-ai.sh
 fi
 
