@@ -83,6 +83,15 @@ print_error() {
     echo -e "$BOLD_RED:::: $1 ::::$NC"
 }
 
+# Usage print_message 5 "A Message"
+print_progress() {
+    local percent=$1
+    local message=$2
+
+    # Format the percentage to be right-aligned within 3 characters
+    printf "[%3d%%] %s\n" "$percent" "$message"
+}
+
 toggle_process() {
 
     PROCESS_NAME="$1"
