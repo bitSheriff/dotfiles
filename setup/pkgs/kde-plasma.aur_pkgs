@@ -1,0 +1,6 @@
+1password                   # Password manager
+1password-cli               # CLI for 1Password
+adwaita-dark
+adwaita-qt5-git             # dark themes for qt5 apps
+adwaita-qt6-git             # dark themes for qt6 apps
+
