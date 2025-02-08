@@ -76,6 +76,7 @@ NAME_drawio="[Office] Draw.io"
 NAME_whisper="[Office/AI] WhisperAI"
 NAME_speechNote="[Office/AI] Speech Note"
 NAME_vibe="[Office/AI] Vibe (Transcript)"
+NAME_upscayl="[Office] Upscayl (AI Picture Upscaler)"
 
 # ========================================
 # Global Variables
@@ -204,6 +205,7 @@ packages=(
     "$NAME_monerogui"
     "$NAME_kodi"
     "$NAME_gromit"
+    "$NAME_upscayl"
 )
 
 # sort the packages
@@ -269,6 +271,7 @@ if array_contains "${array[@]}" "$NAME_spotube"; then yay_packages+=("spotube-bi
 if array_contains "${array[@]}" "$NAME_monerogui"; then pacman_packages+=("monero-gui"); fi
 if array_contains "${array[@]}" "$NAME_kodi"; then setup_kodi; fi
 if array_contains "${array[@]}" "$NAME_gromit"; then yay_packages+=("gromit-mpx"); fi
+if array_contains "${array[@]}" "$NAME_upscayl"; then yay_packages+=("upscayl-bin"); fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
     sudo systemctl enable tailscaled
