@@ -18,6 +18,8 @@ setup_models() {
 
     models=(
         "DeepSeek R1:7b"
+        "DeepSeek R1:14b"
+        "Mistral"
     )
 
     # sort the packages
@@ -33,9 +35,22 @@ setup_models() {
 
     if array_contains "${array[@]}" "DeepSeek R1:7b"; then
         print_note "Pulling DeepSeek R1 7B-Version"
-        print_note "~ 5GB"
+        print_note "~4.7GB"
         ollama pull deepseek-r1:7b
     fi
+
+    if array_contains "${array[@]}" "DeepSeek R1:14b"; then
+        print_note "Pulling DeepSeek R1 14B-Version"
+        print_note "~9GB"
+        ollama pull deepseek-r1:14b
+    fi
+
+    if array_contains "${array[@]}" "Mistral"; then
+        print_note "Pulling Mistral"
+        print_note "~4.1GB"
+        ollama pull mistral
+    fi
+
 }
 
 ## -- MAIN -- ##
