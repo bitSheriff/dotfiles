@@ -1,14 +1,22 @@
 #!/bin/bash
 
 # Ensure gum and ollama are installed
-if ! command -v gum &> /dev/null; then
+if ! command -v gum &>/dev/null; then
     echo "Error: gum is not installed." >&2
     exit 1
 fi
 
-if ! command -v ollama &> /dev/null; then
+if ! command -v ollama &>/dev/null; then
     echo "Error: ollama is not installed." >&2
     exit 1
+fi
+
+# Check if the --update option is provided
+if [[ "$1" == "--update" ]]; then
+    echo "Updating all local AI models..."
+    ollama list | awk 'NR>1 {print $1}' | xargs -I {} sh -c 'echo "Updating model: {}"; ollama pull {}; echo "--"'
+    echo "All models updated."
+    exit 0
 fi
 
 # Get the list of installed AIs
@@ -30,4 +38,3 @@ else
     echo "No AI selected." >&2
     exit 1
 fi
-
