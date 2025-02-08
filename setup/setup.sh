@@ -295,6 +295,17 @@ install_hyprland() {
     DO_ZSH=1
 }
 
+install_kde_plasma() {
+
+    print_h1 "KDE Plasma"
+    install_pkgfiles "kde_plasma"
+
+    ensure_sddm_enabled
+
+    sudo systemctl enable NetworkManager.service
+
+}
+
 install_language_specific() {
 
     # check if languages have been installed already
@@ -775,7 +786,7 @@ fi
 # ========================================
 
 # select the tools to install
-tool_selection=$(gum choose --no-limit "Hyprland" "Development" "University" "LaTeX" "Office" "Local AI's")
+tool_selection=$(gum choose --no-limit "Hyprland" "KDE Plasma" "Development" "University" "LaTeX" "Office" "Local AI's")
 
 # Converting list from `gum choose` output to an array
 IFS=$'\n' read -rd '' -a array <<<"$tool_selection"
@@ -808,6 +819,10 @@ fi
 if array_contains "${array[@]}" "Hyprland" || [ "$DO_HYPR" = 1 ]; then
     write_cache_option "$APP_NAME" "$CACHE_HYPRLAND"
     install_hyprland
+fi
+
+if array_contains "${array[@]}" "KDE Plasma" || [ "$DO_HYPR" = 1 ]; then
+    install_kde_plasma
 fi
 
 if array_contains "${array[@]}" "Development" || [ "$DO_DEV" = 1 ]; then

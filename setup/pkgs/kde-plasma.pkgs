@@ -1,0 +1,30 @@
+blueman                     # Bluetooth manager
+fastfetch                   # newer neofetch
+gcolor3                     # GUI color picker
+kde-applications
+kmenuedit                   # Editor for menu and desktop files
+kvantum                     # Theme manager for KDE applications
+kwallet
+kwalletmanager              # GUI to edit KWallet
+mpv                         # Video player (minimalistic)
+pavucontrol
+pipewire
+plasma
+plasma-wayland-session
+polkit-kde-agent            # Polkit agent for KDE
+qt5ct                       # Qt5 configuration tool
+qt6ct                       # Qt6 configuration tool
+sddm                        # Display manager
+seahorse                    # Gnome Seahorse for GnuPG management
+spotify-launcher            # Spotify launcher
+starship                    # Shell prompt
+ttf-jetbrains-mono-nerd     # Nerd Font
+wireplumber
+wl-clipboard
+wtype                       # Keyboard layout switcher
+xbindkeys                   # Media keys and stuff
+xdg-desktop-portal-hyprland 
+yazi                        # terminal file explorer
+zathura                     # PDF viewer (minimalistic)
+zathura-cb                  # Plugin for comic books
+zathura-pdf-mupdf           # PDF plugin for zathura
