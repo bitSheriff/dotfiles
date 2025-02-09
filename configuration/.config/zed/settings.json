@@ -104,6 +104,19 @@
         "LaTeX": ["cfg"]
     },
 
+    // disable the predictions for certain files
+    "edit_predictions": {
+        "disabled_in": ["comment", "string"], // dont need predictions in comments or strings
+        "disabled_globs": [
+            "**/.env*",
+            "**/*.pem",
+            "**/*.key",
+            "**/*.cert",
+            "**/*.crt",
+            "**/secrets.yml"
+        ]
+    },
+
     // The key to use for adding multiple cursors
     "multi_cursor_modifier": "alt",
 
@@ -136,14 +149,18 @@
 
     // Auto install extensions
     "auto_install_extensions": {
-        "snippets": true,
-        "latex": true,
-        "tokyo-nights": true,
-        "toml": true,
-        "make": true,
+        "basher": true,
+        "catppuccin-icons": true,
+        "csv": true,
+        "html": true,
         "ini": true, // different config files
         "just": true,
-        "catppuccin-icons": true,
-        "markdown-oxide": true // PKM LSP for Markdown
+        "latex": true,
+        "lua": true,
+        "make": true,
+        "markdown-oxide": true, // PKM LSP for Markdown
+        "snippets": true,
+        "tokyo-nights": true,
+        "toml": true
     }
 }
