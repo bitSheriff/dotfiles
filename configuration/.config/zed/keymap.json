@@ -146,7 +146,7 @@
     {
         "context": "Workspace",
         "bindings": {
-            "t t": "terminal_panel::ToggleFocus"
+            "ctrl-shift-t": "terminal_panel::ToggleFocus"
         }
     },
     {
@@ -156,7 +156,7 @@
             "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
             "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
             "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
-            "ctrl-t": "terminal_panel::ToggleFocus"
+            "ctrl-shift-t": "terminal_panel::ToggleFocus"
         }
     },
     // File panel (netrw)
