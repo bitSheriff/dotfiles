@@ -1,6 +1,14 @@
 [
-  {
-    "label": "start lazygit",
-    "command": "cd '$ZED_WORKTREE_ROOT' && lazygit"
-  }
+    {
+        "label": "start lazygit",
+        "command": "cd '$ZED_WORKTREE_ROOT' && lazygit",
+        "tags": ["devops"]
+    },
+
+    {
+        "label": "Rust build",
+        "command": "cd '$ZED_CUSTOM_RUST_PACKAGE' && cargo build",
+        "use_new_terminal": false,
+        "tags": ["rust"]
+    }
 ]
