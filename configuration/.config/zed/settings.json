@@ -139,7 +139,6 @@
         "snippets": true,
         "latex": true,
         "tokyo-nights": true,
-        "git-firefly": true,
         "toml": true,
         "make": true,
         "ini": true, // different config files
