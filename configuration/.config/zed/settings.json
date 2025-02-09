@@ -136,11 +136,14 @@
 
     // Auto install extensions
     "auto_install_extensions": {
-        "LaTeX": true,
-        "Tokyo Nights Themes": true,
-        "Git Firefly": true,
-        "TOML": true,
-        "Justfile": true,
-        "Catppuccin Icons": true
+        "snippets": true,
+        "latex": true,
+        "tokyo-nights": true,
+        "git-firefly": true,
+        "toml": true,
+        "make": true,
+        "ini": true,
+        "just": true,
+        "catppuccin-icons": true
     }
 }
