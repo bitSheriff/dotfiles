@@ -1,0 +1,37 @@
+{
+    "Doxygen Function": {
+        "prefix": "doxy function",
+        "body": [
+            "/**",
+            " * @brief ${1:Description}",
+            " *",
+            " * @param ${2:Param}",
+            " *",
+            " * @return ${3:Return}",
+            " */",
+            "${4:void} ${5:Function}(${6:Param_Type} ${7:Param_Name}) {",
+            "    ${8:/* code */}",
+            "}"
+        ]
+    },
+
+    "Doxygen Variable": {
+        "prefix": "doxy variable",
+        "body": [
+            "/**",
+            " * @brief ${1:Description}",
+            " */",
+            "${2:Type} ${3:Variable};"
+        ]
+    },
+
+    "Doxygen Varaible after": {
+        "prefix": "doxy variable after",
+        "body": ["/*!< $1 */"]
+    },
+
+    "Comment": {
+        "prefix": "cmt",
+        "body": "/* $1 */"
+    }
+}

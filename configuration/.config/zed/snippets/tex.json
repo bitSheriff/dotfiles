@@ -1,0 +1,25 @@
+{
+    "Bold": {
+        "prefix": "bf",
+        "body": "\\textbf{$1}",
+        "description": "Bold"
+    },
+
+    "Italic": {
+        "prefix": "it",
+        "body": "\\textit{$1}",
+        "description": "Italic"
+    },
+
+    "Underline": {
+        "prefix": "ul",
+        "body": "\\underline{$1}",
+        "description": "Underline"
+    },
+
+    "Monospaced": {
+        "prefix": "tt",
+        "body": "\\texttt{$1}",
+        "description": "Monospaced"
+    }
+}

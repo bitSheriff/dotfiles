@@ -1,0 +1,42 @@
+{
+    "Small_Test": {
+        "prefix": "small test",
+        "body": ["fn test() {", "    assert_eq!(1, 1);", "}"]
+    },
+
+    "Dead Code": {
+        "prefix": "dead code",
+        "body": ["#[allow(dead_code)]"]
+    },
+
+    "Main Function": {
+        "prefix": "main function",
+        "body": ["fn main() {", "    println!(\"Hello, world!\");", "}"]
+    },
+
+    "Unit Test": {
+        "prefix": "unit test",
+        "body": [
+            "#[cfg(test)]",
+            "mod tests {",
+            "    use super::*;",
+            "",
+            "    #[test]",
+            "    fn test() {",
+            "        assert_eq!(1, 1);",
+            "    }",
+            "}"
+        ]
+    },
+
+    "Unit Test Function": {
+        "prefix": "unit test function",
+        "body": [
+            "    #[test]",
+            "    fn ${1:test}() {",
+            "        ${2:assert_eq!(1, 1);}",
+            "    }",
+            "}"
+        ]
+    }
+}

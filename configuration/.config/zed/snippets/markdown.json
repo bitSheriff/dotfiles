@@ -1,0 +1,54 @@
+{
+    "Underline": {
+        "prefix": "ul",
+        "body": "<u>$1</u>",
+        "description": "Underline"
+    },
+
+    "Todo": {
+        "prefix": "todo",
+        "body": "- [ ] $1"
+    },
+
+    "Link": {
+        "prefix": "link",
+        "body": "[$1]($2)",
+        "description": "URL Link"
+    },
+
+    "h1": {
+        "prefix": "h1",
+        "body": "# $1",
+        "description": "Header 1"
+    },
+
+    "h2": {
+        "prefix": "h2",
+        "body": "## $1",
+        "description": "Header 2"
+    },
+
+    "h3": {
+        "prefix": "h3",
+        "body": "### $1",
+        "description": "Header 3"
+    },
+
+    "h4": {
+        "prefix": "h4",
+        "body": "#### $1",
+        "description": "Header 4"
+    },
+
+    "h5": {
+        "prefix": "h5",
+        "body": "##### $1",
+        "description": "Header 5"
+    },
+
+    "h6": {
+        "prefix": "h6",
+        "body": "###### $1",
+        "description": "Header 6"
+    }
+}

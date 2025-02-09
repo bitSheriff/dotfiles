@@ -36,9 +36,12 @@
         "git_status": true
     },
 
-    // Inlay hints preconfigured by Zed: Go, Rust, Typescript and Svelte
+    // Inlay hints preconfigured by Zed
     "inlay_hints": {
-        "enabled": true
+        "enabled": true,
+        "show_type_hints": true,
+        "show_parameter_hints": true,
+        "show_other_hints": true
     },
     // Theming
     "theme": {
@@ -58,6 +61,21 @@
         "Markdown": {
             "format_on_save": "on",
             "tab_size": 4
+        },
+        "Rust": {
+            "formatter": "language_server",
+            "format_on_save": "on",
+            "tab_size": 4
+        }
+    },
+
+    "lsp": {
+        "rust-analyzer": {
+            "initialization_options": {
+                "checkOnSave": {
+                    "command": "clippy"
+                }
+            }
         }
     },
 
@@ -83,7 +101,20 @@
         }
     },
 
+    // Builtin Terminal Settings
     "terminal": {
-        "font_size": 13
+        "font_family": "JetBrainsMono Nerd Font",
+        "font_size": 13,
+        "default_height": 320,
+        "copy_on_select": true
+    },
+
+    // Auto install extensions
+    "auto_install_extensions": {
+        "LaTeX": true,
+        "Tokyo Nights Themes": true,
+        "Git Firefly": true,
+        "TOML": true,
+        "Justfile": true
     }
 }
