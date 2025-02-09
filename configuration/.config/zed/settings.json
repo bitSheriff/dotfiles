@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+    "icon_theme": "Catppuccin Mocha",
     "assistant": {
         "default_model": {
             "provider": "copilot_chat",
@@ -43,6 +44,14 @@
     },
     "chat_panel": {
         "button": false
+    },
+
+    "outline_panel": {
+        "dock": "right"
+    },
+
+    "notification_panel": {
+        "dock": "left"
     },
 
     // Inlay hints preconfigured by Zed
@@ -120,11 +129,7 @@
         "font_family": "JetBrainsMono Nerd Font",
         "font_size": 13,
         "default_height": 320,
-        "copy_on_select": true,
-        "env": {
-            // use Zed as the terminal editor, but only in Zed
-            "EDITOR": "zed --wait"
-        }
+        "copy_on_select": true
     },
 
     // Auto install extensions
@@ -133,6 +138,7 @@
         "Tokyo Nights Themes": true,
         "Git Firefly": true,
         "TOML": true,
-        "Justfile": true
+        "Justfile": true,
+        "Catppuccin Icons": true
     }
 }
