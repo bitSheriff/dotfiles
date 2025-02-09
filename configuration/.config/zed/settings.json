@@ -88,6 +88,11 @@
         }
     },
 
+    "file_types": {
+        "C": ["C", "H"],
+        "LaTeX": ["cfg"]
+    },
+
     // The key to use for adding multiple cursors
     "multi_cursor_modifier": "alt",
 

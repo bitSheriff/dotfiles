@@ -9,22 +9,20 @@
             " *",
             " * @return ${3:Return}",
             " */"
-        ]
+        ],
+        "description": "Doxygen Documentation for a function"
     },
 
     "Doxygen Variable": {
-        "prefix": "doxy variable",
-        "body": [
-            "/**",
-            " * @brief ${1:Description}",
-            " */",
-            "${2:Type} ${3:Variable};"
-        ]
+        "prefix": "doxy var",
+        "body": ["/**", " * @brief ${1:Description}", " */"],
+        "description": "Doxygen Documentation for a variable (before)"
     },
 
-    "Doxygen Varaible after": {
-        "prefix": "doxy variable after",
-        "body": ["/*!< $1 */"]
+    "Doxygen Varaible inline": {
+        "prefix": "doxy var inline",
+        "body": ["/*!< $1 */"],
+        "description": "Doxygen Documentation for a variable (inline)"
     },
 
     "Comment": {

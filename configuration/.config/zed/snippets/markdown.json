@@ -50,5 +50,30 @@
         "prefix": "h6",
         "body": "###### $1",
         "description": "Header 6"
+    },
+
+    "Hugo Comment": {
+        "prefix": "hugo comment",
+        "body": ["<!--", "    ${1:Comment}", "-->"],
+        "description": "Hugo Comment"
+    },
+
+    "Hugo Github Repo": {
+        "prefix": "hugo github repo",
+        "body": ["{{< github repo=\"NAME/REPO\" >}}"]
+    },
+
+    "Hugo Alert": {
+        "prefix": "hugo alert",
+        "body": [
+            "{{< alert icon=\"fire\" cardColor=\"#e63946\" iconColor=\"#1d3557\" textColor=\"#f1faee\" >}}",
+            "    ${1:Alert}",
+            "{{< /alert >}}"
+        ]
+    },
+
+    "Hugo Article": {
+        "prefix": "hugo article",
+        "body": ["{{< article link=\"/docs/welcome/\" >}}"]
     }
 }
