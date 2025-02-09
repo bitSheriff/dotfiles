@@ -1,4 +1,5 @@
 texinfo                     # LaTeX Stuff
+texlab                      # Language Server
 texlive-basic
 texlive-bibtexextra
 texlive-binextra
