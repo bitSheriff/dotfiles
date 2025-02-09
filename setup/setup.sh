@@ -460,8 +460,8 @@ setup_default_apps() {
     # set Nemo as default file manager
     xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
 
-    # set kitty as defaul terminal
-    gsettings set org.cinnamon.desktop.default-applications.terminal exec kitty
+    # set ghostty as defaul terminal
+    gsettings set org.cinnamon.desktop.default-applications.terminal exec ghostty
 }
 
 post_install() {
