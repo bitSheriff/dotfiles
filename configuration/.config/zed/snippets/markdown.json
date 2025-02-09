@@ -52,6 +52,18 @@
         "description": "Header 6"
     },
 
+    "Code": {
+        "prefix": "code",
+        "body": "`$1`",
+        "description": "Inline Code"
+    },
+
+    "Code Block": {
+        "prefix": "code block",
+        "body": ["```${1:Language}", "$2", "```"],
+        "description": "Code Block"
+    },
+
     "Hugo Comment": {
         "prefix": "hugo comment",
         "body": ["<!--", "    ${1:Comment}", "-->"],

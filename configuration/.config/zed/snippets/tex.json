@@ -21,5 +21,21 @@
         "prefix": "tt",
         "body": "\\texttt{$1}",
         "description": "Monospaced"
+    },
+
+    "Code Listing": {
+        "prefix": "code listing",
+        "body": [
+            "\\begin{lstlisting}[language=LANG, label=lst:LABEL, caption={CAPTION}]",
+            "$1",
+            "\\end{lstlisting}"
+        ],
+        "description": "Code Listing"
+    },
+
+    "Code Inline": {
+        "prefix": "code inline",
+        "body": "\\lstinline{$1}",
+        "description": "Code Inline"
     }
 }

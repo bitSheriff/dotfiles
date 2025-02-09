@@ -101,7 +101,7 @@
 
     "file_types": {
         "C": ["C", "H"],
-        "LaTeX": ["cfg"]
+        "LaTeX": ["cfg", "sty"]
     },
 
     // disable the predictions for certain files
