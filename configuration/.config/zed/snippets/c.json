@@ -8,10 +8,7 @@
             " * @param ${2:Param}",
             " *",
             " * @return ${3:Return}",
-            " */",
-            "${4:void} ${5:Function}(${6:Param_Type} ${7:Param_Name}) {",
-            "    ${8:/* code */}",
-            "}"
+            " */"
         ]
     },
 
