@@ -142,8 +142,9 @@
         "git-firefly": true,
         "toml": true,
         "make": true,
-        "ini": true,
+        "ini": true, // different config files
         "just": true,
-        "catppuccin-icons": true
+        "catppuccin-icons": true,
+        "markdown-oxide": true // PKM LSP for Markdown
     }
 }
