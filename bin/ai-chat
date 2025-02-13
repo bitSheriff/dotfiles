@@ -11,6 +11,14 @@ if ! command -v ollama &>/dev/null; then
     exit 1
 fi
 
+if [[ "$1" == "--help" ]]; then
+    echo "Usage: ai-chat"
+    echo "  Select and run a local AI model."
+    echo "  --update: Update all local AI models."
+    echo "  --help: Display this help message."
+    exit 0
+fi
+
 # Check if the --update option is provided
 if [[ "$1" == "--update" ]]; then
     echo "Updating all local AI models..."
