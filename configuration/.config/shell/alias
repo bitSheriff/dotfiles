@@ -66,7 +66,7 @@ search_man() {
     man $1 | grep -- $2
 }
 
-# count files in current directory 
+# count files in current directory
 alias count='find . -type f | wc -l'
 
 ## Rsync with default flags
@@ -100,7 +100,7 @@ function y() {
 alias exp="nemo ."
 
 # show weather information
-weather(){ curl -s "wttr.in/$1?m1"} 
+weather(){ curl -s "wttr.in/$1?m1"}
 
 # always allow creating nested folders
 alias mkdir="mkdir -p"
@@ -167,7 +167,7 @@ latexmk!()
 
 mounts() {
   MEDIA_PATH="/run/media/$USER"
-  
+
   # Check if /run/media/$USER exists
   if [ ! -d "$MEDIA_PATH" ]; then
     echo "Media directory not found. Creating..."
@@ -214,7 +214,7 @@ aur_vote()
 
 # View all git repositories and open it later in Lazygit
 lgall(){
-        lazygit -p $(tv git-repos)
+    lazygit -p $(tv git-repos)
 }
 
 # copy the selected file to clipboard
@@ -223,9 +223,13 @@ yank()
     cat $(tv files) | wl-copy
 }
 
+# open openweb-ui with python uv
+openweb-ui(){
+    DATA_DIR=~/.open-webui uvx --python 3.11 open-webui@latest serve
+}
+
 # Alias only for Android
 if [[ -n "$TERMUX_VERSION" ]]; then
     # sudo is not available on termux/android
     alias sudo=""
 fi
-
