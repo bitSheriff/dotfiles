@@ -2,39 +2,43 @@
 import shutil
 import subprocess
 from colorama import Fore, Style
+from pylint.reporters.ureports.nodes import Title
 
 ############## CLASS FOR TREE NODE ##############
 
 class Program:
-    def __init__(self, name, check_function=None, dependencies=None, description=None):
+    def __init__(self, name, title=None, check_function=None, dependencies=None, description=None):
         self.name = name
+        self.title = title
         self.check_function = check_function if callable(check_function) else None
         self.dependencies = dependencies if dependencies else []
         self.checked = False
         self.description = description
 
     def is_working(self):
+        real_title = self.title if self.title else self.name
+
         if self.checked:
-            print(f"  - {Fore.CYAN}SKIPPED{Style.RESET_ALL}: {self.name} already checked")
+            print(f"  - {Fore.CYAN}SKIPPED{Style.RESET_ALL}: {real_title} already checked")
             return True
         for dependency in self.dependencies:
             if not dependency.is_working():
-                print(f"  - {Fore.RED}ERROR{Style.RESET_ALL}: Dependency {dependency.name} failed for {self.name}")
+                print(f"  - {Fore.RED}ERROR{Style.RESET_ALL}: Dependency {dependency.name} failed for {real_title}")
                 return False
 
         if shutil.which(self.name):
-            print(f"  - {Fore.GREEN}OK{Style.RESET_ALL}: {self.name} Found")
+            print(f"  - {Fore.GREEN}OK{Style.RESET_ALL}: {real_title} Found")
             if self.check_function:
                 try:
                     self.check_function()
                 except Exception as e:
-                    print(f"  - {Fore.YELLOW}WARNING{Style.RESET_ALL}: {self.name} function failed ({e})")
+                    print(f"  - {Fore.YELLOW}WARNING{Style.RESET_ALL}: {real_title} function failed ({e})")
                     self.checked = False
                     return False
             self.checked = True
             return True
         else:
-            print(f"  - {Fore.RED}ERROR{Style.RESET_ALL}: {self.name} Not Found")
+            print(f"  - {Fore.RED}ERROR{Style.RESET_ALL}: {real_title} Not Found")
             self.checked = False
             return False
 
@@ -87,6 +91,13 @@ def git_check():
     except Exception as e:
         print(f"\t\t {Fore.RED}ERROR{Style.RESET_ALL}: Could not retrieve git version ({e})")
 
+def plasmashell_check():
+    try:
+        version = subprocess.check_output(["plasmashell", "--version"], stderr=subprocess.STDOUT, text=True).strip()
+        print(f"\t\t{version}")
+    except Exception as e:
+        print(f"\t\t{Fore.RED}ERROR{Style.RESET_ALL}: Could not retrieve Plasma version ({e})")
+
 ############## MAIN ##############
 if __name__ == "__main__":
     # Define the programs and their dependencies.
@@ -101,13 +112,16 @@ if __name__ == "__main__":
     # Neovim section
     fzf = Program("fzf")
     fd = Program("fd")
-    rg = Program("rg", description="ripgrep") # ripgrep
-    neovim = Program("nvim", dependencies=[python, git, fzf, fd, rg])
+    rg = Program("rg", title="ripgrep" , description="ripgrep") # ripgrep
+    neovim = Program("nvim", title= "Neovim", dependencies=[python, git, fzf, fd, rg])
 
     # Hyprland section
     hyprshade = Program("hyprshade")
     hypr = Program("Hyprland", dependencies=[python, hyprshade])
 
-    programs_to_check = [python, neovim, curl, hypr]
+    # KDE Plasma
+    kdeplasma = Program("plasmashell", title="KDE Plasma", check_function=plasmashell_check, dependencies=[python])
+
+    programs_to_check = [python, neovim, curl, hypr, kdeplasma]
 
     check_programs_health(programs_to_check)
