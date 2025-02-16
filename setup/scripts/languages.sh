@@ -115,6 +115,7 @@ if array_contains "${array[@]}" "LaTeX"; then
 
     gum confirm --default=false "Install LaTeX Beamer Presentation Tool?" && yay_install_single "python-pympress"
     gum confirm --default=false "Install TeXstudio?" && pacman_install_single "texstudio"
+    gum confirm --default=false "Install LanguageTool Server?" && pacman_install_single "languagetool"
 fi
 
 if array_contains "${array[@]}" "Typst"; then
