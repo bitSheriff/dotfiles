@@ -31,6 +31,7 @@ alias lt3="eza -a --long --header --icons --tree --level=3"
 
 alias hx="helix"
 alias v="NVIM_APPNAME=nvim-vanilla nvim"
+alias oil="nvim -c Oil"                                 # start nvim with oil, to edit current directory and files
 alias gw="ghostwriter"
 alias clock="peaclock --config-dir ~/.config/peaclock" # cli-clock
 alias cp="cp -r" # always copy recursive
