@@ -58,6 +58,7 @@ NAME_qbittorrent="[Privacy] QBitTorrent"
 NAME_torbowser="[Privacy] TOR Browser"
 NAME_ledgerlive="[Privacy] Ledger Live"
 NAME_monerogui="[Privacy] Monero GUI"
+NAME_entephotos="[Privacy] Ente Photos"
 
 NAME_ticktick="[Productivity] TickTick"
 NAME_espanso="[Productivity] espanso"
@@ -208,6 +209,7 @@ packages=(
     "$NAME_gromit"
     "$NAME_upscayl"
     "$NAME_xournalpp"
+    "$NAME_entephotos"
 )
 
 # sort the packages
@@ -275,6 +277,7 @@ if array_contains "${array[@]}" "$NAME_kodi"; then setup_kodi; fi
 if array_contains "${array[@]}" "$NAME_gromit"; then yay_packages+=("gromit-mpx"); fi
 if array_contains "${array[@]}" "$NAME_upscayl"; then yay_packages+=("upscayl-bin"); fi
 if array_contains "${array[@]}" "$NAME_xournalpp"; then pacman_packages+=("xournalpp"); fi
+if array_contains "${array[@]}" "$NAME_entephotos"; then yay_packages+=("ente-desktop-bin"); fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
     sudo systemctl enable tailscaled
