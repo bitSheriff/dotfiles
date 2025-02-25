@@ -41,6 +41,7 @@
   sync = "! git pull && git push"
   dangling = "! git fsck --lost-found | grep "^dangling commit" | sed "s/^dangling commit //g" | xargs git show -s --oneline"
   cloner = git clone --recurse-submodules -j8 # recursive cloning (inclusive submodules)
+  pushall = !git remote | xargs -L1 git push --all
 
 [gpg]
 	format = ssh
