@@ -20,3 +20,6 @@ customCommands:
   - key: 'O'
     context: 'global'
     command: 'nemo .'
+  - key: '<c-p>'
+    context: 'global'
+    command: 'git pushall'
