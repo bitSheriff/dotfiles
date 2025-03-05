@@ -42,6 +42,8 @@ if array_contains "${array[@]}" "C"; then
     # CLI debugging Tools
     pacman_install_single "lldb"
     yay_install_single "codelldb"
+    yay_install_single "cbmc"       # C Model Checker
+    pacman_install_singe "valgrind" # Memory Leak Checker
 fi
 
 if array_contains "${array[@]}" "Docker"; then
