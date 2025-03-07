@@ -47,7 +47,6 @@ alias cd!='cd $(fd  --type d --hidden --exclude .git | fzf --ignore-case --no-pr
 alias go2conf="cd ~/.config"
 alias go2code="cd ~/code"
 alias iqalc="qalc -i" # interactive mode of Qalculator
-alias zed="zeditor" # dont know why they did not named it this in the first place
 alias typo="typora"
 alias calc="qalc"
 

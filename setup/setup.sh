@@ -153,6 +153,9 @@ create_symlinks() {
     # link the wallpaper
     ln -sf $DOTFILES_DIR/wallpapers/ "$HOME/Pictures/"
 
+    # fix some applications (better names) if they are installed
+    safe_symlink "/usr/bin/zeditor" "/usr/bin/zed"
+
     # link the secrets if the file is found
     if [ -d "$DOTFILES_DIR/secrets" ]; then
         bash $DOTFILES_DIR/secrets/link.sh
@@ -462,6 +465,22 @@ setup_default_apps() {
 
     # set ghostty as defaul terminal
     gsettings set org.cinnamon.desktop.default-applications.terminal exec ghostty
+}
+
+safe_symlink() {
+    local source="$1"
+    local target="$2"
+
+    # Check if source exists
+    if [[ -e "$source" ]]; then
+        # Remove target if it is a symlink
+        if [[ -L "$target" ]]; then
+            sudo rm "$target"
+        fi
+
+        # link the new source
+        sudo ln -s "$source" "$target"
+    fi
 }
 
 post_install() {
