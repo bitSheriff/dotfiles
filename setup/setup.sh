@@ -472,15 +472,24 @@ safe_symlink() {
     local target="$2"
 
     # Check if source exists
-    if [[ -e "$source" ]]; then
-        # Remove target if it is a symlink
-        if [[ -L "$target" ]]; then
-            sudo rm "$target"
-        fi
-
-        # link the new source
-        sudo ln -s "$source" "$target"
+    if [[ ! -e "$source" ]]; then
+        echo "Source does not exist: $source. No symlink created."
+        return 1
     fi
+
+    # Check if target exists and is not a symlink
+    if [[ -e "$target" && ! -L "$target" ]]; then
+        echo "Target exists and is not a symlink: $target. Aborting."
+        return 2
+    fi
+
+    # Remove target if it is a symlink
+    if [[ -L "$target" ]]; then
+       sudo rm "$target"
+    fi
+
+    # link the new source
+    sudo ln -s "$source" "$target"
 }
 
 post_install() {
@@ -492,8 +501,8 @@ post_install() {
 }
 
 generic_encrypt() {
-    input=$1
-    output=$2
+    local input=$1
+    local output=$2
 
     print_debug "encrypting $input > $output"
 
@@ -514,8 +523,8 @@ secret_encrypt() {
 }
 
 generic_decrypt() {
-    input=$1
-    output=$2
+    local input=$1
+    local output=$2
 
     print_debug "decrypting $input > $output"
     # check if the enviroment varaible with the passphrase is set
