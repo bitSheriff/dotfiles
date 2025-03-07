@@ -488,8 +488,14 @@ safe_symlink() {
        sudo rm "$target"
     fi
 
-    # link the new source
-    sudo ln -s "$source" "$target"
+    # Check if target is inside the home directory
+    if [[ "$target" == "$HOME"* ]]; then
+        # Inside home directory, no sudo needed
+        ln -s "$source" "$target"
+    else
+        # Outside home directory, might need sudo
+        sudo ln -s "$source" "$target"
+    fi
 }
 
 post_install() {
