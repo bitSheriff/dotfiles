@@ -37,5 +37,17 @@
         "prefix": "code inline",
         "body": "\\lstinline{$1}",
         "description": "Code Inline"
+    },
+
+    "Todo Inline": {
+        "prefix": "todo",
+        "body": "\\todo[inline]{$1}",
+        "description": "Todo Inline"
+    },
+
+    "Todo": {
+        "prefix": "todo",
+        "body": "\\todo{$1}",
+        "description": "Todo"
     }
 }
