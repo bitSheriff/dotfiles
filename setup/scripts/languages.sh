@@ -42,7 +42,7 @@ if array_contains "${array[@]}" "C"; then
     # CLI debugging Tools
     pacman_install_single "lldb"
     yay_install_single "codelldb"
-    yay_install_single "cbmc"       # C Model Checker
+    gum confirm --default=false "Install C Model Checker?" && yay_install_single "cbmc"
     pacman_install_singe "valgrind" # Memory Leak Checker
 fi
 
