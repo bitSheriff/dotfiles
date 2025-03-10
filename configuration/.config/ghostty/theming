@@ -9,7 +9,7 @@ adw-toolbar-style = flat
 
 # custom shaders
 # custom-shader = ./shaders/retro-terminal.glsl
-custom-shader = ./shaders/in-game-crt.glsl
+# custom-shader = ./shaders/in-game-crt.glsl
 
 # purplepeter, Sakura, shades-of-purple, SynthwaveAlpha, Eldritch
 theme = SynthwaveAlpha
