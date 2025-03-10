@@ -5,3 +5,5 @@ configuration/.config/hypr/monitors.conf
 configuration/.config/hypr/workspaces.conf
 **/**.log
 configuration/.config/espanso/match/email.yml
+configuration/.config/1Password
+configuration/.ssh
