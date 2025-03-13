@@ -97,7 +97,11 @@
             "space /": "pane::DeploySearch",
             // TODO: Open other files
             // Show project panel with current file
-            "space e": "pane::RevealInProjectPanel"
+            "space e": "pane::RevealInProjectPanel",
+
+            // Toggle Docks
+            "ctrl-alt-left": "workspace::ToggleLeftDock",
+            "ctrl-alt-right": "workspace::ToggleRightDock"
         }
     },
     // Empty pane, set of keybindings that are available when there is no active editor
@@ -187,7 +191,11 @@
             "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
             "ctrl-w l": ["workspace::ActivatePaneInDirection", "Right"],
             "ctrl-w k": ["workspace::ActivatePaneInDirection", "Up"],
-            "ctrl-w j": ["workspace::ActivatePaneInDirection", "Down"]
+            "ctrl-w j": ["workspace::ActivatePaneInDirection", "Down"],
+
+            // Toggle Docks
+            "ctrl-alt-left": "workspace::ToggleLeftDock",
+            "ctrl-alt-right": "workspace::ToggleRightDock"
         }
     },
     // Run nearest task
