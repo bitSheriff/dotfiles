@@ -1,7 +1,7 @@
 base-devel
 bash-completion
-binsider                    # TUI for analyzing binaries
 bat                         # better cat alternative
+binsider                    # TUI for analyzing binaries
 chromium
 clang
 cloc                        # 'count lines of code'
@@ -36,6 +36,7 @@ obsidian                    # Note Taking
 openssh
 pacman-contrib              # needed for AUR and stuff
 pandoc-cli
+pastebin                    # termbin, post text online and get url to share
 powertop                    # battery and power management
 python
 qalculate-gtk               # another calculator
