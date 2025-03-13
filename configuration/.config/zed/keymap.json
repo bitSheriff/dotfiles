@@ -45,10 +45,10 @@
             // put key-bindings here if you want them to work only in normal mode
             // Window movement bindings
             // Ctrl jklk to move between panes
-            "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
-            "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
-            "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-            "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
+            "ctrl-h": "workspace::ActivatePaneLeft",
+            "ctrl-l": "workspace::ActivatePaneRight",
+            "ctrl-k": "workspace::ActivatePaneUp",
+            "ctrl-j": "workspace::ActivatePaneDown",
 
             // +LSP
             "space c a": "editor::ToggleCodeActions",
@@ -62,10 +62,10 @@
             "g T": "editor::GoToTypeDefinitionSplit",
             "g r": "editor::FindAllReferences",
             "] d": "editor::GoToDiagnostic",
-            "[ d": "editor::GoToPrevDiagnostic",
+            "[ d": "editor::GoToPreviousDiagnostic",
             // TODO: Go to next/prev error
             "] e": "editor::GoToDiagnostic",
-            "[ e": "editor::GoToPrevDiagnostic",
+            "[ e": "editor::GoToPreviousDiagnostic",
             // Symbol search
             "s s": "outline::Toggle",
             "s S": "project_symbols::Toggle",
@@ -75,13 +75,13 @@
             // +Git
             // Git prev/next hunk
             "] h": "editor::GoToHunk",
-            "[ h": "editor::GoToPrevHunk",
+            "[ h": "editor::GoToPreviousHunk",
 
             // TODO: git diff is not ready yet, refer https://github.com/zed-industries/zed/issues/8665#issuecomment-2194000497
 
             // + Buffers
             // Switch between buffers
-            "shift-h": "pane::ActivatePrevItem",
+            "shift-h": "pane::ActivatePreviousItem",
             "shift-l": "pane::ActivateNextItem",
             // Close active panel
             "shift-q": "pane::CloseActiveItem",
@@ -156,10 +156,10 @@
     {
         "context": "Terminal",
         "bindings": {
-            "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
-            "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
-            "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-            "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
+            "ctrl-h": "workspace::ActivatePaneLeft",
+            "ctrl-l": "workspace::ActivatePaneRight",
+            "ctrl-k": "workspace::ActivatePaneUp",
+            "ctrl-j": "workspace::ActivatePaneDown",
             "ctrl-shift-t": "terminal_panel::ToggleFocus"
         }
     },
@@ -178,20 +178,20 @@
             "q": "workspace::ToggleRightDock",
             "space e": "workspace::ToggleRightDock",
             // Navigate between panel
-            "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
-            "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
-            "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-            "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"]
+            "ctrl-h": "workspace::ActivatePaneLeft",
+            "ctrl-l": "workspace::ActivatePaneRight",
+            "ctrl-k": "workspace::ActivatePaneUp",
+            "ctrl-j": "workspace::ActivatePaneDown"
         }
     },
     // Panel nagivation
     {
         "context": "Dock",
         "bindings": {
-            "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
-            "ctrl-w l": ["workspace::ActivatePaneInDirection", "Right"],
-            "ctrl-w k": ["workspace::ActivatePaneInDirection", "Up"],
-            "ctrl-w j": ["workspace::ActivatePaneInDirection", "Down"],
+            "ctrl-w h": "workspace::ActivatePaneLeft",
+            "ctrl-w l": "workspace::ActivatePaneRight",
+            "ctrl-w k": "workspace::ActivatePaneUp",
+            "ctrl-w j": "workspace::ActivatePaneDown",
 
             // Toggle Docks
             "ctrl-alt-left": "workspace::ToggleLeftDock",
