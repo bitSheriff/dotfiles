@@ -20,4 +20,4 @@ wayland-logout              # logout from wayland session
 waypaper                    # wallpaper chooser
 webapp-manager              # create webapps
 wlogout                     # logout from wayland session
-zen-browser                 # good-looking hardend firefox
+zen-browser-bin             # good-looking hardend firefox
