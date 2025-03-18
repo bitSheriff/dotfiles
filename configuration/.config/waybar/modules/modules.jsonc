@@ -62,7 +62,7 @@
 
         // Browser and Websites
         "class<firefox>": " ",
-        "class<zen-beta>": "<span font='12'>󰬡 </span>",
+        "class<zen>": "<span font='12'>󰬡 </span>",
         "title<.*Endel.*>": " ",
         "title<.*Picture-in-Picture.*>": " ",
         "title<.*Twitch.*>": " ",
