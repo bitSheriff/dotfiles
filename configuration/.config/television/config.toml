@@ -42,7 +42,7 @@ theme = "Eldritch"
 #
 # Channel mode
 # ------------------------
-[keybindings.Channel]
+[keybindings]
 # Quit the application
 quit = "esc"
 # Scrolling through entries
@@ -63,43 +63,6 @@ toggle_remote_control = "ctrl-r"
 toggle_send_to_channel = "ctrl-s"
 # Toggle the help bar
 toggle_help = "ctrl-g"
-
-
-# Remote control mode
-# -------------------------------
-[keybindings.RemoteControl]
-# Quit the application
-quit = "esc"
-# Scrolling through entries
-select_next_entry = "down"
-select_prev_entry = "up"
-select_next_page = "pagedown"
-select_prev_page = "pageup"
-# Select an entry
-select_entry = "enter"
-# Toggle the remote control mode
-toggle_remote_control = "ctrl-r"
-# Toggle the help bar
-toggle_help = "ctrl-g"
-
-
-# Send to channel mode
-# --------------------------------
-[keybindings.SendToChannel]
-# Quit the application
-quit = "esc"
-# Scrolling through entries
-select_next_entry = "down"
-select_prev_entry = "up"
-select_next_page = "pagedown"
-select_prev_page = "pageup"
-# Select an entry
-select_entry = "enter"
-# Toggle the send to channel mode
-toggle_send_to_channel = "ctrl-s"
-# Toggle the help bar
-toggle_help = "ctrl-g"
-
 
 # trigger with CTRL+T
 [shell_integration.commands]
