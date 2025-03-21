@@ -106,7 +106,7 @@
         "class<MATLAB.*>": "󰍘 ",
         "title<.*Maple.*>": " ",
         "class<.*gcolor3.*>": " ", // Color Picker
-        "class<dev.zed.Zed>": "󱚍 ",
+        "class<dev.zed.Zed>": "<span font='12'>󰅱 </span>",
         "class<.*[gG]hostty.*>": "<span font='12'>󰊠 </span>",
 
         // Basic Office Stuff
