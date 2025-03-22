@@ -10,11 +10,6 @@
     {
         "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
         "bindings": {
-            // put key-bindings here if you want them to work in normal & visual mode
-            // Git
-            "space g h d": "editor::ToggleHunkDiff",
-            "space g h r": "editor::RevertSelectedHunks",
-
             // Toggle inlay hints
             "space t i": "editor::ToggleInlayHints",
 
@@ -35,8 +30,15 @@
 
             // Chat with AI
             "space a c": "assistant::ToggleFocus",
+
             // Go to file with `gf`
-            "g f": "editor::OpenExcerpts"
+            "g f": "editor::OpenExcerpts",
+
+            // Open file finder
+            "space f": "file_finder::Toggle",
+
+            // toggle left dock
+            "space e": "workspace::ToggleLeftDock"
         }
     },
     {
@@ -53,6 +55,7 @@
             // +LSP
             "space c a": "editor::ToggleCodeActions",
             "space .": "editor::ToggleCodeActions",
+            "space c f": "editor::Format",
             "space c r": "editor::Rename",
             "g d": "editor::GoToDefinition",
             "g D": "editor::GoToDefinitionSplit",
@@ -138,14 +141,6 @@
             "r": "editor::Rename" // zed specific
         }
     },
-    // Code Action
-    {
-        "context": "Editor && vim_operator == c",
-        "bindings": {
-            "c": "vim::CurrentLine",
-            "a": "editor::ToggleCodeActions" // zed specific
-        }
-    },
     // Toggle terminal
     {
         "context": "Workspace",
@@ -196,13 +191,6 @@
             // Toggle Docks
             "ctrl-alt-left": "workspace::ToggleLeftDock",
             "ctrl-alt-right": "workspace::ToggleRightDock"
-        }
-    },
-    // Run nearest task
-    {
-        "context": "EmptyPane || SharedScreen || vim_mode == normal",
-        "bindings": {
-            "space r t": ["editor::SpawnNearestTask", { "reveal": "no_focus" }]
         }
     }
     // Subword motion is not working really nice with `ciw`, disable for now
