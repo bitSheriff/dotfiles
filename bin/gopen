@@ -1,12 +1,27 @@
 #! /usr/bin/bash
 
+# Function to open the URL in the browser.
+open_url() {
+    local url=$1
+    # Let the user know what we're opening, formatting org/repo in green, open.
+    echo -e "opening ${base_url}/\e[32m${org_repo}\e[0m"
+    python3 -c "import webbrowser; webbrowser.open_new_tab('${url}')"
+}
+
 # Get the origin for the current repo.
 origin=$(git remote get-url origin 2>/dev/null)
 
-# Bail if we're not in a git repo.
+# If "origin" is not found, use fzf to select a remote.
 if [[ $? -ne 0 ]]; then
-    echo "current dir '$(basename "${PWD}")' is not in a git repo..."
-    return
+    echo "No remote 'origin' found. Selecting a remote with fzf..."
+    remote=$(git remote -v | awk '{print $2}' | fzf --prompt="Select a remote: ")
+    if [[ -z "${remote}" ]]; then
+        echo "No remote selected. Opening current directory in the browser..."
+        open_url "file://${PWD}"
+        exit 0
+    else
+        origin=${remote}
+    fi
 fi
 
 # Determine the platform and set the base URL accordingly.
@@ -18,7 +33,7 @@ elif [[ "${origin}" == *codeberg.org* ]]; then
     base_url="https://codeberg.org"
 else
     echo "Unsupported git hosting service."
-    return
+    exit 1
 fi
 
 # Extract the org/repo from the origin URL.
@@ -27,6 +42,4 @@ org_repo=$(echo "${origin%.git}" | cut -f2 -d: | sed 's/.*@//')
 # Construct the full URL.
 url="${base_url}/${org_repo}"
 
-# Let the user know what we're opening, formatting org/repo in green, open.
-echo -e "opening ${base_url}/\e[32m${org_repo}\e[0m"
-python3 -c "import webbrowser; webbrowser.open_new_tab('${url}')"
+open_url "${url}"
