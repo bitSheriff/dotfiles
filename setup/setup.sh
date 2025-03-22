@@ -155,6 +155,7 @@ create_symlinks() {
 
     # fix some applications (better names) if they are installed
     safe_symlink "/usr/bin/zeditor" "/usr/bin/zed"
+    safe_symlink "/usr/bin/pastebin" "/usr/bin/termbin"
 
     # link the secrets if the file is found
     if [ -d "$DOTFILES_DIR/secrets" ]; then
