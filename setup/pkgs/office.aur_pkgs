@@ -5,7 +5,6 @@ anki                        # flashcard learning app
 decoder                     # scan and generate QR codes
 gpgfrontend                 # beautiful frontend for GnuPG
 localsend-bin               # Send files to other devices on the same network
-morgen-bin                  # calender
 parabolic                   # youtube-dl frontend
 peazip-qt-bin               # .zip/ .rar  client
 ticktick                    # Task manager
