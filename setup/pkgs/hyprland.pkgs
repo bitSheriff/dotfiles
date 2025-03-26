@@ -15,6 +15,7 @@ hypridle                    # Idle manager
 hyprland                    # Hyprland
 hyprlock                    # Lockscreen
 hyprpaper                   # Wallpaper manager
+hyprsunset                  # Display Color Temperature
 kvantum                     # Theme manager for KDE applications
 kwallet
 kwalletmanager              # GUI to edit KWallet
