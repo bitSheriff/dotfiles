@@ -7,3 +7,4 @@ configuration/.config/hypr/workspaces.conf
 configuration/.config/espanso/match/email.yml
 configuration/.config/1Password
 configuration/.ssh
+configuration/.config/peaclock/history
