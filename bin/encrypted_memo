@@ -1,0 +1,24 @@
+#!/bin/bash
+
+JOURNAL=~/notes/Journal/Entries/Daily/$(date +"%F").md
+
+if [ $# -gt 0 ]; then
+    # If there are arguments, join them into a single string and process
+    input="$*"
+else
+
+    # Otherwise, use gum write to get the input
+    input=$(gum write --header "Memo" --show-line-numbers --char-limit 0)
+fi
+
+# encrypt the input using age
+# -a    armored
+# -e    encrypt
+# -p    passphrase
+encrypted_input=$(echo "$input" | age -e -a -p )
+
+# embedd the encrypted cipher into a markdown codefence
+formatted=$(printf '%s\n%s\n%s' '```age' "$encrypted_input" '```')
+
+# save the formatted output to the journal file
+echo "$formatted" >> "$JOURNAL"
