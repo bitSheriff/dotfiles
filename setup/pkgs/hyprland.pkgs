@@ -35,6 +35,7 @@ slurp                       # Screenshot utility
 spotify-launcher            # Spotify launcher
 starship                    # Shell prompt
 swappy                      # Screenshot annotator
+termdown                    # countdown and stopwatch for CLI
 ttf-jetbrains-mono-nerd     # Nerd Font
 waybar                      # Status bar
 wireplumber

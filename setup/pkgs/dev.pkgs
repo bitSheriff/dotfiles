@@ -54,6 +54,7 @@ serie                       # git graph viewer in the terminal
 speedcrunch                 # best scientific calculator
 spotify-launcher
 television                  # tui fuzzy finder (öike fzf)
+termdown                    # countdown and stopwatch for CLI
 thefuck
 tldr                        # man alternative with examples
 torbrowser-launcher
