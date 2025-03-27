@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Check if the age command is installed
+if ! command -v age &> /dev/null; then
+    echo "age command could not be found. Please install age."
+    exit 1
+fi
+
+# Check if a file is provided as an argument
+if [ -z "$1" ]; then
+    echo "Usage: $0 <markdown-file>"
+    exit 1
+fi
+
+# Read the markdown file
+file="$1"
+
+# Extract the age-encrypted section
+encrypted_section=$(awk '/```age/{flag=1; next} /```/{flag=0} flag' "$file")
+
+# Check if an encrypted section was found
+if [ -z "$encrypted_section" ]; then
+    echo "No age-encrypted section found in the file."
+    exit 1
+fi
+
+# Decrypt the section using age
+decrypted_text=$(echo "$encrypted_section" | age -d)
+
+# Check if the age command is installed
+if command -v glow &> /dev/null; then
+    # print the formatted text with glow
+    echo "$decrypted_text" | glow -
+else
+    echo "glow command could not be found. Please install glow."
+fi
