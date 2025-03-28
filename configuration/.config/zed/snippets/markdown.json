@@ -94,5 +94,12 @@
         "body": [
             "{{< codeimporter url=\"https://raw.githubusercontent.com/\" type=\"shell\" >}}"
         ]
+    },
+
+    "Hugo Figure": {
+        "prefix": "hugo figure",
+        "body": [
+            "{{< figure src=\"./path/to/image.png\" caption=\"Caption\" >}}"
+        ]
     }
 }
