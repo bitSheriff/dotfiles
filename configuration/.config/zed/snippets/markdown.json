@@ -87,5 +87,12 @@
     "Hugo Article": {
         "prefix": "hugo article",
         "body": ["{{< article link=\"/docs/welcome/\" >}}"]
+    },
+
+    "Hugo Codeimporter": {
+        "prefix": "hugo codeimporter",
+        "body": [
+            "{{< codeimporter url=\"https://raw.githubusercontent.com/\" type=\"shell\" >}}"
+        ]
     }
 }
