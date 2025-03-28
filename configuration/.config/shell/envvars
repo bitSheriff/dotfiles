@@ -16,6 +16,8 @@ export CODE_DIR=$HOME/code                                          # define the
 export BIN_PATH=$HOME/.local/bin                                    # path for own binaries/scripts
 export LIB_PATH=$HOME/.local/lib                                    # path for own libraries
 
+export AGE_KEY_DIR=$HOME/.age                                       # path where different age keys are stored
+
 # use 1Password as the SSH Agent
 export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
 
