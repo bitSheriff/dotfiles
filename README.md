@@ -4,6 +4,18 @@
 
 ## Installation
 
+> [!important] Distribution
+> This installation process is designed for Arch Linux. The dotfiles should work on other distributions as well, but some features might not be available.
+
+### Prerequisites
+
+- Ensure you have `git` installed.
+- Install `stow` if you haven't already.
+- Install `gum` for interactive prompts.
+- Install `age` for encrypting secrets.
+
+### Process
+
 The whole installation process is managed by the `setup/setup.sh` script.
 
 ```sh
