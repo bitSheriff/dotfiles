@@ -64,6 +64,31 @@
         "description": "Code Block"
     },
 
+    "Callout Note": {
+        "prefix": "callout note",
+        "body": ["> [!NOTE]  ", "> $1"]
+    },
+
+    "Callout Tip": {
+        "prefix": "callout tip",
+        "body": ["> [!TIP]  ", "> $1"]
+    },
+
+    "Callout Important": {
+        "prefix": "callout important",
+        "body": ["> [!IMPORTANT]  ", "> $1"]
+    },
+
+    "Callout Warning": {
+        "prefix": "callout warning",
+        "body": ["> [!WARNING]  ", "> $1"]
+    },
+
+    "Callout Caution": {
+        "prefix": "callout caution",
+        "body": ["> [!CAUTION]  ", "> $1"]
+    },
+
     "Hugo Comment": {
         "prefix": "hugo comment",
         "body": ["<!--", "    ${1:Comment}", "-->"],
