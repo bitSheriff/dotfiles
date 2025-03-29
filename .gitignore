@@ -8,3 +8,8 @@ configuration/.config/espanso/match/email.yml
 configuration/.config/1Password
 configuration/.ssh
 configuration/.config/peaclock/history
+**.md5
+bin/clone-repositories.sh
+bin/datengrab_copy
+configuration/.config/gurk/gurk.toml
+configuration/.config/iamb/config.toml

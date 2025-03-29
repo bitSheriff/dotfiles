@@ -132,13 +132,16 @@ create_symlinks() {
         sudo apt install -y stow
     fi
 
+    # encrypt the secrets
+    secret_run
+
     # find broken symlinks and remove them
     find ~/.config -xtype l -delete
     find ~/Templates -xtype l -delete
     find ~/.local/bin -xtype l -delete
 
     # stow the packages (no idea why it does not work with $FLAGS)
-    stow --adopt -t ~ -d $DIR_NAME/.. configuration
+    stow --adopt -t $HOME -d $DIR_NAME/.. configuration
 
     # link the templates
     mkdir -p ~/Templates/
@@ -157,10 +160,6 @@ create_symlinks() {
     safe_symlink "/usr/bin/zeditor" "/usr/bin/zed"
     safe_symlink "/usr/bin/pastebin" "/usr/bin/termbin"
 
-    # link the secrets if the file is found
-    if [ -d "$DOTFILES_DIR/secrets" ]; then
-        bash $DOTFILES_DIR/secrets/link.sh
-    fi
 
     # check if running on Android
     if [[ -z "$TERMUX_VERSION" ]]; then
@@ -507,69 +506,8 @@ post_install() {
 
 }
 
-generic_encrypt() {
-    local input=$1
-    local output=$2
-
-    print_debug "encrypting $input > $output"
-
-    # check if the enviroment varaible with the passphrase is set
-    if [ -z "$GPG_DOTFILES_PASSWORD" ]; then
-        gpg --symmetric --batch --yes --armor -o "$output" "$input"
-    else
-        gpg --symmetric --passphrase "$GPG_DOTFILES_PASSWORD" --batch --yes --armor -o "$output" "$input"
-    fi
-
-}
-
-secret_encrypt() {
-    print_h1 "Secret: Encrypt"
-
-    generic_encrypt "secret.sh" "secret.sh.gpg"
-    generic_encrypt "$HOME/.ssh/hosts" "ssh_hosts.gpg"
-}
-
-generic_decrypt() {
-    local input=$1
-    local output=$2
-
-    print_debug "decrypting $input > $output"
-    # check if the enviroment varaible with the passphrase is set
-    if [ -z "$GPG_DOTFILES_PASSWORD" ]; then
-        gpg --decrypt --batch --yes -o "$output" "$input"
-    else
-        gpg --decrypt --passphrase "$GPG_DOTFILES_PASSWORD" --batch --yes -o "$output" "$input"
-    fi
-
-}
-
-secret_decrypt() {
-    print_h1 "Secret: Decrypt"
-
-    generic_decrypt "secret.sh.gpg" "secret.sh"
-    generic_decrypt "ssh_hosts.gpg" "$HOME/.ssh/hosts"
-}
-
 secret_run() {
-    # Überprüfen, ob die Datei secret.sh existiert
-    if [ -f "secret.sh" ]; then
-        print_debug "Secret already encrypted"
-    else
-        print_debug "Decrypt the Secret file"
-        secret_dectypt
-    fi
-
-    # check if the secret file was correct decrypted -> the main function exists
-    if grep -q "^secret_main()" secret.sh; then
-
-        # source the file and execute the function
-        source secret.sh
-        secret_main
-
-    else
-        print_debug "Something went wrong with decryption"
-        exit 1
-    fi
+    bash $DIR_NAME/secret.sh
 }
 
 deactivate_gpg_signing() {
@@ -737,13 +675,8 @@ if [[ "$ARG_MODE" = 'languages' || "$ARG_MODE" = 'lang' ]]; then
     exit 0
 fi
 
-if [[ "$ARG_MODE" = 'encrypt' ]]; then
-    secret_encrypt
-    exit 0
-fi
-
-if [[ "$ARG_MODE" = 'decrypt' ]]; then
-    secret_decrypt
+if [[ "$ARG_MODE" = 'secrets' || "$ARG_MODE" = 'secret' ]]; then
+    secret_run
     exit 0
 fi
 
