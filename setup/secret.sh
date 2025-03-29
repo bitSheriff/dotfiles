@@ -126,7 +126,6 @@ secret_main() {
         eval line="$line"
         check_updates "$line"
     done < "$FILE_LIST"
-
 }
 
 secret_main

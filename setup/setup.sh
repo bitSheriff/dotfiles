@@ -749,6 +749,11 @@ if ! is_arch; then
     exit 1
 fi
 
+# check if DOTFILES_DIR is set, if not source the env.sh file
+if [ -z "$DOTFILES_DIR" ]; then
+    source "$DIR_NAME/env.sh"
+fi
+
 # ========================================
 # Interactions
 # ========================================

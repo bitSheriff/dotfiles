@@ -14,6 +14,8 @@
 - Install `gum` for interactive prompts.
 - Install `age` for encrypting secrets.
 
+Please check the [env.sh](./setup/env.sh) file to see if the environment variables are set correctly (for yourself).
+
 ### Process
 
 The whole installation process is managed by the `setup/setup.sh` script.
