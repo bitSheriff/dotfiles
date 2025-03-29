@@ -1,9 +1,6 @@
 [submodule "configuration/.config/nvim"]
 	path = configuration/.config/nvim
 	url = git@github.com:bitSheriff/Benjavim.git
-[submodule "secrets"]
-	path = secrets
-    url = git@github.com:bitSheriff/dotfiles-secrets.git
 [submodule "wallpapers"]
 	path = wallpapers
 	url = git@github.com:bitSheriff/wallpapers.git
