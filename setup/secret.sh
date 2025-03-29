@@ -14,6 +14,7 @@ source "$DIR_NAME/../lib/distributions.sh"
 FILE_UNCHANGED=0
 FILE_CHANGED=1
 FILE_CHECKSUM_NOT_FOUND=2
+FILE_NOT_FOUND=3
 
 
 create_checksum() {
@@ -26,6 +27,10 @@ create_checksum() {
 check_file_checksum() {
     FILE_NAME=$1
     MD5_FILE="${FILE_NAME}.md5"
+
+    if [[ ! -f "$FILE_NAME" ]]; then
+        return $FILE_NOT_FOUND
+    fi
 
     if [[ -f "$MD5_FILE" ]]; then
         NEW_MD5=$(md5sum "$FILE_NAME" | awk '{ print $1 }')
@@ -90,6 +95,11 @@ check_updates() {
             create_checksum "$FILE_NAME"
             create_checksum "$FILE_NAME.age"
             print_note "Checksum file for $FILE_NAME not found."
+            ;;
+        "$FILE_NOT_FOUND")
+            print_note "File $FILE_NAME not found."
+            decrypt_file "$FILE_NAME"
+            create_checksum "$FILE_NAME"
             ;;
     esac
 }
