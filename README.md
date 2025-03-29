@@ -4,7 +4,7 @@
 
 ## Installation
 
-> [!IMPORTANT] Distribution
+> [!IMPORTANT]
 > This installation process is designed for Arch Linux. The dotfiles should work on other distributions as well, but some features might not be available.
 
 ### Prerequisites
