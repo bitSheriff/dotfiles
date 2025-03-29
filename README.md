@@ -56,6 +56,14 @@ Additionally, I do the same with the encrypted `.age` file, this way I can check
 
 If **both** the local and the remote files are changed, we have a real problem. So the only option is to decrypt the remote file to another filename and merge them manually. But I am working on a solution for this.
 
+For the secrets to work, you will need to set the environment variable `AGE_KEY_DOTFILES` to the path of the key file.
+
+```sh
+export AGE_KEY_DOTFILES=$HOME/.age/dotfiles.key
+```
+
+> obviously this file is not checked into git...
+
 ---
 
 [^1]: https://www.gnu.org/software/stow/
