@@ -112,18 +112,23 @@ secret_main() {
         exit 1
     fi
 
-    FILES=(
-        "$DOTFILES_DIR/configuration/.ssh/hosts"
-        "$DOTFILES_DIR/configuration/.config/shell/secrets"
-        "$DOTFILES_DIR/configuration/.config/gurk/gurk.toml"
-        "$DOTFILES_DIR/configuration/.config/iamb/config.toml"
-        "$DOTFILES_DIR/bin/datengrab_copy"
-        "$DOTFILES_DIR/bin/clone-repositories.sh"
-    )
+    FILE_LIST="$DOTFILES_DIR/setup/secret_files.txt"
 
-    for FILE in "${FILES[@]}"; do
-        check_updates "$FILE"
-    done
+    if [[ ! -f "$FILE_LIST" ]]; then
+        echo "Error: File list $FILE_LIST does not exist."
+        exit 1
+    fi
+
+    FILES=()
+
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        # Ignore empty lines and lines starting with #
+        [[ -z "$line" || "$line" =~ ^# ]] && continue
+        # Replace environment variables in the line
+        eval line="$line"
+        check_updates "$line"
+    done < "$FILE_LIST"
+
 }
 
 secret_main
