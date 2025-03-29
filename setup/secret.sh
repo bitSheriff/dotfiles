@@ -108,18 +108,16 @@ secret_main() {
     print_h1 "Secrets"
 
     if [[ ! -f "$AGE_KEY_DOTFILES" ]]; then
-        echo "Error: Key file $AGE_KEY_DOTFILES does not exist."
+        print_error "Error: Key file $AGE_KEY_DOTFILES does not exist."
         exit 1
     fi
 
     FILE_LIST="$DOTFILES_DIR/setup/secret_files.txt"
 
     if [[ ! -f "$FILE_LIST" ]]; then
-        echo "Error: File list $FILE_LIST does not exist."
+        print_error "Error: File list $FILE_LIST does not exist."
         exit 1
     fi
-
-    FILES=()
 
     while IFS= read -r line || [[ -n "$line" ]]; do
         # Ignore empty lines and lines starting with #
