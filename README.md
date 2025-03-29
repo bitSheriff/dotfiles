@@ -66,6 +66,15 @@ export AGE_KEY_DOTFILES=$HOME/.age/dotfiles.key
 
 > obviously this file is not checked into git...
 
+> [!TIP]
+> if you want to use secure your age-keys, you can encrypt them with a passphrase
+>
+> ```sh
+> age-keygen | age -p > key.age
+> ```
+>
+> everytime you use this _identity file_ (aka the key), you will be prompted for the passphrase
+
 ---
 
 [^1]: https://www.gnu.org/software/stow/
