@@ -759,7 +759,7 @@ fi
 # ========================================
 
 # select the tools to install
-tool_selection=$(gum choose --no-limit "Hyprland" "KDE Plasma" "Development" "University" "LaTeX" "Office" "Local AI")
+tool_selection=$(gum choose --no-limit "Hyprland" "KDE Plasma" "Development" "University" "LaTeX" "Office" "Local AI" "Audio")
 
 # Converting list from `gum choose` output to an array
 IFS=$'\n' read -rd '' -a array <<<"$tool_selection"
@@ -816,6 +816,16 @@ fi
 if array_contains "${array[@]}" "Local AI"; then
     bash $DIR_NAME/scripts/local-ai.sh
 fi
+
+if array_contains "${array[@]}" "Audio"; then
+
+    # basic of everything
+    pacman_install_single "ffmpeg" "qjackctl"
+
+    # editor to merge, cut and convert (GUI for ffmpeg)
+    yay_install_single "losslesscut-bin"
+fi
+
 
 if [[ "$DO_OPTIONALS" = 1 ]]; then
     install_optionals
