@@ -41,6 +41,7 @@ NAME_xxd="[Dev/Reverse Engineering] netcat"
 NAME_cozy="[Media/Audio] Cozy Audiobook-Player"
 NAME_spotify="[Media/Audio] Spotify"
 NAME_spotube="[Media/Audio] Spotube"
+NAME_losslesscut="[Media/Audio] LosslessCut (ffmpeg GUI)"
 NAME_pocketcasts="[Media/Audio] Pocket Casts"
 NAME_kodi="[Media] Kodi"
 
@@ -210,6 +211,7 @@ packages=(
     "$NAME_upscayl"
     "$NAME_xournalpp"
     "$NAME_entephotos"
+    "$NAME_losslesscut"
 )
 
 # sort the packages
@@ -278,6 +280,7 @@ if array_contains "${array[@]}" "$NAME_gromit"; then yay_packages+=("gromit-mpx"
 if array_contains "${array[@]}" "$NAME_upscayl"; then yay_packages+=("upscayl-bin"); fi
 if array_contains "${array[@]}" "$NAME_xournalpp"; then pacman_packages+=("xournalpp"); fi
 if array_contains "${array[@]}" "$NAME_entephotos"; then yay_packages+=("ente-desktop-bin"); fi
+if array_contains "${array[@]}" "$NAME_losslesscut"; then yay_packages+=("losslesscut-bin"); fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
     sudo systemctl enable tailscaled
