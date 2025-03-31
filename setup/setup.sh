@@ -370,6 +370,22 @@ install_uni_tools() {
     install_language_specific
 }
 
+
+install_audio_tools() {
+    print_h1 "AUdio Tools"
+
+    # basic of everything
+    pacman_install_single "ffmpeg"
+
+    # Pipwire Patchbay
+    # qpwgraph: Qt
+    # helvum: Gtk (is not able to save sessions)
+    pacman_install_single "qpwgraph" "helvum"
+
+    # editor to merge, cut and convert (GUI for ffmpeg)
+    yay_install_single "losslesscut-bin"
+}
+
 install_latex() {
 
     print_note "LaTeX installation needs a lot of space"
@@ -819,11 +835,7 @@ fi
 
 if array_contains "${array[@]}" "Audio"; then
 
-    # basic of everything
-    pacman_install_single "ffmpeg" "qjackctl"
-
-    # editor to merge, cut and convert (GUI for ffmpeg)
-    yay_install_single "losslesscut-bin"
+    install_audio_tools
 fi
 
 
