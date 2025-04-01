@@ -110,6 +110,7 @@
             "class<.*pocket-casts.*>": "<span font='12'>󰑬 </span>",
             "class<mpv>": "<span font='12'> </span>",
             "class<.*gwenview.*>": "󰋩 ",
+            "class<ente>": "󰋩 ",
 
             // Basic Office Stuff
             "class<.*calibre.*>": "󱉟 ",
