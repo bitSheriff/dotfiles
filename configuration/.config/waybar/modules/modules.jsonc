@@ -1,374 +1,376 @@
 {
-  // Media Player
-  "custom/media": {
-    "format": "{}",
-    "return-type": "json",
-    "max-length": 40,
-    "escape": true,
-    "exec": "~/.config/waybar/scripts/mediaplayer.py 2> /dev/null", // Script in resources folder
-    "on-click" : "playerctl play-pause",
-    "on-scroll-down": "playerctl next",
-    "on-scroll-up": "playerctl previous",
-    "scroll-step": 1,
-    "smooth-scrolling-threshold": 10,
-  },
-
-  // Workspaces
-  "hyprland/workspaces#minimal": {
-    "active-only": false,
-    "format": "{icon}",
-    // "show-special" : true,
-    "on-scroll-up": "hyprctl dispatch workspace e+1",
-    "on-scroll-down": "hyprctl dispatch workspace e-1",
-    "format-icons": {
-      "1": "I",
-      "2": "II",
-      "3": "III",
-      "4": "IV",
-      "5": "V",
-      "6": "VI",
-      "7": "VII",
-      "8": "VIII",
-      "9": "IX",
-      "10": "X",
-      "11": "XI",
-      "12": "XII",
-      "13": "XIII",
-      "14": "XIV",
-      "15": "XV",
-      "16": "XVI",
-      "17": "XVII",
-      "18": "XVIII",
-      "19": "XIX",
-      
+    // Media Player
+    "custom/media": {
+        "format": "{}",
+        "return-type": "json",
+        "max-length": 40,
+        "escape": true,
+        "exec": "~/.config/waybar/scripts/mediaplayer.py 2> /dev/null", // Script in resources folder
+        "on-click": "playerctl play-pause",
+        "on-scroll-down": "playerctl next",
+        "on-scroll-up": "playerctl previous",
+        "scroll-step": 1,
+        "smooth-scrolling-threshold": 10,
     },
-  },
 
-  // NUMBERS and ICONS style with window rewrite
-  "hyprland/workspaces": {
-    "disable-scroll": true,
-    "all-outputs": true,
-    "warp-on-scroll": true,
-    "sort-by-number": true,
-    "show-special": false,
-    "on-click": "activate",
-    "on-scroll-up": "hyprctl dispatch workspace e+1",
-    "on-scroll-down": "hyprctl dispatch workspace e-1",
-    "format": "{icon} {windows}",
-    // "persistent-workspaces": {"*": 25},
-    "format-window-separator": " ",
-    "window-rewrite-default": " ",
-    "window-rewrite": {
+    // Workspaces
+    "hyprland/workspaces#minimal": {
+        "active-only": false,
+        "format": "{icon}",
+        // "show-special" : true,
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "format-icons": {
+            "1": "I",
+            "2": "II",
+            "3": "III",
+            "4": "IV",
+            "5": "V",
+            "6": "VI",
+            "7": "VII",
+            "8": "VIII",
+            "9": "IX",
+            "10": "X",
+            "11": "XI",
+            "12": "XII",
+            "13": "XIII",
+            "14": "XIV",
+            "15": "XV",
+            "16": "XVI",
+            "17": "XVII",
+            "18": "XVIII",
+            "19": "XIX",
+        },
+    },
 
-        // Browser and Websites
-        "class<firefox>": " ",
-        "class<zen>": "<span font='12'>󰬡 </span>",
-        "title<.*Endel.*>": " ",
-        "title<.*Picture-in-Picture.*>": " ",
-        "title<.*Twitch.*>": " ",
-        "title<.*[sS]potify.*>": " ",
-        "class<.*[sS]potify.*>": " ",
-        "title<.*amazon.*>": " ",
-        "title<.*github.*>": " ",
-        "title<.*plex.*>": "󰚺 ",
-        "title<.*reddit.*>": " ",
-        "title<.*youtube.*>": " ",	
-        "title<.*[mM]astodon.*>": " ",	
+    // NUMBERS and ICONS style with window rewrite
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "warp-on-scroll": true,
+        "sort-by-number": true,
+        "show-special": false,
+        "on-click": "activate",
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "format": "{icon} {windows}",
+        // "persistent-workspaces": {"*": 25},
+        "format-window-separator": " ",
+        "window-rewrite-default": " ",
+        "window-rewrite": {
+            // Browser and Websites
+            "class<firefox>": " ",
+            "class<zen>": "<span font='12'>󰬡 </span>",
+            "title<.*Endel.*>": " ",
+            "title<.*Picture-in-Picture.*>": " ",
+            "title<.*Twitch.*>": " ",
+            "title<.*[sS]potify.*>": " ",
+            "class<.*[sS]potify.*>": " ",
+            "title<.*amazon.*>": " ",
+            "title<.*github.*>": " ",
+            "title<.*plex.*>": "󰚺 ",
+            "title<.*reddit.*>": " ",
+            "title<.*youtube.*>": " ",
+            "title<.*[mM]astodon.*>": " ",
 
-        // Productivity Apps
-        "class<.*ghostwriter.*>": "󰊠 ",
-        "class<.*okular.*>": " ",
-        "class<.*zathura.*>": " ",
-        "class<1Password>": "󰟵 ",
-        "class<Signal>": "󰈎 ",
-        "class<localsend>": "<span font='12'>󰷹 </span>",
-        "title<.*[W|w]hats[A|a]pp.*>": "<span font='12'>󰖣 </span>",
-        "class<obsidian>": "<span font='12'> </span>", // some icons need to be increased in size
-        "class<ticktick>": "<span font='11'> </span>",
-        "class<Beeper>": "<span font='11'>󰭻 </span>",
-        "title<.*Readwise.*>": "<span font='11'> </span>",
-        "title<.*Overleaf.*>": "<span font='13'> </span>",
+            // Productivity Apps
+            "class<.*ghostwriter.*>": "󰊠 ",
+            "class<.*okular.*>": " ",
+            "class<.*zathura.*>": " ",
+            "class<1Password>": "󰟵 ",
+            "class<Signal>": "󰈎 ",
+            "class<localsend>": "<span font='12'>󰷹 </span>",
+            "title<.*[W|w]hats[A|a]pp.*>": "<span font='12'>󰖣 </span>",
+            "class<ticktick>": "<span font='11'> </span>",
+            "title<.*Readwise.*>": "<span font='11'> </span>",
+            "title<.*Overleaf.*>": "<span font='13'> </span>",
 
-        // Coding & Co
-        "class<.*Meld.*>": " ",
-        "class<.*Termius.*>": "<span font='12'>󰢹 </span>",
-        "class<.*kate.*>": " ",
-        "class<.*qalculate.*>": "<span font='12'>󰪚 </span>",
-        "class<.*speedcrunch.*>": "<span font='12'>󰪚 </span>",
-        "class<Chromium>": "<span font='12'> </span>",
-        "class<Code|code-url-handler>": "󰨞 ",
-        "class<GitKraken>": " ",
-        "class<filezilla>": " ",
-        "class<kitty>": " ",
-        "class<org.gnome.Boxes>": " ",
-        "class<.*cool-retro-term.*>": "󰍹 ",
-        "class<neovide>": " ",
-        "class<MATLAB.*>": "󰍘 ",
-        "title<.*Maple.*>": " ",
-        "class<.*gcolor3.*>": " ", // Color Picker
-        "class<dev.zed.Zed>": "<span font='12'>󰅱 </span>",
-        "class<.*[gG]hostty.*>": "<span font='12'>󰊠 </span>",
+            // Coding & Co
+            "class<.*Meld.*>": " ",
+            "class<.*Termius.*>": "<span font='12'>󰢹 </span>",
+            "class<.*kate.*>": " ",
+            "class<.*qalculate.*>": "<span font='12'>󰪚 </span>",
+            "class<.*speedcrunch.*>": "<span font='12'>󰪚 </span>",
+            "class<Chromium>": "<span font='12'> </span>",
+            "class<Code|code-url-handler>": "󰨞 ",
+            "class<GitKraken>": " ",
+            "class<filezilla>": " ",
+            "class<kitty>": " ",
+            "class<org.gnome.Boxes>": " ",
+            "class<.*cool-retro-term.*>": "󰍹 ",
+            "class<neovide>": " ",
+            "class<MATLAB.*>": "󰍘 ",
+            "title<.*Maple.*>": " ",
+            "class<.*gcolor3.*>": " ", // Color Picker
+            "class<dev.zed.Zed>": "<span font='12'>󰅱 </span>",
+            "class<.*[gG]hostty.*>": "<span font='12'>󰊠 </span>",
 
-        // Basic Office Stuff
-        "class<.*calibre.*>": "󱉟 ",
-        "class<.*gwenview.*>": "󰋩 ",
-        "class<.*qbittorrent.*>": " ",
-        "class<.*tubeconverter.*>": " ",
-        "class<anki>": "󰘸 ",
-        "class<com.obsproject.Studio>": " ",
-        "class<discord>": " ",
-        "class<thunar|nemo>": "󰝰 ",
-        "class<virt-manager>": " ",
-        "class<Morgen>": "<span font='12'>󰃭 </span>",
-        "class<mpv>": "<span font='12'> </span>",
-        "class<org.kde.haruna>": "<span font='12'> </span>",
-        "class<thunderbird>": "<span font='11'> </span>",
-        "class<Typora>": "<span font='11'>󰼭 </span>",
-        "class<.*[aA]postrophe>": "<span font='11'>󰼭 </span>",
+            // Media
+            "class<org.kde.haruna>": "<span font='12'> </span>",
+            "class<.*pocket-casts.*>": "<span font='12'>󰑬 </span>",
+            "class<mpv>": "<span font='12'> </span>",
+            "class<.*gwenview.*>": "󰋩 ",
 
-        // Socials
-        "class<.*[tT]okodon.*>": " ",	
-        "class<.*[tT]uba.*>": " ",	
-        "class<.*Element.*>": "󰘨 ",	
-        "class<.*Fractal.*>": "󰘨 ",	
-        "title<.*Bluesky.*>": " ",	
-    }
-},
-  // Hyprland Window
- "hyprland/window": {
-    "separate-outputs": true
-  },
+            // Basic Office Stuff
+            "class<.*calibre.*>": "󱉟 ",
+            "class<anki>": "󰘸 ",
+            "class<com.obsproject.Studio>": " ",
+            "class<thunar|nemo>": "󰝰 ",
+            "class<virt-manager>": " ",
+            "class<thunderbird>": "<span font='11'> </span>",
 
-  // Hyprland Submaps
-  "hyprland/submap": {
-    "format": "{}",
-    "max-length": 30,
-    "tooltip": false,
-    "on-click" : "hyprctl dispatch submap reset"
-  },
+            // Downloads
+            "class<.*qbittorrent.*>": " ",
+            "class<.*tubeconverter.*>": " ",
 
-  // Clock
-  "clock": {
-    "format": "{:%H:%M}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format-alt": "{:%Y-%m-%d}",
-  },
+            // Writing
+            "class<Typora>": "<span font='11'>󰼭 </span>",
+            "class<obsidian>": "<span font='12'> </span>", // some icons need to be increased in size
+            "class<.*[aA]postrophe>": "<span font='11'>󰼭 </span>",
 
-  "custom/clock": {
+            // Socials
+            // "class<discord>": " ",
+            "class<.*[tT]okodon.*>": " ",
+            "class<.*[tT]uba.*>": " ",
+            "class<.*Element.*>": "󰘨 ",
+            "class<.*Fractal.*>": "󰘨 ",
+            "title<.*Bluesky.*>": " ",
+            "class<Beeper>": "<span font='11'>󰭻 </span>",
+        },
+    },
+    // Hyprland Window
+    "hyprland/window": {
+        "separate-outputs": true,
+    },
+
+    // Hyprland Submaps
+    "hyprland/submap": {
+        "format": "{}",
+        "max-length": 30,
+        "tooltip": false,
+        "on-click": "hyprctl dispatch submap reset",
+    },
+
+    // Clock
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}",
+    },
+
+    "custom/clock": {
         "format": "{}",
         "interval": 30,
         "exec": "date +'%d.%m %H:%M'",
-  },
-  // Battery
-  "battery": {
-    "states": {
-      "warning": 30,
-      "critical": 15,
     },
-    "format": "{capacity}% {icon}",
-    "format-full": "{capacity}% {icon}",
-    "format-charging": "{capacity}% 󰂄",
-    "format-plugged": "{capacity}% ",
-    "format-alt": "{time} {icon}",
-    "format-icons": ["", "", "", "", ""],
-    "interval": 10,
-  },
-
-  // Power Profiles Daemon
-  "power-profiles-daemon": {
-    "format": "{icon}",
-    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-    "tooltip": true,
-    "format-icons": {
-      "default": "",
-      "performance": "",
-      "balanced": "",
-      "power-saver": "",
+    // Battery
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15,
+        },
+        "format": "{capacity}% {icon}",
+        "format-full": "{capacity}% {icon}",
+        "format-charging": "{capacity}% 󰂄",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""],
+        "interval": 10,
     },
-  },
 
-  // Power Button
-  "custom/power": {
-    "format": "&#x23FB;",
-    "tooltip": false,
-    "on-click": "wlogout",
-    "on-click-right": "hyprlock",
-  },
-
-  // Audio Information
-  "pulseaudio": {
-    "format": "{volume}% {icon} ",
-    "format-bluetooth": "{volume}% {icon} ",
-    "format-bluetooth-muted": " {icon}  ",
-    "format-muted": " {format_source}",
-    "format-source": "{volume}% ",
-    "format-source-muted": "",
-    "format-icons": {
-      "headphone": "",
-      "hands-free": "󰋎",
-      "headset": "󰋎",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["", "", ""],
+    // Power Profiles Daemon
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": "",
+        },
     },
-    "on-click-right": "pavucontrol",
-    "on-click": "~/.config/waybar/scripts/audio_changer.py",
-  },
 
-  // Brightness Information
-  "backlight": {
-    "format": "{percent}% {icon}",
-    "format-icons": ["", "", "", "", "", "", "", "", ""],
-    "on-click-right" : "nwg-displays"
-  },
-
-  // System Tray
-  "tray": {
-    "icon-size": 18,
-    "spacing": 7,
-  },
-
-  // network
-  "network": {
-	"interface": "wlan0",
-	"format": "{ifname}",
-	"format-wifi": "{essid} ({signalStrength}%) ",
-	"format-ethernet": "{ifname} ",
-	"format-disconnected": "", //An empty format will hide the module.
-	// "format-disconnected": "",
-	"tooltip-format": "{ifname}",
-	"tooltip-format-wifi": "{essid} ({signalStrength}%) ",
-	"tooltip-format-ethernet": "{ifname} ",
-	"tooltip-format-disconnected": "Disconnected",
-	"max-length": 50
-},
-
-"bluetooth": {
-	"format": " {status}",
-	"format-connected": " {device_alias}",
-	"format-connected-battery": " {device_alias} {device_battery_percentage}%",
-	// "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
-	"tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
-	"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
-	"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-	"tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
-},
-
-// like caffein, prevent from sleeping
-"idle_inhibitor": {
-    "format": "{icon}",
-    "format-icons": {
-        "activated": "",
-        "deactivated": ""
-    }, 
-    "icon-size": 18,
-    "spacing": 7
-},
-
-// Hypridle inhibitor
-// not needed anymore because Hyprland v0.41 fixed the bug 
-"custom/hypridle": {
-    "format": "{}{icon}", 
-    "format-icons": {
-        "activated": "",
-        "deactivated": ""
+    // Power Button
+    "custom/power": {
+        "format": "&#x23FB;",
+        "tooltip": false,
+        "on-click": "wlogout",
+        "on-click-right": "hyprlock",
     },
-    "return-type": "json",
-    // "escape": true,
-    "exec-on-event": true,
-    "return-type": "json",
-    "interval": 1,
-    "exec": "~/.config/hypr/scripts/hypridle.sh status",
-    "on-click": "~/.config/hypr/scripts/hypridle.sh toggle",
-    "icon-size": 18,
-    "spacing": 7
-},
 
+    // Audio Information
+    "pulseaudio": {
+        "format": "{volume}% {icon} ",
+        "format-bluetooth": "{volume}% {icon} ",
+        "format-bluetooth-muted": " {icon}  ",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "󰋎",
+            "headset": "󰋎",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""],
+        },
+        "on-click-right": "pavucontrol",
+        "on-click": "~/.config/waybar/scripts/audio_changer.py",
+    },
 
-"hyprland/language": {
-    "format": "{}",
-    "format-en": "🇺🇸",
-    "format-de": "🇦🇹" ,
-    "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next"
-},
+    // Brightness Information
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""],
+        "on-click-right": "nwg-displays",
+    },
 
-// Do not Disturb Switch
-"custom/dnd": { 
-    "tooltip-format" : "Do not Disturb",
-    "format": "{}", 
-    "return-type": "json",
-    "on-click": "~/.config/waybar/scripts/dunst.sh toggle", 
-    "interval" : 1, // every sec
-    "exec" : "~/.config/waybar/scripts/dunst.sh status"
-},
+    // System Tray
+    "tray": {
+        "icon-size": 18,
+        "spacing": 7,
+    },
 
-"cpu": {
-  "format": "{usage}% ",
-  "tooltip": false,
-  "on-click" : "kitty -e btop"
-},
+    // network
+    "network": {
+        "interface": "wlan0",
+        "format": "{ifname}",
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ifname} ",
+        "format-disconnected": "", //An empty format will hide the module.
+        // "format-disconnected": "",
+        "tooltip-format": "{ifname}",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+        "tooltip-format-ethernet": "{ifname} ",
+        "tooltip-format-disconnected": "Disconnected",
+        "max-length": 50,
+    },
 
-"memory": {
-        "format": "{}% "
-},
+    "bluetooth": {
+        "format": " {status}",
+        "format-connected": " {device_alias}",
+        "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+        // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+    },
 
-"temperature": {
-    "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-    "critical-threshold": 80,
-   "format": "{temperatureC}°C {icon}",
-   "format-icons": ["", "", ""]
-},
+    // like caffein, prevent from sleeping
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": "",
+        },
+        "icon-size": 18,
+        "spacing": 7,
+    },
 
-// Harddisc space used
-  "disk": {
-    "interval": 30,
-    "format": "{percentage_used}% ",
-    "path": "/",
-},
+    // Hypridle inhibitor
+    // not needed anymore because Hyprland v0.41 fixed the bug
+    "custom/hypridle": {
+        "format": "{}{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": "",
+        },
+        "return-type": "json",
+        // "escape": true,
+        "exec-on-event": true,
+        "return-type": "json",
+        "interval": 1,
+        "exec": "~/.config/hypr/scripts/hypridle.sh status",
+        "on-click": "~/.config/hypr/scripts/hypridle.sh toggle",
+        "icon-size": 18,
+        "spacing": 7,
+    },
 
+    "hyprland/language": {
+        "format": "{}",
+        "format-en": "🇺🇸",
+        "format-de": "🇦🇹",
+        "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
+    },
 
-"custom/app-launcher" : {
-  "format" : "",
-  "on-click" : "fuzzel",
-  "tooltip" : "Opent the App Launcher"
-},
+    // Do not Disturb Switch
+    "custom/dnd": {
+        "tooltip-format": "Do not Disturb",
+        "format": "{}",
+        "return-type": "json",
+        "on-click": "~/.config/waybar/scripts/dunst.sh toggle",
+        "interval": 1, // every sec
+        "exec": "~/.config/waybar/scripts/dunst.sh status",
+    },
 
-"custom/app-calc" : {
-  "format" : "󰪚",
-  "on-click" : "speedcrunch",
-  "tooltip" : "Open the Calculator"
-},
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": false,
+        "on-click": "kitty -e btop",
+    },
 
-"custom/app-code" : {
-  "format" : "󰨞",
-  "on-click" : "code",
-  "tooltip" : "Open the Code"
-},
+    "memory": {
+        "format": "{}% ",
+    },
 
-"custom/app-waypaper" : {
-  "format" : "",
-  "on-click" : "waypaper",
-  "tooltip" : "Change the Wallpaper"
-},
+    "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""],
+    },
 
-"custom/app-clipboard" : {
-  "format" : "",
-  "on-click" : "cliphist list | wofi --dmenu | cliphist decode | wl-copy",
-  "tooltip" : "Open the Clipboard"
-},
+    // Harddisc space used
+    "disk": {
+        "interval": 30,
+        "format": "{percentage_used}% ",
+        "path": "/",
+    },
 
-"custom/app-screenshot" : {
-  "format" : "󱣴",
-  "on-click" : "hyprshot -m region --freeze",
-  "tooltip" : "Take a Screenshot"
-},
+    "custom/app-launcher": {
+        "format": "",
+        "on-click": "fuzzel",
+        "tooltip": "Opent the App Launcher",
+    },
 
-"custom/app-blue-light" : {
-  "format" : "󰖔",
-  "on-click" : "hyprshade toggle blue-light-filter",
-  "tooltip" : "Toggle Blue-Light-Filter"
-}
+    "custom/app-calc": {
+        "format": "󰪚",
+        "on-click": "speedcrunch",
+        "tooltip": "Open the Calculator",
+    },
 
-// global end
+    "custom/app-code": {
+        "format": "󰨞",
+        "on-click": "code",
+        "tooltip": "Open the Code",
+    },
+
+    "custom/app-waypaper": {
+        "format": "",
+        "on-click": "waypaper",
+        "tooltip": "Change the Wallpaper",
+    },
+
+    "custom/app-clipboard": {
+        "format": "",
+        "on-click": "cliphist list | wofi --dmenu | cliphist decode | wl-copy",
+        "tooltip": "Open the Clipboard",
+    },
+
+    "custom/app-screenshot": {
+        "format": "󱣴",
+        "on-click": "hyprshot -m region --freeze",
+        "tooltip": "Take a Screenshot",
+    },
+
+    "custom/app-blue-light": {
+        "format": "󰖔",
+        "on-click": "hyprshade toggle blue-light-filter",
+        "tooltip": "Toggle Blue-Light-Filter",
+    },
+
+    // global end
 }
