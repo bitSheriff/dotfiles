@@ -10,7 +10,9 @@
     "features": {
         "edit_prediction_provider": "zed"
     },
+
     "icon_theme": "Catppuccin Mocha",
+
     "assistant": {
         "default_model": {
             "provider": "copilot_chat",
@@ -47,8 +49,9 @@
     "collaboration_panel": {
         "button": false
     },
+
     "chat_panel": {
-        "button": false
+        "button": "never"
     },
 
     "outline_panel": {
@@ -118,6 +121,20 @@
             "**/*.crt",
             "**/secrets.yml"
         ]
+    },
+
+    "scrollbar": {
+        "show": "auto",
+        "cursors": true,
+        "git_diff": true,
+        "search_results": true,
+        "selected_text": true,
+        "selected_symbol": true,
+        "diagnostics": "all",
+        "axes": {
+            "horizontal": true,
+            "vertical": true
+        }
     },
 
     // The key to use for adding multiple cursors
