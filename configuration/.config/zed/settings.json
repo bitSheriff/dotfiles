@@ -181,6 +181,7 @@
         "markdown-oxide": true, // PKM LSP for Markdown
         "snippets": true,
         "tokyo-night": true,
-        "toml": true
+        "toml": true,
+        "nix": true
     }
 }
