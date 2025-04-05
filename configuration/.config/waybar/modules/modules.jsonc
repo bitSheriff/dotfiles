@@ -131,6 +131,7 @@
             "class<Typora>": "<span font='11'>󰼭 </span>",
             "class<obsidian>": "<span font='12'> </span>", // some icons need to be increased in size
             "class<.*[aA]postrophe>": "<span font='11'>󰼭 </span>",
+            "class<keymapp>": "<span font='12'>󰌌 </span>",
 
             // Socials
             // "class<discord>": " ",
