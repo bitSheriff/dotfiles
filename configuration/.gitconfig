@@ -62,3 +62,5 @@
 
 [submodule]
 	recurse = true
+[help]
+	autocorrect = 20
