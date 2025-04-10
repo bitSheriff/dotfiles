@@ -121,7 +121,8 @@
             "class<com.obsproject.Studio>": " ",
             "class<thunar|nemo>": "󰝰 ",
             "class<virt-manager>": " ",
-            "class<thunderbird>": "<span font='11'> </span>",
+            "class<thunderbird>": "<span font='11'>  </span>",
+            "class<tutanota-desktop>": "<span font='11'>󰛮 </span>",
 
             // Downloads
             "class<.*qbittorrent.*>": " ",
