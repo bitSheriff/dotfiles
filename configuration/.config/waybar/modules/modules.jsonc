@@ -344,7 +344,7 @@
 
     "custom/app-calc": {
         "format": "󰪚",
-        "on-click": "speedcrunch",
+        "on-click": "qalculate-gtk",
         "tooltip": "Open the Calculator",
     },
 
