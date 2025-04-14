@@ -22,6 +22,10 @@ export AGE_KEY_DOTFILES=$AGE_KEY_DIR/dotfiles.key                   # key for so
 # use 1Password as the SSH Agent
 export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
 
+# fix Wayland problem with Rust Tauri
+# https://github.com/tauri-apps/tauri/issues/10702
+export WEBKIT_DISABLE_DMABUF_RENDERER=1
+
 
 ### ---- path config -------------------------------------
 # this works only iwth zsh
