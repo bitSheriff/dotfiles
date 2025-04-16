@@ -123,6 +123,13 @@
         ]
     },
 
+    // autosave file after one second of inactivity
+    "autosave": {
+        "after_delay": {
+            "milliseconds": 1000
+        }
+    },
+
     "scrollbar": {
         "show": "auto",
         "cursors": true,
