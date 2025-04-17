@@ -158,7 +158,6 @@ create_symlinks() {
     safe_symlink "/usr/bin/zeditor" "/usr/bin/zed"
     safe_symlink "/usr/bin/pastebin" "/usr/bin/termbin"
 
-
     # check if running on Android
     if [[ -z "$TERMUX_VERSION" ]]; then
         # unlink the .termux directory (not needed)
@@ -368,7 +367,6 @@ install_uni_tools() {
     install_language_specific
 }
 
-
 install_audio_tools() {
     print_h1 "AUdio Tools"
 
@@ -378,7 +376,7 @@ install_audio_tools() {
     # Pipwire Patchbay
     # qpwgraph: Qt
     # helvum: Gtk (is not able to save sessions)
-    pacman_install_single "qpwgraph" "helvum"
+    pacman_install_single "qpwgraph" "helvum" "audacity"
 
     # editor to merge, cut and convert (GUI for ffmpeg)
     yay_install_single "losslesscut-bin"
@@ -499,7 +497,7 @@ safe_symlink() {
 
     # Remove target if it is a symlink
     if [[ -L "$target" ]]; then
-       sudo rm "$target"
+        sudo rm "$target"
     fi
 
     # Check if target is inside the home directory
@@ -773,7 +771,6 @@ fi
 tool_selection=$(gum choose --no-limit "Hyprland" "KDE Plasma" "Development" "University" "LaTeX" "Office" "Local AI" "Audio")
 # Converting list from `gum choose` output to an array
 IFS=$'\n' read -rd '' -a array <<<"$tool_selection"
-
 
 # ========================================
 # Actual Installation & Setup
