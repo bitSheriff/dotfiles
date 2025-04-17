@@ -38,11 +38,9 @@ DO_DEV=0
 DO_OFFICE=0
 DO_UNI=0
 DO_HYPR=0
-DO_OPTIONALS=0
 
 # Flags for additional installations / setups
 DO_ZSH=0
-DO_GIT=0
 DO_SYMLINKS=0
 DO_HARDWARE=0
 DO_NIX_PKGS=0
@@ -517,9 +515,6 @@ safe_symlink() {
 post_install() {
     print_h1 "Post Installation"
     setup_default_apps
-
-    gum confirm --default=false "Would you like to run the secrets?" && secret_run
-
 }
 
 secret_run() {
@@ -776,21 +771,9 @@ fi
 
 # select the tools to install
 tool_selection=$(gum choose --no-limit "Hyprland" "KDE Plasma" "Development" "University" "LaTeX" "Office" "Local AI" "Audio")
-
 # Converting list from `gum choose` output to an array
 IFS=$'\n' read -rd '' -a array <<<"$tool_selection"
 
-gum confirm --default=false "Would you like to setup SSH keys?" && setup_ssh_keys
-
-gum confirm --default=false "Wouldyou like to change the hostname?" && change_hostname
-
-gum confirm --default=false "Would you like to checkout the provided repositories?" && DO_GIT=1
-
-gum confirm --default=false "[INTERACTIVE] Would you like to install the opional packages?" && DO_OPTIONALS=1
-
-gum confirm --default=false "Would you like to link the dotfiles?" && DO_SYMLINKS=1
-
-gum confirm --default=false "Would you like a general hardware setup?" && DO_HARDWARE=1
 
 # ========================================
 # Actual Installation & Setup
@@ -834,21 +817,38 @@ if array_contains "${array[@]}" "Local AI"; then
 fi
 
 if array_contains "${array[@]}" "Audio"; then
-
     install_audio_tools
 fi
 
+# select the tools to install
+option_selection=$(gum choose --no-limit "Change Hostname" "Setup SSH Keys" "Clone Git Repos" "Optional Apps" "Link Dotfiles" "Setup Hardware")
+# Converting list from `gum choose` output to an array
+IFS=$'\n' read -rd '' -a options <<<"$option_selection"
 
-if [[ "$DO_OPTIONALS" = 1 ]]; then
+if array_contains "${options[@]}" "Setup SSH Keys"; then
+    setup_ssh_keys
+fi
+if array_contains "${options[@]}" "Change Hostname"; then
+    change_hostname
+fi
+if array_contains "${options[@]}" "Clone Git Repos"; then
+    setup_repositories
+fi
+if array_contains "${options[@]}" "Optional Apps"; then
     install_optionals
+fi
+if array_contains "${options[@]}" "Clone Git Repos"; then
+    setup_repositories
+fi
+if array_contains "${options[@]}" "Link Dotfiles"; then
+    DO_SYMLINKS=1
+fi
+if array_contains "${options[@]}" "Setup Hardware"; then
+    bash $DIR_NAME/scripts/hardware.sh
 fi
 
 if [[ "$DO_ZSH" = 1 ]]; then
     setup_shell
-fi
-
-if [[ "$DO_GIT" = 1 ]]; then
-    setup_repositories
 fi
 
 if [[ "$DO_BACKUP" = 1 ]]; then
