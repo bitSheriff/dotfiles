@@ -73,7 +73,7 @@
     "theme": {
         "mode": "dark",
         "light": "One Light",
-        "dark": "Tokyo Night"
+        "dark": "Shades Of Purple (Super Dark)"
     },
 
     // Turn off telemetry
@@ -189,6 +189,7 @@
         "snippets": true,
         "tokyo-night": true,
         "toml": true,
-        "nix": true
+        "nix": true,
+        "shades-of-purple-theme": true
     }
 }
