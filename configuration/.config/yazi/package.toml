@@ -1,7 +1,7 @@
 [[plugin.deps]]
 use = "GianniBYoung/rsync"
-rev = "3f431aa"
-hash = ""
+rev = "ed7b7f9"
+hash = "bf05f8a280bbbdd723968f243421274"
 
 [[plugin.deps]]
 use = "Lil-Dank/lazygit"
