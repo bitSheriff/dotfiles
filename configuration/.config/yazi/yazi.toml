@@ -28,6 +28,7 @@ ueberzug_offset = [ 0, 0, 0, 0 ]
 edit = [
 	{ run = 'nvim "$@"', desc = "neovim", block = true, for = "unix" },
 	{ run = 'zed "$@"', desc = "zed", block = false, for = "unix" },
+	{ run = 'zed -n "$@"', desc = "zed (new workspace)", block = false, for = "unix" },
 	{ run = 'code "%*"',    orphan = true, desc = "code",         for = "windows" },
 	{ run = 'code -w "%*"', block = true,  desc = "code (block)", for = "windows" },
 ]
