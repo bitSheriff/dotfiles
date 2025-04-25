@@ -99,8 +99,8 @@ preloaders = [
 previewers = [
 	{ name = "*/", run = "folder", sync = true },
 	# Code
-	{ mime = "text/*", run = "zed" },
-	{ mime = "*/{xml,javascript,x-wine-extension-ini}", run = "zed" },
+	{ mime = "text/*", run = "code" },
+	{ mime = "*/{xml,javascript,x-wine-extension-ini}", run = "code" },
 	# JSON
 	{ mime = "application/json", run = "json" },
 	# Image
