@@ -316,3 +316,8 @@ keymap = [
 on   = "R"
 run  = "plugin rsync"
 desc = "Copy files using rsync"
+
+[[manager.prepend_keymap]]
+on   = "L"
+run  = "plugin lazygit"
+desc = "Open lazygit"
