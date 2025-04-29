@@ -1,67 +1,74 @@
 [user]
-  name = bitSheriff
-  email = root@bitsheriff.dev
-  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKaKM4Dwfago4s/0Ap9hFHZMmqoly90mS/3rEl+7prJx
+    name = bitSheriff
+    email = root@bitsheriff.dev
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKaKM4Dwfago4s/0Ap9hFHZMmqoly90mS/3rEl+7prJx
 
 [core]
-  editor = nvim
-  autocrlf = input
+    editor = nvim
+    autocrlf = input
 
 [merge]
-  tool = meld
+    tool = meld
 
 [diff]
-  tool = meld
+    tool = meld
 
 [advice]
-  addIgnoredFile = false
-
-[pull]
-	rebase = true
-
-[credential "https://github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper = 
-  helper = !/usr/bin/gh auth git-credential
+    addIgnoredFile = false
 
 [commit]
     verbose = false
-	gpgsign = true
-
-[alias]
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-  lgall = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --reflog
-  winner = shortlog -sn
-  pfusch = push -f --all
-  backup = "! git push --all backup && git push --tags backup"
-  ignore = update-index --assume-unchanged
-  no-ignore = update-index --no-assume-unchanged
-  sync = "! git pull && git push"
-  dangling = "! git fsck --lost-found | grep "^dangling commit" | sed "s/^dangling commit //g" | xargs git show -s --oneline"
-  cloner = git clone --recurse-submodules -j8 # recursive cloning (inclusive submodules)
-  pushall = !git remote | xargs -L1 git push --all
-  graph = !serie # view the git graph
+    gpgsign = true
 
 [gpg]
-	format = ssh
+    format = ssh
+
 [gpg "ssh"]
     program = /opt/1Password/op-ssh-sign
 
 [init]
-	defaultBranch = main
-[push]
+    defaultBranch = main
 
-    default = current
+[push]
+    autoSetupRemote = true  # easier to push new branches
+    default = current  # push only current branch by default
+    followTags = true  # push also tags
+
+[pull]
+    rebase = true
+
+[rebase]
+    autoStash = true
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
     required = true
 
 [submodule]
-	recurse = true
+    recurse = true
+
 [help]
-	autocorrect = 20
+    autocorrect = 20
+
+[credential "https://github.com"]
+    helper = !/usr/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+    helper = !/usr/bin/gh auth git-credential
+
+[alias]
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    lgall = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --reflog
+    winner = shortlog -sn
+    pfusch = push -f --all
+    backup = "! git push --all backup && git push --tags backup"
+    ignore = update-index --assume-unchanged
+    no-ignore = update-index --no-assume-unchanged
+    sync = "! git pull && git push"
+    dangling = "! git fsck --lost-found | grep "^dangling commit" | sed "s/^dangling commit //g" | xargs git show -s --oneline"
+    cloner = git clone --recurse-submodules -j8 # recursive cloning (inclusive submodules)
+    pushall = !git remote | xargs -L1 git push --all
+    graph = !serie # view the git graph
+
