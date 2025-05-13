@@ -319,6 +319,7 @@ c.url.searchengines = {
         '!dd': 'https://www.duckduckgo.com/?q={}',
         '!rd': 'https://www.reddit.com/search?q={}',
         '!dc': 'https://www.discogs.com/de/search/?q={}&btn=&type=all',
+        '!gpt' : 'https://chatgpt.com/?q={}&hints=search'
         }
 
 c.completion.open_categories = ['searchengines', 'quickmarks', 'bookmarks', 'history', 'filesystem']
