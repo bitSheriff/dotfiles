@@ -62,6 +62,7 @@
             "class<firefox>": " ",
             "class<zen>": "<span font='12'>󰬡 </span>",
             "class<.*[vV]ivaldi.*>": "<span font='12'> </span>",
+            "class<org.qutebrowser.qutebrowser>": "<span font='12'> </span>",
             "title<.*Endel.*>": " ",
             "title<.*Picture-in-Picture.*>": " ",
             "title<.*Twitch.*>": " ",
