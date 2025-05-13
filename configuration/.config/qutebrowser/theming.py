@@ -1,3 +1,4 @@
+
 def dracula_theme(c, config, options = {}):
     palette = {
         'background': '#282a36',
@@ -296,7 +297,7 @@ def dracula_theme(c, config, options = {}):
     config.set('colors.webpage.darkmode.enabled', False, 'file://*')
 
     # styles, cosmetics
-    c.content.user_stylesheets = ["~/.config/qutebrowser/styles/youtube-tweaks.css"]
+    # c.content.user_stylesheets = ["~/.config/qutebrowser/styles/youtube-tweaks.css"]
     c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 9, 'right': 9}
     c.tabs.indicator.width = 0 # no tab indicators
     # c.window.transparent = True # apparently not needed

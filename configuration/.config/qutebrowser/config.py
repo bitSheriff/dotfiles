@@ -32,6 +32,7 @@ c.url.searchengines = {
 # note - if you use duckduckgo, you can make use of its built in bangs, of which there are many! https://duckduckgo.com/bangs
         'DEFAULT': 'https://duckduckgo.com/?q={}',
         '!dd': 'https://www.duckduckgo.com/?q={}',
+        '!w' : 'https://wikipedia.org/wiki/{}',
         # Linux
         '!aw': 'https://wiki.archlinux.org/?search={}',
         '!apkg': 'https://archlinux.org/packages/?sort=&q={}&maintainer=&flagged=',
@@ -41,6 +42,7 @@ c.url.searchengines = {
         '!dc': 'https://www.discogs.com/de/search/?q={}&btn=&type=all',
         # AI
         '!gpt' : 'https://chatgpt.com/?q={}&hints=search',
+        '!da' : 'https://duckduckgo.com/?q={}&ia=chat&bang=true+', # DuckDuck AI
         # Media 
         '!yt': 'https://www.youtube.com/results?search_query={}',
         '!sp' : 'https://open.spotify.com/search/{}'

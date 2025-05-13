@@ -8,9 +8,10 @@ def load_keybindings(config):
     # config.bind('pP', 'open -- {primary}')
     config.bind('pp', 'open -- {clipboard}')
     config.bind('pP', 'open -t -- {clipboard}')
-    config.bind('B', 'bookmark-list')                                           # open bookmarks list
+    config.bind('py', 'spawn mpv {url}')                                        # open the current url in mpv
 
     ## Quickmarks
+    config.bind('B', 'bookmark-list')                                           # open bookmarks list
     config.bind('Qa', 'quickmark-save')                                         # save current page as quickmark
     config.bind('Qd', 'quickmark-del')                                          # delete current page as quickmark
     config.bind('Qo', 'cmd-set-text -s :quickmark-load')                        # open quickmarks
@@ -23,5 +24,5 @@ def load_keybindings(config):
     ## UI Changes
     config.bind('tH', 'config-cycle tabs.show multiple never')
     config.bind('sH', 'config-cycle statusbar.show always never')
-    config.bind('tT', 'config-cycle tabs.position top left')
+    # config.bind('tT', 'config-cycle tabs.position top left')
 
