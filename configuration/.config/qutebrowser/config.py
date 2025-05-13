@@ -330,7 +330,9 @@ c.auto_save.session = True # save tabs on quit/restart
 
 # keybinding changes
 config.bind('=', 'cmd-set-text -s :open')
-config.bind('h', 'history')
+config.bind('H', 'history')                                                 # open history
+config.bind('h', 'back')                                                    # go back in history
+config.bind('l', 'forward')                                                 # go forward in history
 config.bind('cs', 'cmd-set-text -s :config-source')
 config.bind('tH', 'config-cycle tabs.show multiple never')
 config.bind('sH', 'config-cycle statusbar.show always never')
@@ -352,7 +354,7 @@ c.colors.webpage.darkmode.policy.images = 'never'
 config.set('colors.webpage.darkmode.enabled', False, 'file://*')
 
 # styles, cosmetics
-# c.content.user_stylesheets = ["~/.config/qutebrowser/styles/youtube-tweaks.css"]
+c.content.user_stylesheets = ["~/.config/qutebrowser/styles/youtube-tweaks.css"]
 c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 9, 'right': 9}
 c.tabs.indicator.width = 0 # no tab indicators
 # c.window.transparent = True # apparently not needed
