@@ -316,6 +316,9 @@ c.url.searchengines = {
         '!apkg': 'https://archlinux.org/packages/?sort=&q={}&maintainer=&flagged=',
         '!gh': 'https://github.com/search?o=desc&q={}&s=stars',
         '!yt': 'https://www.youtube.com/results?search_query={}',
+        '!dd': 'https://www.duckduckgo.com/?q={}',
+        '!rd': 'https://www.reddit.com/search?q={}',
+        '!dc': 'https://www.discogs.com/de/search/?q={}&btn=&type=all',
         }
 
 c.completion.open_categories = ['searchengines', 'quickmarks', 'bookmarks', 'history', 'filesystem']
@@ -335,7 +338,7 @@ config.bind('pP', 'open -- {primary}')
 config.bind('pp', 'open -- {clipboard}')
 config.bind('pt', 'open -t -- {clipboard}')
 config.bind('qm', 'macro-record')
-config.bind('<ctrl-y>', 'spawn --userscript ytdl.sh')
+# config.bind('<ctrl-y>', 'spawn --userscript ytdl.sh')
 config.bind('tT', 'config-cycle tabs.position top left')
 config.bind('gJ', 'tab-move +')
 config.bind('gK', 'tab-move -')
