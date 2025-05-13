@@ -1,4 +1,4 @@
-def dracula_theme(c, options = {}):
+def dracula_theme(c, config, options = {}):
     palette = {
         'background': '#282a36',
         'background-alt': '#282a36', 
