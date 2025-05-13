@@ -1,6 +1,5 @@
 
 import subprocess
-# Import own keybindings file
 import keybindings
 import theming
 
@@ -14,14 +13,20 @@ config.load_autoconfig()
 
 # load dracula theme
 theming.dracula_theme(c)
+
 # load keybindings
 keybindings.load_keybindings(config)
 
 # c.url.start_pages = "https://bitsheriff.dev/startpage"
 c.url.default_page = "https://bitsheriff.dev/startpage"
+c.auto_save.session = True # save tabs on quit/restart
 
 c.tabs.title.format = "{audio}{current_title}"
 c.fonts.web.size.default = 20
+
+#############################################################################################################
+# SEARCH
+#############################################################################################################
 
 c.url.searchengines = {
 # note - if you use duckduckgo, you can make use of its built in bangs, of which there are many! https://duckduckgo.com/bangs
@@ -43,37 +48,10 @@ c.url.searchengines = {
 
 c.completion.open_categories = ['searchengines', 'quickmarks', 'bookmarks', 'history', 'filesystem']
 
-config.load_autoconfig() # load settings done via the gui
-
-c.auto_save.session = True # save tabs on quit/restart
 
 #############################################################################################################
-# KEYBINDINGS
+# PRIVACY
 #############################################################################################################
-
-
-#############################################################################################################
-
-# dark mode setup
-c.colors.webpage.darkmode.enabled = True
-c.colors.webpage.darkmode.algorithm = 'lightness-cielab'
-c.colors.webpage.darkmode.policy.images = 'never'
-config.set('colors.webpage.darkmode.enabled', False, 'file://*')
-
-# styles, cosmetics
-c.content.user_stylesheets = ["~/.config/qutebrowser/styles/youtube-tweaks.css"]
-c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 9, 'right': 9}
-c.tabs.indicator.width = 0 # no tab indicators
-# c.window.transparent = True # apparently not needed
-c.tabs.width = '7%'
-
-# fonts
-c.fonts.default_family = []
-c.fonts.default_size = '13pt'
-c.fonts.web.family.fixed = 'monospace'
-c.fonts.web.family.sans_serif = 'monospace'
-c.fonts.web.family.serif = 'monospace'
-c.fonts.web.family.standard = 'monospace'
 
 # privacy - adjust these settings based on your preference
 # config.set("completion.cmd_history_max_items", 0)

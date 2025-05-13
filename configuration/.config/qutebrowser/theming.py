@@ -289,3 +289,24 @@ def dracula_theme(c, options = {}):
     c.tabs.indicator.width = 1
     c.tabs.favicons.scale = 1
 
+    # dark mode setup
+    c.colors.webpage.darkmode.enabled = True
+    c.colors.webpage.darkmode.algorithm = 'lightness-cielab'
+    c.colors.webpage.darkmode.policy.images = 'never'
+    config.set('colors.webpage.darkmode.enabled', False, 'file://*')
+
+    # styles, cosmetics
+    c.content.user_stylesheets = ["~/.config/qutebrowser/styles/youtube-tweaks.css"]
+    c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 9, 'right': 9}
+    c.tabs.indicator.width = 0 # no tab indicators
+    # c.window.transparent = True # apparently not needed
+    c.tabs.width = '7%'
+
+    # fonts
+    c.fonts.default_family = []
+    c.fonts.default_size = '13pt'
+    c.fonts.web.family.fixed = 'monospace'
+    c.fonts.web.family.sans_serif = 'monospace'
+    c.fonts.web.family.serif = 'monospace'
+    c.fonts.web.family.standard = 'monospace'
+
