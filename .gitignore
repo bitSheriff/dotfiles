@@ -13,3 +13,4 @@ configuration/.config/gurk/gurk.toml
 configuration/.config/iamb/config.toml
 configuration/.ssh/hosts
 configuration/.ssh
+configuration/.config/qutebrowser/bookmarks/urls
