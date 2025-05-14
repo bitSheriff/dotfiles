@@ -28,4 +28,13 @@ def load_keybindings(config):
     config.bind('tH', 'config-cycle tabs.show multiple never')
     config.bind('sH', 'config-cycle statusbar.show always never')
     # config.bind('tT', 'config-cycle tabs.position top left')
+    
+    ## Yanking
+    config.bind('ym', 'yank inline [{title}]({url:yank})')                      # Yank URL and title as Markdown link
+    config.unbind('yD')
+    config.unbind('yP')
+    config.unbind('yT')
+    config.unbind('yY')
+    config.unbind('yM')
+     
 
