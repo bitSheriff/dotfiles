@@ -40,10 +40,12 @@ pandoc-cli
 pastebin                    # termbin, post text online and get url to share
 powertop                    # battery and power management
 python
+python-adblock              # adblock for qutebrowser
 qalculate-gtk               # another calculator
 qbittorrent                 # torrent gui
 qt5ct
 qt6ct
+qutebrowser                 # vim like browser
 remmina                     # SSH client
 ripgrep
 ripgrep-all                 # search trough all kind of files
