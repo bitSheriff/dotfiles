@@ -9,6 +9,9 @@ def load_keybindings(config):
     config.bind('pp', 'open -- {clipboard}')
     config.bind('pP', 'open -t -- {clipboard}')
     config.bind('py', 'spawn mpv {url}')                                        # open the current url in mpv
+    config.bind('pY', 'hint links spawn --detach mpv {hint-url}')
+    
+    config.unbind('q')                                                          # i dont need macros
 
     ## Quickmarks
     config.bind('B', 'bookmark-list')                                           # open bookmarks list
