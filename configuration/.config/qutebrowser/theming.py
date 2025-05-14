@@ -305,7 +305,7 @@ def dracula_theme(c, config, options = {}):
 
     # fonts
     c.fonts.default_family = []
-    c.fonts.default_size = '13pt'
+    c.fonts.default_size = '11pt'
     c.fonts.web.family.fixed = 'monospace'
     c.fonts.web.family.sans_serif = 'monospace'
     c.fonts.web.family.serif = 'monospace'
