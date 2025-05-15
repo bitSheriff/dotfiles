@@ -1,6 +1,15 @@
 def load_keybindings(config):
+
+    ## Unbindings
+    config.unbind('yD')
+    config.unbind('yP')
+    config.unbind('yT')
+    config.unbind('yY')
+    config.unbind('yM')
+    config.unbind('q')                                                          # i dont need macros
+
     config.bind('=', 'cmd-set-text -s :open')
-    config.bind('H', 'history')                                                 # open history
+    config.bind('<Shift-h>', 'history')                                         # open history
     config.bind('h', 'back')                                                    # go back in history
     config.bind('l', 'forward')                                                 # go forward in history
     config.bind('T', 'hint links tab')
@@ -10,8 +19,6 @@ def load_keybindings(config):
     config.bind('pP', 'open -t -- {clipboard}')
     config.bind('py', 'spawn mpv {url}')                                        # open the current url in mpv
     config.bind('pY', 'hint links spawn --detach mpv {hint-url}')
-    
-    config.unbind('q')                                                          # i dont need macros
 
     ## Quickmarks
     config.bind('B', 'bookmark-list')                                           # open bookmarks list
@@ -31,10 +38,10 @@ def load_keybindings(config):
     
     ## Yanking
     config.bind('ym', 'yank inline [{title}]({url:yank})')                      # Yank URL and title as Markdown link
-    config.unbind('yD')
-    config.unbind('yP')
-    config.unbind('yT')
-    config.unbind('yY')
-    config.unbind('yM')
-     
+    ## Scrolling
+    config.bind('<Shift-j>', 'scroll-page 0 0.5')                               # Scroll half page down
+    config.bind('<Shift-k>', 'scroll-page 0 -0.5')                              # Scroll half page up
 
+    ## Tabs
+    config.bind('<Ctrl-k>', 'tab-prev')                                         # Previous tab
+    config.bind('<Ctrl-j>', 'tab-next')                                         # Next tab
