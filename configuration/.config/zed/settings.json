@@ -190,6 +190,7 @@
         "tokyo-night": true,
         "toml": true,
         "nix": true,
-        "shades-of-purple-theme": true
+        "shades-of-purple-theme": true,
+        "typst" : true
     }
 }
