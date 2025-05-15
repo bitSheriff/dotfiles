@@ -14,3 +14,5 @@ configuration/.config/iamb/config.toml
 configuration/.ssh/hosts
 configuration/.ssh
 configuration/.config/qutebrowser/bookmarks/urls
+configuration/.config/qutebrowser/__pycache__
+configuration/.config/qutebrowser/quickmarks
