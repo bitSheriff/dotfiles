@@ -75,7 +75,6 @@ config.set("content.cookies.store", True)
 c.content.blocking.enabled = True
 c.content.blocking.method = 'both' # uncomment this if you install python-adblock
 c.content.blocking.adblock.lists = [
-        "https://github.com/ewpratten/youtube_ad_blocklist/blob/master/blocklist.txt",
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/legacy.txt",
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters.txt",
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2020.txt",
@@ -92,4 +91,5 @@ c.content.blocking.adblock.lists = [
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/badlists.txt",
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/quick-fixes.txt",
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/resource-abuse.txt",
-        "https://github.com/uBlockOrigin/uAssets/raw/master/filters/unbreak.txt"]
+        "https://github.com/uBlockOrigin/uAssets/raw/master/filters/unbreak.txt"
+]
