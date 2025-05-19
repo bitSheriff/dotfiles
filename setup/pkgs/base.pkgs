@@ -16,6 +16,8 @@ linux-lts                                                           # LTS Kernel
 nemo                                                                # gtk file manager 
 nemo-fileroller                                                     # nemo compressor (.zip)
 nemo-preview                                                        # preview for nemo
+nemo-audio-tab                                                      # preview for audio information
+gvfs-dnssd                                                          # needed for Webdav
 pkgfile                                                             # search for packages
 python
 ripgrep
