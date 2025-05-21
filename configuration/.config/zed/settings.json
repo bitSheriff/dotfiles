@@ -112,6 +112,7 @@
 
     // disable the predictions for certain files
     "edit_predictions": {
+        "mode": "subtle",
         "disabled_in": ["comment", "string"], // dont need predictions in comments or strings
         "disabled_globs": [
             "**/.env*",
