@@ -4,7 +4,6 @@ gui:
     'main': 'magenta'
     'bug/*': 'red'
     'feature/*': 'blue'
-
 customCommands:
   - key: '<delete>'
     context: 'files'
@@ -16,7 +15,7 @@ customCommands:
     command: "git mergetool {{ .SelectedFile.Name }}"
     context: "files"
     loadingText: "opening mergetool"
-    subprocess: true
+    output: terminal
   - key: 'O'
     context: 'global'
     command: 'nemo .'
