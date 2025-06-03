@@ -266,7 +266,6 @@ if array_contains "${array[@]}" "$NAME_zathura"; then setup_zathura; fi
 if array_contains "${array[@]}" "$NAME_torbowser"; then pacman_packages+=("torbrowser-launcher"); fi
 if array_contains "${array[@]}" "$NAME_toot"; then pacman_packages+=("toot"); fi
 if array_contains "${array[@]}" "$NAME_wireshark"; then pacman_packages+=("wireshark-qt" "wireshark-cli"); fi
-if array_contains "${array[@]}" "$NAME_syncthing"; then pacman_packages+=("syncthing"); fi
 if array_contains "${array[@]}" "$NAME_beeper"; then yay_packages+=("beeper-latest-bin"); fi
 if array_contains "${array[@]}" "$NAME_xxd"; then pacman_packages+=("tinyxxd"); fi
 if array_contains "${array[@]}" "$NAME_netcat"; then pacman_packages+=("gnu-netcat"); fi
@@ -283,6 +282,11 @@ if array_contains "${array[@]}" "$NAME_upscayl"; then yay_packages+=("upscayl-bi
 if array_contains "${array[@]}" "$NAME_xournalpp"; then pacman_packages+=("xournalpp"); fi
 if array_contains "${array[@]}" "$NAME_entephotos"; then yay_packages+=("ente-desktop-bin"); fi
 if array_contains "${array[@]}" "$NAME_losslesscut"; then yay_packages+=("losslesscut-bin"); fi
+if array_contains "${array[@]}" "$NAME_syncthing"; then
+    sudo pacman -S syncthing
+    systemctl --user enable syncthing.service
+    systemctl --user start syncthing.service
+fi
 if array_contains "${array[@]}" "$NAME_qutebrowser"; then
     pacman_packages+=("qutebrowser")
     pacman_packages+=("python-adblock") # additional Brave Browsers Ad block
