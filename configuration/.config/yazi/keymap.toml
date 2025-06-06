@@ -2,7 +2,7 @@
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 "$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
 
-[manager]
+[mgr]
 
 keymap = [
 	{ on = [ "<Esc>" ], run = "escape",             desc = "Exit visual mode, clear selected, or cancel search" },
@@ -312,12 +312,12 @@ keymap = [
 ]
 
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on   = "R"
 run  = "plugin rsync"
 desc = "Copy files using rsync"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on   = "L"
 run  = "plugin lazygit"
 desc = "Open lazygit"
