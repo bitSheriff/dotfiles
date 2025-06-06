@@ -16,6 +16,7 @@ appBundle = [
     ["⚡", "Power Menu", "wlogout"],
     ["🌗", "Night Mode", "hyprshade toggle blue-light-filter"],
     ["📺", "Reset Display", "hyprctl hyprsunset temperature 6500"],
+    ["⏰", "Toggle Waybar", "killall -SIGUSR1 waybar"],
 ]
 
 
