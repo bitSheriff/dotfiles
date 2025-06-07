@@ -79,7 +79,7 @@ else
     input=$(gum write --header "Inbox" --show-line-numbers --char-limit 0)
 
     # line conter
-    local count=0
+    count=0
 
     while IFS= read -r line; do
 
