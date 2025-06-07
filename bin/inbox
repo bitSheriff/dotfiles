@@ -7,9 +7,7 @@ INBOX_POST=""
 # Journal File where the memo gets added
 INBOX_FILE="$INBOX"
 INBOX_DIR="$(dirname -- $INBOX_FILE)"
-SAVE_FILE="$INBOX_DIR/Save 4 Later.md"
-
-OPTSTRING=":cnl"
+LINKS_FILE="$INBOX_DIR/Save 4 Later.md"
 
 create_inbox_file() {
 
@@ -42,18 +40,28 @@ save_link() {
     local url=$(gum input --placeholder "URL")
     local notes=$(gum input --placeholder "Notes")
 
-    echo -e "- [ ] [$title]($url)" >>"$SAVE_FILE"
+    echo -e "- [ ] [$title]($url)" >>"$LINKS_FILE"
 
     # add notes if provided
     if [[ ! -z "$notes" ]]; then
-        echo -e "    - $notes" >>"$SAVE_FILE"
+        echo -e "    - $notes" >>"$LINKS_FILE"
     fi
 
-    echo -e "\n" >>"$SAVE_FILE"
+    echo -e "\n" >>"$LINKS_FILE"
 }
 
+OPTSTRING="cnlh"
 while getopts ${OPTSTRING} opt; do
     case ${opt} in
+    h) # help/usage
+        echo -e "inbox [opt] [text]"
+        echo -e "  -h ... Print this help/usage message"
+        echo -e "  -c ... Puts the clipboard contents to the inbox file"
+        echo -e "  -n ... Create a new file in the inbox for this item"
+        echo -e "  -l ... Save a link, promts you to enter the name, url and some optional notes for this link"
+        echo -e "         Links will get formated as a Todo"
+        exit 0
+        ;;
     c) # clipboard option
         echo -e "\n$(wl-paste)" >>"$INBOX_FILE"
         exit 0
