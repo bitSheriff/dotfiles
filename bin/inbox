@@ -55,6 +55,8 @@ while getopts ${OPTSTRING} opt; do
     case ${opt} in
     h) # help/usage
         echo -e "inbox [opt] [text]"
+        echo -e "Little script to save text in the inbox file. If no text is provided at stdin, it will provide promt(s) to fill in some text. Collecting text with stdin makes it possible to parse output of other programs to the inbox file."
+        echo -e "Usage:"
         echo -e "  -h ... Print this help/usage message"
         echo -e "  -c ... Puts the clipboard contents to the inbox file"
         echo -e "  -n ... Create a new file in the inbox for this item"

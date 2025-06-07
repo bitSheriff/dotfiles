@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Function to show usage
+usage() {
+    echo "Usage: $0 [-o output_dir] archive_file"
+    exit 1
+}
+
+# Parse options
+while getopts ":o:" opt; do
+    case $opt in
+    o)
+        OUTDIR="$OPTARG"
+        ;;
+    *)
+        usage
+        ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
+# Check for archive file argument
+if [ -z "$1" ]; then
+    usage
+fi
+
+ARCHIVE="$1"
+EXTENSION="${ARCHIVE##*.}"
+BASENAME="$(basename "$ARCHIVE")"
+
+# Set output directory or default to current
+DESTDIR="${OUTDIR:-.}"
+
+# Create output directory if it doesn't exist
+mkdir -p "$DESTDIR"
+
+# Determine and extract based on extension
+case "$ARCHIVE" in
+*.zip)
+    unzip -o "$ARCHIVE" -d "$DESTDIR"
+    ;;
+*.rar)
+    unrar x -o+ "$ARCHIVE" "$DESTDIR"
+    ;;
+*.tar)
+    tar -xf "$ARCHIVE" -C "$DESTDIR"
+    ;;
+*.tar.gz | *.tgz)
+    tar -xzf "$ARCHIVE" -C "$DESTDIR"
+    ;;
+*.tar.bz2)
+    tar -xjf "$ARCHIVE" -C "$DESTDIR"
+    ;;
+*.7z)
+    7z x "$ARCHIVE" -o"$DESTDIR"
+    ;;
+*)
+    echo "Unsupported file type: $ARCHIVE"
+    exit 2
+    ;;
+esac
+
+echo "Extraction complete to $DESTDIR"
