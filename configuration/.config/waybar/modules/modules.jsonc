@@ -89,6 +89,7 @@
             "title<.*Readwise.*>": "<span font='11'> </span>",
             "title<.*Overleaf.*>": "<span font='13'> </span>",
             "class<vibe>": "<span font='12'> </span>", // offline transcription tool
+            "class<ONLYOFFICE>": "<span font='12'>󰏆 </span>",
 
             // Coding & Co
             "class<.*Meld.*>": " ",
