@@ -1,0 +1,3 @@
+#! /bin/bash
+
+uv run --directory $HOME/code/ankithon main.py $(pwd)/$@
