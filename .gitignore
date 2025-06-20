@@ -17,3 +17,4 @@ configuration/.config/qutebrowser/bookmarks/urls
 configuration/.config/qutebrowser/__pycache__
 configuration/.config/qutebrowser/quickmarks
 configuration/.config/systemd/user/default.target.wants
+configuration/.config/zed/settings_backup.json
