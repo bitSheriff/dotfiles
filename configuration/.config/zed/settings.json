@@ -92,6 +92,11 @@
             "formatter": "language_server",
             "format_on_save": "on",
             "tab_size": 4
+        },
+        "Python": {
+            "formatter": "black",
+            "format_on_save": "on",
+            "tab_size": 2
         }
     },
 
@@ -192,6 +197,6 @@
         "toml": true,
         "nix": true,
         "shades-of-purple-theme": true,
-        "typst" : true
+        "typst": true
     }
 }
