@@ -82,7 +82,7 @@
             "class<.*okular.*>": " ",
             "class<.*zathura.*>": " ",
             "class<1Password>": "󰟵 ",
-            "class<Signal>": "󰭹 ",
+            "class<Signal>": "<span font='11'>󰭹 </span>",
             "class<localsend>": "<span font='12'>󰷹 </span>",
             "title<.*[W|w]hats[A|a]pp.*>": "<span font='12'>󰖣 </span>",
             "class<ticktick>": "<span font='11'> </span>",
