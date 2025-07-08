@@ -114,6 +114,7 @@ fi
 if array_contains "${array[@]}" "LaTeX"; then
     print_note "Language LaTeX"
     pacman_install_file "pkgs/latex.pkgs"
+    yay_install_single "texlive-tikz-uml"
 
     gum confirm --default=false "Install LaTeX Beamer Presentation Tool?" && yay_install_single "python-pympress"
     gum confirm --default=false "Install TeXstudio?" && pacman_install_single "texstudio"
