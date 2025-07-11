@@ -53,8 +53,6 @@ select_prev_page = "pageup"
 # Scrolling the preview pane
 scroll_preview_half_page_down = "ctrl-d"
 scroll_preview_half_page_up = "ctrl-u"
-# Select an entry
-select_entry = "enter"
 # Copy the selected entry to the clipboard
 copy_entry_to_clipboard = "ctrl-y"
 # Toggle the remote control mode
