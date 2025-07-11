@@ -11,13 +11,14 @@ git-lfs                                                             # git large 
 glibc
 gnupg                                                               # GNU encryption
 gum                                                                 # shell library for user
+gvfs-dnssd                                                          # needed for Webdav
 ld-lsb                                                              # Linux Standard Base Runtime
 linux-lts                                                           # LTS Kernel as backup
+mkinitcpio
 nemo                                                                # gtk file manager 
+nemo-audio-tab                                                      # preview for audio information
 nemo-fileroller                                                     # nemo compressor (.zip)
 nemo-preview                                                        # preview for nemo
-nemo-audio-tab                                                      # preview for audio information
-gvfs-dnssd                                                          # needed for Webdav
 pkgfile                                                             # search for packages
 python
 ripgrep
