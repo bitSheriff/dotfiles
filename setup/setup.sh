@@ -376,7 +376,8 @@ install_audio_tools() {
     # Pipwire Patchbay
     # qpwgraph: Qt
     # helvum: Gtk (is not able to save sessions)
-    pacman_install_single "qpwgraph" "helvum" "audacity"
+    # easytag: tag mp3 files
+    pacman_install_single "qpwgraph" "helvum" "audacity" "easytag"
 
     # editor to merge, cut and convert (GUI for ffmpeg)
     yay_install_single "losslesscut-bin"
