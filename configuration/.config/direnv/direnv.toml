@@ -1,0 +1,7 @@
+[global]
+
+# Load .env too
+load_dotenv = true
+
+[whitelist]
+prefix = [ "~/code/" ]

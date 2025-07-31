@@ -145,3 +145,5 @@ PROMPT2="$(/usr/bin/starship prompt --continuation)"
 
 eval "$(atuin init zsh)"
 eval "$(tv init zsh)"
+eval "$(direnv hook zsh)"
+

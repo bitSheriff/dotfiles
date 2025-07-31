@@ -7,6 +7,7 @@ chromium
 clang
 cloc                        # 'count lines of code'
 cool-retro-term             # just what the name says
+direnv                      # load .env files automatically
 doxygen                     # documentation engine
 element-desktop             # Matrix Client
 eza                         # better ls command
