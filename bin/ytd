@@ -1,0 +1,54 @@
+#!/bin/bash
+
+DIR_NAME=$(dirname "$0")
+source "$DIR_NAME/../lib/my_lib.sh"
+source "$DIR_NAME/../lib/logos.sh"
+source "$DIR_NAME/../lib/cache.sh"
+
+# Declare global variables
+opts=()
+array=()
+
+get_options() {
+    if array_contains "${array[@]}" "simple mp3"; then
+        opts+=("--extract-audio" "--audio-format" "mp3")
+    elif array_contains "${array[@]}" "high quality mp3"; then
+        opts+=("-f" "bestaudio" "-x" "--audio-format" "mp3" "--audio-quality" "320k")
+    fi
+
+    if array_contains "${array[@]}" "split chapters"; then
+        opts+=("--split-chapters")
+    fi
+
+    if array_contains "${array[@]}" "add thumbnail"; then
+        opts+=("--embed-thumbnail")
+    fi
+}
+
+main() {
+    local input="$@"
+
+    #
+    # Read the wanted options
+    local selection=$(
+        gum choose --no-limit \
+            "simple mp3" \
+            "high quality mp3" \
+            "add thumbnail" \
+            "split chapters"
+    )
+
+    # Convert list from `gum choose` output to the global array
+    IFS=$'\n' read -rd '' -a array <<<"$selection"
+
+    get_options
+    echo "Selected options:"
+    echo "${opts[@]}"
+    echo "Input:"
+    echo "${input}"
+
+    # Pass options and input URL as separate arguments
+    yt-dlp "${opts[@]}" "$@"
+}
+
+main "$@"
