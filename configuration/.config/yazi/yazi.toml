@@ -193,3 +193,13 @@ sort_reverse   = false
 enabled = false
 
 [headsup]
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*"
+run  = "git"
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*/"
+run  = "git"
