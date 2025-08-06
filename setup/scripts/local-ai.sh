@@ -20,6 +20,7 @@ setup_models() {
         "DeepSeek R1:7b"
         "DeepSeek R1:14b"
         "Mistral"
+        "gpt-oss:20b"
     )
 
     # sort the packages
@@ -49,6 +50,12 @@ setup_models() {
         print_note "Pulling Mistral"
         print_note "~4.1GB"
         ollama pull mistral
+    fi
+
+    if array_contains "${array[@]}" "gpt-oss:20b"; then
+        print_note "Pulling GPT-oss 20b"
+        print_note "~13GB"
+        ollama pull gpt-oss:20b
     fi
 
 }
