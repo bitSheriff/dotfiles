@@ -72,3 +72,5 @@
     pushall = !git remote | xargs -L1 git push --all
     graph = !serie # view the git graph
 
+[credential]
+	helper = store
