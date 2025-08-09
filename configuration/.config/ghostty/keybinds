@@ -50,7 +50,7 @@ keybind = alt+eight=goto_tab:8
 keybind = alt+nine=goto_tab:9
 keybind = ctrl+alt+shift+j=write_scrollback_file:open
 keybind = ctrl+comma=open_config
-keybind = ctrl+enter=toggle_fullscreen
+keybind = ctrl+shift+f=toggle_fullscreen
 keybind = ctrl+equal=increase_font_size:1
 keybind = ctrl+minus=decrease_font_size:1
 keybind = ctrl+plus=increase_font_size:1
