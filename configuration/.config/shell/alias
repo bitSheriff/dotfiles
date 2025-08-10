@@ -49,6 +49,7 @@ alias go2code="cd ~/code"
 alias iqalc="qalc -i" # interactive mode of Qalculator
 alias typo="typora"
 alias calc="qalc"
+alias todo!="tod task quick-add" # Todoist Quick Add
 
 setup() {
     params="$@"

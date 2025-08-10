@@ -143,7 +143,11 @@ PROMPT='$('/usr/bin/starship' prompt --terminal-width="$COLUMNS" --keymap="${KEY
 RPROMPT='$('/usr/bin/starship' prompt --right --terminal-width="$COLUMNS" --keymap="${KEYMAP:-}" --status="$STARSHIP_CMD_STATUS" --pipestatus="${STARSHIP_PIPE_STATUS[*]}" --cmd-duration="${STARSHIP_DURATION:-}" --jobs="$STARSHIP_JOBS_COUNT")'
 PROMPT2="$(/usr/bin/starship prompt --continuation)"
 
+# fix strange ^G error
+autoload -Uz compinit
+compinit
 eval "$(atuin init zsh)"
 eval "$(tv init zsh)"
 eval "$(direnv hook zsh)"
-
+# eval "$(tod shell completions zsh)"
+source ~/.config/tod/completion
