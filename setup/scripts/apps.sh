@@ -68,6 +68,8 @@ NAME_webapp="[Productivity] WebApp Manager"
 NAME_beeper="[Productivity] Beeper"
 NAME_typora="[Productivity/Writing] Typora"
 NAME_apostrophe="[Productivity/Writing] Apostrophe"
+NAME_todoist_gui="[Productivity] Todoist"
+NAME_todoist_cli="[Productivity] Todoist CLI"
 
 NAME_calibre="[Office/Books] Calibre"
 NAME_foliate="[Office/Books] Foliate"
@@ -214,6 +216,8 @@ packages=(
     "$NAME_entephotos"
     "$NAME_losslesscut"
     "$NAME_qutebrowser"
+    "$NAME_todoist_gui"
+    "$NAME_todoist_cli"
 )
 
 # sort the packages
@@ -297,6 +301,8 @@ if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo systemctl start tailscaled
 fi
 
+if array_contains "${array[@]}" "$NAME_todoist_gui"; then yay_packages+=("todoist-appimage"); fi
+if array_contains "${array[@]}" "$NAME_todoist_cli"; then cargo install tod; fi
 # synchronize database
 sudo pacman -Syy
 
