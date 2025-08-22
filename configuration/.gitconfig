@@ -6,12 +6,15 @@
 [core]
     editor = nvim
     autocrlf = input
+    compression = 9
+    whitespace = trailing-space
 
 [merge]
     tool = meld
 
 [diff]
     tool = meld
+    algorithm = histogram
 
 [advice]
     addIgnoredFile = false
@@ -30,7 +33,7 @@
     defaultBranch = main
 
 [push]
-    autoSetupRemote = true  # easier to push new branches
+    autoSetupRemote = true
     default = current  # push only current branch by default
     followTags = true  # push also tags
 
@@ -50,7 +53,7 @@
     recurse = true
 
 [help]
-    autocorrect = 20
+    autocorrect = prompt
 
 [credential "https://github.com"]
     helper = !/usr/bin/gh auth git-credential
@@ -76,3 +79,17 @@
 	helper = store
 [http]
 	postBuffer = 157286400
+[branch]
+	sort = -committerdate
+[column]
+	ui = auto
+[tag]
+	sort = -version:refname
+[maintenance]
+	auto = true
+	strategy = incremental
+[status]
+	branch = true
+[rerere]
+	enabled = true
+	autoUpdate = true
