@@ -2,3 +2,4 @@ downgrade                                                           # helper to 
 gearlever                                                           # manage appimages
 nemo-compare
 pacseek                                                             # search for packages (official & AUR)
+ente-auth-bin                                                       # Ente Auth: 2FA Authenticator
