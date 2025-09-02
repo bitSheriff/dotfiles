@@ -6,10 +6,11 @@ bemoji                      # simple emoji picker
 cava                        # Console-based Audio Visualizer for Alsa
 clipman
 hyprpicker                  # A simple and fast GTK color picker
+hyprshade                   # tool for blue-ligth-filter and stuff
 hyprshot                    # screen shots
 hyprswitch                  # gui window switcher
-hyprshade                   # tool for blue-ligth-filter and stuff
 jome-git                    # emoji picker
+nmgui-bin                   # GUI for Network Manager
 nwg-displays                # gui display manager
 pacseek                     # tui package search engine
 peaclock                    # terminal clock

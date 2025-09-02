@@ -51,7 +51,8 @@
       "cpu",
       "memory",
       "temperature",
-      "disk"
+      "disk",
+      "network"
     ],
   },
 
