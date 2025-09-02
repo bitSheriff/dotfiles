@@ -40,6 +40,7 @@ path=(
     $HOME/.cargo/bin
     /var/lib/flatpak/exports/share/applications
     /usr/bin/
+    $HOME/.config/hypr/scripts
 )
 
 # Remove duplicate entries and non-existent directories
