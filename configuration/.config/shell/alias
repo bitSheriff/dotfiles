@@ -110,7 +110,7 @@ alias mkdir="mkdir -p"
 mkdir!() { mkdir -p "$1" && cd "$1"; }
 
 # start a process and disown it
-disown!() { exec "$1" & ; disown }
+disown!() { exec "$@" & ; disown }
 
 daily-gw() { ghostwriter "$NOTES_DIR"/Journal/Entries/Daily/$(date +"%F").md & }
 
