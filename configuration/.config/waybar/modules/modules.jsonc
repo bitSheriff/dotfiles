@@ -86,6 +86,7 @@
             "class<localsend>": "<span font='12'>󰷹 </span>",
             "title<.*[W|w]hats[A|a]pp.*>": "<span font='12'>󰖣 </span>",
             "class<ticktick>": "<span font='11'> </span>",
+            "class<Todoist>": "<span font='11'> </span>",
             "title<.*Readwise.*>": "<span font='11'> </span>",
             "title<.*Overleaf.*>": "<span font='13'> </span>",
             "class<vibe>": "<span font='12'> </span>", // offline transcription tool
