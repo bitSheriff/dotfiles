@@ -2,6 +2,21 @@
 @import url("../theming/colors.css");
 
 
+
+/*               DEFINE COLORS */
+
+
+@define-color bordercol                    @neon-purple;
+
+@define-color bordercol-spotify         @green;
+@define-color bordercol-vlc               @orange;
+
+
+@define-color wb-foreground              @foreground;
+@define-color wb-background             @background;
+
+/*             DEFINE MODULE SETTINGS */
+
 * {
   font-family: "JetBrainsMono Nerd Font";
   font-weight: bold;
@@ -29,26 +44,26 @@ window#waybar {
   padding: 0px 6px;
   border-radius: 20px;
   border: 0.19em solid @neon-purple;
-  background-color: @background;
-  color: @foreground;
+  background-color: @wb-background;
+  color: @wb-foreground;
 }
 
 #submap {
   padding: 0px 6px;
   border-radius: 20px;
   border: 0.19em solid @yellow;
-  background-color: @background;
-  color: @foreground;
+  background-color: @wb-background;
+  color: @wb-foreground;
 }
 
 /* System Group */
 #system {
 
   border-radius: 20px;
-  background-color: @background;
-  color: @foreground;
+  background-color: @wb-background;
+  color: @wb-foreground;
   border-radius: 20px;
-  border: 0.19em solid @neon-purple;
+  border: 0.19em solid @bordercol;
 }
 #cpu,
 #memory,
@@ -57,8 +72,8 @@ window#waybar {
 #network {
   border-radius: 20px;
   padding: 0px 8px;
-  background-color: @background;
-  color: @foreground;
+  background-color: @wb-background;
+  color: @wb-foreground;
 }
 
 #temperature.critical { 
@@ -69,13 +84,13 @@ window#waybar {
 #custom-hypridle {
   padding: 0px;
   padding-right: 16px;
-  color: @foreground;
+  color: @wb-foreground;
 }
 
 #custom-dnd {
   padding: 0px 8px 0px 4px;
   padding-right: 16px;
-  color: @foreground;
+  color: @wb-foreground;
 }
 
 #language{
@@ -94,7 +109,7 @@ window#waybar {
   color: rgba(255, 255, 255, 1);
   border-radius: 20px;
   border: 0.19em solid @neon-purple;
-  background-color: @background;
+  background-color: @wb-background;
   transition: all 0.4s ease-out;
 }
 
@@ -106,7 +121,7 @@ window#waybar {
 
 #workspaces button.active {
   background-color: @selection;
-  color: @foreground;
+  color: @wb-foreground;
   animation-name: blink-workspace;
   animation-duration: 0.5s;
   animation-timing-function: steps(12);
@@ -247,7 +262,7 @@ window#waybar {
 }
 
 #power-profiles-daemon.balanced {
-  color: @foreground;
+  color: @wb-foreground;
 }
 
 #power-profiles-daemon.power-saver {
@@ -264,8 +279,8 @@ window#waybar {
   padding: 0px 8px;
   border-radius: 20px;
   border: 0.19em solid @neon-purple;
-  background-color: @background;
-  color: @foreground;
+  background-color: @wb-background;
+  color: @wb-foreground;
 }
 
 #custom-app-launcher,
