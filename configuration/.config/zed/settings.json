@@ -17,7 +17,7 @@
         "default_profile": "write",
         "default_model": {
             "provider": "copilot_chat",
-            "model": "gpt-4o"
+            "model": "gpt-4.1"
         },
         "version": "2"
     },
