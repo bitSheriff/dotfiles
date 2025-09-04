@@ -28,7 +28,7 @@ window#waybar {
 #mpd {
   padding: 0px 6px;
   border-radius: 20px;
-  border: 0.19em solid @purple;
+  border: 0.19em solid @neon-purple;
   background-color: @background;
   color: @foreground;
 }
@@ -154,7 +154,7 @@ window#waybar {
 }
 
 #pulseaudio {
-  border: 0.19em solid @neon-pink;
+  border: 0.19em solid @neon-purple;
   padding: 0px 8px;
 }
 
@@ -163,7 +163,7 @@ window#waybar {
 }
 
 #custom-media {
-  border: 0.19em solid @cyan;
+  border: 0.19em solid @neon-purple;
   min-width: 100px;
 }
 
@@ -219,7 +219,7 @@ window#waybar {
 }
 
 #systray {
-  border: 0.19em solid @neon-light-blue;
+  border: 0.19em solid @neon-purple;
   padding: 0px 4px;
 }
 
@@ -263,7 +263,7 @@ window#waybar {
 #apps {
   padding: 0px 8px;
   border-radius: 20px;
-  border: 0.19em solid @neon-cyan;
+  border: 0.19em solid @neon-purple;
   background-color: @background;
   color: @foreground;
 }
