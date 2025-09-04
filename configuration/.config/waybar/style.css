@@ -3,19 +3,19 @@
 
 
 
-/*               DEFINE COLORS */
+/* ---------- DEFINE COLORS ---------- */
 
 
-@define-color bordercol                    @neon-purple;
-
+@define-color bordercol                 @neon-purple;
+@define-color bordercol-submap          @yellow;
 @define-color bordercol-spotify         @green;
-@define-color bordercol-vlc               @orange;
+@define-color bordercol-vlc             @orange;
 
 
-@define-color wb-foreground              @foreground;
+@define-color wb-foreground             @foreground;
 @define-color wb-background             @background;
 
-/*             DEFINE MODULE SETTINGS */
+/* ---------- DEFINE MODULE SETTINGS ---------- */
 
 * {
   font-family: "JetBrainsMono Nerd Font";
@@ -43,7 +43,7 @@ window#waybar {
 #mpd {
   padding: 0px 6px;
   border-radius: 20px;
-  border: 0.19em solid @neon-purple;
+  border: 0.19em solid @bordercol;
   background-color: @wb-background;
   color: @wb-foreground;
 }
@@ -51,7 +51,7 @@ window#waybar {
 #submap {
   padding: 0px 6px;
   border-radius: 20px;
-  border: 0.19em solid @yellow;
+  border: 0.19em solid @bordercol-submap;
   background-color: @wb-background;
   color: @wb-foreground;
 }
@@ -108,7 +108,7 @@ window#waybar {
 #window {
   color: rgba(255, 255, 255, 1);
   border-radius: 20px;
-  border: 0.19em solid @neon-purple;
+  border: 0.19em solid @bordercol;
   background-color: @wb-background;
   transition: all 0.4s ease-out;
 }
@@ -169,7 +169,7 @@ window#waybar {
 }
 
 #pulseaudio {
-  border: 0.19em solid @neon-purple;
+  border: 0.19em solid @bordercol;
   padding: 0px 8px;
 }
 
@@ -178,16 +178,16 @@ window#waybar {
 }
 
 #custom-media {
-  border: 0.19em solid @neon-purple;
+  border: 0.19em solid @bordercol;
   min-width: 100px;
 }
 
 #custom-media.custom-spotify {
-  border: 0.19em solid @green;
+  border: 0.19em solid @bordercol-spotify;
 }
 
 #custom-media.custom-vlc {
-  border: 0.19em solid @orange;
+  border: 0.19em solid @bordercol-vlc;
 }
 
 #custom-clock,
@@ -234,7 +234,7 @@ window#waybar {
 }
 
 #systray {
-  border: 0.19em solid @neon-purple;
+  border: 0.19em solid @bordercol;
   padding: 0px 4px;
 }
 
@@ -278,7 +278,7 @@ window#waybar {
 #apps {
   padding: 0px 8px;
   border-radius: 20px;
-  border: 0.19em solid @neon-purple;
+  border: 0.19em solid @bordercol;
   background-color: @wb-background;
   color: @wb-foreground;
 }
