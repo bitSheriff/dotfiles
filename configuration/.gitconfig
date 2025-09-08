@@ -74,9 +74,6 @@
     cloner = git clone --recurse-submodules -j8 # recursive cloning (inclusive submodules)
     pushall = !git remote | xargs -L1 git push --all
     graph = !serie # view the git graph
-
-[credential]
-	helper = store
 [http]
 	postBuffer = 157286400
 [branch]
@@ -93,3 +90,8 @@
 [rerere]
 	enabled = true
 	autoUpdate = true
+[credential "https://code.bitsheriff.dev"]
+	provider = generic
+[credential]
+	helper = cache --timeout 21600
+	helper = oauth

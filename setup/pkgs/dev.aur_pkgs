@@ -1,14 +1,15 @@
+# sshpass                     # ssh addition (connect with password directly)
 #ltex-ls                     # Markdown/LaTeX Langauage Server
 1password-cli               # CLI password manager
 bottles                     # manage wine enviroments
 devtoys-bin                 # collection of simple tools for developers
 drawio-desktop              # Draw.io desktop app (now called diagrams.net)
 fast-bin                    # Fast.com internet speed test
+git-credential-oauth        # OAuth for git
 gitkraken                   # visual git tool
 gittyup                     # git gui
 gpgfrontend                 # beautiful frontend for GnuPG
 pacseek                     # tui package search engine
-# sshpass                     # ssh addition (connect with password directly)
 sshs                        # tui to select ssh servers
 wifi-qr                     # share wifi with a QR Code
 zsh-vi-mode                 # vi mdode for zsh
