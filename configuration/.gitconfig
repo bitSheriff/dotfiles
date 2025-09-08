@@ -74,6 +74,7 @@
     cloner = git clone --recurse-submodules -j8 # recursive cloning (inclusive submodules)
     pushall = !git remote | xargs -L1 git push --all
     graph = !serie # view the git graph
+    today = !git-today
 [http]
 	postBuffer = 157286400
 [branch]
