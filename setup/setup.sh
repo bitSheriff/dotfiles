@@ -344,6 +344,9 @@ install_dev_tools() {
     gum confirm --default=false "Install LazyDocker?" && yay_packages+=("lazydocker")
     gum confirm --default=false "Install Gnome Connections (VNC/RDP Client)?" && pacman_packages+=("gnome-connections")
 
+    # my own git app
+    cargo install git-today
+
     DO_ZSH=1
 
     # rebuild the bat cache so the theme gets applied
