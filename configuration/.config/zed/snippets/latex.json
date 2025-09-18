@@ -96,7 +96,7 @@
     "prefix": "frame col 2",
     "body": [
         "\\begin{frame}{}",
-        "\\begin{columns}",
+        "\\begin{columns}[t]",
         "\\begin{column}{0.5\\textwidth}",
         "    ",
         "\\end{column}",
