@@ -92,7 +92,8 @@
 	enabled = true
 	autoUpdate = true
 [credential "https://code.bitsheriff.dev"]
-	provider = generic
+    provider = generic
+    helper = store
 [credential]
 	helper = cache --timeout 21600
 	helper = oauth
