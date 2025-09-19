@@ -708,6 +708,11 @@ if [[ "$ARG_MODE" = 'android' ]]; then
     exit 0
 fi
 
+if [[ "$ARG_MODE" = 'hardware' ]]; then
+    bash $DIR_NAME/scripts/hardware.sh
+    exit 0
+fi
+
 if [[ "$ARG_MODE" = 'repo' || "$ARG_MODE" = 'repos' ]]; then
     setup_repositories
     exit 0
