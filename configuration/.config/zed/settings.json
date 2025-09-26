@@ -112,8 +112,9 @@
     },
 
     "file_types": {
-        "C": ["C", "H"],
-        "LaTeX": ["cfg", "sty"]
+        "c": ["C", "H"],
+        "latex": ["cfg", "sty"]
+        "dotenv" : [".env.*"]
     },
 
     // disable the predictions for certain files
