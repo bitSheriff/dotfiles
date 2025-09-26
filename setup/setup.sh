@@ -380,7 +380,8 @@ install_audio_tools() {
     # qpwgraph: Qt
     # helvum: Gtk (is not able to save sessions)
     # easytag: tag mp3 files
-    pacman_install_single "qpwgraph" "helvum" "audacity" "easytag"
+    # id3v2: tag mp3 files in console and scripts
+    pacman_install_single "qpwgraph" "helvum" "audacity" "easytag" "id3v2"
 
     # editor to merge, cut and convert (GUI for ffmpeg)
     yay_install_single "losslesscut-bin"
