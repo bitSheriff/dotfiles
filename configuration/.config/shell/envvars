@@ -19,6 +19,8 @@ export LIB_PATH=$HOME/.local/lib                                    # path for o
 export AGE_KEY_DIR=$HOME/.age                                       # path where different age keys are stored
 export AGE_KEY_DOTFILES=$AGE_KEY_DIR/dotfiles.key                   # key for some dotfile secrets
 
+export GCM_CREDENTIAL_STORE=secretservice                           # how to store the git credentials (needed for git-credential-manager)
+
 # use 1Password as the SSH Agent
 export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
 
