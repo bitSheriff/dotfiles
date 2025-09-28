@@ -92,7 +92,12 @@
 	enabled = true
 	autoUpdate = true
 [credential "https://code.bitsheriff.dev"]
-    helper = store
+	helper = oauth
+	provider = generic
 [credential]
 	helper = cache --timeout 21600
 	helper = oauth
+	helper = 
+	helper = /usr/bin/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true

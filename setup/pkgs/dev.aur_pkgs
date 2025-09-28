@@ -5,6 +5,7 @@ bottles                     # manage wine enviroments
 devtoys-bin                 # collection of simple tools for developers
 drawio-desktop              # Draw.io desktop app (now called diagrams.net)
 fast-bin                    # Fast.com internet speed test
+git-credential-manager      # Git Credential manager
 git-credential-oauth        # OAuth for git
 gitkraken                   # visual git tool
 gittyup                     # git gui
