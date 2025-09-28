@@ -12,6 +12,7 @@ glibc
 gnupg                                                               # GNU encryption
 gum                                                                 # shell library for user
 gvfs-dnssd                                                          # needed for Webdav
+kitty                                                               # another terminal emulator, which is needed for some scripts
 ld-lsb                                                              # Linux Standard Base Runtime
 linux-lts                                                           # LTS Kernel as backup
 mkinitcpio
