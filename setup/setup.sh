@@ -130,9 +130,6 @@ create_symlinks() {
         sudo apt install -y stow
     fi
 
-    # encrypt the secrets
-    secret_run
-
     # find broken symlinks and remove them
     find ~/.config -xtype l -delete
     find ~/Templates -xtype l -delete
@@ -140,6 +137,7 @@ create_symlinks() {
 
     # stow the packages (no idea why it does not work with $FLAGS)
     stow --adopt -t $HOME -d $DIR_NAME/.. configuration
+    stow --adopt -t $HOME -d $DIR_NAME/.. secrets
 
     # link the templates
     mkdir -p ~/Templates/
@@ -219,14 +217,6 @@ clone_repositories_from_file() {
         # Clone the repository
         git clone "$url" "$target_dir/$repo_name"
     done <$file
-}
-
-setup_repositories() {
-
-    print_h1 "Setup Repositories"
-
-    # only execute the file if it exists
-    safe_exec ../secrets/clone-repositories.sh
 }
 
 install_pkgfiles() {
@@ -520,10 +510,6 @@ post_install() {
     setup_default_apps
 }
 
-secret_run() {
-    bash $DIR_NAME/secret.sh
-}
-
 deactivate_gpg_signing() {
     print_h2 "Deactivate GPG"
     print_debug "this is needed if 1Password is not available"
@@ -564,10 +550,6 @@ setup_android() {
 
     # set ZSH to default shell
     chsh -s "$(which zsh)"
-
-    gum confirm --default=false "Would you like to copy the SSH keys?" && (
-        safe_exec ../secrets/ssh-copy.sh
-    )
 
     # create the symlinks
     create_symlinks
