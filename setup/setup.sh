@@ -328,6 +328,7 @@ install_dev_tools() {
         gum confirm --default=false "Install extensions for github-cli?" && (
             gum confirm --default=false "Graph" && gh extension install kawarimidoll/gh-graph
             gum confirm --default=false "Dash (Issue/Pull-Request viewer)" && gh extension install dlvhdr/gh-dash
+            gum confirm --default=false "Mardown Previewer" && gh extension install yusukebe/gh-markdown-preview
         )
     )
 
