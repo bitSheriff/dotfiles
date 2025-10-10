@@ -7,198 +7,187 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-    "features": {
-        "edit_prediction_provider": "zed"
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
+
+  "icon_theme": "Catppuccin Mocha",
+
+  "agent": {
+    "default_profile": "write",
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4.1"
     },
+    "version": "2"
+  },
 
-    "icon_theme": "Catppuccin Mocha",
-
-    "agent": {
-        "default_profile": "write",
-        "default_model": {
-            "provider": "copilot_chat",
-            "model": "gpt-4.1"
-        },
-        "version": "2"
-    },
-
-    "show_edit_predictions": true,
-    "ui_font_size": 16,
-    "ui_font_family": "JetBrainsMono Nerd Font",
-    "buffer_font_size": 16,
-    "buffer_font_family": "JetBrainsMono Nerd Font",
-
-    // Vim mode settings
-    "vim_mode": true,
-    "relative_line_numbers": true,
-
-    "soft_wrap": "editor_width",
-    "tab_size": 4,
-
-    // color the indentation levels
-    "indent_guides": {
-        "enabled": true,
-        "coloring": "indent_aware"
-    },
-
-    "tabs": {
-        "file_icons": true,
-        "git_status": true
-    },
-
-    // Disable the collaboration and chat panel
-    "collaboration_panel": {
-        "button": false
-    },
-
-    "chat_panel": {
-        "button": "never"
-    },
-
-    "outline_panel": {
-        "dock": "right"
-    },
-
-    "notification_panel": {
-        "dock": "left"
-    },
-
-    // Inlay hints preconfigured by Zed
-    "inlay_hints": {
-        "enabled": true,
-        "show_type_hints": true,
-        "show_parameter_hints": true,
-        "show_other_hints": true
-    },
-    // Theming
-    "theme": {
-        "mode": "dark",
-        "light": "One Light",
-        "dark": "Shades Of Purple (Super Dark)"
-    },
-
-    // Turn off telemetry
-    "telemetry": {
-        "diagnostics": false,
-        "metrics": false
-    },
-
-    // Language Settings
-    "languages": {
-        "Markdown": {
-            "format_on_save": "on",
-            "tab_size": 4
-        },
-        "Rust": {
-            "formatter": "language_server",
-            "format_on_save": "on",
-            "tab_size": 4
-        },
-        "Python": {
-            "formatter": "black",
-            "format_on_save": "on",
-            "tab_size": 2
-        }
-    },
-
-    "lsp": {
-        "rust-analyzer": {
-            "initialization_options": {
-                "checkOnSave": {
-                    "command": "clippy"
-                }
-            }
-        }
-    },
-
-    "file_types": {
-        "c": ["C", "H"],
-        "latex": ["cfg", "sty"]
-        "dotenv" : [".env.*"]
-    },
-
-    // disable the predictions for certain files
-    "edit_predictions": {
-        "mode": "subtle",
-        "disabled_in": ["comment", "string"], // dont need predictions in comments or strings
-        "disabled_globs": [
-            "**/.env*",
-            "**/*.pem",
-            "**/*.key",
-            "**/*.cert",
-            "**/*.crt",
-            "**/secrets.yml"
-        ]
-    },
-
-    // autosave file after one second of inactivity
-    "autosave": {
-        "after_delay": {
-            "milliseconds": 1000
-        }
-    },
-
-    "scrollbar": {
-        "show": "auto",
-        "cursors": true,
-        "git_diff": true,
-        "search_results": true,
-        "selected_text": true,
-        "selected_symbol": true,
-        "diagnostics": "all",
-        "axes": {
-            "horizontal": true,
-            "vertical": true
-        }
-    },
-
-    // The key to use for adding multiple cursors
-    "multi_cursor_modifier": "alt",
-
-    // Git Features
-    "git": {
-        "enabled": true,
-        "autoFetch": true,
-        "autoFetchInterval": 300,
-        "autoFetchOnFocus": true,
-        "autoFetchOnWindowChange": true,
-        "autoFetchOnBuild": true,
-        "git_status": true,
-        "autoFetchOnBuildEvents": ["build", "run", "debug"],
-        "autoFetchOnBuildEventsDelay": 1500,
-        "autoFetchOnBuildDelay": 1500,
-        "git_gutter": "tracked_files",
-        "inline_blame": {
-            "enabled": true,
-            "position": "right"
-        }
-    },
-
-    // Builtin Terminal Settings
-    "terminal": {
-        "font_family": "JetBrainsMono Nerd Font",
-        "font_size": 13,
-        "default_height": 320,
-        "copy_on_select": true
-    },
-
-    // Auto install extensions
-    "auto_install_extensions": {
-        "basher": true,
-        "catppuccin-icons": true,
-        "csv": true,
-        "html": true,
-        "ini": true, // different config files
-        "just": true,
-        "latex": true,
-        "lua": true,
-        "make": true,
-        "markdown-oxide": true, // PKM LSP for Markdown
-        "snippets": true,
-        "tokyo-night": true,
-        "toml": true,
-        "nix": true,
-        "shades-of-purple-theme": true,
-        "typst": true
+  "agent_servers": {
+    "gemini": {
+      "ignore_system_version": false
     }
+  },
+
+  "show_edit_predictions": true,
+  "ui_font_size": 16,
+  "ui_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_size": 16,
+  "buffer_font_family": "JetBrainsMono Nerd Font",
+
+  // Vim mode settings
+  "vim_mode": true,
+  "relative_line_numbers": true,
+
+  "soft_wrap": "editor_width",
+  "tab_size": 4,
+
+  // color the indentation levels
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "indent_aware"
+  },
+
+  "tabs": {
+    "file_icons": true,
+    "git_status": true
+  },
+
+  // Disable the collaboration and chat panel
+  "collaboration_panel": {
+    "button": false
+  },
+
+  "chat_panel": {
+    "button": "never"
+  },
+
+  "outline_panel": {
+    "dock": "right"
+  },
+
+  "notification_panel": {
+    "dock": "left"
+  },
+
+  // Inlay hints preconfigured by Zed
+  "inlay_hints": {
+    "enabled": true,
+    "show_type_hints": true,
+    "show_parameter_hints": true,
+    "show_other_hints": true
+  },
+  // Theming
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "Shades Of Purple (Super Dark)"
+  },
+
+  // Turn off telemetry
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+
+  // Language Settings
+  "languages": {
+    "Markdown": {
+      "format_on_save": "on",
+      "tab_size": 4
+    },
+    "Rust": {
+      "formatter": "language_server",
+      "format_on_save": "on",
+      "tab_size": 4
+    },
+    "Python": {
+      "formatter": {
+        "external": {
+          "command": "black",
+          "arguments": ["-"]
+        }
+      },
+      "format_on_save": "on",
+      "tab_size": 2
+    }
+  },
+
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "checkOnSave": {
+          "command": "clippy"
+        }
+      }
+    }
+  },
+
+  "file_types": {
+    "latex": ["*.cfg", "*.sty"],
+    "dotnev": [".env.*"]
+  },
+
+  // disable the predictions for certain files
+  "edit_predictions": {
+    "mode": "subtle",
+    "disabled_in": ["comment", "string"], // dont need predictions in comments or strings
+    "disabled_globs": [
+      "**/.env*",
+      "**/*.pem",
+      "**/*.key",
+      "**/*.cert",
+      "**/*.crt",
+      "**/secrets.yml"
+    ]
+  },
+
+  // autosave file after one second of inactivity
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  },
+
+  "scrollbar": {
+    "show": "auto",
+    "cursors": true,
+    "git_diff": true,
+    "search_results": true,
+    "selected_text": true,
+    "selected_symbol": true,
+    "diagnostics": "all",
+    "axes": {
+      "horizontal": true,
+      "vertical": true
+    }
+  },
+
+  // The key to use for adding multiple cursors
+  "multi_cursor_modifier": "alt",
+
+  // Git Features
+  "git": {
+    "enabled": true,
+    "autoFetch": true,
+    "autoFetchInterval": 300,
+    "autoFetchOnFocus": true,
+    "autoFetchOnWindowChange": true,
+    "autoFetchOnBuild": true,
+    "autoFetchOnBuildEvents": ["build", "run", "debug"],
+    "autoFetchOnBuildEventsDelay": 1500,
+    "autoFetchOnBuildDelay": 1500,
+    "git_gutter": "tracked_files",
+    "inline_blame": {
+      "enabled": true,
+      "position": "right"
+    }
+  },
+
+  // Builtin Terminal Settings
+  "terminal": {
+    "font_family": "JetBrainsMono Nerd Font",
+    "font_size": 13,
+    "default_height": 320,
+    "copy_on_select": true
+  }
 }
