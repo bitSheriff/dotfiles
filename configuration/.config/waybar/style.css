@@ -6,7 +6,7 @@
 /* ---------- DEFINE COLORS ---------- */
 
 
-@define-color bordercol                 @neon-purple;
+@define-color bordercol                 @color0;
 @define-color bordercol-submap          @yellow;
 @define-color bordercol-spotify         @green;
 @define-color bordercol-vlc             @orange;
@@ -27,7 +27,7 @@
 window#waybar {
   background-color: @backround;
   /* color: rgba(255, 255, 255, 1); */
-  color: @purple;
+  color: @color1;
   transition-property: background-color;
   transition-duration: 0.5s;
 }
@@ -44,7 +44,7 @@ window#waybar {
   padding: 0px 6px;
   border-radius: 20px;
   border: 0.19em solid @bordercol;
-  background-color: @wb-background;
+  background-color: @background;
   color: @wb-foreground;
 }
 

@@ -4,24 +4,24 @@
 css = { src = "colors.css", dst = "~/.config/" }
  */
 
-@define-color color0       #443A3A;
-@define-color color1       #443627;
-@define-color color2       #88421F;
-@define-color color3       #7A6B4B;
-@define-color color4       #BA744C;
-@define-color color5       #C0A98A;
-@define-color color6       #FCD4CE;
-@define-color color7       #F5E1DE;
-@define-color color8       #AC9E9B;
-@define-color color9       #443627;
-@define-color color10      #88421F;
-@define-color color11      #7A6B4B;
-@define-color color12      #BA744C;
-@define-color color13      #C0A98A;
-@define-color color14      #FCD4CE;
-@define-color color15      #F5E1DE;
-@define-color background   alpha(#1C1313,0.5);
-@define-color foreground   #FEF0EE;
+@define-color color0       {{color0 }};
+@define-color color1       {{color1 }};
+@define-color color2       {{color2 }};
+@define-color color3       {{color3 }};
+@define-color color4       {{color4 }};
+@define-color color5       {{color5 }};
+@define-color color6       {{color6 }};
+@define-color color7       {{color7 }};
+@define-color color8       {{color8 }};
+@define-color color9       {{color9 }};
+@define-color color10      {{color10}};
+@define-color color11      {{color11}};
+@define-color color12      {{color12}};
+@define-color color13      {{color13}};
+@define-color color14      {{color14}};
+@define-color color15      {{color15}};
+@define-color background   alpha({{background}},0.5);
+@define-color foreground   {{foreground}};
 
 @define-color background-darker rgba(30, 31, 41, 230);
 @define-color selection       #44475a;
