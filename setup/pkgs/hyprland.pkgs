@@ -3,6 +3,7 @@ blueman                     # Bluetooth manager
 bluez                       # Bluetooth stack
 brightnessctl               # Brightness control
 cliphist                    # Clipboard manager for wayland (handles text and images)
+copyq                       # another gui clipboard manager
 dunst                       # Notification daemon
 fastfetch                   # newer neofetch
 fuzzel                      # fuzzy finder for applications (app launcher)
