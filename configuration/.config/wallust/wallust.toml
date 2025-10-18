@@ -48,3 +48,4 @@ css = { src = "colors.css", dst = "~/.config/theming/colors.css" }
 hypr = { src = "hyprland-colors.conf", dst = "~/.config/hypr/modules/colors.conf" }
 ghostty = {src = "ghostty.conf", dst = "~/.config/ghostty/themes/wallust"}
 kitty = { src='kitty-colors.conf', dst='~/.config/kitty/wallust.conf'}
+zed = { src='zed-theme.json', dst='~/.config/zed/themes/wallust.json'}
