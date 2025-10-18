@@ -106,7 +106,8 @@ window#waybar {
 
 #workspaces,
 #window {
-  color: rgba(255, 255, 255, 1);
+  /* color: rgba(255, 255, 255, 1); */
+  color: @cursorcolor;
   border-radius: 20px;
   border: 0.19em solid @bordercol;
   background-color: @wb-background;
@@ -115,7 +116,7 @@ window#waybar {
 
 #workspaces button {
   border-radius: 20px;
-  color: rgba(255, 255, 255, 1);
+  color: @cursorcolor;
   transition: all 0.4s ease-out;
 }
 
