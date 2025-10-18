@@ -22,6 +22,7 @@ css = { src = "colors.css", dst = "~/.config/" }
 @define-color color15      {{color15}};
 @define-color background   alpha({{background}},0.5);
 @define-color foreground   {{foreground}};
+@define-color cursorcolor  {{cursor}};
 
 @define-color background-darker rgba(30, 31, 41, 230);
 @define-color selection       #44475a;
