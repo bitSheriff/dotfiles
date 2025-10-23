@@ -19,3 +19,4 @@ configuration/.config/qutebrowser/quickmarks
 configuration/.config/systemd/user/default.target.wants
 configuration/.config/zed/settings_backup.json
 configuration/.config/television/cable
+configuration/.config/Typora
