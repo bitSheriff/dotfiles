@@ -372,7 +372,8 @@ install_audio_tools() {
     # helvum: Gtk (is not able to save sessions)
     # easytag: tag mp3 files
     # id3v2: tag mp3 files in console and scripts
-    pacman_install_single "qpwgraph" "helvum" "audacity" "easytag" "id3v2"
+    # paprefs: enable virtual outputs to play sounds on all sinks
+    pacman_install_single "qpwgraph" "helvum" "audacity" "easytag" "id3v2" "paprefs"
 
     # editor to merge, cut and convert (GUI for ffmpeg)
     yay_install_single "losslesscut-bin"
