@@ -14,6 +14,7 @@ nmgui-bin                   # GUI for Network Manager
 nwg-displays                # gui display manager
 pacseek                     # tui package search engine
 peaclock                    # terminal clock
+qview                       # minimal image viewer
 timer-bin                   # simple terminal timer with progressbar
 tokyonight-gtk-theme-git    # gtk theme
 unipicker                   # picker for unicode symbols
