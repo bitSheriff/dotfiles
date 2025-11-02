@@ -14,6 +14,7 @@ pastebin                    # termbin, post text online and get url to share
 pdfgrep                     # search through pdf files in terminal
 pinta                       # MS Paint alternative
 poppler-glib                # pdf rendering library
+print-manager               # Manager for printer devices (init and config)
 signal-desktop              # secure messaging
 thunderbird                 # email client
 veracrypt                   # encryption software   
