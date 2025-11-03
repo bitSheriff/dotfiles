@@ -121,6 +121,7 @@
             "class<.*gwenview.*>": "󰋩 ",
             "class<com.interversehq.qView>": "󰋩 ",
             "class<ente>": "󰋩 ",
+            "class<nl.jknaapen.fladder>": "󰼁 ",
 
             // Basic Office Stuff
             "class<.*calibre.*>": "󱉟 ",
