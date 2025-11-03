@@ -17,6 +17,7 @@ alias nvim-gui="kitty nvim"
 alias nv="nvim"
 alias benjavim="nvim"
 alias rmrf="rm -rf"
+alias music="musikcube"
 
 alias ..="cd .."
 alias ...="cd ../.."
