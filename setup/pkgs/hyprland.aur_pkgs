@@ -10,6 +10,7 @@ hyprshade                   # tool for blue-ligth-filter and stuff
 hyprshot                    # screen shots
 hyprswitch                  # gui window switcher
 jome-git                    # emoji picker
+musikcube                   # TUI music player
 nmgui-bin                   # GUI for Network Manager
 nwg-displays                # gui display manager
 pacseek                     # tui package search engine
