@@ -43,6 +43,8 @@ set recolor-keephue "true"
 # keybindings
 
 map <C-r> recolor # toggle dark mode
+map r reload
+map <S-r> rotate
 
 # scroll a whole page
 map <Right> scroll full-down
