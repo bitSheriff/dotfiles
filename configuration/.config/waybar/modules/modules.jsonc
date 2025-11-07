@@ -133,6 +133,7 @@
             "class<tutanota-desktop>": "<span font='11'>󰛮 </span>",
             "class<Ledger Live>": "<span font='12'></span>",
             "class<org.gnome.SimpleScan>": "<span font='12'>󰁲 </span>",
+            "class<org.kde.korganizer>": "<span font='12'>󰃭 </span>",
 
             // Downloads
             "class<.*qbittorrent.*>": " ",
