@@ -6,8 +6,9 @@ glow                        # cli markdown renderer
 gwenview                    # image viewer
 haruna                      # video player
 hugo                        # static blogging engine
-inkscape                    # vector editor
 imagemagick                 # image tool
+inkscape                    # vector editor
+korganizer                  # KDE calendar
 obsidian                    # Note Taking
 okular                      # document viewer
 pastebin                    # termbin, post text online and get url to share
