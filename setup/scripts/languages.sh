@@ -125,4 +125,5 @@ if array_contains "${array[@]}" "Typst"; then
     print_note "Language Typst"
     pacman_install_single "typst"
     pacman_install_single "typst-lsp"
+    cargo install typst-live # tool to live render typst in the browser
 fi
