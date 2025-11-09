@@ -76,6 +76,7 @@
             "title<.*[mM]astodon.*>": " ",
             "title<.*ArchWiki.*>": "<span font='12'>󰣇 </span>",
             "title<.*AUR.*>": "<span font='12'>󰣇 </span>",
+            "title<.*JupyterLab.*>": "<span font='12'> </span>",
 
             // Productivity Apps
             "class<.*ghostwriter.*>": "󰊠 ",
