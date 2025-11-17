@@ -236,6 +236,29 @@ sync(){
     rsync -rtu $1 $2 && rsync -rtu $2 $1 
 }
 
+fcf() {
+    # 1. Get the history list from the first command (fc -l 1) and pipe it to fzf.
+    #    --tac: Shows the most recent commands at the top.
+    #    --no-sort: Keeps the history order intact.
+    # 2. Capture the user's selected line.
+    local selected_line
+    selected_line=$(fc -l 1 | fzf --tac --no-sort)
+
+    # Check if a selection was made (user didn't press Esc or Ctrl+C)
+    if [[ -n "$selected_line" ]]; then
+        # 3. Extract the command number (the first column) using awk.
+        local selected_number
+        selected_number=$(echo "$selected_line" | awk '{print $1}')
+
+        # 4. Use 'fc' to open the selected command number in the editor.
+        #    fc 1234 is equivalent to fc -e ${EDITOR:-vi} 1234
+        echo "Opening command #$selected_number in editor..."
+        fc "$selected_number"
+    else
+        echo "No command selected. Aborting fc."
+    fi
+}
+
 # Alias only for Android
 if [[ -n "$TERMUX_VERSION" ]]; then
     # sudo is not available on termux/android
