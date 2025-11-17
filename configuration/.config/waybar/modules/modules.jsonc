@@ -328,7 +328,7 @@
     "cpu": {
         "format": "{usage}% ",
         "tooltip": false,
-        "on-click": "kitty -e btop",
+        "on-click": "missioncenter",
     },
 
     "memory": {

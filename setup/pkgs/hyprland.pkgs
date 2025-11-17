@@ -21,6 +21,7 @@ hyprsunset                  # Display Color Temperature
 kvantum                     # Theme manager for KDE applications
 kwallet
 kwalletmanager              # GUI to edit KWallet
+mission-center              # PC stats, taskmanager
 mpv                         # Video player (minimalistic)
 network-manager-applet      # Network manager applet
 networkmanager              # Network manager
