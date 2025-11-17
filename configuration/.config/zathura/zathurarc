@@ -4,6 +4,7 @@
 # Open document in fit-width mode by default
 set adjust-open "best-fit"
 set selection-clipboard clipboard
+set guioptions none
 
 # zathurarc-dark
 set font "JetBrainsMono Nerd Font Mono 12"
@@ -45,6 +46,7 @@ set recolor-keephue "true"
 map <C-r> recolor # toggle dark mode
 map r reload
 map <S-r> rotate
+map <C-n> toggle_statusbar # toggle the statusbar on the bottum (title of document and page)
 
 # scroll a whole page
 map <Right> scroll full-down
