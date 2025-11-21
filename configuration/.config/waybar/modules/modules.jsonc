@@ -180,6 +180,7 @@
         "format": "{}",
         "interval": 30,
         "exec": "date +'%d.%m %H:%M'",
+        "on-click": "korganizer",
     },
     // Battery
     "battery": {
