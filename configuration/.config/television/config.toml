@@ -255,6 +255,9 @@ fallback_channel = "files"
 "pdf-files" = [
     "zathura"
 ]
+"dotenv" = [
+    "source"
+]
 
 
 [shell_integration.keybindings]

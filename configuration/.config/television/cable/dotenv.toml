@@ -1,0 +1,8 @@
+[metadata]
+name = "dotenv"
+description = "A channel to select from .env files"
+requirements = ["fd"]
+
+[source]
+command = "fd -H --type f .env"
+
