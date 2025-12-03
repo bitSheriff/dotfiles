@@ -258,6 +258,10 @@ fallback_channel = "files"
 "dotenv" = [
     "source"
 ]
+"mpv" = [
+    "mpv",
+    "vlc"
+]
 
 
 [shell_integration.keybindings]
