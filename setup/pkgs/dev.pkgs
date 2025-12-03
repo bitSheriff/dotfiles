@@ -67,6 +67,7 @@ veracrypt
 wine                        # not an emulator
 yq                          # commandline YAML, JSON parser
 yt-dlp
+yt-dlp-ejs
 zed                         # Zed Editor
 zellij                      # like tmux but better
 zoxide                      # smarter cd command
