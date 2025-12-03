@@ -1,8 +1,8 @@
 [metadata]
 name = "audio-video"
-description = "A channel to select files for mpv"
+description = "A channel to select files for media players"
 requirements = ["fd"]
 
 [source]
-command = "fd --extension mp4 --extension mp3 --extension webm --extension mov --extension mkv --extension flac --extension m4a --extension m4v"
+command = "fd --extension mp4 --extension mp3 --extension webm --extension mov --extension mkv --extension flac --extension m4a --extension m4v --extension m3u"
 
