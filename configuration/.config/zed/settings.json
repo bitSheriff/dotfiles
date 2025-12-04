@@ -47,7 +47,7 @@
 
     // Vim mode settings
     "vim_mode": true,
-    "relative_line_numbers": true,
+    "relative_line_numbers": "enabled",
 
     "soft_wrap": "editor_width",
     "tab_size": 4,
