@@ -8,7 +8,6 @@ fast-bin                    # Fast.com internet speed test
 git-credential-manager      # Git Credential manager
 git-credential-oauth        # OAuth for git
 gitkraken                   # visual git tool
-gittyup                     # git gui
 gpgfrontend                 # beautiful frontend for GnuPG
 pacseek                     # tui package search engine
 sshs                        # tui to select ssh servers

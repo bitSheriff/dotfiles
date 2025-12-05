@@ -159,7 +159,7 @@ create_symlinks() {
     # check if running on Android
     if [[ -z "$TERMUX_VERSION" ]]; then
         # unlink the .termux directory (not needed)
-        rm ~/.termux
+        rm -rf ~/.termux
     fi
 
 }
