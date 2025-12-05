@@ -150,7 +150,7 @@ create_symlinks() {
     stow --adopt -t $LIB_PATH -d $DIR_NAME/.. lib
 
     # link the wallpaper
-    ln -sf $DOTFILES_DIR/wallpapers/ "$HOME/Pictures/"
+    ln -sf $DOTFILES_DIR/wallpapers "$WALLPAPER_PATH"
 
     # fix some applications (better names) if they are installed
     safe_symlink "/usr/bin/zeditor" "/usr/bin/zed"
