@@ -4,6 +4,9 @@ include () {
     [[ -f "$1" ]] && source "$1"
 }
 
+autoload -Uz compinit
+compinit
+
 # incude own alias, options, path and much more (build to can be used in onter shells as well)
 include ~/.config/shell/envvars
 include ~/.config/shell/autostart
@@ -11,10 +14,14 @@ include ~/.config/shell/alias
 include ~/.config/shell/secrets
 include ~/.config/shell/options
 
+# fix problem where overwritten "ls" doe snot autocmplete paths
+compdef _eza ls
+
 # Plugins (mostly installed through Arch Packages/AUR)
 include /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 include /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 include /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+
  
 # Auto completion
 autoload -Uz compinit && compinit
