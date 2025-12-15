@@ -25,7 +25,7 @@ alias ....="cd ../../.."
 
 alias ls="eza -l --icons --git"
 alias l="eza -a --long --header --icons"
-alias ll="eza -a --long --header --icons"
+alias ll="eza -a --long --header --icons --git"
 alias lt="eza -a --long --header --icons --tree"
 alias lt2="eza -a --long --header --icons --tree --level=2"
 alias lt3="eza -a --long --header --icons --tree --level=3"
