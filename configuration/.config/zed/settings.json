@@ -7,6 +7,9 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+    // global AI Killswitch
+    "disable_ai": false,
+
     "colorize_brackets": true,
     "ssh_connections": [
         {
