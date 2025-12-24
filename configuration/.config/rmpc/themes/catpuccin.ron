@@ -150,4 +150,40 @@
             default: (kind: Property(Filename))
         ),
     ],
+
+    cava: (
+        // symbols that will be used to draw the bar in the visualiser, in ascending order of
+        // fill fraction
+        bar_symbols: ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'],
+        // similar to bar_symbols but these are used for the top-down rendering, meaning for orientation
+        // "Horizontal" and "Top"
+        inverted_bar_symbols: ['▔', '🮂', '🮃', '▀', '🮄', '🮅', '🮆', '█'],
+
+        //bg_color: "black", // background color, defaults to rmpc's bg color if not provided
+        bar_width: 1, // width of a single bar in columns
+        bar_spacing: 1, // free space between bars in columns
+
+        // Possible values are "Top", "Bottom" and "Horizontal". Top makes the bars go from top to
+        // bottom, "Bottom" is from bottom up, and "Horizontal" is split in the middle with bars going
+        // both down and up from there.
+        // Using non-default symbols with "Top" and "Horizontal" may produce undesired output.
+        orientation: Bottom,
+
+        // Colors can be configured in three different ways: a single color, different colors
+        // per row and a gradient. You can use the same colors as everywhere else. Only specify
+        // one of these:
+
+        // A simple color gradient. This is a map where keys are percent values of the height
+        // where the color starts. After that it is linearly interpolated towards the next value.
+        // In this example, the color will start at green for the lowest amplitudes, go towards
+        // blue at half amplitudes and finishing as red for the highest values. Keys must be between
+        // 0 and 100 and if the first or last key are not 0 and 100 respectively, the lowest and highest
+        // value will be used as 0 and 100. Only hex and RGB colors are supported here and your terminal
+        // must support them as well!
+        bar_color: Gradient({
+            0: "rgb(  0, 255,   0)",
+            50: "rgb(  0,   0, 255)",
+            100: "rgb(255,   0,   0)",
+        })
+    )
 )
