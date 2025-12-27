@@ -45,6 +45,7 @@ NAME_spotube="[Media/Audio] Spotube"
 NAME_losslesscut="[Media/Audio] LosslessCut (ffmpeg GUI)"
 NAME_pocketcasts="[Media/Audio] Pocket Casts"
 NAME_kodi="[Media] Kodi"
+NAME_rmpc="[Media] RMPC"
 
 NAME_decoder="[Misc] Decoder (QR Scanner)"
 NAME_zenbrowser="[Misc] Zen-Browser"
@@ -151,6 +152,14 @@ setup_kodi() {
     pacman_install_single "kodi-addon-inputstream-adaptive"
 }
 
+setup_rmpc() {
+    # install the needed packages for the frontend and the backend server (mpd)
+    sudo pacman -S mpd rmpc
+
+    # enable the service
+    systemctl --user enable --now mpd
+}
+
 # ========================================
 # Main
 # ========================================
@@ -218,6 +227,7 @@ packages=(
     "$NAME_qutebrowser"
     "$NAME_todoist_gui"
     "$NAME_todoist_cli"
+    "$NAME_rmpc"
 )
 
 # sort the packages
@@ -303,6 +313,7 @@ fi
 
 if array_contains "${array[@]}" "$NAME_todoist_gui"; then yay_packages+=("todoist-appimage"); fi
 if array_contains "${array[@]}" "$NAME_todoist_cli"; then cargo install tod; fi
+if array_contains "${array[@]}" "$NAME_rmpc"; then setup_rmpc; fi
 # synchronize database
 sudo pacman -Syy
 
