@@ -35,9 +35,9 @@
         clear: false,
         global: {
             ":":       CommandMode,
-            ",":       VolumeDown,
+            "+":       VolumeUp,
+            "-":       VolumeDown,
             "s":       Stop,
-            ".":       VolumeUp,
             "<Tab>":   NextTab,
             "<S-Tab>": PreviousTab,
             "1":       SwitchToTab("Queue"),
