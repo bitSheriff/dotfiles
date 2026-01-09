@@ -10,7 +10,8 @@ TODO_PRE="- [ ] "
 LINES_PRE="    - "
 
 # Journal File where the memo gets added
-JOURNAL=~/notes/Journal/Daily/$(date +"%F").md
+JOURNAL=$JOURNAL_DAILY_PATH/$(date +"%F").md
+
 
 # decide if the input was given as a positional argument or parsed into (stdin)
 if [ $# -gt 0 ]; then
