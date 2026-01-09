@@ -8,7 +8,7 @@ MEMO_PRE="- **$(date +%H:%M):** "
 LINES_PRE="    - "
 
 # Journal File where the memo gets added
-JOURNAL=~/notes/Journal/Entries/Daily/$(date +"%F").md
+JOURNAL=~/notes/Journal/Daily/$(date +"%F").md
 
 # check if file has new line at the end, if not add one
 test "$(tail -c 1 "$JOURNAL" | wc -l)" -eq 0 && echo -e "" >>"$JOURNAL"
