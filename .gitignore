@@ -22,3 +22,4 @@ configuration/.config/television/cable
 configuration/.config/Typora
 configuration/.config/copyq
 configuration/.config/mpd/database
+configuration/.config/mpd/state
