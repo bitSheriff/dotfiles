@@ -20,16 +20,16 @@ def open_daily_journal(offset=0, editor=None):
     editor_to_use = editor or DEFAULT_EDITOR
 
     # Define the NOTES_DIR environment variable
-    notes_dir = os.getenv("NOTES_DIR")
-    if not notes_dir:
-        raise EnvironmentError("NOTES_DIR environment variable is not set.")
+    daily_dir = os.getenv("JOURNAL_DAILY_PATH")
+    if not daily_dir:
+        raise EnvironmentError("JOURNAL_DAILY_PATH environment variable is not set.")
 
     # Calculate the target date with the offset
     target_date = datetime.now() + timedelta(days=offset)
     formatted_date = target_date.strftime("%Y-%m-%d")
 
     # Construct the path to the journal file
-    journal_file = os.path.join(notes_dir, "Journal", "Entries", "Daily", f"{formatted_date}.md")
+    journal_file = os.path.join(daily_dir, f"{formatted_date}.md")
 
     # Open the file with the chosen editor
     subprocess.run([editor_to_use, journal_file])
