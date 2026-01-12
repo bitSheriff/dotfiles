@@ -10,7 +10,7 @@ editor="${1:-nvim}" # Use the first argument if provided, otherwise default to n
 
 (
     cd "$NOTES_DIR" || exit 1 # Exit if NOTES_DIR cannot be changed to
-    file="$(tv files)"        # Capture the output of tv files
+    file="$(fzf)"             # Capture the output of tv files
     # Trim and sanitize the file name
     sanitized_file=$(echo "$file" | sed 's/[{}]//g' | xargs)
     if [[ -n "$sanitized_file" && -f "$sanitized_file" ]]; then
