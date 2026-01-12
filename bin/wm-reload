@@ -3,5 +3,9 @@
 # reload Hyprland
 hyprctl reload
 
+killall hyprpaper
+
+hyprpaper &
+
 # reload waybar
 bash "$HOME/.config/waybar/scripts/launch.sh"
