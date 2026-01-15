@@ -142,7 +142,7 @@
 
             // Writing
             "class<Typora>": "<span font='11'>󰼭 </span>",
-            "class<obsidian>": "<span font='12'> </span>", // some icons need to be increased in size
+            "class<obsidian>": "<span font='12'>󰇈 </span>",
             "class<.*[aA]postrophe>": "<span font='11'>󰼭 </span>",
             "class<keymapp>": "<span font='12'>󰌌 </span>",
 
