@@ -1,0 +1,15 @@
+#! /bin/bash
+
+# get the wallpaper from the first argument
+wallpaper=${1}
+echo "${wallpaper}"
+
+# change the wallpaper with hyprpaper
+# hyprctl hyprpaper wallpaper ",${wallpaper},cover"
+ln -sf "${wallpaper}" ~/Pictures/wallpapers/desktop-wallpaper
+
+# write the new color palette
+wallust run "${wallpaper}"
+
+# reload the window manager to accept the new colors
+~/.local/bin/wm-reload && disown
