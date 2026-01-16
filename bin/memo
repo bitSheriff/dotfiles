@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 source "$HOME/.config/shell/envvars"
+source "$HOME/.config/shell/secrets"
 source $LIB_PATH/my_lib.sh
 
 # Preamble of the Memo
