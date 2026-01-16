@@ -12,6 +12,7 @@ export INBOX_DIR=$(dirname $INBOX)
 export DOTFILES_DIR=$HOME/code/dotfiles                             # define the folder where the dotfiles are located
 export CACHE_DIR=$HOME/.cache                                       # define the folder for temporary cache files
 export CODE_DIR=$HOME/code                                          # define the folder for the most coding projects
+export WALLPAPER_DIR=$HOME/Pictures/wallpapers                      # define the folder for the wallpapers
 
 export BIN_PATH=$HOME/.local/bin                                    # path for own binaries/scripts
 export LIB_PATH=$HOME/.local/lib                                    # path for own libraries
