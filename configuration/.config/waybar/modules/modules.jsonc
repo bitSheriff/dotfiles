@@ -154,6 +154,10 @@
             "class<.*Fractal.*>": "󰘨 ",
             "title<.*Bluesky.*>": " ",
             "class<Beeper>": "<span font='11'>󰭻 </span>",
+
+            // Utils
+            "class<.*blueman.*>": "<span font='11'> </span>",
+
         },
     },
     // Hyprland Window
