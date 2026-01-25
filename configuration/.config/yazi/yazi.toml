@@ -29,43 +29,49 @@ edit = [
 	{ run = 'nvim "$@"',    desc = "neovim", block = true, for = "unix" },
 	{ run = 'zed "$@"',     desc = "zed", block = false, for = "unix" },
 	{ run = 'zed -n "$@"',  desc = "zed (new workspace)", block = false, for = "unix" },
-	{ run = 'typora "$@"',  desc = "typora", block = false, for = "unix" },
-	{ run = 'code "%*"',    orphan = true, desc = "code",         for = "windows" },
-	{ run = 'code -w "%*"', block = true,  desc = "code (block)", for = "windows" },
 ]
 open = [
 	{ run = 'xdg-open "$@"',                desc = "Open", for = "linux" },
 	{ run = 'open "$@"',                    desc = "Open", for = "macos" },
-	{ run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
 ]
 reveal = [
 	{ run = 'xdg-open "$(dirname "$0")"',            desc = "Reveal", for = "linux" },
-	{ run = 'open -R "$1"',                          desc = "Reveal", for = "macos" },
-	{ run = 'explorer /select, "%1"', orphan = true, desc = "Reveal", for = "windows" },
 	{ run = '''exiftool "$1"u echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
 extract = [
-	{ run = 'peazip "$1"', desc = "Extract here", for = "unix" },
-	{ run = 'unar "%1"', desc = "Extract here", for = "windows" },
+	{ run = 'unrar x "$1"', desc = "(unrar) Extract here", for = "unix" },
+	{ run = 'unzip "$1"', desc = "(unzip) Extract here", for = "unix" },
 ]
 play = [
 	{ run = 'mpv "$@"', orphan = true, for = "unix" },
-	{ run = 'mpv "%1"', orphan = true, for = "windows" },
 	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
 ]
 viewPDF = [
 	{ run = 'zathura "$@"', orphan = true, for = "unix" },
+	{ run = 'okular "$@"', orphan = true, for = "unix" },
 ]
 viewImage = [
 	{ run = 'qview "$@"', orphan = true, for = "unix" },
+]
+viewEpub = [
+    { run = 'okular "$@"', orphan = true, for = "unix", desc = "Open with Okular"}
+    { run = 'foliate "$@"', orphan = true, for = "unix", desc = "Open with Foliate"}
+]
+openMarkdown = [
+	{ run = 'typora "$@"',  desc = "Typora", block = false, for = "unix" },
+	{ run = 'zed "$@"',     desc = "Zed", block = false, for = "unix" },
+	{ run = 'nvim "$@"',    desc = "neovim", block = true, for = "unix" },
 ]
 
 
 [open]
 rules = [
 	{ name = "*/", use = [ "edit", "open", "reveal" ] },
+    { mime = "application/epub+zip", use = ["viewEpub"] },
 
-	{ mime = "text/*",          use = [ "edit", "reveal" ] },
+	{ mime = "text/plain",   use = [ "openMarkdown" ] },
+	{ mime = "text/*",          use = [ "edit", "reveal", "openMarkdown" ] },
+
 	{ mime = "image/*",         use = [ "viewImage", "open", "reveal" ] },
 	{ mime = "{audio,video}/*", use = [ "play", "reveal" ] },
 	{ mime = "inode/x-empty",   use = [ "edit", "reveal" ] },
