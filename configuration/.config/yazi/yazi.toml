@@ -39,6 +39,7 @@ reveal = [
 	{ run = '''exiftool "$1"u echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
 extract = [
+	{ run = 'file-roller "$1"', desc = "Open with File-Roller", for = "unix" },
 	{ run = 'unrar x "$1"', desc = "(unrar) Extract here", for = "unix" },
 	{ run = 'unzip "$1"', desc = "(unzip) Extract here", for = "unix" },
 ]
@@ -54,13 +55,21 @@ viewImage = [
 	{ run = 'qview "$@"', orphan = true, for = "unix" },
 ]
 viewEpub = [
-    { run = 'okular "$@"', orphan = true, for = "unix", desc = "Open with Okular"}
-    { run = 'foliate "$@"', orphan = true, for = "unix", desc = "Open with Foliate"}
+    { run = 'foliate "$@"', orphan = true, for = "unix", desc = "Open with Foliate"},
+    { run = 'okular "$@"', orphan = true, for = "unix", desc = "Open with Okular"},
 ]
 openMarkdown = [
 	{ run = 'typora "$@"',  desc = "Typora", block = false, for = "unix" },
 	{ run = 'zed "$@"',     desc = "Zed", block = false, for = "unix" },
 	{ run = 'nvim "$@"',    desc = "neovim", block = true, for = "unix" },
+]
+openMusic = [
+	{ run = 'kew play "$@"',    desc = "Open with Kew", block = true, for = "unix" },
+	{ run = 'picard "$@"',    desc = "Open with MuiscBrainz Picard", block = false, for = "unix" },
+]
+openVideo = [
+	{ run = 'mpv "$@"', orphan = true, for = "unix", block = false },
+	{ run = 'haruna "$@"', orphan = true, for = "unix", block = false },
 ]
 
 
@@ -73,7 +82,8 @@ rules = [
 	{ mime = "text/*",          use = [ "edit", "reveal", "openMarkdown" ] },
 
 	{ mime = "image/*",         use = [ "viewImage", "open", "reveal" ] },
-	{ mime = "{audio,video}/*", use = [ "play", "reveal" ] },
+	{ mime = "audio/*",         use = [ "openMusic", "reveal" ] },
+	{ mime = "video/*",         use = [ "openVideo", "reveal" ] },
 	{ mime = "inode/x-empty",   use = [ "edit", "reveal" ] },
 
 	{ mime = "application/*zip", use = [ "extract", "reveal" ] },
