@@ -114,6 +114,8 @@
             "class<dev.zed.Zed>": "<span font='12'> </span>",
             "class<.*[gG]hostty.*>": "<span font='12'>󰊠 </span>",
             "class<org.freecad.FreeCAD>": "<span font='12'> </span>",
+            "class<org.kde.kleopatra>": "<span font='12'> </span>",
+
 
             // Media
             "class<org.kde.haruna>": "<span font='12'> </span>",
