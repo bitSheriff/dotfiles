@@ -1,6 +1,7 @@
 archlinux-xdg-menu
 blueman                     # Bluetooth manager
 bluez                       # Bluetooth stack
+bluetui                     # Bluetooth TUI manager
 brightnessctl               # Brightness control
 cliphist                    # Clipboard manager for wayland (handles text and images)
 copyq                       # another gui clipboard manager

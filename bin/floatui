@@ -1,0 +1,27 @@
+#!/usr/bin/bash
+
+# FLOATUI
+# create some floating terminals for TUIs
+#
+
+# Lookup-Table for Choice to command to launch program
+declare -rA LUT=(
+    [test]="echo Hello"
+    [bluetooth]="bluetui"
+    [memo]="$HOME/.local/bin/memo"
+    [notes]="$HOME/.local/bin/notes"
+)
+
+choice=$1
+cmd=${LUT[${choice}]}
+
+# check if the key was found
+if test -z "${cmd}"; then
+    echo "Key ${choice} does not exist"
+    exit 1
+fi
+
+# echo ${LUT[${choice}]}
+
+# execute command
+eval "kitty --class floatui-${choice} -e ${cmd}"
