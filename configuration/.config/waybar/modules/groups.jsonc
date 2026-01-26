@@ -14,7 +14,9 @@
       "custom/app-waypaper", 
       "custom/app-clipboard", 
       "custom/app-screenshot",
-      "custom/app-blue-light"
+      "custom/app-blue-light",
+      "custom/bluetooth-tui"
+
     ]
   },
 

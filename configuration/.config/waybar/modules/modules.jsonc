@@ -397,6 +397,11 @@
         "on-click": "hyprshade toggle blue-light-filter",
         "tooltip": "Toggle Blue-Light-Filter",
     },
+    "custom/bluetooth-tui": {
+        "format": "",
+        "on-click": "~/.local/bin/floatui bluetooth",
+        "tooltip": "Open Bluetooth TUI",
+    }
 
     // global end
 }
