@@ -12,7 +12,7 @@ appBundle = [
     ["📺", "Monitor Settings", "nwg-displays"],
     ["💉", "Color Picker", "hyprpicker -a"],
     ["😀", "Emoji Picker", "jome | wl-copy"],
-    ["🎧", "Audio Chooser", "~/.config/waybar/scripts/audio_changer.py"],
+    ["🎧", "Audio Chooser", "~/.local/bin/floatui audio"],
     ["⚡", "Power Menu", "wlogout"],
     ["🌗", "Night Mode", "hyprshade toggle blue-light-filter"],
     ["📺", "Reset Display", "hyprctl hyprsunset temperature 6500"],
