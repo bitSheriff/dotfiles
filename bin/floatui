@@ -14,6 +14,7 @@ declare -rA LUT=(
     [jellyfin]="jellyfin-tui"
     [audio]="wiremix"
     [timer]="timr"
+    [mastodon]="toot tui"
 )
 
 choice=$1
