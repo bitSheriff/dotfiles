@@ -158,3 +158,4 @@ eval "$(tv init zsh)"
 eval "$(direnv hook zsh)"
 # eval "$(tod shell completions zsh)"
 source ~/.config/tod/completion
+eval "$(mise activate zsh)"
