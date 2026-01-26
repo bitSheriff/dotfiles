@@ -16,7 +16,7 @@ nwg-displays                # gui display manager
 pacseek                     # tui package search engine
 peaclock                    # terminal clock
 qview                       # minimal image viewer
-timer-bin                   # simple terminal timer with progressbar
+timr                        # Timer, Stopwatch, ...
 tokyonight-gtk-theme-git    # gtk theme
 unipicker                   # picker for unicode symbols
 wallust                     # generate colors from wallpaper
