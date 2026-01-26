@@ -15,6 +15,7 @@ declare -rA LUT=(
     [audio]="wiremix"
     [timer]="timr"
     [mastodon]="toot tui"
+    [matrix]="iamb"
 )
 
 choice=$1
@@ -29,4 +30,5 @@ fi
 # echo ${LUT[${choice}]}
 
 # execute command
-(eval "kitty --class floatui-${choice} -e ${cmd}") & disown
+(eval "kitty --class floatui-${choice} -e ${cmd}") &
+disown
