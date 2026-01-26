@@ -29,4 +29,4 @@ fi
 # echo ${LUT[${choice}]}
 
 # execute command
-eval "kitty --class floatui-${choice} -e ${cmd}"
+(eval "kitty --class floatui-${choice} -e ${cmd}") & disown
