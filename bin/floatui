@@ -10,6 +10,9 @@ declare -rA LUT=(
     [bluetooth]="bluetui"
     [memo]="$HOME/.local/bin/memo"
     [notes]="$HOME/.local/bin/notes"
+    [music]="kew ."
+    [jellyfin]="jellyfin-tui"
+    [audio]="wiremix"
 )
 
 choice=$1
