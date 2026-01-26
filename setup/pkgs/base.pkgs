@@ -19,14 +19,11 @@ mkinitcpio
 nemo                                                                # gtk file manager 
 nemo-audio-tab                                                      # preview for audio information
 nemo-fileroller                                                     # nemo compressor (.zip)
-nemo-preview                                                        # preview for nemo
 pkgfile                                                             # search for packages
 python
 ripgrep
 ttf-jetbrains-mono-nerd
 ttf-nerd-fonts-symbols-mono
-ttf-comic-mono-git                                                  # Comic Sans NerdFont
-ttf-comic-neue                                                      # Comic Sans with German Letters
 unzip                                                               # unzip archives
 zip                                                                 # zip files and directories
 zsh

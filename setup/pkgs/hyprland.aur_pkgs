@@ -18,6 +18,8 @@ peaclock                    # terminal clock
 qview                       # minimal image viewer
 timr                        # Timer, Stopwatch, ...
 tokyonight-gtk-theme-git    # gtk theme
+ttf-comic-mono-git          # Comic Sans NerdFont
+ttf-comic-neue              # Comic Sans with German Letters
 unipicker                   # picker for unicode symbols
 wallust                     # generate colors from wallpaper
 wayland-logout              # logout from wayland session
