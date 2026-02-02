@@ -73,6 +73,7 @@
             "title<.*plex.*>": "󰚺 ",
             "title<.*reddit.*>": " ",
             "title<.*youtube.*>": " ",
+            "title<.*codeberg.*>": " ",
             "title<.*[mM]astodon.*>": " ",
             "title<.*ArchWiki.*>": "<span font='12'>󰣇 </span>",
             "title<.*AUR.*>": "<span font='12'>󰣇 </span>",
@@ -111,7 +112,7 @@
             "class<MATLAB.*>": "󰍘 ",
             "title<.*Maple.*>": " ",
             "class<.*gcolor3.*>": " ", // Color Picker
-            "class<dev.zed.Zed>": "<span font='12'> </span>",
+            "class<dev.zed.Zed>": "<span font='13'>󰈮 </span>",
             "class<.*[gG]hostty.*>": "<span font='12'>󰊠 </span>",
             "class<org.freecad.FreeCAD>": "<span font='12'> </span>",
             "class<org.kde.kleopatra>": "<span font='12'> </span>",
