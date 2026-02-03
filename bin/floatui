@@ -17,6 +17,7 @@ declare -rA LUT=(
     [mastodon]="toot tui"
     [matrix]="iamb"
     [files]="yazi $HOME"
+    [wifi]="sudo impala"
 )
 
 choice=$1

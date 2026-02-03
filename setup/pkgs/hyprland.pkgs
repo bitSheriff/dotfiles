@@ -19,6 +19,7 @@ hyprlock                    # Lockscreen
 hyprpaper                   # Wallpaper manager
 hyprpolkitagent             # Polkit
 hyprsunset                  # Display Color Temperature
+impala                      # Wifi TUI
 kvantum                     # Theme manager for KDE applications
 kwallet
 kwalletmanager              # GUI to edit KWallet
