@@ -59,9 +59,9 @@ viewEpub = [
     { run = 'okular "$@"', orphan = true, for = "unix", desc = "Open with Okular"},
 ]
 openMarkdown = [
-	{ run = 'typora "$@"',  desc = "Typora", block = false, for = "unix" },
+    { run = 'nvim "$@"',    desc = "neovim", block = true, for = "unix" },
 	{ run = 'zed "$@"',     desc = "Zed", block = false, for = "unix" },
-	{ run = 'nvim "$@"',    desc = "neovim", block = true, for = "unix" },
+    { run = 'typora "$@"',  desc = "Typora", block = false, for = "unix" },
 ]
 openMusic = [
 	{ run = 'kew play "$@"',    desc = "Open with Kew", block = true, for = "unix" },
