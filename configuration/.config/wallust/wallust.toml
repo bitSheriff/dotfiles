@@ -45,6 +45,7 @@ palette = "dark"
 # ¡ If either one is a directory, then both SHOULD be one. !
 # zathura = { template = 'zathura', target = '~/.config/zathura/zathurarc' }
 css = { src = "colors.css", dst = "~/.config/theming/colors.css" }
+json = { src = "colors.json", dst = "~/.config/theming/colors.json" }
 hypr = { src = "hyprland-colors.conf", dst = "~/.config/hypr/modules/colors.conf" }
 ghostty = {src = "ghostty.conf", dst = "~/.config/ghostty/themes/wallust"}
 kitty = { src='kitty-colors.conf', dst='~/.config/kitty/wallust.conf'}
