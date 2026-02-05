@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Ensure the environment variables are set
+if [[ -z "$LEDGER_TEMPLATE_FILE" || ! -f "$LEDGER_TEMPLATE_FILE" ]]; then
+    echo "Error: LEDGER_TEMPLATE_FILE is not set or file not found."
+    exit 1
+fi
+
+if [[ -z "$LEDGER_FILE" ]]; then
+    echo "Error: LEDGER_FILE is not set."
+    exit 1
+fi
+
+# 1. Extract the first line of every block (dates + description)
+# We use grep to find lines starting with a date
+HEADERS=$(grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}' "$LEDGER_TEMPLATE_FILE")
+
+if [[ -z "$HEADERS" ]]; then
+    echo "Error: No templates found in $LEDGER_TEMPLATE_FILE. Make sure they start with a date."
+    exit 1
+fi
+
+# 2. Use gum to choose
+# We pipe the HEADERS string directly to gum
+CHOICE=$(echo "$HEADERS" | gum choose --header="Select a Template")
+
+if [[ -z "$CHOICE" ]]; then
+    exit 0
+fi
+
+# 3. Extract the block.
+# We look for the CHOICE string and take everything until the next blank line.
+# 'awk' uses the CHOICE as a starting pattern.
+BLOCK=$(awk -v RS='' -v pat="$CHOICE" '$0 ~ pat {print}' "$LEDGER_TEMPLATE_FILE")
+
+# 4. Update the date to today
+TODAY=$(date +%Y-%m-%d)
+FINAL_ENTRY=$(echo "$BLOCK" | sed "s/^[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/$TODAY/")
+
+# 5. Append to file
+echo -e "\n$FINAL_ENTRY" >>"$LEDGER_FILE"
+
+# 6. Feedback
+gum format "### ✅ Added to Ledger"
+echo "$FINAL_ENTRY" | gum format -t code
