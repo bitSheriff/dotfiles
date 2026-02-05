@@ -12,7 +12,8 @@ config = config  # noqa: F821 pylint: disable=E0602,C0103
 config.load_autoconfig()
 
 # load dracula theme
-theming.dracula_theme(c, config)
+# theming.dracula_theme(c, config)
+theming.wallust_theme(c, config)
 
 # load keybindings
 keybindings.load_keybindings(config)

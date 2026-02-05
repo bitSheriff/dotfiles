@@ -1,37 +1,28 @@
 
-def dracula_theme(c, config, options = {}):
-    palette = {
-        'background': '#282a36',
-        'background-alt': '#282a36', 
-        'background-attention': '#181920',
-        'border': '#282a36',
-        'current-line': '#44475a',
-        'selection': '#44475a',
-        'foreground': '#f8f8f2',
-        'foreground-alt': '#e0e0e0',
-        'foreground-attention': '#ffffff',
-        'comment': '#6272a4',
-        'cyan': '#8be9fd',
-        'green': '#50fa7b',
-        'orange': '#ffb86c',
-        'pink': '#ff79c6',
-        'purple': '#bd93f9',
-        'red': '#ff5555',
-        'yellow': '#f1fa8c'
-    }   
+import json
+import os
+from types import SimpleNamespace
 
-    spacing = options.get('spacing', {
-        'vertical': 5,
-        'horizontal': 5
-    })
+def get_wallust_theme(config_path):
+    """
+    Reads a JSON theme file and returns a SimpleNamespace object.
+    Supports environment variables like $HOME in the path.
+    """
+    # 1. Expand $HOME or other env vars in the path string
+    expanded_path = os.path.expandvars(config_path)
+    
+    # 2. Safety check: does the file actually exist?
+    if not os.path.exists(expanded_path):
+        raise FileNotFoundError(f"Could not find config at: {expanded_path}")
 
-    padding = options.get('padding', {
-        'top': spacing['vertical'],
-        'right': spacing['horizontal'],
-        'bottom': spacing['vertical'],
-        'left': spacing['horizontal']
-    })
+    with open(expanded_path, 'r') as f:
+        # 3. Load JSON and hook it into SimpleNamespace
+        # This converts the dictionary keys into object attributes
+        theme = json.load(f, object_hook=lambda d: SimpleNamespace(**d))
+        return theme
 
+
+def apply_palette(c, palette, config, padding):
     ## Background color of the completion widget category headers.
     c.colors.completion.category.bg = palette['background']
 
@@ -311,3 +302,77 @@ def dracula_theme(c, config, options = {}):
     c.fonts.web.family.serif = 'monospace'
     c.fonts.web.family.standard = 'monospace'
 
+
+def wallust_theme(c, config, options = {}):
+    path = "$HOME/.config/theming/colors.json"
+    theme = get_wallust_theme(path)
+   
+    spacing = options.get('spacing', {
+        'vertical': 5,
+        'horizontal': 5
+    })
+
+    padding = options.get('padding', {
+        'top': spacing['vertical'],
+        'right': spacing['horizontal'],
+        'bottom': spacing['vertical'],
+        'left': spacing['horizontal']
+    })
+    
+    palette = {
+        'background': theme.background,
+        'background-alt': theme.background, 
+        'background-attention': theme.background,
+        'border': theme.color0,
+        'current-line': theme.cursor,
+        'selection': theme.cursor,
+        'foreground': theme.foreground,
+        'foreground-alt': theme.foreground,
+        'foreground-attention': theme.foreground,
+        'comment': '#6272a4',
+        'cyan': theme.color1,
+        'green': theme.color2,
+        'orange': theme.color3,
+        'pink': theme.color4,
+        'purple': theme.color5,
+        'red': theme.color6,
+        'yellow': theme.color7
+    }   
+
+    apply_palette(c, palette,config, padding)
+
+
+def dracula_theme(c, config, options = {}):
+    palette = {
+        'background': '#282a36',
+        'background-alt': '#282a36', 
+        'background-attention': '#181920',
+        'border': '#282a36',
+        'current-line': '#44475a',
+        'selection': '#44475a',
+        'foreground': '#f8f8f2',
+        'foreground-alt': '#e0e0e0',
+        'foreground-attention': '#ffffff',
+        'comment': '#6272a4',
+        'cyan': '#8be9fd',
+        'green': '#50fa7b',
+        'orange': '#ffb86c',
+        'pink': '#ff79c6',
+        'purple': '#bd93f9',
+        'red': '#ff5555',
+        'yellow': '#f1fa8c'
+    }   
+
+    spacing = options.get('spacing', {
+        'vertical': 5,
+        'horizontal': 5
+    })
+
+    padding = options.get('padding', {
+        'top': spacing['vertical'],
+        'right': spacing['horizontal'],
+        'bottom': spacing['vertical'],
+        'left': spacing['horizontal']
+    })
+    
+    apply_palette(c, palette,config, padding)
