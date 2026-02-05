@@ -5,4 +5,5 @@ experimental = true
 key_file = "~/.age/mise.key"
 
 [tools]
+hledger = "latest"
 usage = "latest"
