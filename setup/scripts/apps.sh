@@ -84,6 +84,7 @@ NAME_speechNote="[Office/AI] Speech Note"
 NAME_vibe="[Office/AI] Vibe (Transcript)"
 NAME_upscayl="[Office] Upscayl (AI Picture Upscaler)"
 NAME_xournalpp="[Office] Xournal++"
+NAME_hledger="[Office] hledger"
 
 # ========================================
 # Global Variables
@@ -228,6 +229,7 @@ packages=(
     "$NAME_todoist_gui"
     "$NAME_todoist_cli"
     "$NAME_rmpc"
+    "$NAME_hledger"
 )
 
 # sort the packages
@@ -304,6 +306,10 @@ fi
 if array_contains "${array[@]}" "$NAME_qutebrowser"; then
     pacman_packages+=("qutebrowser")
     pacman_packages+=("python-adblock") # additional Brave Browsers Ad block
+fi
+if array_contains "${array[@]}" "$NAME_hledger"; then
+    pacman_packages+=("hledger")
+    pacman_packages+=("hledger-ui")
 fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
