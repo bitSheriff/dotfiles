@@ -238,7 +238,7 @@ unset IFS
 
 # read the wanted apps
 selection=$(
-    gum choose --no-limit "${sorted_packages[@]}"
+    gum filter --no-limit "${sorted_packages[@]}"
 )
 
 IFS=$'\n' read -rd '' -a array <<<"$selection"
