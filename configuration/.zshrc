@@ -10,9 +10,9 @@ compinit
 # incude own alias, options, path and much more (build to can be used in onter shells as well)
 include ~/.config/shell/envvars
 include ~/.config/shell/autostart
-include ~/.config/shell/alias
 include ~/.config/shell/secrets
 include ~/.config/shell/options
+include ~/.config/shell/alias
 
 # fix problem where overwritten "ls" doe snot autocmplete paths
 compdef _eza ls
