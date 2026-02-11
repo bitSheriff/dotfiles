@@ -1,5 +1,5 @@
 # Basic Theming Settings
-font-family = JetBrainsMono Nerd Font
+font-family = Comic Mono
 font-size = 11
 
 # window-decoration = true
@@ -12,7 +12,6 @@ font-size = 11
 # custom-shader = ./shaders/in-game-crt.glsl
 
 # purplepeter, Sakura, shades-of-purple, SynthwaveAlpha, Eldritch
-# theme = wallust
+theme = wallust
 # theme = Eldritch
 # theme = shades-of-purple
-
