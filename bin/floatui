@@ -18,6 +18,7 @@ declare -rA LUT=(
     [matrix]="iamb"
     [files]="yazi $HOME"
     [wifi]="sudo impala"
+    [ipscan]="whosthere"
 )
 
 choice=$1
