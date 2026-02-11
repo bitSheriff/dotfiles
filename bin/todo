@@ -8,6 +8,8 @@ include "$HOME/.config/shell/secrets"
 # Preamble of the Memo
 TODO_PRE="- [ ] "
 LINES_PRE="    - "
+DUE=" 📅"
+DUE_TODAY="$DUE $(date '+%F')"
 
 # Journal File where the memo gets added
 JOURNAL=$JOURNAL_DAILY_PATH/$(date +"%F").md
@@ -20,6 +22,18 @@ if [ $# -gt 0 ]; then
 else
     # Otherwise, use gum write to get the input
     input=$(gum write --header "Todo" --show-line-numbers)
+fi
+
+# check if input start with '-t' -> due today
+if [[ $input == -t* ]]; then
+    # Remove the option flag
+    input="${input#-t}"
+    # Trim leading whitespace
+    input="${input#"${input%%[![:space:]]*}"}"
+    if [[ -z "$input" ]]; then
+        input=$(gum write --header "Todo (Due Today)")
+    fi
+    input+="$DUE_TODAY"
 fi
 
 # line conter
