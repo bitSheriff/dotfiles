@@ -60,9 +60,9 @@
         "window-rewrite": {
             // Browser and Websites
             "class<firefox>": " ",
-            "class<zen>": "<span font='12'>󰬡 </span>",
-            "class<brave-browser>": "<span font='12'> </span>",
-            "class<org.qutebrowser.qutebrowser>": "<span font='12'>󰦙 </span>",
+            "class<zen>": "󰬡 ",
+            "class<brave-browser>": " ",
+            "class<org.qutebrowser.qutebrowser>": "󰦙 ",
             "title<.*Endel.*>": " ",
             "title<.*Picture-in-Picture.*>": " ",
             "title<.*Twitch.*>": " ",
@@ -75,9 +75,9 @@
             "title<.*youtube.*>": " ",
             "title<.*codeberg.*>": " ",
             "title<.*[mM]astodon.*>": " ",
-            "title<.*ArchWiki.*>": "<span font='12'>󰣇 </span>",
-            "title<.*AUR.*>": "<span font='12'>󰣇 </span>",
-            "title<.*JupyterLab.*>": "<span font='12'> </span>",
+            "title<.*ArchWiki.*>": "󰣇 ",
+            "title<.*AUR.*>": "󰣇 ",
+            "title<.*JupyterLab.*>": " ",
 
             // Productivity Apps
             "class<.*ghostwriter.*>": "󰊠 ",
@@ -85,23 +85,23 @@
             "class<.*zathura.*>": " ",
             "class<1Password>": "󰟵 ",
             "class<io.ente.auth>": "󰟵 ",
-            "class<Signal>": "<span font='11'>󰭹 </span>",
-            "class<localsend>": "<span font='12'>󰷹 </span>",
-            "title<.*[W|w]hats[A|a]pp.*>": "<span font='12'>󰖣 </span>",
-            "class<ticktick>": "<span font='11'> </span>",
-            "class<Todoist>": "<span font='11'> </span>",
-            "title<.*Readwise.*>": "<span font='11'> </span>",
-            "title<.*Overleaf.*>": "<span font='13'> </span>",
-            "class<vibe>": "<span font='12'> </span>", // offline transcription tool
-            "class<ONLYOFFICE>": "<span font='12'>󰏆 </span>",
+            "class<Signal>": "󰭹 ",
+            "class<localsend>": "󰷹 ",
+            "title<.*[W|w]hats[A|a]pp.*>": "󰖣 ",
+            "class<ticktick>": " ",
+            "class<Todoist>": " ",
+            "title<.*Readwise.*>": " ",
+            "title<.*Overleaf.*>": " ",
+            "class<vibe>": " ", // offline transcription tool
+            "class<ONLYOFFICE>": "󰏆 ",
 
             // Coding & Co
             "class<.*Meld.*>": " ",
-            "class<.*Termius.*>": "<span font='12'>󰢹 </span>",
+            "class<.*Termius.*>": "󰢹 ",
             "class<.*kate.*>": " ",
-            "class<.*qalculate.*>": "<span font='12'>󰪚 </span>",
-            "class<.*speedcrunch.*>": "<span font='12'>󰪚 </span>",
-            "class<Chromium>": "<span font='12'> </span>",
+            "class<.*qalculate.*>": "󰪚 ",
+            "class<.*speedcrunch.*>": "󰪚 ",
+            "class<Chromium>": " ",
             "class<Code|code-url-handler>": "󰨞 ",
             "class<GitKraken>": " ",
             "class<filezilla>": " ",
@@ -112,16 +112,15 @@
             "class<MATLAB.*>": "󰍘 ",
             "title<.*Maple.*>": " ",
             "class<.*gcolor3.*>": " ", // Color Picker
-            "class<dev.zed.Zed>": "<span font='13'>󰈮 </span>",
-            "class<.*[gG]hostty.*>": "<span font='12'>󰊠 </span>",
-            "class<org.freecad.FreeCAD>": "<span font='12'> </span>",
-            "class<org.kde.kleopatra>": "<span font='12'> </span>",
-
+            "class<dev.zed.Zed>": "󰈮 ",
+            "class<.*[gG]hostty.*>": "󰊠 ",
+            "class<org.freecad.FreeCAD>": " ",
+            "class<org.kde.kleopatra>": " ",
 
             // Media
-            "class<org.kde.haruna>": "<span font='12'> </span>",
-            "class<.*pocket-casts.*>": "<span font='12'>󰑬 </span>",
-            "class<mpv>": "<span font='12'> </span>",
+            "class<org.kde.haruna>": " ",
+            "class<.*pocket-casts.*>": "󰑬 ",
+            "class<mpv>": " ",
             "class<.*gwenview.*>": "󰋩 ",
             "class<com.interversehq.qView>": "󰋩 ",
             "class<ente>": "󰋩 ",
@@ -133,21 +132,21 @@
             "class<com.obsproject.Studio>": " ",
             "class<thunar|nemo>": "󰝰 ",
             "class<virt-manager>": " ",
-            "class<thunderbird>": "<span font='11'>  </span>",
-            "class<tutanota-desktop>": "<span font='11'>󰛮 </span>",
-            "class<Ledger Live>": "<span font='12'></span>",
-            "class<org.gnome.SimpleScan>": "<span font='12'>󰁲 </span>",
-            "class<org.kde.korganizer>": "<span font='12'>󰃭 </span>",
+            "class<thunderbird>": "  ",
+            "class<tutanota-desktop>": "󰛮 ",
+            "class<Ledger Live>": "",
+            "class<org.gnome.SimpleScan>": "󰁲 ",
+            "class<org.kde.korganizer>": "󰃭 ",
 
             // Downloads
             "class<.*qbittorrent.*>": " ",
             "class<.*tubeconverter.*>": " ",
 
             // Writing
-            "class<Typora>": "<span font='11'>󰼭 </span>",
-            "class<obsidian>": "<span font='12'>󰇈 </span>",
-            "class<.*[aA]postrophe>": "<span font='11'>󰼭 </span>",
-            "class<keymapp>": "<span font='12'>󰌌 </span>",
+            "class<Typora>": "󰼭 ",
+            "class<obsidian>": "󰇈 ",
+            "class<.*[aA]postrophe>": "󰼭 ",
+            "class<keymapp>": "󰌌 ",
 
             // Socials
             // "class<discord>": " ",
@@ -156,11 +155,10 @@
             "class<.*Element.*>": "󰘨 ",
             "class<.*Fractal.*>": "󰘨 ",
             "title<.*Bluesky.*>": " ",
-            "class<Beeper>": "<span font='11'>󰭻 </span>",
+            "class<Beeper>": "󰭻 ",
 
             // Utils
-            "class<.*blueman.*>": "<span font='11'> </span>",
-
+            "class<.*blueman.*>": " ",
         },
     },
     // Hyprland Window
@@ -272,7 +270,7 @@
         "tooltip-format-ethernet": "{ifname} ",
         "tooltip-format-disconnected": "Disconnected",
         "max-length": 50,
-        "on-click": "nmgui"
+        "on-click": "nmgui",
     },
 
     "bluetooth": {
@@ -409,7 +407,7 @@
         "format": "󰀠",
         "on-click": "~/.local/bin/floatui timer",
         "tooltip": "Open Timer TUI",
-    }
+    },
 
     // global end
 }
