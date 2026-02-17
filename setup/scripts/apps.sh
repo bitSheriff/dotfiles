@@ -310,6 +310,7 @@ fi
 if array_contains "${array[@]}" "$NAME_hledger"; then
     pacman_packages+=("hledger")
     pacman_packages+=("hledger-ui")
+    pacman_packages+=("hledger-iadd")
 fi
 if array_contains "${array[@]}" "$NAME_tailscale"; then
     sudo pacman -S tailscale
