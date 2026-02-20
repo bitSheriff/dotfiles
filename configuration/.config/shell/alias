@@ -54,6 +54,7 @@ alias calc="qalc"
 alias t="tod task quick-add" # Todoist Quick Add
 
 alias hl="hledger"
+alias hla="hledger -f ${LEDGER_ALL_FILE}"
 alias hl-budget="hledger bal expenses --budget"
 alias hl-temp="hledger-templates"
 alias hl-edit="nv $LEDGER_FILE"
