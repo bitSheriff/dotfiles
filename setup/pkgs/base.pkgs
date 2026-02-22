@@ -23,6 +23,7 @@ pkgfile                                                             # search for
 python
 ripgrep
 ttf-jetbrains-mono-nerd
+wmctrl                                                              # check which WM is currently running
 ttf-nerd-fonts-symbols-mono
 unzip                                                               # unzip archives
 zip                                                                 # zip files and directories
