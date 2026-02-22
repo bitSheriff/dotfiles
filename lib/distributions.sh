@@ -44,3 +44,7 @@ is_macos() {
         return 1
     fi
 }
+
+is_plasma_running() {
+    wmctrl -m | grep -q "Name: *KWin"
+}
