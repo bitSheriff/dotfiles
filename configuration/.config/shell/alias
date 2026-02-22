@@ -58,7 +58,8 @@ alias hla="hledger -f ${LEDGER_ALL_FILE}"
 alias hl-budget="hledger bal expenses --budget"
 alias hl-temp="hledger-templates"
 alias hle="nv $LEDGER_FILE"
-alias td="hledger -f ${TIMEDOT_FILE}"
+
+alias td="hledger -f ${TIMEDOT_ALL_FILE}"
 alias tde="nvim -f ${TIMEDOT_FILE}"
 
 setup() {
