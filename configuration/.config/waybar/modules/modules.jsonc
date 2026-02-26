@@ -132,7 +132,7 @@
             "class<com.obsproject.Studio>": " ",
             "class<thunar|nemo>": "󰝰 ",
             "class<virt-manager>": " ",
-            "class<thunderbird>": "  ",
+            "class<org.mozilla.Thunderbird>": "  ",
             "class<tutanota-desktop>": "󰛮 ",
             "class<Ledger Live>": "",
             "class<org.gnome.SimpleScan>": "󰁲 ",
