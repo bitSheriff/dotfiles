@@ -1,5 +1,7 @@
 #! /bin/bash
 
+source "$LIB_DIR/distribution.sh"
+
 # get the wallpaper from the first argument
 wallpaper=${1}
 echo "${wallpaper}"
@@ -11,5 +13,7 @@ ln -sf "${wallpaper}" ~/Pictures/wallpapers/desktop-wallpaper
 # write the new color palette
 wallust run "${wallpaper}"
 
-# reload the window manager to accept the new colors
-~/.local/bin/wm-reload && disown
+if ! is_plasma_running; then
+    # reload the window manager to accept the new colors
+    ~/.local/bin/wm-reload && disown
+fi
