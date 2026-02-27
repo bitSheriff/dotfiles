@@ -6,4 +6,6 @@ mouse-hide-while-typing = true
 desktop-notifications = true
 
 shell-integration = zsh
-shell-integration-features = cursor,sudo,title
+shell-integration-features = cursor,sudo,title,ssh-env
+
+clipboard-trim-trailing-spaces = true
