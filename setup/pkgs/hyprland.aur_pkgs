@@ -8,7 +8,7 @@ clipman
 hyprpicker                  # A simple and fast GTK color picker
 hyprshade                   # tool for blue-ligth-filter and stuff
 hyprshot                    # screen shots
-hyprswitch                  # gui window switcher
+quickshell-overview-git     # qui workspace switcher
 jome-git                    # emoji picker
 musikcube                   # TUI music player
 nmgui-bin                   # GUI for Network Manager
