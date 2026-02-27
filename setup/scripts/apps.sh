@@ -129,6 +129,9 @@ setup_kdeConnect() {
     # install the package
     pacman_install_single "kdeconnect"
 
+    sudo pacman -S firewalld
+    sudo firewalld
+
     # allow kdeconnect
     sudo firewall-cmd --permanent --zone=public --add-service=kdeconnect
     sudo firewall-cmd --reload
