@@ -67,6 +67,14 @@ tde () {
     )
 }
 
+hlae () {
+    (
+        cd "${LEDGER_PATH}" || return
+        file=$(fd -e hledger | fzf)
+        [ -n "$file" ] && nvim "$file"
+    )
+}
+
 setup() {
     params="$@"
 
