@@ -8,12 +8,13 @@ clipman
 hyprpicker                  # A simple and fast GTK color picker
 hyprshade                   # tool for blue-ligth-filter and stuff
 hyprshot                    # screen shots
-quickshell-overview-git     # qui workspace switcher
 jome-git                    # emoji picker
+monitui                     # Manage monitors in hyprland
 musikcube                   # TUI music player
 nmgui-bin                   # GUI for Network Manager
 nwg-displays                # gui display manager
 pacseek                     # tui package search engine
+quickshell-overview-git     # qui workspace switcher
 peaclock                    # terminal clock
 qview                       # minimal image viewer
 timr                        # Timer, Stopwatch, ...
