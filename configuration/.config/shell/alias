@@ -60,7 +60,12 @@ alias hl-temp="hledger-templates"
 alias hle="nv $LEDGER_FILE"
 
 alias td="hledger -f ${TIMEDOT_ALL_FILE}"
-alias tde="nvim -f ${TIMEDOT_FILE}"
+tde () {
+    (
+        cd ${TIMEDOT_PATH};
+        nvim $(find . -type f | fzf)
+    )
+}
 
 setup() {
     params="$@"
