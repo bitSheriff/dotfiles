@@ -71,6 +71,9 @@ openVideo = [
 	{ run = 'mpv "$@"', orphan = true, for = "unix", block = false },
 	{ run = 'haruna "$@"', orphan = true, for = "unix", block = false },
 ]
+openDiffMerger = [
+    { run = 'meld "$@"', desc = "Open with Meld", block = false},
+]
 
 
 [open]
@@ -78,8 +81,8 @@ rules = [
 	{ name = "*/", use = [ "edit", "open", "reveal" ] },
     { mime = "application/epub+zip", use = ["viewEpub"] },
 
-	{ mime = "text/plain",   use = [ "openMarkdown" ] },
-	{ mime = "text/*",          use = [ "edit", "reveal", "openMarkdown" ] },
+	{ mime = "text/plain",   use = [ "openMarkdown","openDiffMerger" ] },
+	{ mime = "text/*",          use = [ "edit", "reveal", "openMarkdown", "openDiffMerger" ] },
 
 	{ mime = "image/*",         use = [ "viewImage", "open", "reveal" ] },
 	{ mime = "audio/*",         use = [ "openMusic", "reveal" ] },
