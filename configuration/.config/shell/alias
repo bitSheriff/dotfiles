@@ -63,7 +63,8 @@ alias td="hledger -f ${TIMEDOT_ALL_FILE}"
 tde () {
     (
         cd ${TIMEDOT_PATH};
-        nvim $(find . -type f | fzf)
+        file=$(fd -e journal -e timedot -e timeclock | fzf)
+        [ -n "$file" ] && nvim "$file"
     )
 }
 
