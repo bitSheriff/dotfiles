@@ -1,0 +1,72 @@
+#!/bin/bash
+# Check if file argument is provided
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <file>"
+    exit 1
+fi
+
+FILE="$1"
+
+# Check if file exists
+if [ ! -f "$FILE" ]; then
+    echo "File not found: $FILE"
+    exit 1
+fi
+
+# Select account using hledger and gum
+ACCOUNT=$(hledger -f "$FILE" accounts | gum filter --placeholder "Select account")
+
+# Exit if no account selected (e.g., user pressed Esc)
+if [ -z "$ACCOUNT" ]; then
+    exit 0
+fi
+
+# Ask for amount using gum
+AMOUNT=$(gum input --placeholder "Amount")
+
+# Exit if no amount entered
+if [ -z "$AMOUNT" ]; then
+    exit 0
+fi
+
+# Ask for optional comment using gum
+COMMENT=$(gum input --placeholder "Comment (optional)")
+
+# Construct the entry: 4 spaces indent, account, 4+ spaces, amount
+# Using 40 characters for the account field to keep things somewhat aligned
+ENTRY=$(printf "    %-40s    %s" "$ACCOUNT" "$AMOUNT")
+
+# Add optional comment if provided
+if [ -n "$COMMENT" ]; then
+    # Ensure comment starts with ;
+    if [[ ! "$COMMENT" =~ ^\; ]]; then
+        COMMENT="; $COMMENT"
+    fi
+    ENTRY=$(printf "%s    %s" "$ENTRY" "$COMMENT")
+fi
+
+# Get current date in YYYY-MM-DD format
+DATE=$(date +%Y-%m-%d)
+
+# Find the line number of the date header
+LINE_NUM=$(grep -n "^$DATE" "$FILE" | cut -d: -f1)
+
+if [ -z "$LINE_NUM" ]; then
+    echo "Date $DATE not found in $FILE"
+    exit 1
+fi
+
+# Find the first blank line after the date header to determine insertion point
+# We start searching from the date header line itself
+OFFSET=$(tail -n +$LINE_NUM "$FILE" | grep -n "^$" | head -n 1 | cut -d: -f1)
+
+if [ -n "$OFFSET" ]; then
+    # Calculate the line number for insertion (before the blank line)
+    TARGET_LINE=$((LINE_NUM + OFFSET - 1))
+    # Use sed to insert the entry at the target line
+    sed -i "${TARGET_LINE}i\\${ENTRY}" "$FILE"
+else
+    # If no blank line found, we assume it's the end of the file or block
+    # and just append at the end
+    echo "${ENTRY}" >> "$FILE"
+fi
