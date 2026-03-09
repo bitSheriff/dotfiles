@@ -63,6 +63,8 @@ alias td="hledger -f ${TIMEDOT_ALL_FILE}"
 alias tda="timedot-add ${TIMEDOT_FILE}"
 alias tdauni="timedot-add ${TIMEDOT_SEMESTER_FILE}"
 alias tdawork="timeclock-add ${TIMEDOT_WORK_FILE}"
+alias clockin="timeclock-add ${TIMEDOT_WORK_FILE} i"
+alias clockout="timeclock-add ${TIMEDOT_WORK_FILE} o"
 
 tde () {
     (
