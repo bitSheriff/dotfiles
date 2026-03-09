@@ -13,24 +13,51 @@ if [ ! -f "$FILE" ]; then
     exit 1
 fi
 
-# Select account using hledger and gum
-ACCOUNT=$(hledger -f "$FILE" accounts | gum filter --placeholder "Select account")
+# Get inputs using gum if available, otherwise fallback to fzf/read
+if command -v gum >/dev/null 2>&1; then
+    # Select account using hledger and gum
+    ACCOUNT=$(hledger -f "$FILE" accounts | gum filter --placeholder "Select account")
 
-# Exit if no account selected (e.g., user pressed Esc)
-if [ -z "$ACCOUNT" ]; then
-    exit 0
+    # Exit if no account selected (e.g., user pressed Esc)
+    if [ -z "$ACCOUNT" ]; then
+        exit 0
+    fi
+
+    # Ask for amount using gum
+    AMOUNT=$(gum input --placeholder "Amount")
+
+    # Exit if no amount entered
+    if [ -z "$AMOUNT" ]; then
+        exit 0
+    fi
+
+    # Ask for optional comment using gum
+    COMMENT=$(gum input --placeholder "Comment (optional)")
+else
+    # Fallback to fzf for account selection
+    if command -v fzf >/dev/null 2>&1; then
+        ACCOUNT=$(hledger -f "$FILE" accounts | fzf --header "Select account")
+    else
+        echo "Error: Neither gum nor fzf found for account selection"
+        exit 1
+    fi
+
+    # Exit if no account selected
+    if [ -z "$ACCOUNT" ]; then
+        exit 0
+    fi
+
+    # Ask for amount using normal input
+    read -p "Amount: " AMOUNT
+
+    # Exit if no amount entered
+    if [ -z "$AMOUNT" ]; then
+        exit 0
+    fi
+
+    # Ask for optional comment using normal input
+    read -p "Comment (optional): " COMMENT
 fi
-
-# Ask for amount using gum
-AMOUNT=$(gum input --placeholder "Amount")
-
-# Exit if no amount entered
-if [ -z "$AMOUNT" ]; then
-    exit 0
-fi
-
-# Ask for optional comment using gum
-COMMENT=$(gum input --placeholder "Comment (optional)")
 
 # Construct the entry: 4 spaces indent, account, 4+ spaces, amount
 # Using 40 characters for the account field to keep things somewhat aligned
