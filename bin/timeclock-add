@@ -15,6 +15,10 @@ fi
 
 # Get inputs using gum if available, otherwise fallback to fzf
 if command -v gum >/dev/null 2>&1; then
+    # Select account using hledger and gum
+    ACCOUNT=$(hledger -f "$FILE" accounts | gum filter --placeholder "Select account")
+    if [ -z "$ACCOUNT" ]; then exit 0; fi
+
     # Select action using gum
     ACTION_SEL=$(printf "in\nout" | gum choose --header "Select action")
 
@@ -29,9 +33,6 @@ if command -v gum >/dev/null 2>&1; then
         ACTION="o"
     fi
 
-    # Select account using hledger and gum
-    ACCOUNT=$(hledger -f "$FILE" accounts | gum filter --placeholder "Select account")
-
     # Exit if no account selected
     if [ -z "$ACCOUNT" ]; then
         exit 0
@@ -39,19 +40,20 @@ if command -v gum >/dev/null 2>&1; then
 else
     # Fallback to fzf
     if command -v fzf >/dev/null 2>&1; then
+        # Select account
+        ACCOUNT=$(hledger -f "$FILE" accounts | fzf --header "Select account")
+        if [ -z "$ACCOUNT" ]; then exit 0; fi
+
         # Select action
         ACTION_SEL=$(printf "in\nout" | fzf --header "Select action")
         if [ -z "$ACTION_SEL" ]; then exit 0; fi
-        
+
         if [ "$ACTION_SEL" == "in" ]; then
             ACTION="i"
         else
             ACTION="o"
         fi
 
-        # Select account
-        ACCOUNT=$(hledger -f "$FILE" accounts | fzf --header "Select account")
-        if [ -z "$ACCOUNT" ]; then exit 0; fi
     else
         echo "Error: Neither gum nor fzf found for selection"
         exit 1
@@ -66,4 +68,4 @@ TIME=$(date +%H:%M)
 ENTRY=$(printf "%s %s %s %s" "$ACTION" "$DATE" "$TIME" "$ACCOUNT")
 
 # Append the entry to the file
-echo "$ENTRY" >> "$FILE"
+echo "$ENTRY" >>"$FILE"
