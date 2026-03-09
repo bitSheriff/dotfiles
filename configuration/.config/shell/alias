@@ -62,6 +62,8 @@ alias hle="nv $LEDGER_FILE"
 alias td="hledger -f ${TIMEDOT_ALL_FILE}"
 alias tda="timedot-add ${TIMEDOT_FILE}"
 alias tdauni="timedot-add ${TIMEDOT_SEMESTER_FILE}"
+alias tdawork="timeclock-add ${TIMEDOT_WORK_FILE}"
+
 tde () {
     (
         cd ${TIMEDOT_PATH};
