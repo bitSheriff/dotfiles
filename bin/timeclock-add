@@ -1,11 +1,13 @@
 #!/bin/bash
 # Check if file argument is provided
 if [ $# -eq 0 ]; then
-    echo "Usage: $0 <file>"
+    echo "Usage: $0 <file> [in|out|i|o] [account]"
     exit 1
 fi
 
 FILE="$1"
+ACTION_ARG="$2"
+ACCOUNT_ARG="$3"
 
 # Check if file exists
 if [ ! -f "$FILE" ]; then
@@ -13,50 +15,56 @@ if [ ! -f "$FILE" ]; then
     exit 1
 fi
 
-# Get inputs using gum if available, otherwise fallback to fzf
-if command -v gum >/dev/null 2>&1; then
-    # Select account using hledger and gum
-    ACCOUNT=$(hledger -f "$FILE" accounts | gum filter --placeholder "Select account")
-    if [ -z "$ACCOUNT" ]; then exit 0; fi
+ACTION=""
+ACCOUNT=""
 
-    # Select action using gum
-    ACTION_SEL=$(printf "in\nout" | gum choose --header "Select action")
+# Parse Action argument if provided
+if [ -n "$ACTION_ARG" ]; then
+    case "$ACTION_ARG" in
+        in|i) ACTION="i" ;;
+        out|o) ACTION="o" ;;
+        *) echo "Invalid action: $ACTION_ARG (use in/i or out/o)"; exit 1 ;;
+    esac
+fi
 
-    # Exit if no action selected
-    if [ -z "$ACTION_SEL" ]; then
-        exit 0
-    fi
+# Parse Account argument if provided
+if [ -n "$ACCOUNT_ARG" ]; then
+    ACCOUNT="$ACCOUNT_ARG"
+fi
 
-    if [ "$ACTION_SEL" == "in" ]; then
-        ACTION="i"
-    else
-        ACTION="o"
-    fi
-
-    # Exit if no account selected
-    if [ -z "$ACCOUNT" ]; then
-        exit 0
-    fi
-else
-    # Fallback to fzf
-    if command -v fzf >/dev/null 2>&1; then
-        # Select account
-        ACCOUNT=$(hledger -f "$FILE" accounts | fzf --header "Select account")
-        if [ -z "$ACCOUNT" ]; then exit 0; fi
-
-        # Select action
-        ACTION_SEL=$(printf "in\nout" | fzf --header "Select action")
-        if [ -z "$ACTION_SEL" ]; then exit 0; fi
-
-        if [ "$ACTION_SEL" == "in" ]; then
-            ACTION="i"
-        else
-            ACTION="o"
+# Interactive selection if needed
+if [ -z "$ACCOUNT" ] || [ -z "$ACTION" ]; then
+    if command -v gum >/dev/null 2>&1; then
+        # Prompt for account if not provided
+        if [ -z "$ACCOUNT" ]; then
+            ACCOUNT=$(hledger -f "$FILE" accounts | gum filter --placeholder "Select account")
+            if [ -z "$ACCOUNT" ]; then exit 0; fi
         fi
 
+        # Prompt for action if not provided
+        if [ -z "$ACTION" ]; then
+            ACTION_SEL=$(printf "in\nout" | gum choose --header "Select action")
+            if [ -z "$ACTION_SEL" ]; then exit 0; fi
+            [ "$ACTION_SEL" == "in" ] && ACTION="i" || ACTION="o"
+        fi
+    elif command -v fzf >/dev/null 2>&1; then
+        # Prompt for account if not provided
+        if [ -z "$ACCOUNT" ]; then
+            ACCOUNT=$(hledger -f "$FILE" accounts | fzf --header "Select account")
+            if [ -z "$ACCOUNT" ]; then exit 0; fi
+        fi
+
+        # Prompt for action if not provided
+        if [ -z "$ACTION" ]; then
+            ACTION_SEL=$(printf "in\nout" | fzf --header "Select action")
+            if [ -z "$ACTION_SEL" ]; then exit 0; fi
+            [ "$ACTION_SEL" == "in" ] && ACTION="i" || ACTION="o"
+        fi
     else
-        echo "Error: Neither gum nor fzf found for selection"
-        exit 1
+        if [ -z "$ACCOUNT" ] || [ -z "$ACTION" ]; then
+            echo "Error: Missing arguments and neither gum nor fzf found for selection"
+            exit 1
+        fi
     fi
 fi
 
