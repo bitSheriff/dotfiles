@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Check if meld is installed
+if ! command -v meld &>/dev/null; then
+    echo "Error: meld is not installed."
+    exit 1
+fi
+
+# Find all sync-conflict files (ignoring .gitignore)
+# The pattern matches: <filename>.sync-conflict-<date>-<time>-<deviceid>.<ext>
+# or <filename>.sync-conflict-<date>-<time>-<deviceid>
+mapfile -t conflict_files < <(fd -I -t f "\.sync-conflict-")
+
+if [ ${#conflict_files[@]} -eq 0 ]; then
+    echo "No Syncthing conflict files found."
+    exit 0
+fi
+
+echo "Found ${#conflict_files[@]} conflict(s):"
+
+for conflict_file in "${conflict_files[@]}"; do
+    # Extract the original filename
+    # Regex to remove .sync-conflict-<date>-<time>-<id>
+    # Handles cases with and without extensions
+    original_file=$(echo "$conflict_file" | sed -E 's/\.sync-conflict-[0-9]{8}-[0-9]{6}-[A-Z0-9]{7}//')
+
+    if [ ! -f "$original_file" ]; then
+        echo "----------------------------------------------------------------"
+        echo "Conflict: $conflict_file"
+        echo "Original: $original_file (NOT FOUND)"
+        echo "Skipping..."
+        continue
+    fi
+
+    echo "----------------------------------------------------------------"
+    echo "Merging: $original_file"
+    echo "With:    $conflict_file"
+
+    # Open meld to merge
+    meld "$original_file" "$conflict_file"
+
+    # Ask to delete the conflict file
+    read -p "Delete conflict file '$conflict_file'? [y/N] " response
+    case "$response" in
+    [yY][eE][sS] | [yY])
+        rm -v "$conflict_file"
+        ;;
+    *)
+        echo "Kept: $conflict_file"
+        ;;
+    esac
+done
+
+echo "----------------------------------------------------------------"
+echo "Done."
