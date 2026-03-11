@@ -6,7 +6,7 @@ def load_keybindings(config):
     config.unbind('yT')
     config.unbind('yY')
     config.unbind('yM')
-    # config.unbind('q')                                                          # i dont need macros
+    config.unbind('q')                                                          # i dont need macros
 
     config.bind('=', 'cmd-set-text -s :open')
     config.bind('<Shift-h>', 'history')                                         # open history
@@ -19,7 +19,9 @@ def load_keybindings(config):
     config.bind('pP', 'open -t -- {clipboard}')
     config.bind('py', 'spawn mpv {url}')                                        # open the current url in mpv
     config.bind('pY', 'hint links spawn --detach mpv {hint-url}')
-    config.bind('pQ', 'spawn --userscript qr')
+
+    # userscripts
+    config.bind('qq', 'spawn --userscript qr')
 
     ## Quickmarks
     config.bind('B', 'bookmark-list')                                           # open bookmarks list

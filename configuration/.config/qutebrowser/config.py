@@ -19,7 +19,7 @@ theming.wallust_theme(c, config)
 keybindings.load_keybindings(config)
 
 # enable PDFs
-config.content.pdfjs = True
+# config.content.pdfjs = True
 
 # c.url.start_pages = "https://bitsheriff.dev/startpage"
 c.url.default_page = "https://bitsheriff.dev/startpage"

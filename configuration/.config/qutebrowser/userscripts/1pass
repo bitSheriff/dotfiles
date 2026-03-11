@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+set +e
+
+# JS field injection code from https://github.com/qutebrowser/qutebrowser/blob/main/misc/userscripts/password_fill
+javascript_escape() {
+    # print the first argument in an escaped way, such that it can safely
+    # be used within javascripts double quotes
+    # shellcheck disable=SC2001
+    sed "s,[\\\\'\"\/],\\\\&,g" <<< "$1"
+}
+
+js() {
+cat <<EOF
+    function loadData2Form() {
+        var user = "$(javascript_escape "${USERNAME}")";
+        var pass = "$(javascript_escape "${PASSWORD}")";
+        var inputs = document.getElementsByTagName("input");
+        var found = false;
+        for (var i = 0; i < inputs.length; i++) {
+            var input = inputs[i];
+            if (input.type == "password") {
+                input.value = pass;
+                input.dispatchEvent(new Event('change', {bubbles: true}));
+                found = true;
+            } else if (input.type == "text" || input.type == "email") {
+                if (input.id.toLowerCase().includes("user") || input.name.toLowerCase().includes("user") || input.type == "email") {
+                    input.value = user;
+                    input.dispatchEvent(new Event('change', {bubbles: true}));
+                }
+            }
+        }
+        if (!found) alert("No password field found on this page.");
+    };
+    loadData2Form();
+EOF
+}
+
+URL=$(echo "$QUTE_URL" | awk -F/ '{print $3}' | sed 's/www.//g')
+TOKEN_TMPDIR="${TMPDIR:-/tmp}"
+TOKEN_CACHE="$TOKEN_TMPDIR/1pass.token"
+
+echo "message-info 'Looking for password for $URL...'" >> "$QUTE_FIFO"
+
+# Sign in logic updated for op v2
+if [ -f "$TOKEN_CACHE" ]; then
+    TOKEN=$(cat "$TOKEN_CACHE")
+    if ! op whoami --session="$TOKEN" > /dev/null 2>&1; then
+        TOKEN=$(wofi -d -P -p "1password: "| op signin --raw) || TOKEN=""
+        echo "$TOKEN" > "$TOKEN_CACHE"
+    fi
+else
+    TOKEN=$(wofi -d -P -p "1password: "| op signin --raw) || TOKEN=""
+    install -m 600 /dev/null "$TOKEN_CACHE"
+    echo "$TOKEN" > "$TOKEN_CACHE"
+fi
+
+
+if [ -n "$TOKEN" ]; then
+    ITEMS_JSON=$(op item list --format=json --session="$TOKEN")
+    
+    # In v2, we first try a fast search by title or additional info
+    # Matches if: title is in URL, URL is in title, or additional_info (often domain/username) is in URL
+    ID=$(echo "$ITEMS_JSON" | jq --arg url "$URL" -r '.[] | select(
+        (.title? | ascii_downcase | contains($url | ascii_downcase)) or 
+        ($url | ascii_downcase | contains(.title? | ascii_downcase)) or
+        (.additional_information? | ascii_downcase | contains($url | ascii_downcase))
+    ) | .id' | head -n 1) || ID=""
+
+    if [ -z "$ID" ] || [ "$ID" == "null" ]; then
+        echo "message-info 'No exact match for $URL, please select...'" >> "$QUTE_FIFO"
+        
+        TITLE=$(echo "$ITEMS_JSON" | jq -r '.[].title' | sort | uniq | wofi -d -i -p "Select item:") || TITLE=""
+        
+        if [ -n "$TITLE" ]; then
+            ID=$(echo "$ITEMS_JSON" | jq --arg title "$TITLE" -r '.[] | select(.title == $title) | .id' | head -n 1) || ID=""
+        else
+            ID=""
+        fi
+    fi
+
+    if [ -n "$ID" ] && [ "$ID" != "null" ]; then
+        # Use v2 command 'op item get'
+        ITEM=$(op item get "$ID" --format=json --session="$TOKEN")
+
+        PASSWORD=$(echo "$ITEM" | jq -r '.fields[] | select(.purpose=="PASSWORD") | .value')
+        # Fallback if purpose is not set
+        [ "$PASSWORD" == "null" ] || [ -z "$PASSWORD" ] && PASSWORD=$(echo "$ITEM" | jq -r '.fields[] | select(.label=="password") | .value')
+
+        if [ -n "$PASSWORD" ] && [ "$PASSWORD" != "null" ]; then
+            TITLE=$(echo "$ITEM" | jq -r '.title')
+            USERNAME=$(echo "$ITEM" | jq -r '.fields[] | select(.purpose=="USERNAME") | .value')
+            # Fallback if purpose is not set
+            [ "$USERNAME" == "null" ] || [ -z "$USERNAME" ] && USERNAME=$(echo "$ITEM" | jq -r '.fields[] | select(.label=="username") | .value')
+
+            printjs() {
+                # Strip comments and compress to one line for jseval
+                js | sed 's,//.*$,,' | tr '\n' ' ' | sed 's/  */ /g'
+            }
+            JS_CODE=$(printjs)
+            echo "jseval -q $JS_CODE" >> "$QUTE_FIFO"
+
+            # Use v2 command 'op item get --otp' - ignore errors if no OTP exists
+            TOTP=$(op item get "$ID" --otp --session="$TOKEN" 2>/dev/null) || TOTP=""
+            if [ -n "$TOTP" ]; then
+                if command -v xclip >/dev/null; then
+                    echo "$TOTP" | xclip -in -selection clipboard
+                elif command -v wl-copy >/dev/null; then
+                    echo "$TOTP" | wl-copy
+                fi
+                echo "message-info 'Pasted one time password for $TITLE to clipboard'" >> "$QUTE_FIFO" 
+            fi
+        else
+            echo "message-error 'No password found for $ID'" >> "$QUTE_FIFO"
+        fi
+    else
+        echo "message-error 'Entry not found'" >> "$QUTE_FIFO"
+    fi
+else
+    echo "message-error 'Authentication failed'" >> "$QUTE_FIFO"
+fi
