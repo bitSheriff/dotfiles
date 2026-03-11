@@ -309,6 +309,7 @@ fi
 if array_contains "${array[@]}" "$NAME_qutebrowser"; then
     pacman_packages+=("qutebrowser")
     pacman_packages+=("python-adblock") # additional Brave Browsers Ad block
+    pacman_packages+=("pdfjs-legacy")   # view pdfs
 fi
 if array_contains "${array[@]}" "$NAME_hledger"; then
     pacman_packages+=("hledger")
