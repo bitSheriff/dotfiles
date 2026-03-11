@@ -303,6 +303,11 @@ def apply_palette(c, palette, config, padding):
     c.fonts.web.family.standard = 'monospace'
 
 
+def set_font_config(c):
+    c.fonts.default_family = "Comic Mono"
+    c.fonts.web.size.default = 20
+
+
 def wallust_theme(c, config, options = {}):
     path = "$HOME/.config/theming/colors.json"
     theme = get_wallust_theme(path)
@@ -340,6 +345,7 @@ def wallust_theme(c, config, options = {}):
     }   
 
     apply_palette(c, palette,config, padding)
+    set_font_config(c)
 
 
 def dracula_theme(c, config, options = {}):

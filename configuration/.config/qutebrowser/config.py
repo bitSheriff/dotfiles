@@ -23,7 +23,6 @@ c.url.default_page = "https://bitsheriff.dev/startpage"
 c.auto_save.session = True # save tabs on quit/restart
 
 c.tabs.title.format = "{audio}{current_title}"
-c.fonts.web.size.default = 20
 
 #############################################################################################################
 # SEARCH
