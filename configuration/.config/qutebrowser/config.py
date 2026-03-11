@@ -18,6 +18,9 @@ theming.wallust_theme(c, config)
 # load keybindings
 keybindings.load_keybindings(config)
 
+# enable PDFs
+config.content.pdfjs = True
+
 # c.url.start_pages = "https://bitsheriff.dev/startpage"
 c.url.default_page = "https://bitsheriff.dev/startpage"
 c.auto_save.session = True # save tabs on quit/restart
@@ -41,7 +44,7 @@ c.url.searchengines = {
         '!rd': 'https://www.reddit.com/search?q={}',
         '!dc': 'https://www.discogs.com/de/search/?q={}&btn=&type=all',
         # AI
-        '!gpt' : 'https://chatgpt.com/?q={}&hints=search',
+        # '!gpt' : 'https://chatgpt.com/?q={}&hints=search',
         '!da' : 'https://duckduckgo.com/?q={}&ia=chat&bang=true+', # DuckDuck AI
         # Media 
         '!yt': 'https://www.youtube.com/results?search_query={}',
