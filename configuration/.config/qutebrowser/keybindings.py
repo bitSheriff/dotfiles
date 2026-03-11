@@ -31,17 +31,20 @@ def load_keybindings(config):
     config.bind('gK', 'tab-move -')
     config.bind('gm', 'tab-move')
 
+    config.bind('<Ctrl-k>', 'tab-prev')                                         # Previous tab
+    config.bind('<Ctrl-j>', 'tab-next')                                         # Next tab
+    config.bind('<Alt-right>', 'tab-next')
+    config.bind('<Alt-left>', 'tab-prev')
+
     ## UI Changes
     config.bind('tH', 'config-cycle tabs.show multiple never')
     config.bind('sH', 'config-cycle statusbar.show always never')
     # config.bind('tT', 'config-cycle tabs.position top left')
-    
+
     ## Yanking
     config.bind('ym', 'yank inline [{title}]({url:yank})')                      # Yank URL and title as Markdown link
+
     ## Scrolling
     config.bind('<Shift-j>', 'scroll-page 0 0.5')                               # Scroll half page down
     config.bind('<Shift-k>', 'scroll-page 0 -0.5')                              # Scroll half page up
 
-    ## Tabs
-    config.bind('<Ctrl-k>', 'tab-prev')                                         # Previous tab
-    config.bind('<Ctrl-j>', 'tab-next')                                         # Next tab
