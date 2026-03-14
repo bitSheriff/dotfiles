@@ -1,58 +1,84 @@
-#!/bin/zsh
+#!/usr/bin/env python3
+import os
+import sys
+import datetime
+import argparse
 
-source "$HOME/.config/shell/envvars"
-source "$LIB_PATH/my_lib.sh"
-include "$HOME/.config/shell/secrets"
+def main():
+    parser = argparse.ArgumentParser(description="Add a todo task to the daily journal.")
+    parser.add_argument("-t", "--today", action="store_true", help="Set due date and file to today.")
+    parser.add_argument("-T", "--tomorrow", action="store_true", help="Set due date and file to tomorrow.")
+    parser.add_argument("task", nargs="*", help="The task content. If empty, reads from stdin.")
 
+    args = parser.parse_args()
 
-# Preamble of the Memo
-TODO_PRE="- [ ] "
-LINES_PRE="    - "
-DUE=" 📅"
-DUE_TODAY="$DUE $(date '+%F')"
+    # Determine date
+    target_date = datetime.date.today()
+    if args.tomorrow:
+        target_date += datetime.timedelta(days=1)
+    
+    # Format dates
+    date_str = target_date.strftime("%Y-%m-%d")
+    due_suffix = f" 📅 {date_str}"
 
-# Journal File where the memo gets added
-JOURNAL=$JOURNAL_DAILY_PATH/$(date +"%F").md
+    # Get journal path
+    journal_daily_path = os.getenv("JOURNAL_DAILY_PATH")
+    if not journal_daily_path:
+        print("Error: JOURNAL_DAILY_PATH environment variable is not set.", file=sys.stderr)
+        sys.exit(1)
+    
+    journal_file = os.path.join(journal_daily_path, f"{date_str}.md")
 
+    # Get task input
+    if args.task:
+        # Check if the first argument was -t or -T (handled by argparse)
+        # and join the rest as the task
+        input_text = " ".join(args.task)
+    else:
+        # Read from stdin (mimicking interactive input)
+        if sys.stdin.isatty():
+            print("Enter todo (Ctrl+D to finish):")
+        input_text = sys.stdin.read().strip()
 
-# decide if the input was given as a positional argument or parsed into (stdin)
-if [ $# -gt 0 ]; then
-    # If there are arguments, join them into a single string and process
-    input="$*"
-else
-    # Otherwise, use gum write to get the input
-    input=$(gum write --header "Todo" --show-line-numbers)
-fi
+    if not input_text:
+        print("Error: No task content provided.", file=sys.stderr)
+        sys.exit(1)
 
-# check if input start with '-t' -> due today
-if [[ $input == -t* ]]; then
-    # Remove the option flag
-    input="${input#-t}"
-    # Trim leading whitespace
-    input="${input#"${input%%[![:space:]]*}"}"
-    if [[ -z "$input" ]]; then
-        input=$(gum write --header "Todo (Due Today)")
-    fi
-    input+="$DUE_TODAY"
-fi
+    # Prepare output lines
+    lines = input_text.splitlines()
+    output_lines = []
+    
+    # First line has the todo preamble and the due date
+    first_line = f"- [ ] {lines[0]}"
+    # Append due date if not already present
+    if "📅" not in first_line:
+        first_line += due_suffix
+    output_lines.append(first_line)
 
-# line conter
-count=0
+    # Subsequent lines are sub-items
+    for line in lines[1:]:
+        if line.strip():
+            output_lines.append(f"    - {line}")
 
-# Ensure the journal file ends with a newline to avoid appending to the same line
-[[ -s "$JOURNAL" && -n "$(tail -c 1 "$JOURNAL")" ]] && echo "" >> "$JOURNAL"
+    # Ensure journal file exists and handle newline
+    try:
+        # Check if file exists and has content
+        needs_newline = False
+        if os.path.exists(journal_file) and os.path.getsize(journal_file) > 0:
+            with open(journal_file, "rb") as f:
+                f.seek(-1, os.SEEK_END)
+                if f.read(1) != b"\n":
+                    needs_newline = True
 
-while IFS= read -r line; do
+        with open(journal_file, "a") as f:
+            if needs_newline:
+                f.write("\n")
+            f.write("\n".join(output_lines) + "\n")
+            
+        print(f"Added todo to {journal_file}")
+    except Exception as e:
+        print(f"Error writing to file: {e}", file=sys.stderr)
+        sys.exit(1)
 
-    # just print the preamble on the first line
-    if [ $count -eq 0 ]; then
-        # Process the first line differently
-        echo "$TODO_PRE" "$line" >>"$JOURNAL"
-    else
-        # Process the remaining lines
-        echo "$LINES_PRE" "$line" >>"$JOURNAL"
-    fi
-
-    # Increment the counter
-    count=$((count + 1))
-done <<<"$input"
+if __name__ == "__main__":
+    main()
