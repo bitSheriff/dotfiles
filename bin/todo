@@ -4,6 +4,33 @@ import sys
 import datetime
 import argparse
 
+import subprocess
+
+def select_file_with_fzf():
+    notes_dir = os.getenv("NOTES_DIR")
+    if not notes_dir:
+        print("Error: NOTES_DIR environment variable is not set.", file=sys.stderr)
+        sys.exit(1)
+    
+    try:
+        # Use fd to get list of files, then pipe to fzf
+        fd_cmd = ["fd", "--type", "f", "--extension", "md", ".", notes_dir]
+        fzf_cmd = ["fzf", "--prompt=Select file: "]
+        
+        p1 = subprocess.Popen(fd_cmd, stdout=subprocess.PIPE)
+        p2 = subprocess.Popen(fzf_cmd, stdin=p1.stdout, stdout=subprocess.PIPE)
+        p1.stdout.close()
+        
+        stdout, _ = p2.communicate()
+        if p2.returncode == 0:
+            return stdout.decode().strip()
+        else:
+            print("Selection cancelled.", file=sys.stderr)
+            sys.exit(0)
+    except FileNotFoundError:
+        print("Error: fzf or find not found in PATH.", file=sys.stderr)
+        sys.exit(1)
+
 def parse_date(date_str):
     date_str = date_str.lower().strip()
     today = datetime.date.today()
@@ -52,35 +79,52 @@ def main():
     parser.add_argument("-t", "--today", action="store_true", help="Set due date and file to today.")
     parser.add_argument("-T", "--tomorrow", action="store_true", help="Set due date and file to tomorrow.")
     parser.add_argument("-n", "--next", type=int, help="Set due date to N days from today.")
-    parser.add_argument("-d", "--date", type=str, help="Set due date to a specific YYYY-MM-DD.")
+    parser.add_argument("-d", "--date", type=str, help="Set due date to a specific YYYY-MM-DD or natural language date.")
+    parser.add_argument("-f", "--file", nargs="?", const="SELECT_WITH_FZF", help="Target markdown file. If no file path is given, use fzf in $NOTES_DIR.")
     parser.add_argument("task", nargs="*", help="The task content. If empty, reads from stdin.")
 
     args = parser.parse_args()
 
-    # Determine date (precedence: -d > -n > -T > -t/default)
+    # Determine date (precedence: -d > -n > -T > -t)
     target_date = datetime.date.today()
+    date_flag_used = False
+
     if args.date:
         try:
             target_date = parse_date(args.date)
+            date_flag_used = True
         except ValueError:
             print(f"Error: Invalid date format or keyword '{args.date}'. Use YYYY-MM-DD or words like 'monday'.", file=sys.stderr)
             sys.exit(1)
     elif args.next is not None:
         target_date += datetime.timedelta(days=args.next)
+        date_flag_used = True
     elif args.tomorrow:
         target_date += datetime.timedelta(days=1)
-    
+        date_flag_used = True
+    elif args.today:
+        # target_date is already today, but we set flag to add the suffix
+        date_flag_used = True
+
     # Format dates
     date_str = target_date.strftime("%Y-%m-%d")
-    due_suffix = f" 📅 {date_str}"
+    due_suffix = f" 📅 {date_str}" if date_flag_used else ""
+    # Determine target file
+    if args.file == "SELECT_WITH_FZF":
+        journal_file = select_file_with_fzf()
+    elif args.file:
+        journal_file = args.file
+    else:
+        # Default journal logic
+        journal_daily_path = os.getenv("JOURNAL_DAILY_PATH")
+        if not journal_daily_path:
+            print("Error: JOURNAL_DAILY_PATH environment variable is not set.", file=sys.stderr)
+            sys.exit(1)
+        journal_file = os.path.join(journal_daily_path, f"{date_str}.md")
 
-    # Get journal path
-    journal_daily_path = os.getenv("JOURNAL_DAILY_PATH")
-    if not journal_daily_path:
-        print("Error: JOURNAL_DAILY_PATH environment variable is not set.", file=sys.stderr)
-        sys.exit(1)
-    
-    journal_file = os.path.join(journal_daily_path, f"{date_str}.md")
+    # Ensure the target file's directory exists
+    os.makedirs(os.path.dirname(os.path.abspath(journal_file)), exist_ok=True)
+
 
     # Get task input
     if args.task:
