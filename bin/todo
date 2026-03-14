@@ -6,6 +6,18 @@ import argparse
 
 import subprocess
 
+# Configuration for input parsing
+INPUT_DESC_PREFIX = "--"
+INPUT_SUB_PREFIX = "-"
+
+# Configuration for output formatting
+OUT_TODO = "- [ ] "
+OUT_NOTE = "    - "
+OUT_SUBTODO = "    - [ ] "
+
+# Target marker in the file (if found, insert after this line)
+TODO_MARKER = "%%insert_todos%%"
+
 def select_file_with_fzf():
     notes_dir = os.getenv("NOTES_DIR")
     if not notes_dir:
@@ -13,16 +25,21 @@ def select_file_with_fzf():
         sys.exit(1)
     
     try:
-        # Use fd to get list of files, then pipe to fzf
-        fd_cmd = ["fd", "--type", "f", "--extension", "md", ".", notes_dir]
-        fzf_cmd = ["fzf", "--prompt=Select file: "]
+        # Use fd to get list of files, then pipe to sort, then to fzf
+        # --absolute-path ensures that absolute paths are returned for the previewer
+        fd_cmd = ["fd", "--type", "f", "--extension", "md", "--absolute-path", ".", notes_dir]
+        sort_cmd = ["sort"]
+        # --no-sort tells fzf not to re-sort the results alphabetically or by relevance
+        fzf_cmd = ["fzf", "--prompt=Select file: ", "--no-sort"]
         
         p1 = subprocess.Popen(fd_cmd, stdout=subprocess.PIPE)
-        p2 = subprocess.Popen(fzf_cmd, stdin=p1.stdout, stdout=subprocess.PIPE)
+        p2 = subprocess.Popen(sort_cmd, stdin=p1.stdout, stdout=subprocess.PIPE)
         p1.stdout.close()
+        p3 = subprocess.Popen(fzf_cmd, stdin=p2.stdout, stdout=subprocess.PIPE)
+        p2.stdout.close()
         
-        stdout, _ = p2.communicate()
-        if p2.returncode == 0:
+        stdout, _ = p3.communicate()
+        if p3.returncode == 0:
             return stdout.decode().strip()
         else:
             print("Selection cancelled.", file=sys.stderr)
@@ -161,32 +178,67 @@ def main():
     lines = input_text.splitlines()
     output_lines = []
     
-    # First line has the todo preamble and the due date
-    first_line = f"- [ ] {lines[0]}"
-    # Append due date if not already present
-    if "📅" not in first_line:
-        first_line += due_suffix
-    output_lines.append(first_line)
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+            
+        # Determine task type based on prefixes
+        is_desc = stripped.startswith(INPUT_DESC_PREFIX)
+        # Note: we check desc first because it's longer than sub
+        is_sub = stripped.startswith(INPUT_SUB_PREFIX) and not is_desc
+        
+        # If no task exists yet, everything is a main task
+        if not output_lines:
+            is_desc = is_sub = False
 
-    # Subsequent lines are sub-items
-    for line in lines[1:]:
-        if line.strip():
-            output_lines.append(f"    - {line}")
+        if is_desc:
+            # Description (Note) of the previous task
+            content = stripped[len(INPUT_DESC_PREFIX):].strip()
+            output_lines.append(f"{OUT_NOTE}{content}")
+        elif is_sub:
+            # Sub-todo of the previous task
+            content = stripped[len(INPUT_SUB_PREFIX):].strip()
+            output_lines.append(f"{OUT_SUBTODO}{content}")
+        else:
+            # New top-level task
+            task_line = f"{OUT_TODO}{stripped}"
+            # Append due date if a date flag was used and not already present
+            if due_suffix and "📅" not in task_line:
+                task_line += due_suffix
+            output_lines.append(task_line)
 
-    # Ensure journal file exists and handle newline
+    # Write to file
     try:
-        # Check if file exists and has content
-        needs_newline = False
+        content_to_write = "\n".join(output_lines) + "\n"
+        
         if os.path.exists(journal_file) and os.path.getsize(journal_file) > 0:
-            with open(journal_file, "rb") as f:
-                f.seek(-1, os.SEEK_END)
-                if f.read(1) != b"\n":
-                    needs_newline = True
-
-        with open(journal_file, "a") as f:
-            if needs_newline:
-                f.write("\n")
-            f.write("\n".join(output_lines) + "\n")
+            with open(journal_file, "r") as f:
+                lines = f.readlines()
+            
+            # Find the marker
+            marker_index = -1
+            for i, line in enumerate(lines):
+                if TODO_MARKER in line:
+                    marker_index = i
+                    break
+            
+            if marker_index != -1:
+                # Insert after marker
+                lines.insert(marker_index + 1, content_to_write)
+                with open(journal_file, "w") as f:
+                    f.writelines(lines)
+            else:
+                # Append to end, handle newline
+                needs_newline = not lines[-1].endswith("\n")
+                with open(journal_file, "a") as f:
+                    if needs_newline:
+                        f.write("\n")
+                    f.write(content_to_write)
+        else:
+            # New file
+            with open(journal_file, "w") as f:
+                f.write(content_to_write)
             
         print(f"Added todo to {journal_file}")
     except Exception as e:
