@@ -27,6 +27,9 @@ c.auto_save.session = True # save tabs on quit/restart
 
 c.tabs.title.format = "{audio}{current_title}"
 
+# alias to toggle darkmode
+c.aliases['darkmode'] = "config-cycle colors.webpage.darkmode.enabled"
+
 #############################################################################################################
 # SEARCH
 #############################################################################################################
