@@ -39,6 +39,9 @@ fi
 # line conter
 count=0
 
+# Ensure the journal file ends with a newline to avoid appending to the same line
+[[ -s "$JOURNAL" && -n "$(tail -c 1 "$JOURNAL")" ]] && echo "" >> "$JOURNAL"
+
 while IFS= read -r line; do
 
     # just print the preamble on the first line
