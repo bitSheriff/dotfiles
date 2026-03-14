@@ -4,17 +4,70 @@ import sys
 import datetime
 import argparse
 
+def parse_date(date_str):
+    date_str = date_str.lower().strip()
+    today = datetime.date.today()
+    
+    if date_str == "today":
+        return today
+    if date_str == "tomorrow":
+        return today + datetime.timedelta(days=1)
+    if date_str == "yesterday":
+        return today - datetime.timedelta(days=1)
+    
+    weekdays = {
+        'monday': 0, 'mon': 0,
+        'tuesday': 1, 'tue': 1,
+        'wednesday': 2, 'wed': 2,
+        'thursday': 3, 'thu': 3,
+        'friday': 4, 'fri': 4,
+        'saturday': 5, 'sat': 5,
+        'sunday': 6, 'sun': 6
+    }
+    
+    # Handle "next [weekday]"
+    is_next = False
+    if date_str.startswith("next "):
+        is_next = True
+        date_str = date_str[5:].strip()
+        
+    if date_str in weekdays:
+        target_wd = weekdays[date_str]
+        days_ahead = (target_wd - today.weekday()) % 7
+        # If it's Monday and I say "Monday", days_ahead is 0.
+        # If I say "next Monday", I mean in 7 days.
+        if is_next:
+            days_ahead += 7
+        elif days_ahead == 0:
+            # Optional: if it's today, maybe you want next week? 
+            # Usually, "Monday" on a Monday means "today".
+            pass
+        return today + datetime.timedelta(days=days_ahead)
+        
+    # Fallback to standard format
+    return datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+
 def main():
     parser = argparse.ArgumentParser(description="Add a todo task to the daily journal.")
     parser.add_argument("-t", "--today", action="store_true", help="Set due date and file to today.")
     parser.add_argument("-T", "--tomorrow", action="store_true", help="Set due date and file to tomorrow.")
+    parser.add_argument("-n", "--next", type=int, help="Set due date to N days from today.")
+    parser.add_argument("-d", "--date", type=str, help="Set due date to a specific YYYY-MM-DD.")
     parser.add_argument("task", nargs="*", help="The task content. If empty, reads from stdin.")
 
     args = parser.parse_args()
 
-    # Determine date
+    # Determine date (precedence: -d > -n > -T > -t/default)
     target_date = datetime.date.today()
-    if args.tomorrow:
+    if args.date:
+        try:
+            target_date = parse_date(args.date)
+        except ValueError:
+            print(f"Error: Invalid date format or keyword '{args.date}'. Use YYYY-MM-DD or words like 'monday'.", file=sys.stderr)
+            sys.exit(1)
+    elif args.next is not None:
+        target_date += datetime.timedelta(days=args.next)
+    elif args.tomorrow:
         target_date += datetime.timedelta(days=1)
     
     # Format dates
