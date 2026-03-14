@@ -128,14 +128,30 @@ def main():
 
     # Get task input
     if args.task:
-        # Check if the first argument was -t or -T (handled by argparse)
-        # and join the rest as the task
+        # Join arguments into a single string
         input_text = " ".join(args.task)
     else:
-        # Read from stdin (mimicking interactive input)
+        # Read from stdin with line editing support
         if sys.stdin.isatty():
-            print("Enter todo (Ctrl+D to finish):")
-        input_text = sys.stdin.read().strip()
+            import readline
+            print("Enter todo (Ctrl+D to finish, Ctrl+C to cancel):")
+            lines = []
+            while True:
+                try:
+                    # The first line has a different prompt
+                    prompt = "Todo: " if not lines else "      "
+                    line = input(prompt)
+                    lines.append(line)
+                except EOFError:
+                    print()  # Move to new line after Ctrl+D
+                    break
+                except KeyboardInterrupt:
+                    print("\nCancelled.")
+                    sys.exit(0)
+            input_text = "\n".join(lines).strip()
+        else:
+            # Non-interactive (piped) input
+            input_text = sys.stdin.read().strip()
 
     if not input_text:
         print("Error: No task content provided.", file=sys.stderr)
