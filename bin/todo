@@ -16,7 +16,7 @@ OUT_NOTE = "    - "
 OUT_SUBTODO = "    - [ ] "
 
 # Target marker in the file (if found, insert after this line)
-TODO_MARKER = "%%insert_todos%%"
+TODO_MARKER = "%%insert_todo%%"
 
 def select_file_with_fzf():
     notes_dir = os.getenv("NOTES_DIR")
