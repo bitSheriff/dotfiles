@@ -6,6 +6,11 @@ tools:
   write: false
   edit: false
   bash: false
+permission:
+  edit: deny
+  bash: ask
+  webfetch: allow
+  read: allow
 ---
 
 # Control Engineering Specialist
