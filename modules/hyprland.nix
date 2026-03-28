@@ -29,6 +29,7 @@
     fuzzel
     qutebrowser
     quickshell
+    kdePackages.dolphin
   ];
 
   services.pipewire = {
@@ -41,4 +42,12 @@
     comic-mono
     jetbrains-mono
   ];
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+  };
+
+  # This ensures environment variables are exported correctly
+  services.dbus.enable = true;
 }

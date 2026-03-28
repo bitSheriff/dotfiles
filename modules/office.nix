@@ -4,11 +4,12 @@
   environment.systemPackages = with pkgs; [
     typst
     
-    # PDF Handling
+    # Files & Co
     zathura            # Minimalist, keyboard-centric PDF viewer (very Arch-like)
     xournalpp          # PDF annotation and note-taking
     pdf-helper         # CLI tool for merging/splitting PDFs
     pdfgrep
+    kdePackages.dolphin
 
     # Notes & Organization
     obsidian

@@ -9,10 +9,10 @@
     ../../modules/office.nix
   ];
 
+  system.stateVersion = "25.11"; 
+
   networking.hostName = "desktop";
 
   # Hardware-specific override for Desktop (NVIDIA)
   services.xserver.videoDrivers = ["nvidia"];
-  
-  system.stateVersion = "25.11"; 
 }

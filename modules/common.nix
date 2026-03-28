@@ -4,9 +4,9 @@
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
-      # Deduplicate the store automatically to save space
       auto-optimise-store = true;
     };
+
     # Garbage collection: keeps your drive from filling up with old generations
     gc = {
       automatic = true;
@@ -21,7 +21,7 @@
   time.timeZone = "Europe/Vienna"; 
   i18n.defaultLocale = "en_US.UTF-8";
   
-  console.keyMap = "de"; # Or "de" if you prefer
+  console.keyMap = "de";
 
   networking.networkmanager.enable = true;
 
@@ -56,7 +56,12 @@
     zsh
   ];
 
-  programs.zsh.enable = true; # Necessary to initialize ZSH correctly
+  programs.zsh = {
+    enable = true;
+    shellAliases = {
+      nix-switch = "sudo nixos-rebuild switch --flake /home/benjamin/code/dotfiles#$HOST";
+    };
+  };
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
@@ -67,4 +72,11 @@
   nixpkgs.config.permittedInsecurePackages = [
     "openssl-1.1.1w"
   ];
+
+  services.envfs.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
 }

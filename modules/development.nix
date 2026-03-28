@@ -3,8 +3,10 @@
 {
   # System-wide dev tools
   environment.systemPackages = with pkgs; [
+
     # General
     git
+    git-lfs
     fd
     fzf
     neovim
@@ -13,6 +15,7 @@
     gnumake
     age
     qutebrowser
+    mise
 
     # Terminal Emulators
     kitty
@@ -20,9 +23,12 @@
     # TUIs
     gh
     lazygit
+    lazydocker
     opencode
+    yazi
 
     vscode
+    zed-editor
 
     # Container / Virt
     docker
