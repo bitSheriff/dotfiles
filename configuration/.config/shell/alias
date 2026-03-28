@@ -53,7 +53,7 @@ alias typo="typora"
 alias calc="qalc"
 alias t="tod task quick-add" # Todoist Quick Add
 
-alias nix-switch="sudo nixos-rebuild switch .#$(hostname)"
+alias nix-switch="sudo nixos-rebuild switch --flake .#$(hostname)"
 
 alias hl="hledger"
 alias hla="hledger -f ${LEDGER_ALL_FILE}"
@@ -264,7 +264,7 @@ openweb-ui(){
 
 # Two-Way sync
 sync(){
-    rsync -rtu $1 $2 && rsync -rtu $2 $1 
+    rsync -rtu $1 $2 && rsync -rtu $2 $1
 }
 
 fcf() {
