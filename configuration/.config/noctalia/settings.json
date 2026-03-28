@@ -79,6 +79,9 @@
         "widgets": {
             "center": [
                 {
+                    "id": "plugin:workspace-overview"
+                },
+                {
                     "characterCount": 2,
                     "colorizeIcons": false,
                     "emptyColor": "secondary",
@@ -166,6 +169,9 @@
                     "textColor": "none",
                     "useFixedWidth": false,
                     "visualizerType": "linear"
+                },
+                {
+                    "id": "plugin:privacy-indicator"
                 }
             ],
             "right": [
