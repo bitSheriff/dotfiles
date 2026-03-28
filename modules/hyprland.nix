@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   programs.hyprland = {
@@ -35,7 +35,6 @@
   fonts.packages = with pkgs; [
     comic-neue
     comic-mono
-    nerdfonts
-    noto-fonts-emoji
+    jetbrains-mono
   ];
 }
