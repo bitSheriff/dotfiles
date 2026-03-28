@@ -53,6 +53,8 @@ alias typo="typora"
 alias calc="qalc"
 alias t="tod task quick-add" # Todoist Quick Add
 
+alias nix-switch="sudo nixos-rebuild switch .#$(hostname)"
+
 alias hl="hledger"
 alias hla="hledger -f ${LEDGER_ALL_FILE}"
 alias hl-budget="hledger bal expenses --budget"
