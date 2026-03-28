@@ -7,6 +7,12 @@
     xwayland.enable = true;
   };
 
+  # Wayland/NVIDIA Environment Variables
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    WLR_NO_HARDWARE_CURSORS = "1";
+  };
+
   # 2. Display Manager (Greetd is lightweight and Wayland-native)
   services.greetd = {
     enable = true;
@@ -20,7 +26,6 @@
 
   # 3. GUI System Packages
   environment.systemPackages = with pkgs; [
-    noctua-shell        # Your specific shell environment
     waybar              # Status bar
     swww                # Wallpaper daemon
     dunst               # Notifications

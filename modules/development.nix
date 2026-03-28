@@ -31,5 +31,5 @@
   };
 
   # Add your user to the docker group automatically
-  users.users.yourusername.extraGroups = [ "docker" ];
+  users.users.benjamin.extraGroups = [ "docker" ];
 }

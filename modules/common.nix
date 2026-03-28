@@ -25,9 +25,9 @@
 
   networking.networkmanager.enable = true;
 
-  users.users.yourusername = {
+  users.users.benjamin = {
     isNormalUser = true;
-    description = "Main User";
+    description = "Benjamin";
     extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" ];
     shell = pkgs.zsh;
   };

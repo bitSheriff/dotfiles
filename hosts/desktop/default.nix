@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/desktop-environment.nix
+    ../../modules/hyprland.nix
     ../../modules/development.nix
     ../../modules/multimedia.nix
     ../../modules/office.nix
