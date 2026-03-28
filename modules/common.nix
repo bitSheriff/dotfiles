@@ -18,9 +18,9 @@
   # Bootloader (Standard Grub or Systemd-boot)
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  time.timeZone = "Europe/Vienna"; 
+  time.timeZone = "Europe/Vienna";
   i18n.defaultLocale = "en_US.UTF-8";
-  
+
   console.keyMap = "de";
 
   networking.networkmanager.enable = true;
@@ -54,6 +54,7 @@
     mise
     atuin
     zsh
+    xdg-utils
   ];
 
   programs.zsh = {
@@ -66,7 +67,7 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  
+
   nixpkgs.config.permittedInsecurePackages = [
     "openssl-1.1.1w"
   ];

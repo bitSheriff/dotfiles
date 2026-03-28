@@ -23,14 +23,17 @@
     hyprshot
 
     # Services
-    dunst                     # notification service      
-    wl-clipboard        
+    dunst                     # notification service
+    wl-clipboard
 
     # Look-and-Feel
     noctalia-shell
     quickshell
+    papirus-icon-theme
+    adwaita-qt
+    lxappearance
     starship		# Shell prompt
-    kitty               
+    kitty
     wofi                      # application runner
     fuzzel                    # application runner
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -53,6 +56,7 @@
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
   };
+
 
   # This ensures environment variables are exported correctly
   services.dbus.enable = true;
