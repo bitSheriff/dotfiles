@@ -15,6 +15,7 @@
     obsidian
     thunderbird
     anki
+    hledger
 
     # Communication
     signal-desktop

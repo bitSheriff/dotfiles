@@ -18,17 +18,23 @@
   };
 
   environment.systemPackages = with pkgs; [
-    noctalia-shell
-    dunst               
-    kitty               
-    wofi                
-    wl-clipboard        
+    # Hyprland packages
+    hyprcursor
     hyprshot
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-    starship		# Shell prompt
-    fuzzel
-    qutebrowser
+
+    # Services
+    dunst                     # notification service      
+    wl-clipboard        
+
+    # Look-and-Feel
+    noctalia-shell
     quickshell
+    starship		# Shell prompt
+    kitty               
+    wofi                      # application runner
+    fuzzel                    # application runner
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    qutebrowser
     kdePackages.dolphin
   ];
 
