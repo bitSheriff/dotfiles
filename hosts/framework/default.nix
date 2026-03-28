@@ -18,6 +18,7 @@
 
   # Battery Stuff
   services.upower.enable = true;
+  services.power-profiles-daemon.enable = false;    # use tlp instead
   services.tlp = {
     enable = true;
     settings = {
@@ -40,11 +41,6 @@
   };
 
   # Fingerprint Reader
-  services.fprintd = {
-    enable = true;
-    tod = {
-      enable = true;
-      driver = pkgs.libfprint-2-tod1-goodix; # Goodix driver module
-    };
-  };
+  services.fprintd.tod.enable = true;
+  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 }
