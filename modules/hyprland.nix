@@ -11,7 +11,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd hyprland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd hyprland";
         user = "greeter";
       };
     };
@@ -26,6 +26,9 @@
     hyprshot
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     starship		# Shell prompt
+    fuzzel
+    qutebrowser
+    quickshell
   ];
 
   services.pipewire = {

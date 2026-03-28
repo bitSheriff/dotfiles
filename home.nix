@@ -4,7 +4,7 @@
   home.username = "benjamin";
   home.homeDirectory = "/home/benjamin";
 
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.11";
 
   home.file.".config" = {
     source = ./configuration/.config;

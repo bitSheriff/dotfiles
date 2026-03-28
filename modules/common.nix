@@ -44,10 +44,16 @@
     unzip
     _1password-gui
     _1password-cli
+    firefox
     ente-auth
     kitty
     gnupg
     eza
+    zoxide
+    television
+    mise
+    atuin
+    zsh
   ];
 
   programs.zsh.enable = true; # Necessary to initialize ZSH correctly
