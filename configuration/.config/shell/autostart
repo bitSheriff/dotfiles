@@ -8,6 +8,3 @@ eval "$(starship init zsh)"
 
 # better cd command
 eval "$(zoxide init zsh --cmd cd)"
-
-# fix typos
-eval $(thefuck --alias)
