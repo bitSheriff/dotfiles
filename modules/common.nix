@@ -58,10 +58,8 @@
 
   programs.zsh = {
     enable = true;
-    shellAliases = {
-      nix-switch = "sudo nixos-rebuild switch --flake /home/benjamin/code/dotfiles#$HOST";
-    };
   };
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
