@@ -5,14 +5,23 @@
   environment.systemPackages = with pkgs; [
     # General
     git
-    gh                  # GitHub CLI
+    gh
+    fd
+    fzf
+    neovim
+    ripgrep
+    eza
     vim
     gnumake
-    
-    # Coding Apps (usually better as systemPackages for path stability)
+    age
+    qutebrowser
+
+    # Terminal Emulators
+    kitty
+
     vscode
     sublime4
-    
+
     # Container / Virt
     docker
     docker-compose

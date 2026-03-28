@@ -42,6 +42,11 @@
     usbutils
     htop
     unzip
+    _1password-gui
+    _1password-cli
+    ente-auth
+    kitty
+    gnupg
   ];
 
   programs.zsh.enable = true; # Necessary to initialize ZSH correctly

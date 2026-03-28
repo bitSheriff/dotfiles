@@ -15,6 +15,7 @@
     vlc                 # The "play anything" king
     mpv                 # High-performance, scriptable player
     spotify             # Music streaming
+    kew                 # TUI music player
     
     # Image & Graphics
     gimp                # Photo editing
