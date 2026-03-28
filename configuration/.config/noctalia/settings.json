@@ -688,6 +688,30 @@
             {
                 "enabled": true,
                 "id": "ghostty"
+            },
+            {
+                "enabled": true,
+                "id": "yazi"
+            },
+            {
+                "enabled": true,
+                "id": "qt"
+            },
+            {
+                "enabled": true,
+                "id": "hyprland"
+            },
+            {
+                "enabled": true,
+                "id": "hyprtoolkit"
+            },
+            {
+                "enabled": true,
+                "id": "code"
+            },
+            {
+                "enabled": true,
+                "id": "wezterm"
             }
         ],
         "enableUserTheming": false
@@ -720,11 +744,6 @@
             {
                 "directory": "/home/benjamin/Pictures/wallpapers",
                 "name": "HDMI-A-1",
-                "wallpaper": ""
-            },
-            {
-                "directory": "/home/benjamin/Pictures/wallpapers",
-                "name": "eDP-1",
                 "wallpaper": ""
             }
         ],

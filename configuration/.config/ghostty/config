@@ -9,3 +9,4 @@ shell-integration = zsh
 shell-integration-features = cursor,sudo,title,ssh-env
 
 clipboard-trim-trailing-spaces = true
+theme = noctalia
