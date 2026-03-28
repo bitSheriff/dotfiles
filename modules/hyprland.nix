@@ -18,7 +18,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+    noctalia-shell
     dunst               
     kitty               
     wofi                
