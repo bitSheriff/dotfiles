@@ -285,7 +285,7 @@
         "manualSunrise": "06:30",
         "manualSunset": "18:30",
         "monitorForColors": "",
-        "predefinedScheme": "Dracula",
+        "predefinedScheme": "Rose Pine",
         "schedulingMode": "off",
         "useWallpaperColors": false
     },
@@ -399,8 +399,8 @@
         "avatarImage": "/home/benjamin/.face",
         "boxRadiusRatio": 1,
         "clockFormat": "hh\\nmm",
-        "clockStyle": "custom",
-        "compactLockScreen": false,
+        "clockStyle": "digital",
+        "compactLockScreen": true,
         "dimmerOpacity": 0.2,
         "enableBlurBehind": true,
         "enableLockScreenCountdown": true,
@@ -710,7 +710,7 @@
         "automationEnabled": false,
         "directory": "/home/benjamin/Pictures/wallpapers",
         "enableMultiMonitorDirectories": false,
-        "enabled": false,
+        "enabled": true,
         "favorites": [
         ],
         "fillColor": "#000000",
@@ -720,6 +720,11 @@
             {
                 "directory": "/home/benjamin/Pictures/wallpapers",
                 "name": "HDMI-A-1",
+                "wallpaper": ""
+            },
+            {
+                "directory": "/home/benjamin/Pictures/wallpapers",
+                "name": "eDP-1",
                 "wallpaper": ""
             }
         ],
@@ -746,7 +751,7 @@
         "useOriginalImages": false,
         "useSolidColor": false,
         "useWallhaven": false,
-        "viewMode": "single",
+        "viewMode": "recursive",
         "wallhavenApiKey": "",
         "wallhavenCategories": "111",
         "wallhavenOrder": "desc",
