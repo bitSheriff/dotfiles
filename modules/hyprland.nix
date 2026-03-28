@@ -49,7 +49,7 @@
   fonts.packages = with pkgs; [
     comic-neue
     comic-mono
-    jetbrains-mono
+    nerd-fonts.jetbrains-mono
   ];
 
   xdg.portal = {

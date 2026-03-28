@@ -55,6 +55,7 @@
     atuin
     zsh
     xdg-utils
+    killall
   ];
 
   programs.zsh = {

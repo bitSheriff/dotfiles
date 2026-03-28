@@ -29,6 +29,7 @@
 
     vscode
     zed-editor
+    obsidian
 
     # Container / Virt
     docker

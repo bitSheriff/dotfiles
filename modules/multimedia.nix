@@ -16,17 +16,14 @@
     mpv                 # High-performance, scriptable player
     spotify             # Music streaming
     kew                 # TUI music player
-    
+
     # Image & Graphics
     gimp                # Photo editing
     inkscape            # Vector graphics
     loupe               # Fast GNOME image viewer
-    
+
     # Video & Recording
-    obs-studio          # Recording/Streaming
-    kdenlive            # Video editing
-    handbrake           # Video transcoding
-    
+
     # Audio Tools
     pavucontrol         # Graphical audio mixer (essential for multi-output)
     audacity            # Quick audio editing
@@ -41,7 +38,6 @@
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver
-      vaapiVdpau
       libvdpau-va-gl
     ];
   };

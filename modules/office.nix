@@ -3,11 +3,10 @@
 {
   environment.systemPackages = with pkgs; [
     typst
-    
+
     # Files & Co
     zathura            # Minimalist, keyboard-centric PDF viewer (very Arch-like)
     xournalpp          # PDF annotation and note-taking
-    pdf-helper         # CLI tool for merging/splitting PDFs
     pdfgrep
     kdePackages.dolphin
 
@@ -27,9 +26,11 @@
   # Crucial for office work to ensure documents look the same everywhere.
   fonts.packages = with pkgs; [
     corefonts          # Microsoft fonts (Arial, Times New Roman)
-    vistafonts         # Calibri, Cambria
-    google-fonts       # Roboto, Open Sans, etc.
+    #google-fonts       # Roboto, Open Sans, etc.
     comic-neue
+    nerd-fonts.jetbrains-mono
+    fira-code
+    fira-code-symbols
   ];
 
   # Enable Printing (CUPS)
