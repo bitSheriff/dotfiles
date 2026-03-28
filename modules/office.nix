@@ -21,6 +21,10 @@
     signal-desktop
     cinny-desktop
     localsend
+    #iamb                # matrix chat in the terminal
+
+    qalculate-gtk
+    copyq
 
   ];
 

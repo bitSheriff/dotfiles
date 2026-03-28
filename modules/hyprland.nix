@@ -25,6 +25,7 @@
     # Services
     dunst                     # notification service
     wl-clipboard
+    swappy                   # screenshot tool
 
     # Look-and-Feel
     noctalia-shell
@@ -33,6 +34,7 @@
     adwaita-qt
     lxappearance
     timr-tui
+    fastfetch
     starship		# Shell prompt
     kitty
     wofi                      # application runner
@@ -40,6 +42,7 @@
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     qutebrowser
     kdePackages.dolphin
+    papirus-nord
   ];
 
   services.pipewire = {

@@ -14,8 +14,9 @@
     eza
     gnumake
     age
-    qutebrowser
     mise
+    just
+    copyq
 
     # Terminal Emulators
     kitty
@@ -28,13 +29,21 @@
     yazi
     timr-tui
 
+    # Editors and Co
     vscode
     zed-editor
     obsidian
+    qutebrowser
 
     # Container / Virt
     docker
     docker-compose
+
+    # Languages
+    rustup
+
+    # Networking
+    whosthere           # discover local devices
   ];
 
   # Enable Docker daemon
