@@ -15,6 +15,7 @@
     thunderbird
     anki
     hledger
+    gromit-mpx          # draw on desktop
 
     # Communication
     signal-desktop

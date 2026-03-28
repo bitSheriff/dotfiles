@@ -56,6 +56,7 @@
     zsh
     xdg-utils
     killall
+    agenix-cli          # needed for age to encrypt nix
   ];
 
   programs.zsh = {
@@ -79,4 +80,8 @@
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
+
+ imports = [ inputs.agenix.nixosModules.default ];
+ # Tell agenix where to find the decryption key on the server
+ age.identityPaths = [ "~/.age" ];
 }

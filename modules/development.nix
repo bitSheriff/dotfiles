@@ -26,6 +26,7 @@
     lazydocker
     opencode
     yazi
+    timr-tui
 
     vscode
     zed-editor

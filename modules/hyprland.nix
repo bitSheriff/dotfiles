@@ -32,6 +32,7 @@
     papirus-icon-theme
     adwaita-qt
     lxappearance
+    timr-tui
     starship		# Shell prompt
     kitty
     wofi                      # application runner
