@@ -41,6 +41,14 @@
     openFirewall = true; # Helps finding network printers automatically
   };
 
-  # 3. Scanning Support
+  # Printing
   hardware.sane.enable = true;
+
+  # Syncthing
+  services.syncthing = {
+      enable = true;
+       user = "benjamin";
+       dataDir = "/home/benjamin/.config/syncthing";
+       configDir = "/home/benjamin/.config/syncthing";
+  };
 }
