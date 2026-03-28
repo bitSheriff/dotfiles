@@ -47,6 +47,7 @@
     ente-auth
     kitty
     gnupg
+    eza
   ];
 
   programs.zsh.enable = true; # Necessary to initialize ZSH correctly
@@ -56,4 +57,8 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+  
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.1.1w"
+  ];
 }

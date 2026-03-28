@@ -25,6 +25,7 @@
     wl-clipboard        
     hyprshot
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    starship		# Shell prompt
   ];
 
   services.pipewire = {
