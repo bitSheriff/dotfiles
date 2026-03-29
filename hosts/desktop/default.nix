@@ -13,6 +13,7 @@
 
   networking.hostName = "desktop";
 
-  # Hardware-specific override for Desktop (NVIDIA)
+  hardware.nvidia.open = true;
+  hardware.graphics.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
 }
