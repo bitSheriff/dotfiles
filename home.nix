@@ -86,6 +86,18 @@ in
     };
 
   programs.home-manager.enable = true;
+
+  programs.eza = {
+    enable = true;
+    icons = "auto";
+    git = true;
+    enableZshIntegration = true;
+    extraOptions = [
+      "--group-directories-first"
+      "--header"
+    ];
+  };
+
   home.activation.report-changes = config.lib.dag.entryAnywhere ''
     ${pkgs.nvd}/bin/nvd --nix-bin-dir=${pkgs.nix}/bin diff $oldGenPath $newGenPath
   '';
