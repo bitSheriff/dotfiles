@@ -8,6 +8,7 @@
     ../../modules/multimedia.nix
     ../../modules/office
     ../../modules/downloaders.nix
+    #../../modules/gaming.nix
   ];
 
   system.stateVersion = "25.11";
