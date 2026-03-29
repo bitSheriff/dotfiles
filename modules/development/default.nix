@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ../notes.nix
+  ];
+
   # System-wide dev tools
   environment.systemPackages = with pkgs; [
 

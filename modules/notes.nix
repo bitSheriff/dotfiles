@@ -11,13 +11,14 @@ let
     # Define the default editor
     DEFAULT_EDITOR = "nvim"
 
+
     def open_daily_journal(offset=0, editor=None):
         """
-        Opens the daily journal file with the given editor or the default editor.
+        Opens the daily journal file with the given editor.
 
         Parameters:
-        - offset (int): The day offset. Positive for future, negative for past. Defaults to 0 (today).
-        - editor (str): The editor to use. If None, the default editor will be used.
+        - offset (int): The day offset. Positive for future, negative for past.
+        - editor (str): The editor to use.
         """
         # Determine the editor to use
         editor_to_use = editor or DEFAULT_EDITOR
@@ -25,7 +26,8 @@ let
         # Define the NOTES_DIR environment variable
         daily_dir = os.getenv("JOURNAL_DAILY_PATH")
         if not daily_dir:
-            raise EnvironmentError("JOURNAL_DAILY_PATH environment variable is not set.")
+            msg = "JOURNAL_DAILY_PATH environment variable is not set."
+            raise EnvironmentError(msg)
 
         # Calculate the target date with the offset
         target_date = datetime.now() + timedelta(days=offset)
@@ -36,6 +38,7 @@ let
 
         # Open the file with the chosen editor
         subprocess.run([editor_to_use, journal_file])
+
 
     # Main logic
     if __name__ == "__main__":
@@ -60,10 +63,10 @@ let
             print("Usage: open_journal [offset] editor")
             print("  If offset is provided, editor must also be specified.")
             print("  Examples:")
-            print("    open_journal               # Opens today's journal with the default editor")
-            print("    open_journal nvim          # Opens today's journal with nvim")
-            print("    open_journal -1 nvim       # Opens yesterday's journal with nvim")
-            print("    open_journal +1 nvim       # Opens tomorrow's journal with nvim")
+            print("    open_journal         # Opens today's journal")
+            print("    open_journal nvim    # Opens today's journal with nvim")
+            print("    open_journal -1 nvim # Opens yesterday's journal")
+            print("    open_journal +1 nvim # Opens tomorrow's journal")
             sys.exit(1)
   '';
 
@@ -92,8 +95,10 @@ let
 in
 {
   environment.systemPackages = with pkgs; [
-    obsidian # the best note system
+    # own scripts
     daily
     notes
+
+    obsidian # the best note system
   ];
 }

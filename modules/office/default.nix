@@ -4,6 +4,7 @@
   imports = [
     ./hledger.nix
     ./uni.nix
+    ../notes.nix
   ];
 
   environment.systemPackages = with pkgs; [
