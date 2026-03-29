@@ -49,6 +49,7 @@
     docker-compose
     distrobox
     distroshelf
+    gnome-boxes
 
     # Languages
     rustup

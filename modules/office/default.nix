@@ -15,6 +15,7 @@
     zathura                 # Minimalist, keyboard-centric PDF viewer (very Arch-like)
     pdfgrep
     kdePackages.dolphin
+    peazip                  # archive manager
 
     # Editors
     libreoffice-fresh       # like beta version
