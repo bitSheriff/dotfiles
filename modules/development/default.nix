@@ -47,8 +47,8 @@
     # Container / Virt
     docker
     docker-compose
-    distrobox
-    distroshelf
+    #distrobox
+    #distroshelf
     gnome-boxes
 
     # Languages
@@ -58,6 +58,7 @@
     clang
     deno
     python3
+    uv                  # because python sucks without
     nixfmt              # nix language formatter
 
     # Networking

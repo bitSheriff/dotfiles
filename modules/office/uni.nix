@@ -8,6 +8,8 @@
     typesetter              # minimal typst editor
     zathura
     lazydocker
+    #octave
+    jupyter                 # python jupyter notebook
   ];
 
 }
