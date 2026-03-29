@@ -185,6 +185,8 @@
                     ]
                 },
                 {
+                    "defaultSettings": {
+                    },
                     "id": "plugin:kde-connect"
                 },
                 {

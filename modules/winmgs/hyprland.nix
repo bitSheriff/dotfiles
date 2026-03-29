@@ -26,12 +26,13 @@
     wireplumber              # Provides wpctl for volume control
 
     # Services
-    dunst                     # notification service
+    #dunst                     # notification service
     wl-clipboard
     swappy                   # screenshot tool
     hyprpolkitagent          # polkit agent
     udiskie                  # automounter
     gsettings-desktop-schemas # for theme settings
+    libnotify
 
     # Look-and-Feel
     noctalia-shell
