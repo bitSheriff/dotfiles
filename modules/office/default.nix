@@ -11,9 +11,13 @@
 
     # Files & Co
     zathura            # Minimalist, keyboard-centric PDF viewer (very Arch-like)
-    xournalpp          # PDF annotation and note-taking
     pdfgrep
     kdePackages.dolphin
+
+    # Editors
+    libreoffice-fresh   # like beta version
+    typora              # most beautiful markdown editor
+    xournalpp           # PDF annotation and note-taking
 
     # Notes & Organization
     obsidian

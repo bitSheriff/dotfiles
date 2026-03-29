@@ -47,6 +47,11 @@ in
   home.homeDirectory = "/home/benjamin";
   home.stateVersion = "25.11";
 
+  home.sessionVariables = {
+    ADW_DISABLE_PORTAL = "1"; # Force libadwaita to use dark mode
+    GTK_THEME = "Adwaita:dark"; # Fallback for some GTK apps
+  };
+
   xdg.enable = true;
 
   home.pointerCursor = {
@@ -81,4 +86,10 @@ in
     };
 
   programs.home-manager.enable = true;
+
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
 }

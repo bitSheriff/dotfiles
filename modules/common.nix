@@ -102,10 +102,12 @@
   services.envfs.enable = true;
 
   services.flatpak.enable = true;
+  programs.dconf.enable = true;
 
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
   };
 
  imports = [ inputs.agenix.nixosModules.default ];

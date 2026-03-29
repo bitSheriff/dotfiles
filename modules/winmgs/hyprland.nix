@@ -31,6 +31,7 @@
     swappy                   # screenshot tool
     hyprpolkitagent          # polkit agent
     udiskie                  # automounter
+    gsettings-desktop-schemas # for theme settings
 
     # Look-and-Feel
     noctalia-shell
