@@ -6,6 +6,7 @@ in
 {
   imports = [
     ./modules/zsh.nix
+    ./modules/git.nix
   ];
 
   # This replaces the automated loop with explicit links
@@ -41,7 +42,6 @@ in
     "gromit-mpx.cfg".source   = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/gromit-mpx.cfg";
   };
 
-  home.file.".gitconfig".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.gitconfig";
   home.file.".ssh".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.ssh";
   home.file.".local/bin".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../bin";
 
