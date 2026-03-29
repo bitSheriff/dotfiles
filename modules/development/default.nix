@@ -44,6 +44,9 @@
 
     # Languages
     rustup
+    gcc
+    clang
+    deno
 
     # Networking
     whosthere           # discover local devices
