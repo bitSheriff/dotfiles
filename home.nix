@@ -37,7 +37,7 @@ in
     "zathura/zathurarc".source   = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/zathura/zathurarc";
     "gromit-mpx.cfg".source   = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/gromit-mpx.cfg";
   };
-  home.file.".local/share/applications".source = config.lib.file.mkOutOfStoreSymlink "/run/current-system/sw/share/applications";
+
   home.file.".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.zshrc";
   home.file.".gitconfig".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.gitconfig";
   home.file.".ssh".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.ssh";
@@ -48,11 +48,6 @@ in
   home.stateVersion = "25.11";
 
   xdg.enable = true;
-  xdg.systemDirs.data = [
-    "${pkgs.papirus-icon-theme}/share"
-    "/run/current-system/sw/share"
-    "/home/benjamin/.nix-profile/share"
-  ];
 
   home.pointerCursor = {
       gtk.enable = true;
