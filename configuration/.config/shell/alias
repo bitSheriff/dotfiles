@@ -171,53 +171,6 @@ latexmk!()
     latexmk -lualatex -pvc -interaction=nonstopmode "$1"
 }
 
-mounts() {
-  MEDIA_PATH="/run/media/$USER"
-
-  # Check if /run/media/$USER exists
-  if [ ! -d "$MEDIA_PATH" ]; then
-    echo "Media directory not found. Creating..."
-    mkdir -p "$MEDIA_PATH"
-  fi
-
-  # List all removable devices not mounted
-  UNMOUNTED=$(lsblk -rpo "NAME,TRAN,MOUNTPOINT" | awk '$2 == "usb" && $3 == "" {print $1}')
-
-  if [ -z "$UNMOUNTED" ]; then
-    echo "No unmounted USB devices found."
-  else
-    echo "The following USB devices are not mounted:"
-    echo "$UNMOUNTED"
-    for DEV in $UNMOUNTED; do
-      echo "Attempting to mount $DEV..."
-      udisksctl mount -b "$DEV"
-    done
-  fi
-
-  # Once devices are mounted, check if the media folder is populated
-  if [ ! "$(ls -A $MEDIA_PATH 2>/dev/null)" ]; then
-    echo "No media devices found in /run/media/$USER."
-    return 1
-  fi
-
-  # Use fzf to select a folder inside the media directory
-  SELECTION=$(find "$MEDIA_PATH" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | fzf --prompt="Select a folder: ")
-
-  if [ -z "$SELECTION" ]; then
-    echo "No folder selected."
-    return 1
-  fi
-
-  # Change to the selected directory
-  cd "$SELECTION" || return 1
-}
-
-# Vote for AUR package
-aur_vote()
-{
-    ssh aur@aur.archlinux.org vote "$1"
-}
-
 # View all git repositories and open it later in Lazygit
 lgall(){
     lazygit -p $(tv git-repos)
@@ -227,11 +180,6 @@ lgall(){
 yank()
 {
     cat $(tv files) | wl-copy
-}
-
-# open openweb-ui with python uv
-openweb-ui(){
-    DATA_DIR=~/.open-webui uvx --python 3.11 open-webui@latest serve
 }
 
 # Two-Way sync
@@ -260,28 +208,6 @@ fcf() {
     else
         echo "No command selected. Aborting fc."
     fi
-}
-
-tab2space() {
-    if [ $# -eq 0 ]; then
-        echo "Usage: tab2space <file1> <file2> ..."
-        return 1
-    fi
-
-    # Loop through all arguments passed to the function
-    for file in "$@"; do
-        if [ -f "$file" ]; then
-            if expand -t 4 "$file" > "$file.tmp"; then
-                mv "$file.tmp" "$file"
-                echo "Processed: $file"
-            else
-                echo "Error: Could not process $file"
-                rm -f "$file.tmp"
-            fi
-        else
-            echo "Skip: '$file' is not a valid file."
-        fi
-    done
 }
 
 # Alias only for Android
