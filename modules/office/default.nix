@@ -3,6 +3,7 @@
 {
   imports = [
     ./hledger.nix
+    ./uni.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -17,8 +18,6 @@
     # Notes & Organization
     obsidian
     thunderbird
-    anki
-    hledger
     gromit-mpx          # draw on desktop
 
     # Communication
