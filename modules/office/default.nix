@@ -17,10 +17,11 @@
 
     # Notes & Organization
     obsidian
-    thunderbird
     gromit-mpx          # draw on desktop
 
     # Communication
+    tutanota-desktop
+    thunderbird
     signal-desktop
     cinny-desktop
     localsend

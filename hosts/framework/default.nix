@@ -13,11 +13,7 @@
 
   networking.hostName = "framework";
 
-  # allow BIOS updates
-  services.fwupd.enable = true;
-
   # Battery Stuff
-  services.upower.enable = true;
   services.power-profiles-daemon.enable = false;    # use tlp instead
   services.tlp = {
     enable = true;
@@ -43,4 +39,11 @@
   # Fingerprint Reader
   services.fprintd.tod.enable = true;
   services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      libvdpau-va-gl
+    ];
+  };
 }

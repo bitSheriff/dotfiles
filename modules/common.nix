@@ -23,8 +23,22 @@
 
   console.keyMap = "de";
 
+  # Networking
   networking.networkmanager.enable = true;
 
+  # Hardware Support & Services
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+  services.devmon.enable = true;
+  boot.supportedFilesystems = [ "ntfs" "exfat" ];
+  security.polkit.enable = true;
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+  services.fwupd.enable = true;
+  services.upower.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+
+  # User Configuration
   users.users.benjamin = {
     isNormalUser = true;
     description = "Benjamin";

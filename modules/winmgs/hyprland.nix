@@ -29,6 +29,8 @@
     dunst                     # notification service
     wl-clipboard
     swappy                   # screenshot tool
+    hyprpolkitagent          # polkit agent
+    udiskie                  # automounter
 
     # Look-and-Feel
     noctalia-shell
