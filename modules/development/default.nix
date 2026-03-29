@@ -29,6 +29,8 @@
 
     # TUIs
     gh
+    gh-dash             # manage github issues in the terminal
+    forgejo-cli         # same for codeberg and forgejo
     lazygit
     lazydocker
     opencode
@@ -51,6 +53,8 @@
     gcc
     clang
     deno
+    python3
+    nixfmt              # nix language formatter
 
     # Networking
     whosthere           # discover local devices

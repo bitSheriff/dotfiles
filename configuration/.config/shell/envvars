@@ -2,7 +2,7 @@
 export TERMINAL=kitty
 export EDITOR=nvim
 export VISUAL=nvim
-export BROWSER=zen-browser
+export BROWSER=firefox
 export MANPAGER='nvim +Man!'
 
 # define important files & directories
