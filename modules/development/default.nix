@@ -47,6 +47,8 @@
     # Container / Virt
     docker
     docker-compose
+    distrobox
+    distroshelf
 
     # Languages
     rustup
@@ -65,6 +67,9 @@
   virtualisation.docker.enable = true;
   # Add your user to the docker group automatically
   users.users.benjamin.extraGroups = [ "docker" ];
+  virtualisation.podman = {
+    enable = true;
+  };
 
   # Specific Program Modules (enable deeper integration)
   programs.direnv = {
