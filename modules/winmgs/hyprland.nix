@@ -21,6 +21,9 @@
     # Hyprland packages
     hyprcursor
     hyprshot
+    brightnessctl            # Needed for brightness control keys
+    playerctl                # Needed for media control keys
+    wireplumber              # Provides wpctl for volume control
 
     # Services
     dunst                     # notification service
