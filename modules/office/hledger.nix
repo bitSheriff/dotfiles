@@ -200,6 +200,7 @@ in
     export LEDGER_FILE="$LEDGER_PATH/2026.hledger"
     export LEDGER_ALL_FILE="$LEDGER_PATH/all.hledger"
     export LEDGER_TEMPLATE_FILE="$LEDGER_PATH/templates.hledger"
+
     export TIMEDOT_PATH="$HOME/notes/Journal/_time"
     export TIMEDOT_ALL_FILE="$TIMEDOT_PATH/all.journal"
     export TIMEDOT_SEMESTER_FILE="$TIMEDOT_PATH/uni/2026SS.timedot"
@@ -217,6 +218,7 @@ in
     hle = "nv \${LEDGER_FILE}";
 
     td = "hledger -f \${TIMEDOT_ALL_FILE}";
+    tde = "(cd $TIMEDOT_PATH && nvim $(find . -type f | fzf))";
     tda = "timedot-add \${TIMEDOT_FILE}";
     tdauni = "timedot-add \${TIMEDOT_SEMESTER_FILE}";
     tdawork = "timeclock-add \${TIMEDOT_WORK_FILE}";
