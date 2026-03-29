@@ -112,6 +112,20 @@
 
   programs.kdeconnect.enable = true;
 
+  programs.bat = {
+    enable = true;
+    settings = {
+      italic-text = "always";
+      map-syntax = [
+        "*.ino:C++"
+        ".ignore:Git Ignore"
+      ];
+      pager = "less";
+      paging = "never";
+      theme = "TwoDark";
+    };
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   nixpkgs.config.permittedInsecurePackages = [
