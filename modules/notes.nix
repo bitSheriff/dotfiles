@@ -499,6 +499,13 @@ todo = pkgs.writers.writePython3Bin "todo" { } ''
 '';
 in
 {
+  environment.sessionVariables = {
+    NOTES_DIR = "$HOME/notes";
+    INBOX = "$HOME/notes/Inbox/Inbox.md";
+    INBOX_DIR = "$HOME/notes/Inbox";
+    JOURNAL_DAILY_PATH="$HOME/notes/Journal/Daily";
+  };
+
   environment.systemPackages = with pkgs; [
     obsidian # the best note system
     daily
@@ -509,4 +516,3 @@ in
     todo
   ];
 }
-

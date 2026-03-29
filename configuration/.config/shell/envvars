@@ -6,9 +6,6 @@ export BROWSER=firefox
 export MANPAGER='nvim +Man!'
 
 # define important files & directories
-export NOTES_DIR=$HOME/notes
-export INBOX=$NOTES_DIR/Inbox/Inbox.md                             # define the inbox file
-export INBOX_DIR=$(dirname $INBOX)
 export DOTFILES_DIR=$HOME/code/dotfiles                             # define the folder where the dotfiles are located
 export CACHE_DIR=$HOME/.cache                                       # define the folder for temporary cache files
 export CODE_DIR=$HOME/code                                          # define the folder for the most coding projects
@@ -28,8 +25,6 @@ export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
 # fix Wayland problem with Rust Tauri
 # https://github.com/tauri-apps/tauri/issues/10702
 export WEBKIT_DISABLE_DMABUF_RENDERER=1
-
-export JOURNAL_DAILY_PATH="$HOME/notes/Journal/Daily"
 
 ### ---- path config -------------------------------------
 # this works only iwth zsh
