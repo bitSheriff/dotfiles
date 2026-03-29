@@ -49,7 +49,6 @@
     fuzzel                    # application runner
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     qutebrowser
-    kdePackages.dolphin
   ];
 
   services.pipewire = {

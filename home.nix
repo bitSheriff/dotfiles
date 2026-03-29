@@ -52,6 +52,7 @@ in
   };
 
   xdg.enable = true;
+  xdg.mime.enable = true;
 
   home.pointerCursor = {
       gtk.enable = true;

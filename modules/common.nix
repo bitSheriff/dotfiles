@@ -1,6 +1,7 @@
 { config, pkgs, inputs, ... }:
 
 {
+  imports = [ inputs.agenix.nixosModules.default ];
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
@@ -99,6 +100,9 @@
     ente-auth
     killall
     kdePackages.kate                # simple text editor
+    nemo                            # Cinnamon File Explorer
+    nemo-preview
+    nemo-fileroller
   ];
 
   programs.zsh = {
@@ -129,6 +133,7 @@
   nixpkgs.config.allowUnfree = true;
   environment.sessionVariables = {
     NIXPKGS_ALLOW_UNFREE = "1";     # needed for packages installed with nix-shell
+    XDG_DATA_DIRS = [ "$GSETTINGS_SCHEMAS_PATH" ];
   };
 
   nixpkgs.config.permittedInsecurePackages = [
@@ -146,7 +151,9 @@
     config.common.default = "*";
   };
 
- imports = [ inputs.agenix.nixosModules.default ];
+  xdg.mime.defaultApplications = {
+    "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+  };
 
  # Tell agenix where to find the decryption key on the server
  age.identityPaths = [ "~/.age" ];
