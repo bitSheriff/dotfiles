@@ -23,7 +23,8 @@
     copyq
     rsync
     bash                # mainly for scripting
-    croc                    # send files to another computer
+    croc                # send files to another computer
+    yq                  # yaml, json parser for the console
 
     # Terminal Emulators
     kitty
@@ -39,6 +40,9 @@
     yazi                # terminal file explorer
     timr-tui
     zellij              # like tmux, but written in rust...
+    delta               # git viewer
+    serie               # git graph viewer in the terminal
+    sshs                # ssh viewer
 
     # Editors and Co
     zed-editor
@@ -62,6 +66,8 @@
     python3
     uv                  # because python sucks without
     nixfmt              # nix language formatter
+    doxygen             # create documentation
+    hugo                # blog engine
 
     # Networking
     whosthere           # discover local devices

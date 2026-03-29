@@ -24,6 +24,7 @@
     # Notes & Organization
     obsidian
     gromit-mpx              # draw on desktop
+    hugo                    # blog engine
 
     # Communication
     tutanota-desktop        # secure encrypted email

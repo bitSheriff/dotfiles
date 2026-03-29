@@ -67,6 +67,9 @@
     # terminal tools
     bash                            # needed only for scripting
     zsh                             # actual shell
+    zsh-autosuggestions             # suggest commands
+    zsh-completions                 # complete commands
+    zsh-syntax-highlighting
     kitty
     vim                             # just as a backup if everythin burns
     comma                           # run nix packages which are not installed
@@ -88,6 +91,7 @@
     findutils                       # sometimes you need the old find...
     fd                              # better find
     _1password-cli
+    glow                            # render markdown in the console
 
     # Services and Co
     pciutils
