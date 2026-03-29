@@ -15,7 +15,7 @@
     };
   };
 
-  # Bootloader (Standard Grub or Systemd-boot)
+  # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   time.timeZone = "Europe/Vienna";
@@ -53,33 +53,42 @@
 
   # Only things that should be available to every user/root.
   environment.systemPackages = with pkgs; [
-    vim
+    # terminal tools
+    bash                            # needed only for scripting
+    zsh                             # actual shell
+    kitty
+    vim                             # just as a backup if everythin burns
+    comma                           # run nix packages which are not installed
     wget
     curl
     git
-    pciutils
-    usbutils
     htop
-    unzip
-    _1password-gui
-    _1password-cli
-    firefox
-    ente-auth
-    kitty
+    unzip                           # for .zip
+    unrar                           # for .rar
     gnupg
-    eza
-    zoxide
+    eza                             # better `ls`
+    zoxide                          # smarter `cd` command
     television                      # like fzf but more fancy
-    mise
-    atuin
-    zsh
-    xdg-utils
-    killall
+    mise                            # like Nix but on project basis (prob not needed anymore if NixOS runs everywhere)
+    atuin                           # better shell history
     agenix-cli                      # needed for age to encrypt nix
     rsync                           # nobody uses scp anymore
-    bash
-    kdePackages.kate                # simple text editor
     tldr                            # better help/man pages for cli programs
+    findutils                       # sometimes you need the old find...
+    fd                              # better find
+    _1password-cli
+
+    # Services and Co
+    pciutils
+    usbutils
+    xdg-utils
+
+    # GUIs
+    _1password-gui
+    firefox
+    ente-auth
+    killall
+    kdePackages.kate                # simple text editor
   ];
 
   programs.zsh = {
@@ -111,6 +120,7 @@
   };
 
  imports = [ inputs.agenix.nixosModules.default ];
+
  # Tell agenix where to find the decryption key on the server
  age.identityPaths = [ "~/.age" ];
 }

@@ -5,6 +5,7 @@
     anki
     thunderbird
     typst
+    typesetter              # minimal typst editor
     zathura
     lazydocker
   ];

@@ -7,33 +7,32 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    typst
+    typst                   # sooo much better than LaTeX
+    typesetter              # minimal typst editor
 
     # Files & Co
-    zathura            # Minimalist, keyboard-centric PDF viewer (very Arch-like)
+    zathura                 # Minimalist, keyboard-centric PDF viewer (very Arch-like)
     pdfgrep
     kdePackages.dolphin
 
     # Editors
-    libreoffice-fresh   # like beta version
-    typora              # most beautiful markdown editor
-    xournalpp           # PDF annotation and note-taking
+    libreoffice-fresh       # like beta version
+    typora                  # most beautiful markdown editor
+    xournalpp               # PDF annotation and note-taking
 
     # Notes & Organization
     obsidian
-    gromit-mpx          # draw on desktop
+    gromit-mpx              # draw on desktop
 
     # Communication
-    tutanota-desktop
-    thunderbird
-    signal-desktop
-    cinny-desktop
-    localsend
-    #iamb                # matrix chat in the terminal
+    tutanota-desktop        # secure encrypted email
+    thunderbird             # email
+    signal-desktop          # chat without Mark Zuckerberg
+    cinny-desktop           # beautiful matrix chat client
+    localsend               # open source AirDrop alternative
 
     qalculate-gtk
     copyq
-
   ];
 
   # Crucial for office work to ensure documents look the same everywhere.
