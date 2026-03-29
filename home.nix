@@ -92,39 +92,19 @@ in
     '';
 
     history = {
-      size = 10000;
-      save = 10000;
+      size = 100000;
+      save = 100000;
       path = "$HOME/.zsh_history";
       ignoreAllDups = true;
       share = true;
     };
   };
 
-  programs.atuin = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-    enableZshIntegration = true;
-  };
-
-  programs.mise = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
+  programs.atuin = { enable = true; enableZshIntegration = true; };
+  programs.direnv = { enable = true; nix-direnv.enable = false; enableZshIntegration = true; };
+  programs.mise = { enable = true; enableZshIntegration = true; };
+  programs.starship = { enable = true; enableZshIntegration = true; };
+  programs.fzf = { enable = true;  enableZshIntegration = true; };
 
   home.pointerCursor = {
     gtk.enable = true;
