@@ -16,13 +16,13 @@
 
       # Include your existing modular config files
       include ~/.config/shell/envvars
-      include ~/.config/shell/autostart
       include ~/.config/shell/secrets
       include ~/.config/shell/options
       include ~/.config/shell/alias
 
       # Tool initializations that don't have HM modules or need custom flags
       eval "$(tv init zsh)"
+      eval "$(zoxide init zsh --cmd cd)"
 
       # Ghostty integration
       if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
