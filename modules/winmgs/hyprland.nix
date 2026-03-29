@@ -57,11 +57,22 @@
     pulse.enable = true;
   };
 
-  fonts.packages = with pkgs; [
-    comic-neue
-    comic-mono
-    nerd-fonts.jetbrains-mono
-  ];
+  fonts = {
+    packages = with pkgs; [
+      comic-neue
+      comic-mono
+      nerd-fonts.jetbrains-mono
+    ];
+  
+    fontconfig = {
+      defaultFonts = {
+        serif = [ "Comic Neue" ];
+        sansSerif = [ "Comic Neue" ];
+        monospace = [ "Comic Mono" ];
+        emoji = [ "Twitter Color Emoji" ];
+      };
+    };
+  };
 
   xdg.portal = {
     enable = true;
