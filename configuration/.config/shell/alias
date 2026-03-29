@@ -55,35 +55,6 @@ alias t="tod task quick-add" # Todoist Quick Add
 
 alias nix-switch="sudo nixos-rebuild switch --flake .#$(hostname)"
 
-alias hl="hledger"
-alias hla="hledger -f ${LEDGER_ALL_FILE}"
-alias hl-budget="hledger bal expenses --budget"
-alias hl-temp="hledger-templates"
-alias hle="nv $LEDGER_FILE"
-
-alias td="hledger -f ${TIMEDOT_ALL_FILE}"
-alias tda="timedot-add ${TIMEDOT_FILE}"
-alias tdauni="timedot-add ${TIMEDOT_SEMESTER_FILE}"
-alias tdawork="timeclock-add ${TIMEDOT_WORK_FILE}"
-alias clockin="timeclock-add ${TIMEDOT_WORK_FILE} i"
-alias clockout="timeclock-add ${TIMEDOT_WORK_FILE} o"
-
-tde () {
-    (
-        cd ${TIMEDOT_PATH};
-        file=$(fd -e journal -e timedot -e timeclock | fzf)
-        [ -n "$file" ] && nvim "$file"
-    )
-}
-
-hlae () {
-    (
-        cd "${LEDGER_PATH}" || return
-        file=$(fd -e hledger | fzf)
-        [ -n "$file" ] && nvim "$file"
-    )
-}
-
 setup() {
     params="$@"
 

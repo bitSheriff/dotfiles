@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./hledger.nix
+  ];
+
   environment.systemPackages = with pkgs; [
     typst
 

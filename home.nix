@@ -11,7 +11,6 @@ in
     "clang".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/clang";
     "direnv".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/direnv";
     "fuzzel".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/fuzzel";
-    "hledger".source   = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/hledger";
     "hypr".source   = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/hypr";
     "kitty".source  = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/kitty";
     "lazygit".source  = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/lazygit";
@@ -61,6 +60,12 @@ in
       package = pkgs.bibata-cursors;
       name = "Bibata-Modern-Classic";
       size = 24;
+    };
+
+    qt = {
+      enable = true;
+      platformTheme.name = "gtk";
+      style.name = "adwaita-dark";
     };
 
     gtk = {

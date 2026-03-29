@@ -31,6 +31,9 @@
     noctalia-shell
     quickshell
     papirus-icon-theme
+    papirus-nord
+    adwaita-icon-theme
+    hicolor-icon-theme
     adwaita-qt
     lxappearance
     timr-tui
@@ -42,7 +45,6 @@
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     qutebrowser
     kdePackages.dolphin
-    papirus-nord
   ];
 
   services.pipewire = {

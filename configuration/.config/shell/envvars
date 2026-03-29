@@ -30,17 +30,6 @@ export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
 export WEBKIT_DISABLE_DMABUF_RENDERER=1
 
 export JOURNAL_DAILY_PATH="$HOME/notes/Journal/Daily"
-export LEDGER_PATH="$HOME/notes/Journal/_finance"
-export LEDGER_FILE="$LEDGER_PATH/2026.hledger"
-export LEDGER_ACCOUNTS_FILE="$LEDGER_PATH/$(date +%Y)_accounts.hledger"
-export LEDGER_ALL_FILE="$LEDGER_PATH/all.hledger"
-export LEDGER_TEMPLATE_FILE="$LEDGER_PATH/templates.hledger"
-
-export TIMEDOT_PATH="$HOME/notes/Journal/_time"
-export TIMEDOT_FILE="$TIMEDOT_PATH/$(date +%Y).timedot"
-export TIMEDOT_ALL_FILE="$TIMEDOT_PATH/all.journal"
-export TIMEDOT_WORK_FILE="$TIMEDOT_PATH/work/$(date +%Y).timeclock"
-export TIMEDOT_SEMESTER_FILE="$TIMEDOT_PATH/uni/2026SS.timedot"
 
 ### ---- path config -------------------------------------
 # this works only iwth zsh
