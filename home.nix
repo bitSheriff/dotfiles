@@ -9,7 +9,6 @@ in
   xdg.configFile = {
     "1Password/ssh/agent.toml".source   = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/1Password/ssh/agent.toml";
     "clang".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/clang";
-    "direnv".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/direnv";
     "fuzzel".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/fuzzel";
     "hypr".source   = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/hypr";
     "kitty".source  = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/kitty";

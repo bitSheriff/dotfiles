@@ -31,12 +31,13 @@
     gh
     gh-dash             # manage github issues in the terminal
     forgejo-cli         # same for codeberg and forgejo
-    lazygit
-    lazydocker
+    lazygit             # the best git tui
+    lazydocker          # makes docker less pain in the ass
     opencode
     gemini-cli
-    yazi
+    yazi                # terminal file explorer
     timr-tui
+    zellij              # like tmux, but written in rust...
 
     # Editors and Co
     zed-editor
@@ -62,11 +63,17 @@
 
   # Enable Docker daemon
   virtualisation.docker.enable = true;
+  # Add your user to the docker group automatically
+  users.users.benjamin.extraGroups = [ "docker" ];
 
   # Specific Program Modules (enable deeper integration)
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true; # Critical for Nix-based development
+    settings = {
+      load_dotenv = true;
+
+    };
   };
 
   # Visual Studio Code
@@ -81,6 +88,4 @@
     ];
   };
 
-  # Add your user to the docker group automatically
-  users.users.benjamin.extraGroups = [ "docker" ];
 }

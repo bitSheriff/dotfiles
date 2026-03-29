@@ -151,9 +151,8 @@ compinit
 eval "$(atuin init zsh)"
 eval "$(tv init zsh)"
 eval "$(direnv hook zsh)"
-# eval "$(tod shell completions zsh)"
-source ~/.config/tod/completion
 eval "$(mise activate zsh)"
+
 #compdef opencode
 ###-begin-opencode-completions-###
 #
