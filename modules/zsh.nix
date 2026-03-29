@@ -39,6 +39,42 @@
       }
       compctl -K _just_completion just
     '';
+    shellAliases = {
+      # Git related stuff
+      gti="git";
+      lg="lazygit";
+      gb="git branch | fzf --preview 'git show --color=always {-1}' --bind 'enter:become(git checkout {-1})'";
+      gg="serie"; # git graph
+      gd="(cd $DOTFILES_DIR && just commit-all)"; # switch for a subshell into the dotfiles directory and open git
+      gn="(cd $NOTES_DIR && lazygit)";           # switch to notes directory and open git TUI
+
+      # application shortcuts
+      nv="nvim";
+      benjavim="nvim";
+      rmrf="rm -rf";
+      cp="cp -r"; # always copy recursive
+      exp="nemo .";
+      "disown!"="exec '$@' & ; disown";         # start a process and disown it
+      sshs="sshs --config ~/.ssh/hosts";        # use own file for the SSH Hosts
+      open="xdg-open";                          # open file with standard program
+      cat="bat";                                # better cat command
+
+      # directory
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
+      mkdir="mkdir -p";                         # always allow creating nested folders
+      "mkdir!"="mkdir -p '$1' && cd '$1'";      # create new directory and move into it
+      dots="cd $DOTFILES_DIR";                  # change to the dotfiles directory
+      "cd!"="cd $(fd  --type d --hidden --exclude .git | fzf --ignore-case --no-preview )"; # change directory with fuzzy finder
+
+      nix-switch="sudo nixos-rebuild switch --flake .#$(hostname)";
+      nix-test="sudo nixos-rebuild test --flake .#$(hostname)";
+
+      ":q"="exit";                              # quit terminal like vim
+      ":c"="clear";                             # clear terminal
+      ":r"="exec zsh";                          # update zsh
+    };
 
     history = {
       size = 100000;
