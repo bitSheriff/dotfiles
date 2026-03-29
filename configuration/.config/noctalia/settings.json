@@ -694,8 +694,8 @@
     },
     "ui": {
         "boxBorderEnabled": false,
-        "fontDefault": "Sans Serif",
-        "fontDefaultScale": 1,
+        "fontDefault": "Comic Neue",
+        "fontDefaultScale": 1.1099999999999999,
         "fontFixed": "monospace",
         "fontFixedScale": 1,
         "panelBackgroundOpacity": 0.93,
