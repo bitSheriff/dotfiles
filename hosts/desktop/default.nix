@@ -7,6 +7,7 @@
     ../../modules/development
     ../../modules/multimedia.nix
     ../../modules/office
+    ../../modules/downloaders.nix
   ];
 
   system.stateVersion = "25.11";
