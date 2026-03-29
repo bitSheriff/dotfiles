@@ -86,7 +86,9 @@ in
     };
 
   programs.home-manager.enable = true;
-
+  home.activation.report-changes = config.lib.dag.entryAnywhere ''
+    ${pkgs.nvd}/bin/nvd --nix-bin-dir=${pkgs.nix}/bin diff $oldGenPath $newGenPath
+  '';
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";

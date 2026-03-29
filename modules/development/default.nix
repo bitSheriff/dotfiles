@@ -43,6 +43,7 @@
 
     # Languages
     rustup
+    glibc
     gcc
     clang
     deno
@@ -67,6 +68,8 @@
       dracula-theme.theme-dracula
       vscodevim.vim
       yzhang.markdown-all-in-one
+      myriad-dreamin.tinymist               # Typst Language Server
+      jnoortheen.nix-ide
     ];
   };
 
