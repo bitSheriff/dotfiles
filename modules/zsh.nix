@@ -74,4 +74,9 @@
     enable = true;
     enableZshIntegration = true;
   };
+
+  home.sessionVariables = {
+    BIN_PATH = "$HOME/.local/bin";
+    LIB_PATH = "$HOME/.local/lib";
+  };
 }
