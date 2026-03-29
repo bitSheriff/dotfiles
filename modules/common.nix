@@ -25,6 +25,11 @@
 
   # Networking
   networking.networkmanager.enable = true;
+  networking.firewall = rec {
+    # needed for KDE Connect
+    allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
+    allowedUDPPortRanges = allowedTCPPortRanges;
+  };
 
   # Hardware Support & Services
   services.gvfs.enable = true;
@@ -64,16 +69,17 @@
     gnupg
     eza
     zoxide
-    television
+    television                      # like fzf but more fancy
     mise
     atuin
     zsh
     xdg-utils
     killall
-    agenix-cli          # needed for age to encrypt nix
-    rsync
+    agenix-cli                      # needed for age to encrypt nix
+    rsync                           # nobody uses scp anymore
     bash
     kdePackages.kate                # simple text editor
+    tldr                            # better help/man pages for cli programs
   ];
 
   programs.zsh = {
@@ -84,6 +90,8 @@
     enable = true;
     enableSSHSupport = true;
   };
+
+  programs.kdeconnect.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 

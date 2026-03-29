@@ -185,6 +185,9 @@
                     ]
                 },
                 {
+                    "id": "plugin:kde-connect"
+                },
+                {
                     "hideWhenZero": false,
                     "hideWhenZeroUnread": false,
                     "iconColor": "none",
