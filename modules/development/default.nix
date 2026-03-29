@@ -33,7 +33,6 @@
     timr-tui
 
     # Editors and Co
-    vscode
     zed-editor
     obsidian
     qutebrowser
@@ -59,6 +58,16 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true; # Critical for Nix-based development
+  };
+
+  # Visual Studio Code
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+      dracula-theme.theme-dracula
+      vscodevim.vim
+      yzhang.markdown-all-in-one
+    ];
   };
 
   # Add your user to the docker group automatically
