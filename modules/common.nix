@@ -59,6 +59,7 @@
     agenix-cli          # needed for age to encrypt nix
     rsync
     bash
+    kdePackages.kate                # simple text editor
   ];
 
   programs.zsh = {

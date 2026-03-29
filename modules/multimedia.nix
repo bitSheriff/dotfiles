@@ -21,6 +21,7 @@
     gimp                # Photo editing
     inkscape            # Vector graphics
     loupe               # Fast GNOME image viewer
+    ente-desktop        # encrypted photo backup
 
     # Video & Recording
 

@@ -6,6 +6,7 @@
     thunderbird
     typst
     zathura
+    lazydocker
   ];
 
 }

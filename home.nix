@@ -41,7 +41,7 @@ in
   home.file.".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.zshrc";
   home.file.".gitconfig".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.gitconfig";
   home.file.".ssh".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.ssh";
-  home.file.".local/share/bin".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.bin";
+  home.file.".local/bin".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../bin";
 
   home.username = "benjamin";
   home.homeDirectory = "/home/benjamin";
