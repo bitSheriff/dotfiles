@@ -54,6 +54,7 @@ alias calc="qalc"
 alias t="tod task quick-add" # Todoist Quick Add
 
 alias nix-switch="sudo nixos-rebuild switch --flake .#$(hostname)"
+alias nix-test="sudo nixos-rebuild test --flake .#$(hostname)"
 
 setup() {
     params="$@"
