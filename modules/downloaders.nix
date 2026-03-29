@@ -6,6 +6,7 @@
     qbittorrent             # the best and classic torrent
     mullvad-vpn             # avoid suprise visits
     varia                   # simple download manager
+    croc                    # send files to another computer
 
   ];
 

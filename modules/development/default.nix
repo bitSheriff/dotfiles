@@ -23,6 +23,7 @@
     copyq
     rsync
     bash                # mainly for scripting
+    croc                    # send files to another computer
 
     # Terminal Emulators
     kitty
@@ -43,6 +44,7 @@
     zed-editor
     obsidian
     qutebrowser
+    meld                # diff viewer
 
     # Container / Virt
     docker
