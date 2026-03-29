@@ -3,10 +3,10 @@
 {
   imports = [
     ./hardware-configuration.nix   # The generated hardware file
-    ../../modules/hyprland.nix
-    ../../modules/development.nix
+    ../../modules/winmgs/hyprland.nix
+    ../../modules/development
     ../../modules/multimedia.nix
-    ../../modules/office.nix
+    ../../modules/office
   ];
 
   system.stateVersion = "25.11";

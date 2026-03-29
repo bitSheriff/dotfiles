@@ -17,6 +17,8 @@
     mise
     just
     copyq
+    rsync
+    bash                # mainly for scripting
 
     # Terminal Emulators
     kitty
@@ -26,6 +28,7 @@
     lazygit
     lazydocker
     opencode
+    gemini-cli
     yazi
     timr-tui
 

@@ -57,6 +57,8 @@
     xdg-utils
     killall
     agenix-cli          # needed for age to encrypt nix
+    rsync
+    bash
   ];
 
   programs.zsh = {

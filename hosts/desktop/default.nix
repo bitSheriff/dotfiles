@@ -3,13 +3,13 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/hyprland.nix
-    ../../modules/development.nix
+    ../../modules/winmgs/hyprland.nix
+    ../../modules/development
     ../../modules/multimedia.nix
-    ../../modules/office.nix
+    ../../modules/office
   ];
 
-  system.stateVersion = "25.11"; 
+  system.stateVersion = "25.11";
 
   networking.hostName = "desktop";
 
