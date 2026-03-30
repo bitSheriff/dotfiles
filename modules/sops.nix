@@ -19,6 +19,12 @@
         format = "binary";
         path = "${config.home.homeDirectory}/.config/qutebrowser/bookmarks/urls";
       };
+
+      "ssh_hosts" = {
+        sopsFile = ../encrypted/ssh_hosts.txt;
+        format = "binary";
+        path = "${config.home.homeDirectory}/.ssh/hosts";
+      };
     };
   };
 
