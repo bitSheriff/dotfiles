@@ -16,11 +16,17 @@
       auto-optimise-store = true;
     };
 
-    # Garbage collection: keeps your drive from filling up with old generations
+    # keeps your drive from filling up with old generations
     gc = {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
+    };
+
+    # de-duplicating the remaining files
+    optimise = {
+      automatic = true;
+      dates = [ "weekly" ];
     };
   };
 
