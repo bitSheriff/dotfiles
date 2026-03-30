@@ -41,9 +41,11 @@ in
     "zathura/zathurarc".source   = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/zathura/zathurarc";
     "gromit-mpx.cfg".source   = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/gromit-mpx.cfg";
   };
-
   home.file.".ssh".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.ssh";
   home.file.".local/bin".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../bin";
+
+  # rename a file if a home-manager link would override it
+  home.backupFileExtension = "bk";
 
   home.username = "benjamin";
   home.homeDirectory = "/home/benjamin";
