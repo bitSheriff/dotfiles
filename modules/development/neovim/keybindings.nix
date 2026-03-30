@@ -24,6 +24,27 @@
           silent = true;
           desc = "Exit";
         }
+        {
+          key = "<c-w>";
+          mode = ["n"];
+          action = ":w<CR>";
+          silent = true;
+          desc = "Save current file";
+        }
+        {
+          key = "<c-a>";
+          mode = ["n"];
+          action = ":ggVG";
+          silent = true;
+          desc = "Select All";
+        }
+        {
+          key = "<leader>f";
+          mode = ["n"];
+          action = "function() require('flash').jump() end";
+          silent = true;
+          desc = "Flash";
+        }
       ];
   };
 }
