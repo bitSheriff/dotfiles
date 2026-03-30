@@ -26,7 +26,6 @@
         null-ls.enable = true;
       };
       languages = {
-          enableLSP = true;
           enableTreesitter = true;
           # Languages
           nix.enable = true;
