@@ -6,7 +6,11 @@
 }:
 
 {
-  imports = [ inputs.agenix.nixosModules.default ];
+  imports = [
+    inputs.agenix.nixosModules.default
+    ./development/neovim.nix
+  ];
+
   nix = {
     settings = {
       experimental-features = [

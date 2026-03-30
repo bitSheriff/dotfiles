@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./neovim.nix
     ../notes.nix
   ];
 
@@ -13,7 +14,6 @@
     git-lfs
     fd
     fzf
-    neovim
     ripgrep
     eza
     gnumake
