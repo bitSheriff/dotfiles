@@ -7,6 +7,10 @@ Item {
     id: root
     property var pluginApi: null
     property var screen: null
+    property string widgetId: ""
+    property string section: ""
+    property int sectionWidgetIndex: -1
+    property int sectionWidgetsCount: 0
 
     // Ensures the widget occupies space in the bar
     implicitWidth: Style.baseWidgetSize
