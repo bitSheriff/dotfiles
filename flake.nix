@@ -19,40 +19,49 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, sops-nix, ... }@inputs: {
-    nixosConfigurations = {
-      desktop = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./modules/common.nix
-          ./hosts/desktop
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.benjamin = import ./home.nix;
-            home-manager.backupFileExtension = "backup";
-          }
-        ];
-      };
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      nixos-hardware,
+      sops-nix,
+      ...
+    }@inputs:
+    {
+      nixosConfigurations = {
+        desktop = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./modules/common.nix
+            ./hosts/desktop
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.benjamin = import ./home.nix;
+              home-manager.backupFileExtension = "backup";
+            }
+          ];
+        };
 
-      framework = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./modules/common.nix
-          ./hosts/framework
-          nixos-hardware.nixosModules.framework-13-7040-amd
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.benjamin = import ./home.nix;
-            home-manager.backupFileExtension = "backup";
-          }
-        ];
+        framework = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./modules/common.nix
+            ./hosts/framework
+            nixos-hardware.nixosModules.framework-13-7040-amd
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.benjamin = import ./home.nix;
+              home-manager.backupFileExtension = "backup";
+            }
+          ];
+        };
       };
     };
-  };
 }

@@ -5,11 +5,11 @@
     anki
     thunderbird
     typst
-    typesetter              # minimal typst editor
+    typesetter # minimal typst editor
     zathura
     lazydocker
     #octave
-    jupyter                 # python jupyter notebook
+    jupyter # python jupyter notebook
   ];
 
 }

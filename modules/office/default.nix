@@ -8,30 +8,30 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    typst                   # sooo much better than LaTeX
-    typesetter              # minimal typst editor
+    typst # sooo much better than LaTeX
+    typesetter # minimal typst editor
 
     # Files & Co
-    zathura                 # Minimalist, keyboard-centric PDF viewer (very Arch-like)
+    zathura # Minimalist, keyboard-centric PDF viewer (very Arch-like)
     pdfgrep
-    peazip                  # archive manager
+    peazip # archive manager
 
     # Editors
-    libreoffice-fresh       # like beta version
-    typora                  # most beautiful markdown editor
-    xournalpp               # PDF annotation and note-taking
+    libreoffice-fresh # like beta version
+    typora # most beautiful markdown editor
+    xournalpp # PDF annotation and note-taking
 
     # Notes & Organization
     obsidian
-    gromit-mpx              # draw on desktop
-    hugo                    # blog engine
+    gromit-mpx # draw on desktop
+    hugo # blog engine
 
     # Communication
-    tutanota-desktop        # secure encrypted email
-    thunderbird             # email
-    signal-desktop          # chat without Mark Zuckerberg
-    cinny-desktop           # beautiful matrix chat client
-    localsend               # open source AirDrop alternative
+    tutanota-desktop # secure encrypted email
+    thunderbird # email
+    signal-desktop # chat without Mark Zuckerberg
+    cinny-desktop # beautiful matrix chat client
+    localsend # open source AirDrop alternative
 
     qalculate-gtk
     copyq
@@ -39,7 +39,7 @@
 
   # Crucial for office work to ensure documents look the same everywhere.
   fonts.packages = with pkgs; [
-    corefonts          # Microsoft fonts (Arial, Times New Roman)
+    corefonts # Microsoft fonts (Arial, Times New Roman)
     #google-fonts       # Roboto, Open Sans, etc.
     comic-neue
     nerd-fonts.jetbrains-mono
@@ -60,9 +60,9 @@
 
   # Syncthing
   services.syncthing = {
-      enable = true;
-       user = "benjamin";
-       dataDir = "/home/benjamin/.config/syncthing";
-       configDir = "/home/benjamin/.config/syncthing";
+    enable = true;
+    user = "benjamin";
+    dataDir = "/home/benjamin/.config/syncthing";
+    configDir = "/home/benjamin/.config/syncthing";
   };
 }

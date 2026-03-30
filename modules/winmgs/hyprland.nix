@@ -1,11 +1,15 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
   };
-
 
   services.greetd = {
     enable = true;
@@ -21,16 +25,16 @@
     # Hyprland packages
     hyprcursor
     hyprshot
-    brightnessctl            # Needed for brightness control keys
-    playerctl                # Needed for media control keys
-    wireplumber              # Provides wpctl for volume control
+    brightnessctl # Needed for brightness control keys
+    playerctl # Needed for media control keys
+    wireplumber # Provides wpctl for volume control
 
     # Services
     #dunst                     # notification service
     wl-clipboard
-    swappy                   # screenshot tool
-    hyprpolkitagent          # polkit agent
-    udiskie                  # automounter
+    swappy # screenshot tool
+    hyprpolkitagent # polkit agent
+    udiskie # automounter
     gsettings-desktop-schemas # for theme settings
     libnotify
 
@@ -43,10 +47,10 @@
     lxappearance
     timr-tui
     fastfetch
-    starship		# Shell prompt
+    starship # Shell prompt
     kitty
-    wofi                      # application runner
-    fuzzel                    # application runner
+    wofi # application runner
+    fuzzel # application runner
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     qutebrowser
   ];
@@ -62,7 +66,7 @@
       comic-mono
       nerd-fonts.jetbrains-mono
     ];
-  
+
     fontconfig = {
       defaultFonts = {
         serif = [ "Comic Neue" ];
@@ -77,7 +81,6 @@
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
   };
-
 
   # This ensures environment variables are exported correctly
   services.dbus.enable = true;

@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./hardware-configuration.nix   # The generated hardware file
+    ./hardware-configuration.nix # The generated hardware file
     ../../modules/winmgs/hyprland.nix
     ../../modules/development
     ../../modules/multimedia.nix
@@ -14,7 +14,7 @@
   networking.hostName = "framework";
 
   # Battery Stuff
-  services.power-profiles-daemon.enable = false;    # use tlp instead
+  services.power-profiles-daemon.enable = false; # use tlp instead
   services.tlp = {
     enable = true;
     settings = {
@@ -29,9 +29,9 @@
       CPU_MIN_PERF_ON_BAT = 0;
       CPU_MAX_PERF_ON_BAT = 20;
 
-     #Optional helps save long term battery health
-     START_CHARGE_THRESH_BAT1 = 40; # 40 and bellow it starts to charge
-     STOP_CHARGE_THRESH_BAT1 = 80; # 80 and above it stops charging
+      #Optional helps save long term battery health
+      START_CHARGE_THRESH_BAT1 = 40; # 40 and bellow it starts to charge
+      STOP_CHARGE_THRESH_BAT1 = 80; # 80 and above it stops charging
 
     };
   };

@@ -22,33 +22,33 @@
     just
     copyq
     rsync
-    bash                # mainly for scripting
-    croc                # send files to another computer
-    yq                  # yaml, json parser for the console
+    bash # mainly for scripting
+    croc # send files to another computer
+    yq # yaml, json parser for the console
 
     # Terminal Emulators
     kitty
 
     # TUIs
     gh
-    gh-dash             # manage github issues in the terminal
-    forgejo-cli         # same for codeberg and forgejo
-    lazygit             # the best git tui
-    lazydocker          # makes docker less pain in the ass
+    gh-dash # manage github issues in the terminal
+    forgejo-cli # same for codeberg and forgejo
+    lazygit # the best git tui
+    lazydocker # makes docker less pain in the ass
     opencode
     gemini-cli
-    yazi                # terminal file explorer
+    yazi # terminal file explorer
     timr-tui
-    zellij              # like tmux, but written in rust...
-    delta               # git viewer
-    serie               # git graph viewer in the terminal
-    sshs                # ssh viewer
+    zellij # like tmux, but written in rust...
+    delta # git viewer
+    serie # git graph viewer in the terminal
+    sshs # ssh viewer
 
     # Editors and Co
     zed-editor
     obsidian
     qutebrowser
-    meld                # diff viewer
+    meld # diff viewer
 
     # Container / Virt
     docker
@@ -64,13 +64,13 @@
     clang
     deno
     python3
-    uv                  # because python sucks without
-    nixfmt              # nix language formatter
-    doxygen             # create documentation
-    hugo                # blog engine
+    uv # because python sucks without
+    nixfmt # nix language formatter
+    doxygen # create documentation
+    hugo # blog engine
 
     # Networking
-    whosthere           # discover local devices
+    whosthere # discover local devices
   ];
 
   # Enable Docker daemon
@@ -98,7 +98,7 @@
       dracula-theme.theme-dracula
       vscodevim.vim
       yzhang.markdown-all-in-one
-      myriad-dreamin.tinymist               # Typst Language Server
+      myriad-dreamin.tinymist # Typst Language Server
       jnoortheen.nix-ide
     ];
   };

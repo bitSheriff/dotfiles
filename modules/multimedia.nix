@@ -12,22 +12,22 @@
 
   environment.systemPackages = with pkgs; [
     # Players
-    vlc                 # The "play anything" king
-    mpv                 # High-performance, scriptable player
-    spotify             # Music streaming
-    kew                 # TUI music player
+    vlc # The "play anything" king
+    mpv # High-performance, scriptable player
+    spotify # Music streaming
+    kew # TUI music player
 
     # Image & Graphics
-    gimp                # Photo editing
-    inkscape            # Vector graphics
-    loupe               # Fast GNOME image viewer
-    ente-desktop        # encrypted photo backup
+    gimp # Photo editing
+    inkscape # Vector graphics
+    loupe # Fast GNOME image viewer
+    ente-desktop # encrypted photo backup
 
     # Video & Recording
 
     # Audio Tools
-    pavucontrol         # Graphical audio mixer (essential for multi-output)
-    audacity            # Quick audio editing
+    pavucontrol # Graphical audio mixer (essential for multi-output)
+    audacity # Quick audio editing
   ];
 
   services.tumbler.enable = true; # Image thumbnails

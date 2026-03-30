@@ -8,9 +8,9 @@
 
   config = {
     hardware.opengl = {
-       enable = true;
-       driSupport = true;
-       driSupport32bit = true;
+      enable = true;
+      driSupport = true;
+      driSupport32bit = true;
     };
 
     programs.gamemode.enable = true; # for performance mode

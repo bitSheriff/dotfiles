@@ -33,6 +33,6 @@
 
   # load the data from the files into environment variables
   programs.zsh.initContent = ''
-      export GITHUB_TOKEN="$(cat ${config.sops.secrets.github_access_token.path})"
+    export GITHUB_TOKEN="$(cat ${config.sops.secrets.github_access_token.path})"
   '';
 }
