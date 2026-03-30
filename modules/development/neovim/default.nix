@@ -4,6 +4,7 @@
   imports = [
     ./looks.nix
     ./keybindings.nix
+    ./snippets.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -22,6 +23,7 @@
       };
       lsp = {
         enable = true;
+        null-ls.enable = true;
       };
       languages = {
           enableLSP = true;
@@ -30,10 +32,17 @@
           nix.enable = true;
           rust.enable = true;
           bash.enable = true;
+          just.enable = true;
+          json.enable = true;
+          markdown.enable = true;
+          python.enable = true;
+          yaml.enable = true;
         };
       telescope.enable = true;
       autocomplete.nvim-cmp.enable = true;
       git.gitsigns.enable = true;
+      autopairs.nvim-autopairs.enable = true;
+      comments.comment-nvim.enable = true;
     };
   };
 }

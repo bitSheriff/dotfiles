@@ -10,6 +10,13 @@
           silent = true;
           desc = "Save file and quit";
         }
+        {
+          key = "<leader>n";
+          mode = ["n"];
+          action = ":NvimTreeToggl";
+          silent = true;
+          desc = "Toggle the file explorer on the side";
+        }
       ];
   };
 }
