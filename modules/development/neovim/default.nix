@@ -16,11 +16,6 @@
     settings.vim = {
       viAlias = false;
       vimAlias = true;
-      theme = {
-        enable = true;
-        name = "dracula";
-        style = "dark";
-      };
       lsp = {
         enable = true;
         null-ls.enable = true;
@@ -37,6 +32,7 @@
           python.enable = true;
           yaml.enable = true;
         };
+
       telescope.enable = true;
       autocomplete.nvim-cmp.enable = true;
       git.gitsigns.enable = true;

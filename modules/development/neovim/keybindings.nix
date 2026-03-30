@@ -13,9 +13,16 @@
         {
           key = "<leader>n";
           mode = ["n"];
-          action = ":NvimTreeToggl";
+          action = ":NvimTreeToggl<CR>";
           silent = true;
           desc = "Toggle the file explorer on the side";
+        }
+        {
+          key = "<c-q>";
+          mode = ["n"];
+          action = ":qa<CR>";
+          silent = true;
+          desc = "Exit";
         }
       ];
   };

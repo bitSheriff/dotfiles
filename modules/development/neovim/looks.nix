@@ -18,9 +18,9 @@
 
     # Theme
     theme = {
-        enable = true;
-        name = "dracula";
-        style = "dark";
+      enable = true;
+      name = "tokyonight";
+      style = "night";
     };
   };
 }
