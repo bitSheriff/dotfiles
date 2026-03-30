@@ -1,13 +1,5 @@
-keys:
-    - &admin age1rtq3w62ukhvm38rf473hs4csm3a6pvpc2y4qyj553x3fwz3st5ksekwjdu
-
 creation_rules:
-    - path_regex: encrypted/secrets\.yaml$
-      key_groups:
-          - age:
-                - *admin
-
-    - path_regex: encrypted/.*\.txt$
-      key_groups:
-          - age:
-                - *admin
+  - path_regex: .*\.yaml$
+    age: age1rtq3w62ukhvm38rf473hs4csm3a6pvpc2y4qyj553x3fwz3st5ksekwjdu
+  - path_regex: .*\.txt$
+    age: age1rtq3w62ukhvm38rf473hs4csm3a6pvpc2y4qyj553x3fwz3st5ksekwjdu
