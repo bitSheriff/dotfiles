@@ -31,7 +31,6 @@ in
     "mpd".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpd";
     "mpv".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpv";
     "noctalia".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/noctalia";
-    "nvim".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/nvim";
     "nvim-vanilla".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/nvim-vanilla";
     "opencode".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/opencode";
     "qt5ct".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/qt5ct";

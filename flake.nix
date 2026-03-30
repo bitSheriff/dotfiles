@@ -17,6 +17,10 @@
     agenix.url = "github:ryantm/agenix";
     sops-nix.url = "github:Mic92/sops-nix";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -26,6 +30,7 @@
       home-manager,
       nixos-hardware,
       sops-nix,
+      nvf,
       ...
     }@inputs:
     {
@@ -33,9 +38,10 @@
         desktop = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
-            ./modules/common.nix
-            ./hosts/desktop
             home-manager.nixosModules.home-manager
+            nvf.nixosModules.default
+            ./hosts/desktop
+            ./modules/common.nix
             {
               home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.useGlobalPkgs = true;
@@ -49,10 +55,11 @@
         framework = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
-            ./modules/common.nix
-            ./hosts/framework
             nixos-hardware.nixosModules.framework-13-7040-amd
             home-manager.nixosModules.home-manager
+            nvf.nixosModules.default
+            ./hosts/framework
+            ./modules/common.nix
             {
               home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.useGlobalPkgs = true;

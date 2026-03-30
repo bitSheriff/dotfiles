@@ -8,7 +8,7 @@
 {
   imports = [
     inputs.agenix.nixosModules.default
-    ./development/neovim.nix
+    ./development/neovim
   ];
 
   nix = {
