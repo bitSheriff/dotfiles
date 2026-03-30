@@ -23,7 +23,6 @@ in
 
   xdg.enable = true;
   xdg.configFile = {
-    "clang".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/clang";
     "fuzzel".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/fuzzel";
     "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/hypr";
     "kitty".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/kitty";
