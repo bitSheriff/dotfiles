@@ -28,6 +28,7 @@
     brightnessctl # Needed for brightness control keys
     playerctl # Needed for media control keys
     wireplumber # Provides wpctl for volume control
+    xwayland # needed for some apps
 
     # Services
     #dunst                     # notification service

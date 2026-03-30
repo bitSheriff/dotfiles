@@ -66,7 +66,7 @@ in
 
   home.pointerCursor = {
     gtk.enable = true;
-    # x11.enable = true; # for XWayland Apps
+    x11.enable = true; # for XWayland Apps
     package = pkgs.bibata-cursors;
     name = "Bibata-Modern-Classic";
     size = 24;
