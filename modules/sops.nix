@@ -13,6 +13,9 @@
       "openai_api_key" = {
         key = "api_keys/openai";
       };
+      "github_access_token" = {
+        key = "access_token/github";
+      };
 
       "qutebrowser_urls" = {
         sopsFile = ../encrypted/qutebrowser_urls.txt;
@@ -28,9 +31,8 @@
     };
   };
 
-  # To use an "API" secret in your shell or apps:
-  home.sessionVariables = {
-    # This points to the decrypted file containing the key
-    OPENAI_API_KEY_PATH = config.sops.secrets.openai_api_key.path;
-  };
+  # load the data from the files into environment variables
+  programs.zsh.initContent = ''
+      export GITHUB_TOKEN="$(cat ${config.sops.secrets.github_access_token.path})"
+  '';
 }
