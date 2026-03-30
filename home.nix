@@ -1,12 +1,14 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 let
   dotfiles = "/home/benjamin/code/dotfiles/configuration";
 in
 {
   imports = [
+    inputs.sops-nix.homeManagerModules.sops
     ./modules/zsh.nix
     ./modules/git.nix
+    ./modules/sops.nix
   ];
 
   # This replaces the automated loop with explicit links
@@ -43,9 +45,6 @@ in
   };
   home.file.".ssh".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.ssh";
   home.file.".local/bin".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../bin";
-
-  # rename a file if a home-manager link would override it
-  home.backupFileExtension = "bk";
 
   home.username = "benjamin";
   home.homeDirectory = "/home/benjamin";
