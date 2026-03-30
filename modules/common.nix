@@ -1,10 +1,18 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = [ inputs.agenix.nixosModules.default ];
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       auto-optimise-store = true;
     };
 
@@ -25,7 +33,6 @@
     '';
   };
 
-
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -38,7 +45,12 @@
   networking.networkmanager.enable = true;
   networking.firewall = rec {
     # needed for KDE Connect
-    allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
+    allowedTCPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      }
+    ];
     allowedUDPPortRanges = allowedTCPPortRanges;
   };
 
@@ -46,7 +58,10 @@
   services.gvfs.enable = true;
   services.udisks2.enable = true;
   services.devmon.enable = true;
-  boot.supportedFilesystems = [ "ntfs" "exfat" ];
+  boot.supportedFilesystems = [
+    "ntfs"
+    "exfat"
+  ];
   security.polkit.enable = true;
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
@@ -58,40 +73,46 @@
   users.users.benjamin = {
     isNormalUser = true;
     description = "Benjamin";
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "video"
+      "audio"
+      "docker"
+    ];
     shell = pkgs.zsh;
   };
 
   # Only things that should be available to every user/root.
   environment.systemPackages = with pkgs; [
     # terminal tools
-    bash                            # needed only for scripting
-    zsh                             # actual shell
-    zsh-autosuggestions             # suggest commands
-    zsh-completions                 # complete commands
+    bash # needed only for scripting
+    zsh # actual shell
+    zsh-autosuggestions # suggest commands
+    zsh-completions # complete commands
     zsh-syntax-highlighting
     kitty
-    vim                             # just as a backup if everythin burns
-    comma                           # run nix packages which are not installed
+    vim # just as a backup if everythin burns
+    comma # run nix packages which are not installed
     wget
     curl
     git
     htop
-    unzip                           # for .zip
-    unrar                           # for .rar
+    unzip # for .zip
+    unrar # for .rar
     gnupg
-    eza                             # better `ls`
-    zoxide                          # smarter `cd` command
-    television                      # like fzf but more fancy
-    mise                            # like Nix but on project basis (prob not needed anymore if NixOS runs everywhere)
-    atuin                           # better shell history
-    agenix-cli                      # needed for age to encrypt nix
-    rsync                           # nobody uses scp anymore
-    tldr                            # better help/man pages for cli programs
-    findutils                       # sometimes you need the old find...
-    fd                              # better find
+    eza # better `ls`
+    zoxide # smarter `cd` command
+    television # like fzf but more fancy
+    mise # like Nix but on project basis (prob not needed anymore if NixOS runs everywhere)
+    atuin # better shell history
+    agenix-cli # needed for age to encrypt nix
+    rsync # nobody uses scp anymore
+    tldr # better help/man pages for cli programs
+    findutils # sometimes you need the old find...
+    fd # better find
     _1password-cli
-    glow                            # render markdown in the console
+    glow # render markdown in the console
 
     # Services and Co
     pciutils
@@ -103,8 +124,8 @@
     firefox
     ente-auth
     killall
-    kdePackages.kate                # simple text editor
-    nemo                            # Cinnamon File Explorer
+    kdePackages.kate # simple text editor
+    nemo # Cinnamon File Explorer
     nemo-preview
     nemo-fileroller
   ];
@@ -119,7 +140,6 @@
   };
 
   programs.kdeconnect.enable = true;
-
   programs.bat = {
     enable = true;
     settings = {
@@ -136,9 +156,15 @@
 
   nixpkgs.config.allowUnfree = true;
   environment.sessionVariables = {
-    NIXPKGS_ALLOW_UNFREE = "1";     # needed for packages installed with nix-shell
+    NIXPKGS_ALLOW_UNFREE = "1"; # needed for packages installed with nix-shell
     XDG_DATA_DIRS = [ "$GSETTINGS_SCHEMAS_PATH" ];
     SOPS_AGE_KEY_FILE = "/home/benjamin/.age/dotfiles.key";
+
+    # FZF Config options
+    FZF_DEFAULT_COMMAND = "fd";
+    FZF_DEFAULT_OPTS = "--multi --preview 'bat --style=numbers --color=always {}'";
+    FZF_ALT_C_COMMAND = "rg --sort-files --files --null 2> /dev/null | xargs -0 dirname | uniq";
+
   };
 
   nixpkgs.config.permittedInsecurePackages = [
@@ -160,8 +186,8 @@
     "application/pdf" = [ "org.pwmt.zathura.desktop" ];
   };
 
- # Tell agenix where to find the decryption key on the server
- age.identityPaths = [ "~/.age" ];
+  # Tell agenix where to find the decryption key on the server
+  age.identityPaths = [ "~/.age" ];
 
   # run generic linked executables
   programs.nix-ld.enable = true;
