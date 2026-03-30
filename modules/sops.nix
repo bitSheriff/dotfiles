@@ -14,17 +14,17 @@
         key = "api_keys/openai";
       };
 
-  #     "my_secret_config" = {
-  #       sopsFile = ../encrypted/secretConf.txt;
-  #       format = "binary";
-  #       path = "${config.home.homeDirectory}/.config/secretConf";
-  #     };
+      "qutebrowser_urls" = {
+        sopsFile = ../encrypted/qutebrowser_urls.txt;
+        format = "binary";
+        path = "${config.home.homeDirectory}/.config/qutebrowser/bookmarks/urls";
+      };
     };
   };
 
-  # # To use an "API" secret in your shell or apps:
-    home.sessionVariables = {
-      SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.age/dotfiles.key";
-      OPENAI_API_KEY_PATH = config.sops.secrets.openai_api_key.path;
-    };
+  # To use an "API" secret in your shell or apps:
+  home.sessionVariables = {
+    # This points to the decrypted file containing the key
+    OPENAI_API_KEY_PATH = config.sops.secrets.openai_api_key.path;
+  };
 }
