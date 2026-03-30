@@ -14,6 +14,10 @@
         "flakes"
       ];
       auto-optimise-store = true;
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
     };
 
     # keeps your drive from filling up with old generations
@@ -28,6 +32,12 @@
       automatic = true;
       dates = [ "weekly" ];
     };
+
+    # be able to build offline
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+    '';
   };
 
   # notify about the changes of nixos-rebuild
