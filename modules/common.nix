@@ -138,6 +138,7 @@
     pciutils
     usbutils
     xdg-utils
+    networkmanagerapplet # contains nm-connection-editor for advanced wifi configuration
 
     # GUIs
     _1password-gui
