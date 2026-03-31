@@ -5,6 +5,7 @@
     neovim
     nixfmt
     clang-tools
+    nixd
   ];
 
   # Language specific Settings, LSPs, ...
@@ -14,6 +15,16 @@
       enable = true;
       null-ls.enable = true;
       formatOnSave = true;
+
+      # Nix Language Server
+      servers.nixd = {
+        enable = true;
+        server = "nixd";
+        init_options = {
+          nixpkgs.expr = "import <nixpkgs> { }";
+          formatting.command = [ "nixfmt" ];
+        };
+      };
     };
 
     languages = {
