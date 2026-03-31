@@ -35,6 +35,8 @@
     }@inputs:
     {
       nixosConfigurations = {
+
+        #############  DESKTOP  #############
         desktop = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
@@ -52,6 +54,7 @@
           ];
         };
 
+        #############  FRAMEWORK LAPTOP 13"  #############
         framework = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
@@ -69,6 +72,8 @@
             }
           ];
         };
+
+        #############  #############  #############
       };
     };
 }
