@@ -8,9 +8,15 @@
 {
   imports = [
     inputs.agenix.nixosModules.default
+    inputs.sops-nix.nixosModules.sops
     ./development/neovim
     ./wifi.nix
   ];
+
+  sops = {
+    defaultSopsFile = ../encrypted/secrets.yaml;
+    age.keyFile = "/home/benjamin/.age/dotfiles.key";
+  };
 
   nix = {
     settings = {
