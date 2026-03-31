@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   # List of unique IDs for your networks.
   # These are the only things visible in your Nix config.
@@ -28,7 +33,12 @@ in
   services.nginx = {
     enable = true;
     virtualHosts."syncthing.local" = {
-      listen = [ { addr = "127.0.0.1"; port = 80; } ];
+      listen = [
+        {
+          addr = "127.0.0.1";
+          port = 80;
+        }
+      ];
       locations."/" = {
         proxyPass = "http://127.0.0.1:8384";
         proxyWebsockets = true;
