@@ -18,6 +18,15 @@
       viAlias = false;
       vimAlias = true;
 
+      clipboard = {
+        enable = true;
+        registers = "unnamedplus";
+      };
+
+      extraPackages = with pkgs; [
+        wl-clipboard
+      ];
+
       options = {
         tabstop = 4;
         shiftwidth = 4;
