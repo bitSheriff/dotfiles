@@ -4,8 +4,7 @@ let
   # These are the only things visible in your Nix config.
   # You can use hashes or generic names like "wifi_1".
   wifi_ids = [
-    "wifi_1"
-    "wifi_2"
+    "hotspot"
     "wifi_3"
   ];
 in
