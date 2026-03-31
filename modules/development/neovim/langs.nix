@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     neovim
     nixfmt
+    clang-tools
   ];
 
   # Language specific Settings, LSPs, ...
@@ -24,6 +25,11 @@
           enable = true;
           type = "nixfmt";
         };
+      };
+
+      clang = {
+        enable = true;
+        lsp.enable = true;
       };
 
       python.enable = true;
