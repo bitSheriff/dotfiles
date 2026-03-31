@@ -11,6 +11,7 @@ let
   wifi_ids = [
     "home"
     "hotspot"
+    "wifi_1"
     "wifi_3"
   ];
 in
