@@ -1,43 +1,48 @@
 { config, lib, ... }:
 let
-  # Add your networks here. The name must match the SSID exactly.
-  wifi_networks = [
-    { name = "Coffee Shop"; }
-    { name = "Nothing WiFi"; }
+  # List of unique IDs for your networks.
+  # These are the only things visible in your Nix config.
+  # You can use hashes or generic names like "wifi_1".
+  wifi_ids = [
+    "wifi_1" 
+    "wifi_2"
   ];
-
-  mkPskName = name: "${lib.replaceStrings [ " " ] [ "_" ] name}_PSK";
-  mkFileName = name: "${lib.replaceStrings [ " " ] [ "_" ] name}";
 in
 {
-  # We use sops.secrets to register the passwords
-  sops.secrets = lib.listToAttrs (map (net: {
-    name = mkPskName net.name;
-    value = { sopsFile = ../encrypted/wifi_credentials.yaml; };
-  }) wifi_networks);
+  # 1. Register the secrets for both SSID and PSK for each ID
+  sops.secrets = lib.listToAttrs (lib.concatMap (id: [
+    {
+      name = "${id}_ssid";
+      value = { sopsFile = ../encrypted/wifi_credentials.yaml; };
+    }
+    {
+      name = "${id}_psk";
+      value = { sopsFile = ../encrypted/wifi_credentials.yaml; };
+    }
+  ]) wifi_ids);
 
-  # We use sops.templates to create the NetworkManager connection files
-  sops.templates = lib.listToAttrs (map (net: {
-    name = "${mkFileName net.name}.nmconnection";
+  # 2. Generate the NetworkManager connection files using templates
+  sops.templates = lib.listToAttrs (map (id: {
+    name = "${id}.nmconnection";
     value = {
-      path = "/etc/NetworkManager/system-connections/${mkFileName net.name}.nmconnection";
+      path = "/etc/NetworkManager/system-connections/${id}.nmconnection";
       mode = "0600";
       owner = "root";
       group = "root";
       restartUnits = [ "NetworkManager.service" ];
       content = ''
         [connection]
-        id=${net.name}
+        id=${config.sops.placeholder."${id}_ssid"}
         type=wifi
         autoconnect=true
 
         [wifi]
         mode=infrastructure
-        ssid=${net.name}
+        ssid=${config.sops.placeholder."${id}_ssid"}
 
         [wifi-security]
         key-mgmt=wpa-psk
-        psk=${config.sops.placeholder."${mkPskName net.name}"}
+        psk=${config.sops.placeholder."${id}_psk"}
 
         [ipv4]
         method=auto
@@ -47,5 +52,5 @@ in
         method=auto
       '';
     };
-  }) wifi_networks);
+  }) wifi_ids);
 }
