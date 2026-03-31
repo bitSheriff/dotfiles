@@ -21,6 +21,13 @@
         key = "access_token/github";
       };
 
+      "uni_email" = {
+        key = "uni/email";
+      };
+      "uni_password" = {
+        key = "uni/password";
+      };
+
       "qutebrowser_urls" = {
         sopsFile = ../encrypted/qutebrowser_urls.txt;
         format = "binary";
