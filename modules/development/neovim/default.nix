@@ -18,6 +18,12 @@
       viAlias = false;
       vimAlias = true;
 
+      options = {
+        tabstop = 4;
+        shiftwidth = 4;
+        expandtab = true;
+      };
+
       telescope.enable = true;
       autocomplete.nvim-cmp.enable = true;
       git.gitsigns.enable = true;
