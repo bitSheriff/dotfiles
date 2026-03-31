@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./langs.nix
     ./looks.nix
     ./keybindings.nix
     ./snippets.nix
@@ -16,22 +17,6 @@
     settings.vim = {
       viAlias = false;
       vimAlias = true;
-      lsp = {
-        enable = true;
-        null-ls.enable = true;
-      };
-      languages = {
-          enableTreesitter = true;
-          # Languages
-          nix.enable = true;
-          rust.enable = true;
-          bash.enable = true;
-          just.enable = true;
-          json.enable = true;
-          markdown.enable = true;
-          python.enable = true;
-          yaml.enable = true;
-        };
 
       telescope.enable = true;
       autocomplete.nvim-cmp.enable = true;
