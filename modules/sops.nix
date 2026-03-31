@@ -1,4 +1,8 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 
 {
   home.packages = [ pkgs.sops ];
@@ -35,4 +39,5 @@
   programs.zsh.initContent = ''
     export GITHUB_TOKEN="$(cat ${config.sops.secrets.github_access_token.path})"
   '';
+
 }

@@ -9,6 +9,7 @@
   imports = [
     inputs.agenix.nixosModules.default
     ./development/neovim
+    ./wifi.nix
   ];
 
   nix = {
