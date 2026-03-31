@@ -7,26 +7,27 @@ let
   ];
 
   mkPskName = name: "${lib.replaceStrings [ " " ] [ "_" ] name}_PSK";
+  mkFileName = name: "${lib.replaceStrings [ " " ] [ "_" ] name}";
 in
 {
-  # We use sops.templates to create the NetworkManager connection files 
-  # directly in the system-connections directory.
+  # We use sops.secrets to register the passwords
   sops.secrets = lib.listToAttrs (map (net: {
     name = mkPskName net.name;
     value = { sopsFile = ../encrypted/wifi_credentials.yaml; };
   }) wifi_networks);
 
+  # We use sops.templates to create the NetworkManager connection files
   sops.templates = lib.listToAttrs (map (net: {
-    name = "${net.name}.nmconnection";
+    name = "${mkFileName net.name}.nmconnection";
     value = {
-      path = "/etc/NetworkManager/system-connections/${net.name}.nmconnection";
+      path = "/etc/NetworkManager/system-connections/${mkFileName net.name}.nmconnection";
       mode = "0600";
-      # Automatically restart NetworkManager when this file changes
+      owner = "root";
+      group = "root";
       restartUnits = [ "NetworkManager.service" ];
       content = ''
         [connection]
         id=${net.name}
-        uuid=${builtins.hashString "sha256" net.name}
         type=wifi
         autoconnect=true
 
