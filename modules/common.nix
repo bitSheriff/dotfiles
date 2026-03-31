@@ -10,7 +10,7 @@
     inputs.agenix.nixosModules.default
     inputs.sops-nix.nixosModules.sops
     ./development/neovim
-    ./wifi.nix
+    ./networking.nix
   ];
 
   sops = {
@@ -67,19 +67,6 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   console.keyMap = "de";
-
-  # Networking
-  networking.networkmanager.enable = true;
-  networking.firewall = rec {
-    # needed for KDE Connect
-    allowedTCPPortRanges = [
-      {
-        from = 1714;
-        to = 1764;
-      }
-    ];
-    allowedUDPPortRanges = allowedTCPPortRanges;
-  };
 
   # Hardware Support & Services
   services.gvfs.enable = true;

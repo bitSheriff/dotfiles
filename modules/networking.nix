@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, pkgs, lib, ... }:
 let
   # List of unique IDs for your networks.
   # These are the only things visible in your Nix config.
@@ -9,6 +9,33 @@ let
   ];
 in
 {
+  # Networking
+  networking.networkmanager.enable = true;
+  networking.hosts = {
+    "127.0.0.1" = [ "syncthing.local" ];
+  };
+  networking.firewall = rec {
+    # needed for KDE Connect
+    allowedTCPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      }
+    ];
+    allowedUDPPortRanges = allowedTCPPortRanges;
+  };
+
+  services.nginx = {
+    enable = true;
+    virtualHosts."syncthing.local" = {
+      listen = [ { addr = "127.0.0.1"; port = 80; } ];
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8384";
+        proxyWebsockets = true;
+      };
+    };
+  };
+
   # 1. Register the secrets for both SSID and PSK for each ID
   sops.secrets = lib.listToAttrs (
     lib.concatMap (id: [
