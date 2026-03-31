@@ -13,7 +13,7 @@
         {
           key = "<leader>n";
           mode = ["n"];
-          action = ":NvimTreeToggl<CR>";
+          action = ":NvimTreeToggle<CR>";
           silent = true;
           desc = "Toggle the file explorer on the side";
         }
@@ -25,7 +25,7 @@
           desc = "Exit";
         }
         {
-          key = "<c-w>";
+          key = "<c-s>";
           mode = ["n"];
           action = ":w<CR>";
           silent = true;
@@ -34,9 +34,23 @@
         {
           key = "<c-a>";
           mode = ["n"];
-          action = ":ggVG";
+          action = "ggVG";
           silent = true;
           desc = "Select All";
+        }
+        {
+          key = "<Tab>";
+          mode = ["n"];
+          action = ":BufferLineCycleNext<CR>";
+          silent = true;
+          desc = "Next buffer";
+        }
+        {
+          key = "<S-Tab>";
+          mode = ["n"];
+          action = ":BufferLineCyclePrev<CR>";
+          silent = true;
+          desc = "Previous buffer";
         }
         {
           key = "<leader>f";

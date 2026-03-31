@@ -9,6 +9,9 @@
     dotDir = "${config.xdg.configHome}/zsh";
 
     initContent = ''
+      # Disable flow control to allow CTRL-S and CTRL-Q
+      stty -ixon
+
       # Failsafe source method
       include () {
           [[ -f "$1" ]] && source "$1"
