@@ -73,6 +73,7 @@
 
       nix-switch = "sudo nixos-rebuild switch --flake .#$(hostname)";
       nix-test = "sudo nixos-rebuild test --flake .#$(hostname)";
+      nix-update = "nix flake update && sudo nixos-rebuild switch --flake .#$(hostname)";
 
       ":q" = "exit"; # quit terminal like vim
       ":c" = "clear"; # clear terminal
