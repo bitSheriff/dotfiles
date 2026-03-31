@@ -477,9 +477,9 @@
     "location": {
         "analogClockInCalendar": false,
         "firstDayOfWeek": -1,
-        "hideWeatherCityName": false,
+        "hideWeatherCityName": true,
         "hideWeatherTimezone": false,
-        "name": "Tokyo",
+        "name": "Vienna",
         "showCalendarEvents": true,
         "showCalendarWeather": true,
         "showWeekNumberInCalendar": false,
