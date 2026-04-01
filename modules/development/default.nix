@@ -113,9 +113,9 @@
       globalConfig.settings = {
         experimental = true;
         age.key_file = "~/.age/mise.key";
-        tools = {
-          usage = "latest";
-        };
+      };
+      globalConfig.tools = {
+        usage = "latest";
       };
     };
   };
