@@ -13,8 +13,9 @@
 
     dashboard.alpha.enable = true;
     tabline.nvimBufferline.enable = true; # https://github.com/NotAShelf/nvf/blob/main/modules/plugins/tabline/nvim-bufferline/nvim-bufferline.nix
-    ui.colorizer.enable = true;       # display RGB values in their color
-    ui.noice.enable = true;       # notifications
+    ui.colorizer.enable = true; # display RGB values in their color
+    ui.noice.enable = true; # notifications
+    visuals.rainbow-delimiters.enable = true; # rainbow brackets
 
     # Theme
     theme = {
