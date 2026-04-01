@@ -1,9 +1,0 @@
-[settings]
-experimental = true
-
-[settings.age]
-key_file = "~/.age/mise.key"
-
-[tools]
-hledger = "latest"
-usage = "latest"

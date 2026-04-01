@@ -27,7 +27,6 @@ in
     "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/hypr";
     "kitty".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/kitty";
     "lazygit".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/lazygit";
-    "mise".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mise";
     "mpd".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpd";
     "mpv/script-opts/modernz.conf".source =
       config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpv/script-opts/modernz.conf";
@@ -35,8 +34,6 @@ in
     "noctalia".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/noctalia";
     "nvim-vanilla".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/nvim-vanilla";
     "opencode".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/opencode";
-    # "qt5ct".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/qt5ct";
-    # "qt6ct".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/qt6ct";
     "quickshell".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/quickshell";
     "qutebrowser".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/qutebrowser";
     "shell".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/shell";

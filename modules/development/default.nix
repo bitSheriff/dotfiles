@@ -106,4 +106,18 @@
     ];
   };
 
+  home-manager.users.benjamin = {
+    programs.mise = {
+      enable = true;
+      enableZshIntegration = true;
+      globalConfig.settings = {
+        experimental = true;
+        age.key_file = "~/.age/mise.key";
+        tools = {
+          usage = "latest";
+        };
+      };
+    };
+  };
+
 }

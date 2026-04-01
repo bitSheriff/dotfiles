@@ -31,7 +31,6 @@
   services.tumbler.enable = true; # Image thumbnails
 
   home-manager.users.benjamin = {
-    # It is safer to put the enable flag here
     programs.mpv = {
       enable = true;
 
