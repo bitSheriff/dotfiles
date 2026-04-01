@@ -4,6 +4,7 @@
   imports = [
     ./neovim
     ./yazi
+    ./zed
     ../notes.nix
   ];
 
