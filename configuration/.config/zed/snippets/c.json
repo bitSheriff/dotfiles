@@ -1,0 +1,32 @@
+{
+    "Doxygen Function": {
+        "prefix": "doxy function",
+        "body": [
+            "/**",
+            " * @brief ${1:Description}",
+            " *",
+            " * @param ${2:Param}",
+            " *",
+            " * @return ${3:Return}",
+            " */"
+        ],
+        "description": "Doxygen Documentation for a function"
+    },
+
+    "Doxygen Variable": {
+        "prefix": "doxy var",
+        "body": ["/**", " * @brief ${1:Description}", " */"],
+        "description": "Doxygen Documentation for a variable (before)"
+    },
+
+    "Doxygen Varaible inline": {
+        "prefix": "doxy var inline",
+        "body": ["/*!< $1 */"],
+        "description": "Doxygen Documentation for a variable (inline)"
+    },
+
+    "Comment": {
+        "prefix": "cmt",
+        "body": "/* $1 */"
+    }
+}

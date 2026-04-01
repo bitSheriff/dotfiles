@@ -1,13 +1,18 @@
-{ config, pkgs, ... }:
-
 {
-  imports = [
-  ];
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
-  home-manager.users.benjamin = {
-    programs.zed-editor = {
-      # Snippets currently not supported
+let
+  dotfiles = "/home/benjamin/code/dotfiles/configuration";
+in
+{
+  home-manager.users.benjamin =
+    { config, ... }:
+    {
+      xdg.configFile."zed/snippets".source =
+        config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/zed/snippets";
     };
-  };
-
 }
