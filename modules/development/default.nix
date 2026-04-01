@@ -27,6 +27,7 @@
     croc # send files to another computer
     yq # yaml parser for the console
     jq # json parser for the console
+    ouch # universal archiver (zip, rar, ...)
 
     # Terminal Emulators
     kitty

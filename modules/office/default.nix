@@ -15,6 +15,7 @@
     zathura # Minimalist, keyboard-centric PDF viewer (very Arch-like)
     pdfgrep
     peazip # archive manager
+    ouch # universal archiver (zip, rar, ...)
 
     # Editors & Viewers
     libreoffice-fresh # like beta version
