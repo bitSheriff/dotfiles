@@ -13,7 +13,7 @@ in
   imports = [
     inputs.sops-nix.homeManagerModules.sops
     ./modules/zsh.nix
-    ./modules/git.nix
+    ./modules/development/git.nix
     ./modules/sops.nix
   ];
 
@@ -52,6 +52,7 @@ in
   };
   home.file.".ssh".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.ssh";
   home.file.".local/bin".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../bin";
+  home.file.".local/lib".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../lib";
   home.file.".config/1Password/ssh/agent.toml".text = ''
     [[ssh-keys]]
     vault = "bitSheriff"

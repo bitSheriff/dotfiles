@@ -503,6 +503,8 @@ in
 
   environment.systemPackages = with pkgs; [
     obsidian # the best note system
+    gum # for cli inputs
+    # own scripts
     daily
     notes
     memo
