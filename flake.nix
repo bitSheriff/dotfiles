@@ -43,18 +43,18 @@
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
             ./hosts/desktop
+            ./collections/development.nix
+            ./collections/office.nix
             ./modules/common.nix
             ./modules/winmgs/hyprland.nix
-            ./modules/development
             ./modules/multimedia.nix
-            ./modules/office
             ./modules/downloaders.nix
             #./modules/gaming.nix
             {
+              home-manager.users.benjamin = import ./home.nix;
               home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.benjamin = import ./home.nix;
               home-manager.backupFileExtension = "backup";
             }
           ];
@@ -68,16 +68,16 @@
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
             ./hosts/framework
+            ./collections/development.nix
+            ./collections/office.nix
             ./modules/common.nix
             ./modules/winmgs/hyprland.nix
-            ./modules/development
             ./modules/multimedia.nix
-            ./modules/office
             {
+              home-manager.users.benjamin = import ./home.nix;
               home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.benjamin = import ./home.nix;
               home-manager.backupFileExtension = "backup";
             }
           ];

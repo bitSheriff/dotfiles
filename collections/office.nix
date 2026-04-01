@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ./hledger.nix
     ./uni.nix
-    ../notes.nix
+    ./../modules/hledger.nix
+    ./../modules/notes.nix
   ];
 
   environment.systemPackages = with pkgs; [

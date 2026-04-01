@@ -2,11 +2,11 @@
 
 {
   imports = [
-    ./neovim
-    ./yazi
-    ./zed
-    ../notes.nix
-    ./git.nix
+    ./../modules/neovim
+    ./../modules/yazi
+    ./../modules/zed
+    ./../modules/notes.nix
+    ./../modules/git.nix
   ];
 
   # System-wide dev tools
