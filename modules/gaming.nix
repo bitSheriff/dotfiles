@@ -14,6 +14,7 @@
     };
 
     programs.gamemode.enable = true; # for performance mode
+    boot.kernel = [ "ntsync" ]; # enhance gaming performance
 
     programs.steam = {
       enable = true; # install steam
