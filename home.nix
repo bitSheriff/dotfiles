@@ -26,7 +26,6 @@ in
     "fuzzel".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/fuzzel";
     "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/hypr";
     "kitty".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/kitty";
-    "lazygit".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/lazygit";
     "mpd".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpd";
     "mpv/script-opts/modernz.conf".source =
       config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpv/script-opts/modernz.conf";

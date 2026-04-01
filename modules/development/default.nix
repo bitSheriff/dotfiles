@@ -118,6 +118,41 @@
         usage = "latest";
       };
     };
+    programs.lazygit = {
+      enable = true;
+      enableZshIntegration = true;
+      settings = {
+        customCommands = [
+          {
+            key = "<delete>";
+            context = "files";
+            command = "git update-index --assume-unchanged";
+          }
+          {
+            key = "Q";
+            context = "global";
+            command = "exit";
+          }
+          {
+            key = "M";
+            context = "files";
+            command = "git mergetool {{ .SelectedFile.Name }}";
+            loadingText = "opening mergetool";
+            output = "terminal";
+          }
+          {
+            key = "O";
+            context = "global";
+            command = "nemo .";
+          }
+          {
+            key = "<c-p>";
+            context = "global";
+            command = "git pushall";
+          }
+        ];
+      };
+    };
   };
 
 }
