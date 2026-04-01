@@ -92,10 +92,6 @@ let
   '';
 
   memo = pkgs.writeShellScriptBin "memo" ''
-    source "$HOME/.config/shell/envvars"
-    source "$HOME/.config/shell/secrets"
-    source "$LIB_PATH/my_lib.sh"
-
     # Preamble of the Memo
     MEMO_PRE="- **$(date +%H:%M):** "
     LINES_PRE="    - "

@@ -117,6 +117,7 @@
     kitty
     vim # just as a backup if everythin burns
     comma # run nix packages which are not installed
+    gum # bash library to build cli tools
     wget
     curl
     git
