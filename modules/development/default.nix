@@ -11,20 +11,20 @@
 
     # General
     git
-    git-lfs
-    fd
+    git-lfs # git large file storage
+    fd # find rewritten in rust
     fzf
     ripgrep
     eza
     gnumake
-    age
-    mise
-    just
-    copyq
+    age # encryption
+    mise # like nix but on project basis
+    just # like makefile but better
     rsync
     bash # mainly for scripting
     croc # send files to another computer
-    yq # yaml, json parser for the console
+    yq # yaml parser for the console
+    jq # json parser for the console
 
     # Terminal Emulators
     kitty
@@ -47,7 +47,7 @@
     # Editors and Co
     zed-editor
     obsidian
-    qutebrowser
+    qutebrowser # browser with vim
     meld # diff viewer
 
     # Container / Virt
@@ -100,6 +100,7 @@
       yzhang.markdown-all-in-one
       myriad-dreamin.tinymist # Typst Language Server
       jnoortheen.nix-ide
+      rust-lang.rust-analyzer
     ];
   };
 

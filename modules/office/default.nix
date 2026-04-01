@@ -16,10 +16,11 @@
     pdfgrep
     peazip # archive manager
 
-    # Editors
+    # Editors & Viewers
     libreoffice-fresh # like beta version
     typora # most beautiful markdown editor
     xournalpp # PDF annotation and note-taking
+    kdePackages.okular
 
     # Notes & Organization
     obsidian

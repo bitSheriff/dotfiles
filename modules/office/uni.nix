@@ -8,8 +8,9 @@
     typesetter # minimal typst editor
     zathura
     lazydocker
-    #octave
+    # octave # free alternative to MATLAB (but my not use python then ...)
     jupyter # python jupyter notebook
+    # wireshark-qt # network analyzer
   ];
 
 }

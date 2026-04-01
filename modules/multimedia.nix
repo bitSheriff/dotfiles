@@ -11,11 +11,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # Players
-    vlc # The "play anything" king
-    mpv # High-performance, scriptable player
-    spotify # Music streaming
-    kew # TUI music player
 
     # Image & Graphics
     gimp # Photo editing
@@ -24,15 +19,15 @@
     ente-desktop # encrypted photo backup
 
     # Video & Recording
+    vlc # The "play anything" king
+    mpv # High-performance, scriptable player
 
-    # Audio Tools
+    # Audio
+    spotify # Music streaming
+    kew # TUI music player
     pavucontrol # Graphical audio mixer (essential for multi-output)
     audacity # Quick audio editing
   ];
 
   services.tumbler.enable = true; # Image thumbnails
-  programs.thunar.plugins = with pkgs; [
-    thunar-archive-plugin
-    thunar-volman
-  ];
 }
