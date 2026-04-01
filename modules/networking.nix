@@ -12,6 +12,7 @@ let
     "home"
     "hotspot"
     "wifi_1"
+    "wifi_2"
     "wifi_3"
   ];
 in
