@@ -107,6 +107,8 @@
   };
 
   home-manager.users.benjamin = {
+
+    # Mise
     programs.mise = {
       enable = true;
       enableZshIntegration = true;
@@ -118,6 +120,8 @@
         usage = "latest";
       };
     };
+
+    # LazyGit
     programs.lazygit = {
       enable = true;
       enableZshIntegration = true;
@@ -151,6 +155,37 @@
             command = "git pushall";
           }
         ];
+      };
+    };
+
+    # Television (fuzzy finder)
+    programs.television = {
+      enable = true;
+      settings = {
+        tick_rate = 50;
+        default_channel = "files";
+      };
+      channels = {
+        dotenv = {
+          metadata = {
+            name = "dotenv";
+            description = "A channel to select from .env files";
+            requirements = [ "fd" ];
+          };
+          source = {
+            command = "fd -H --type f .env";
+          };
+        };
+        audiovideo = {
+          metadata = {
+            name = "audio-video";
+            description = "A channel to select from audio and video files";
+            requirements = [ "fd" ];
+          };
+          source = {
+            command = "fd --extension mp4 --extension mp3 --extension webm --extension mov --extension mkv --extension flac --extension m4a --extension m4v --extension m3u";
+          };
+        };
       };
     };
   };

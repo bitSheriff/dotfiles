@@ -36,7 +36,6 @@ in
     "quickshell".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/quickshell";
     "qutebrowser".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/qutebrowser";
     "shell".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/shell";
-    "television".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/television";
     "theming".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/theming";
     "wofi".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/wofi";
     "starship.toml".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/starship.toml";
