@@ -4,7 +4,7 @@
   imports = [
     ./langs.nix
     ./looks.nix
-    ./keybindings.nix
+    ./keymaps.nix
     ./snippets.nix
   ];
 
