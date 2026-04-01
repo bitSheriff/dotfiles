@@ -3,6 +3,7 @@
 {
   imports = [
     ./neovim
+    ./yazi
     ../notes.nix
   ];
 
@@ -37,13 +38,6 @@
     lazydocker # makes docker less pain in the ass
     opencode
     gemini-cli
-
-    yazi # terminal file explorer
-    yaziPlugins.smart-enter
-    yaziPlugins.git
-    yaziPlugins.piper
-    yaziPlugins.lazygit
-    yaziPlugins.rsync
 
     timr-tui
     zellij # like tmux, but written in rust...

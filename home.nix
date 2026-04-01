@@ -43,7 +43,6 @@ in
     "theming".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/theming";
     "wofi".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/wofi";
     "starship.toml".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/starship.toml";
-    "yazi".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/yazi";
     "zed".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/zed";
     "zellij".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/zellij";
     "zathura/zathurarc".source =
