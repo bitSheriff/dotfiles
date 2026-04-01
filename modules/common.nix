@@ -76,7 +76,16 @@
     "ntfs"
     "exfat"
   ];
+
   security.polkit.enable = true;
+  security.sudo = {
+    enable = true;
+    # increase the sudo timeout, in mins
+    extraConfig = ''
+      Defaults timestamp_timeout=30
+    '';
+  };
+
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   services.fwupd.enable = true;
