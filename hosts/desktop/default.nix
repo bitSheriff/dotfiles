@@ -3,12 +3,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/winmgs/hyprland.nix
-    ../../modules/development
-    ../../modules/multimedia.nix
-    ../../modules/office
-    ../../modules/downloaders.nix
-    #../../modules/gaming.nix
   ];
 
   system.stateVersion = "25.11";

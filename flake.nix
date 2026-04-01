@@ -44,6 +44,12 @@
             nvf.nixosModules.default
             ./hosts/desktop
             ./modules/common.nix
+            ./modules/winmgs/hyprland.nix
+            ./modules/development
+            ./modules/multimedia.nix
+            ./modules/office
+            ./modules/downloaders.nix
+            #./modules/gaming.nix
             {
               home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.useGlobalPkgs = true;
@@ -63,6 +69,10 @@
             nvf.nixosModules.default
             ./hosts/framework
             ./modules/common.nix
+            ./modules/winmgs/hyprland.nix
+            ./modules/development
+            ./modules/multimedia.nix
+            ./modules/office
             {
               home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.useGlobalPkgs = true;
