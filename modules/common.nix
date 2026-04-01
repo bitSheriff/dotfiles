@@ -184,7 +184,6 @@
   nixpkgs.config.allowUnfree = true;
   environment.sessionVariables = {
     NIXPKGS_ALLOW_UNFREE = "1"; # needed for packages installed with nix-shell
-    XDG_DATA_DIRS = [ "$GSETTINGS_SCHEMAS_PATH" ];
     SOPS_AGE_KEY_FILE = "/home/benjamin/.age/dotfiles.key";
 
     # FZF Config options

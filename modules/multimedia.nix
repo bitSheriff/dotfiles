@@ -19,6 +19,7 @@
 
     # Video & Recording
     vlc
+    mpv
 
     # Audio
     spotify
