@@ -86,4 +86,16 @@
 
   # This ensures environment variables are exported correctly
   services.dbus.enable = true;
+  home-manager.users.benjamin = {
+    # screenshot annotator
+    programs.swappy = {
+      enable = true;
+      settings = {
+        "Config" = {
+          save_dir = "$HOME/Pictures/Screenshots";
+          save_filename_format = "swappy-%Y%m%d-%H%M%S.png";
+        };
+      };
+    };
+  };
 }
