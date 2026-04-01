@@ -13,7 +13,6 @@ in
   imports = [
     inputs.sops-nix.homeManagerModules.sops
     ./modules/zsh.nix
-    ./modules/development/git.nix
     ./modules/sops.nix
   ];
 

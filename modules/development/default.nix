@@ -6,6 +6,7 @@
     ./yazi
     ./zed
     ../notes.nix
+    ./git.nix
   ];
 
   # System-wide dev tools
