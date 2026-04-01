@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./keymap.nix
+    ./keymaps.nix
     ./tasks.nix
     ./snippets.nix
   ];

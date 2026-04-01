@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./keymap.nix
+    ./keymaps.nix
   ];
 
   environment.systemPackages = with pkgs; [
