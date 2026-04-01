@@ -94,6 +94,7 @@ in
   };
 
   programs.home-manager.enable = true;
+  systemd.user.startServices = "sd-switch"; # remove the Warning with NixOS 26.03
 
   programs.eza = {
     enable = true;
