@@ -11,23 +11,44 @@
   };
 
   environment.systemPackages = with pkgs; [
-
     # Image & Graphics
-    gimp # Photo editing
-    inkscape # Vector graphics
-    loupe # Fast GNOME image viewer
-    ente-desktop # encrypted photo backup
+    gimp
+    inkscape
+    loupe
+    ente-desktop
 
     # Video & Recording
-    vlc # The "play anything" king
-    mpv # High-performance, scriptable player
+    vlc
 
     # Audio
-    spotify # Music streaming
-    kew # TUI music player
-    pavucontrol # Graphical audio mixer (essential for multi-output)
-    audacity # Quick audio editing
+    spotify
+    kew
+    pavucontrol
+    audacity
   ];
 
   services.tumbler.enable = true; # Image thumbnails
+
+  home-manager.users.benjamin = {
+    # It is safer to put the enable flag here
+    programs.mpv = {
+      enable = true;
+
+      scripts = with pkgs.mpvScripts; [
+        modernz
+        thumbfast
+        # uosc # Add this back if you want the menu/timeline
+      ];
+
+      config = {
+        profile = "high-quality";
+        keep-open = "yes";
+        save-position-on-quit = "yes";
+        cursor-autohide = 1000;
+        osc = "no";
+        osd-level = 0;
+      };
+    };
+  };
+
 }

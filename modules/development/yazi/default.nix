@@ -7,6 +7,8 @@
 
   environment.systemPackages = with pkgs; [
     glow # view markdown
+    rsync
+    lazygit
   ];
 
   programs.yazi = {

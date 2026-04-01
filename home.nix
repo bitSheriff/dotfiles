@@ -29,7 +29,9 @@ in
     "lazygit".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/lazygit";
     "mise".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mise";
     "mpd".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpd";
-    "mpv".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpv";
+    "mpv/script-opts/modernz.conf".source =
+      config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpv/script-opts/modernz.conf";
+    "mpv/scripts".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpv/scripts";
     "noctalia".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/noctalia";
     "nvim-vanilla".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/nvim-vanilla";
     "opencode".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/opencode";
