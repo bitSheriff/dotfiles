@@ -107,11 +107,13 @@ image_alloc      = 536870912  # 512MB
 image_bound      = [ 0, 0 ]
 suppress_preload = false
 
-[plugin]
+[[plugin.prepend_previewers]]
+url = "*.md"
+run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"'
 
 [[plugin.prepend_previewers]]
-name = "*.md"
-run  = "glow"
+url = "*.csv"
+run = 'piper -- bat -p --color=always "$1"'
 
 [input]
 # cd

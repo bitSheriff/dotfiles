@@ -37,7 +37,14 @@
     lazydocker # makes docker less pain in the ass
     opencode
     gemini-cli
+
     yazi # terminal file explorer
+    yaziPlugins.smart-enter
+    yaziPlugins.git
+    yaziPlugins.piper
+    yaziPlugins.lazygit
+    yaziPlugins.rsync
+
     timr-tui
     zellij # like tmux, but written in rust...
     delta # git viewer
@@ -98,6 +105,7 @@
       dracula-theme.theme-dracula
       vscodevim.vim
       yzhang.markdown-all-in-one
+      shd101wyy.markdown-preview-enhanced
       myriad-dreamin.tinymist # Typst Language Server
       jnoortheen.nix-ide
       rust-lang.rust-analyzer

@@ -1,22 +1,22 @@
 [[plugin.deps]]
 use = "GianniBYoung/rsync"
-rev = "55631aa"
-hash = "fb38b3c546e6594961b335cee4eaa340"
+rev = "44f6979"
+hash = "9e85283824277bf66011a3977d266edb"
 
 [[plugin.deps]]
 use = "Lil-Dank/lazygit"
-rev = "8f37dc5"
-hash = "ee71543790f0ce3951161045a3787abd"
+rev = "8c4086c"
+hash = "85316b5e9abeae2531d3e5d02a094381"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "e95c7b3"
-hash = "63b6c222bf2103b3023389dde5e2ecfe"
+rev = "1962818"
+hash = "26db011a778f261d730d4f5f8bf24b3f"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:piper"
-rev = "e95c7b3"
-hash = "2143a53182dbbe935a1abd1623424aa5"
+rev = "1962818"
+hash = "384464b6df8cb807425c521f8cd790f3"
 
 [flavor]
 deps = []

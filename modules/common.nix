@@ -138,6 +138,7 @@
     fd # better find
     _1password-cli
     glow # render markdown in the console
+    nh # nix cli helper
 
     # Services and Co
     pciutils

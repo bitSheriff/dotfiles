@@ -1,20 +1,20 @@
-# rsync.yazi
+# Rsync.yazi
 
 A [yazi](https://yazi-rs.github.io/) plugin for simple rsync copying locally and up to remote servers.
 
 ![Demo](assets/demo.gif)
 Thanks to [chrissabug](https://x.com/chrissabug) for creating lovely art!
 
-## Pre-reqs
+## Pre-Reqs
 
-1. yazi 3.0+
+1. yazi latest version preferred
 2. rsync
 3. passwordless authentication if copying to a remote server
 
 ## Installation
 
 ```sh
-ya pack -a GianniBYoung/rsync
+ya pkg add GianniBYoung/rsync
 ```
 
 ## Usage
@@ -35,22 +35,32 @@ desc = "Copy files using rsync"
 ```toml
 [[mgr.prepend_keymap]]
 on   = [ "R" ]
-run  = "plugin rsync --args='user@server.com'"
+run  = "plugin rsync 'user@server.com'"
 desc = "Copy files using rsync to default location"
 ```
+
+### Remember Last Target
+
+Use `--remember` to cache the last used target. On next invocation, the input field will be pre-filled with the cached target.
+
+```toml
+[[mgr.prepend_keymap]]
+on   = [ "R" ]
+run  = "plugin rsync -- --remember"
+desc = "Copy files using rsync (remember target)"
+```
+
+**Note:** The target is stored in `~/.config/yazi/plugins/rsync.yazi/.last_target`
 
 ## Troubleshooting
 
 Basic logging information is sent to `~/.local/state/yazi/yazi.log`
 
-*Note: This plugin has only been tested on linux
+*Note: This plugin has only been tested on Linux
 
 ## Contributing
 
 Run into a bug or want a certain feature added? Submit an issue!
 
-PRs welcome :)
-
-Please keep in mind the yazi plugin system is still very new - as more features are added
-
-more possibilities will open up for this plugin!
+- Give it a star if you like it ⭐!
+- PRs welcome :)
