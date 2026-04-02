@@ -16,6 +16,7 @@
     pdfgrep
     peazip # archive manager
     ouch # universal archiver (zip, rar, ...)
+    pdfgrep # search in multiple pdfs
 
     # Editors & Viewers
     libreoffice-fresh # like beta version
@@ -25,7 +26,7 @@
 
     # Notes & Organization
     obsidian
-    gromit-mpx # draw on desktop
+    # gromit-mpx # draw on desktop
     hugo # blog engine
 
     # Communication

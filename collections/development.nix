@@ -20,6 +20,7 @@
     fd # find rewritten in rust
     fzf
     ripgrep
+    pdfgrep # search in multiple pdfs
     eza
     gnumake
     age # encryption
@@ -77,6 +78,8 @@
 
     # Networking
     whosthere # discover local devices
+
+    cinny-desktop # beautiful matrix chat client
   ];
 
   # Enable Docker daemon
