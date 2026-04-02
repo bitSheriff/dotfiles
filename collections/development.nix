@@ -7,6 +7,7 @@
     ./../modules/zed
     ./../modules/notes.nix
     ./../modules/git.nix
+    ./../modules/zellij.nix
   ];
 
   # System-wide dev tools
