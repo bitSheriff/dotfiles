@@ -31,7 +31,6 @@ in
     "opencode".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/opencode";
     "quickshell".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/quickshell";
     "qutebrowser".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/qutebrowser";
-    "theming".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/theming";
     "wofi".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/wofi";
     "zathura/zathurarc".source =
       config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/zathura/zathurarc";
