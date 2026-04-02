@@ -103,4 +103,11 @@
       };
     };
   };
+
+  home-manager.users.benjamin.home.sessionVariables = {
+    # fix Wayland problem with Rust Tauri
+    # https://github.com/tauri-apps/tauri/issues/10702
+    WEBKIT_DISABLE_DMABUF_RENDERER = "1";
+  };
+
 }

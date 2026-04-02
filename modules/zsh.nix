@@ -21,7 +21,6 @@
           }
 
           # Include your existing modular config files
-          include ~/.config/shell/envvars
           include ~/.config/shell/secrets
           include ~/.config/shell/alias
 
@@ -119,8 +118,6 @@
       };
 
       home.sessionVariables = {
-        BIN_PATH = "$HOME/.local/bin";
-        LIB_PATH = "$HOME/.local/lib";
       };
     };
 }

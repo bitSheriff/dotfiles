@@ -48,15 +48,40 @@ in
   '';
 
   home.sessionVariables = {
+    # Default Programs
     TERMINAL = "kitty";
     EDITOR = "nvim";
     VISUAL = "nvim";
     BROWSER = "firefox";
     MANPAGER = "'nvim +Man!'";
 
+    # Directories
+    BIN_PATH = "$HOME/.local/bin";
+    LIB_PATH = "$HOME/.local/lib";
+    DOTFILES_DIR = "$HOME/code/dotfiles"; # define the folder where the dotfiles are located
+    CACHE_DIR = "$HOME/.cache"; # define the folder for temporary cache files
+    CODE_DIR = "$HOME/code"; # define the folder for the most coding projects
+    WALLPAPER_DIR = "$HOME/Pictures/wallpapers"; # define the folder for the wallpapers
+
+    # use 1Password as the SSH Agent
+    SSH_AUTH_SOCK = "$HOME/.1password/agent.sock";
+
+    # path where different age keys are stored
+    AGE_KEY_DIR = "$HOME/.age";
+
     ADW_DISABLE_PORTAL = "1"; # Force libadwaita to use dark mode
     GTK_THEME = "Adwaita:dark"; # Fallback for some GTK apps
+
   };
+
+  # PATH
+  home.sessionPath = [
+    "$HOME/.local/bin"
+    "$HOME/.cargo/bin"
+    "$HOME/.config/hypr/scripts"
+    "/var/lib/flatpak/exports/share/applications"
+    "/usr/bin"
+  ];
 
   home.pointerCursor = {
     gtk.enable = true;
