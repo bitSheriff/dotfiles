@@ -51,6 +51,11 @@
           };
         };
         agent_servers = {
+          gemini-custom = {
+            type = "custom";
+            comand = "gemini";
+          };
+
           gemini = {
             ignore_system_version = false;
           };
