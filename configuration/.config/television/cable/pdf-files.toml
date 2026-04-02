@@ -1,8 +1,0 @@
-[metadata]
-name = "pdf-files"
-description = "A channel to select from your user's dotfiles"
-requirements = ["fd"]
-
-[source]
-command = "fd --extension pdf"
-
