@@ -14,10 +14,10 @@ declare -rA LUT=(
     [jellyfin]="jellyfin-tui"
     [mastodon]="toot tui"
     [matrix]="iamb"
-    [memo]="$HOME/.local/bin/memo"
+    [memo]="memo"
     [monitor]="monitui"
     [music]="kew ."
-    [notes]="$HOME/.local/bin/notes"
+    [notes]="notes"
     [timer]="timr"
     [wifi]="sudo impala"
 )
