@@ -58,7 +58,6 @@
       };
       # highlight training spaces
       mini.trailspace.enable = true;
-
       # jump anywhere
       utility.motion.flash-nvim.enable = true;
     };

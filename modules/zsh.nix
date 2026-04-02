@@ -125,7 +125,7 @@
 
         # better yazi with move to directory when exit
         (pkgs.writeShellScriptBin "y" ''
-          	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+          	tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
           	yazi "$@" --cwd-file="$tmp"
           	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
           		builtin cd -- "$cwd"
@@ -139,13 +139,11 @@
           #    --tac: Shows the most recent commands at the top.
           #    --no-sort: Keeps the history order intact.
           # 2. Capture the user's selected line.
-          local selected_line
           selected_line=$(fc -l 1 | fzf --tac --no-sort)
 
           # Check if a selection was made (user didn't press Esc or Ctrl+C)
           if [[ -n "$selected_line" ]]; then
               # 3. Extract the command number (the first column) using awk.
-              local selected_number
               selected_number=$(echo "$selected_line" | awk '{print $1}')
 
               # 4. Use 'fc' to open the selected command number in the editor.
