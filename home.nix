@@ -48,6 +48,12 @@ in
   '';
 
   home.sessionVariables = {
+    TERMINAL = "kitty";
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+    BROWSER = "firefox";
+    MANPAGER = "'nvim +Man!'";
+
     ADW_DISABLE_PORTAL = "1"; # Force libadwaita to use dark mode
     GTK_THEME = "Adwaita:dark"; # Fallback for some GTK apps
   };
