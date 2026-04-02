@@ -12,6 +12,7 @@
     ./zsh.nix
     ./neovim
     ./networking.nix
+    ./kitty.nix
   ];
 
   sops = {

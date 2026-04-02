@@ -6,7 +6,7 @@
 
     settings = {
       main = {
-        dpi-aware = "no"; # or false
+        dpi-aware = "no";
         width = 30;
         font = "Comic Mono:weight=bold:size=14";
         line-height = 20;
