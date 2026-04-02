@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./starship.nix
+    ./zellij.nix
+  ];
+
   home-manager.users.benjamin =
     { config, ... }:
     {

@@ -8,6 +8,7 @@
     ./../modules/notes.nix
     ./../modules/git.nix
     ./../modules/zellij.nix
+    ./../modules/starship.nix
   ];
 
   # System-wide dev tools

@@ -33,7 +33,6 @@ in
     "qutebrowser".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/qutebrowser";
     "theming".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/theming";
     "wofi".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/wofi";
-    "starship.toml".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/starship.toml";
     "zathura/zathurarc".source =
       config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/zathura/zathurarc";
     "gromit-mpx.cfg".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/gromit-mpx.cfg";
