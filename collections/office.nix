@@ -37,6 +37,10 @@
 
     qalculate-gtk
     copyq
+
+    # Printers and Scanners
+    kdePackages.skanpage # Scanner GUI
+    libsane-dsseries # driver for Brother DS-740D
   ];
 
   # Crucial for office work to ensure documents look the same everywhere.
