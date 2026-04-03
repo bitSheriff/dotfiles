@@ -9,7 +9,7 @@
   imports = [
     inputs.agenix.nixosModules.default
     inputs.sops-nix.nixosModules.sops
-    ./zsh.nix
+    ./shell/zsh.nix
     ./neovim
     ./networking.nix
     ./kitty.nix

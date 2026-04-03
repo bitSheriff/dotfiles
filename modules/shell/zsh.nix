@@ -2,8 +2,8 @@
 
 {
   imports = [
-    ./starship.nix
-    ./zellij.nix
+    ../starship.nix
+    ../zellij.nix
   ];
 
   home-manager.users.benjamin =
