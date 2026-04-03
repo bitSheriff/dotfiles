@@ -2,7 +2,7 @@
 
 {
   imports = [
-    # ./scripts.nix
+    ./scripts.nix
     ../starship.nix
     ../zellij.nix
   ];

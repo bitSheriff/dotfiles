@@ -36,7 +36,6 @@ in
       config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/zathura/zathurarc";
   };
   home.file.".ssh".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.ssh";
-  home.file.".local/bin".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../bin";
   home.file.".local/lib".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../lib";
   home.file.".config/1Password/ssh/agent.toml".text = ''
     [[ssh-keys]]
