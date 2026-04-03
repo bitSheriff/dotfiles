@@ -158,6 +158,8 @@
     nemo # Cinnamon File Explorer
     nemo-preview
     nemo-fileroller
+    libqalculate # calculator CLI
+    qalculate-gtk # calculator GUI
   ];
 
   programs.zsh = {
