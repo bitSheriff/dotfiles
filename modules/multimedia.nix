@@ -16,6 +16,7 @@
     inkscape
     loupe
     ente-desktop
+    qview # minimal image viewer
 
     # Video & Recording
     vlc
