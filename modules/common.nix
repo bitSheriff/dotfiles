@@ -141,6 +141,7 @@
     _1password-cli
     glow # render markdown in the console
     nh # nix cli helper
+    speedtest-cli # download speed meter
 
     # Services and Co
     pciutils
