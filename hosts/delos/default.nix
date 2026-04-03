@@ -7,7 +7,7 @@
 
   system.stateVersion = "25.11";
 
-  networking.hostName = "framework";
+  networking.hostName = "delos";
 
   # Battery Stuff
   services.power-profiles-daemon.enable = false; # use tlp instead

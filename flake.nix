@@ -40,12 +40,12 @@
       nixosConfigurations = {
 
         #############  DESKTOP  #############
-        desktop = nixpkgs.lib.nixosSystem {
+        rhodos = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
-            ./hosts/desktop
+            ./hosts/rhodos
             # Collections
             ./collections/development.nix
             ./collections/office.nix
@@ -67,13 +67,13 @@
         };
 
         #############  FRAMEWORK LAPTOP 13"  #############
-        framework = nixpkgs.lib.nixosSystem {
+        delos = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
-            ./hosts/framework
+            ./hosts/delos
             # Collections
             ./collections/development.nix
             ./collections/office.nix

@@ -7,7 +7,7 @@
 
   system.stateVersion = "25.11";
 
-  networking.hostName = "desktop";
+  networking.hostName = "rhodos";
 
   hardware.nvidia = {
     modesetting.enable = true;
