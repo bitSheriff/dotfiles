@@ -718,7 +718,7 @@
     },
     "wallpaper": {
         "automationEnabled": false,
-        "directory": "/home/benjamin/code/dotfiles/wallpapers",
+        "directory": "/home/benjamin/Pictures/wallpapers",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
         "favorites": [
@@ -727,6 +727,11 @@
         "fillMode": "crop",
         "hideWallpaperFilenames": false,
         "monitorDirectories": [
+            {
+                "directory": "/home/benjamin/Pictures/wallpapers",
+                "name": "eDP-1",
+                "wallpaper": ""
+            }
         ],
         "overviewBlur": 0.4,
         "overviewEnabled": false,
