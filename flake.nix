@@ -43,8 +43,11 @@
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
             ./hosts/desktop
+            # Collections
             ./collections/development.nix
             ./collections/office.nix
+            ./collections/uni.nix
+            # Modules
             ./modules/common.nix
             ./modules/winmgs/hyprland.nix
             ./modules/multimedia.nix
@@ -68,8 +71,11 @@
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
             ./hosts/framework
+            # Collections
             ./collections/development.nix
             ./collections/office.nix
+            ./collections/uni.nix
+            # Modules
             ./modules/common.nix
             ./modules/winmgs/hyprland.nix
             ./modules/multimedia.nix

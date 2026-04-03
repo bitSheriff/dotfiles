@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./uni.nix
     ./../modules/hledger.nix
     ./../modules/notes.nix
   ];
