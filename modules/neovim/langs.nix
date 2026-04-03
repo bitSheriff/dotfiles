@@ -10,6 +10,7 @@
     shfmt # format shell scripts
     marksman # markdown LSP
     prettier # formatter for different languages
+    tinymist # LSP for Typst
   ];
 
   # Language specific Settings, LSPs, ...
@@ -68,6 +69,11 @@
       };
 
       yaml = {
+        enable = true;
+        lsp.enable = true;
+      };
+
+      typst = {
         enable = true;
         lsp.enable = true;
       };

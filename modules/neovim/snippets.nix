@@ -9,6 +9,8 @@
           body = "if $1 else $2";
         }
       ];
+
+      # #### NIX ####
       nix = [
         {
           trigger = "mkOption";
@@ -20,6 +22,30 @@
               example = $4;
             }
           '';
+        }
+      ];
+
+      # #### TYPST ####
+      typst = [
+        {
+          trigger = "h1";
+          body = "= ";
+        }
+        {
+          trigger = "h2";
+          body = "== ";
+        }
+        {
+          trigger = "h3";
+          body = "=== ";
+        }
+        {
+          trigger = "h4";
+          body = "==== ";
+        }
+        {
+          trigger = "h5";
+          body = "===== ";
         }
       ];
     };
