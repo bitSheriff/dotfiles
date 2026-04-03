@@ -47,12 +47,12 @@
             ./collections/development.nix
             ./collections/office.nix
             ./collections/uni.nix
+            ./collections/gaming.nix
             # Modules
             ./modules/common.nix
             ./modules/winmgs/hyprland.nix
             ./modules/multimedia.nix
             ./modules/downloaders.nix
-            #./modules/gaming.nix
             {
               home-manager.users.benjamin = import ./home.nix;
               home-manager.extraSpecialArgs = { inherit inputs; };

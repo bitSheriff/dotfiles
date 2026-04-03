@@ -7,14 +7,17 @@
   };
 
   config = {
-    hardware.opengl = {
+
+    hardware.graphics = {
       enable = true;
-      driSupport = true;
-      driSupport32bit = true;
+      enable32Bit = true;
     };
 
     programs.gamemode.enable = true; # for performance mode
-    boot.kernel = [ "ntsync" ]; # enhance gaming performance
+
+    boot.kernelPackages = pkgs.linuxPackages_zen; # kernel package with ntsync support
+    boot.kernelModules = [ "ntsync" ]; # enhance gaming performance for wine/proton games
+    boot.kernelParams = [ "ntsync.ntsync_enabled=1" ];
 
     programs.steam = {
       enable = true; # install steam
@@ -23,7 +26,7 @@
     };
 
     environment.systemPackages = with pkgs; [
-      # mumble # install voice-chat
+      mumble # install voice-chat
     ];
   };
 }
