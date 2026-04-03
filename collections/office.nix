@@ -39,8 +39,7 @@
     copyq
 
     # Printers and Scanners
-    kdePackages.skanpage # Scanner GUI
-    libsane-dsseries # driver for Brother DS-740D
+    simple-scan
   ];
 
   # Crucial for office work to ensure documents look the same everywhere.
@@ -61,8 +60,11 @@
     openFirewall = true; # Helps finding network printers automatically
   };
 
-  # Printing
-  hardware.sane.enable = true;
+  # Scanning
+  hardware.sane = {
+    enable = true;
+    extraBackends = [ pkgs.brscan5 ];
+  };
 
   # Syncthing
   services.syncthing = {
