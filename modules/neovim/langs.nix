@@ -39,6 +39,7 @@
       # Languages
       nix = {
         enable = true;
+        treesitter.enable = true;
         format = {
           enable = true;
           type = [ "nixfmt" ];

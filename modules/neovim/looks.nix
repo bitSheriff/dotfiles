@@ -18,6 +18,7 @@
     ui.colorizer.enable = true; # display RGB values in their color
     ui.noice.enable = true; # notifications
     visuals.rainbow-delimiters.enable = true; # rainbow brackets
+    ui.nvim-ufo.enable = true; # show folding levels
 
     # Theme
     theme = {

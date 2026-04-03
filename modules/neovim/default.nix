@@ -27,10 +27,17 @@
         wl-clipboard
       ];
 
+      treesitter.enable = true;
       options = {
         tabstop = 4;
         shiftwidth = 4;
         expandtab = true;
+        # Folding
+        foldmethod = "expr";
+        foldexpr = "v:lua.vim.treesitter.foldexpr()";
+        foldlevel = 99; # Start with all folds open
+        foldlevelstart = 99;
+        foldcolumn = "1";
       };
 
       # luaConfigPost = ''
