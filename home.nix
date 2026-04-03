@@ -22,7 +22,6 @@ in
   xdg.enable = true;
   xdg.configFile = {
     "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/hypr";
-    # "kitty".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/kitty";
     "mpv/script-opts/modernz.conf".source =
       config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpv/script-opts/modernz.conf";
     "mpv/scripts".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpv/scripts";
