@@ -20,8 +20,9 @@
     # Editors & Viewers
     libreoffice-fresh # like beta version
     typora # most beautiful markdown editor
-    xournalpp # PDF annotation and note-taking
+    rnote # PDF annotation and note-taking
     kdePackages.okular
+    foliate # ebook reader
 
     # Notes & Organization
     obsidian
