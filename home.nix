@@ -22,9 +22,6 @@ in
   xdg.enable = true;
   xdg.configFile = {
     "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/hypr";
-    "mpv/script-opts/modernz.conf".source =
-      config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpv/script-opts/modernz.conf";
-    "mpv/scripts".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpv/scripts";
     "noctalia".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/noctalia";
     "nvim-vanilla".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/nvim-vanilla";
     "opencode".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/opencode";

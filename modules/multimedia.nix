@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+
+  imports = [
+    ./mpv.nix
+  ];
+
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -19,7 +24,6 @@
 
     # Video & Recording
     vlc
-    mpv
 
     # Audio
     pavucontrol
@@ -30,26 +34,5 @@
   ];
 
   services.tumbler.enable = true; # Image thumbnails
-
-  home-manager.users.benjamin = {
-    programs.mpv = {
-      enable = true;
-
-      scripts = with pkgs.mpvScripts; [
-        modernz
-        thumbfast
-        # uosc # Add this back if you want the menu/timeline
-      ];
-
-      config = {
-        profile = "high-quality";
-        keep-open = "yes";
-        save-position-on-quit = "yes";
-        cursor-autohide = 1000;
-        osc = "no";
-        osd-level = 0;
-      };
-    };
-  };
 
 }
