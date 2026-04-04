@@ -51,11 +51,11 @@
             ./collections/office.nix
             ./collections/uni.nix
             ./collections/gaming.nix
+            ./collections/multimedia.nix
+            ./collections/downloaders.nix
             # Modules
             ./modules/common.nix
             ./modules/hyprland
-            ./modules/multimedia.nix
-            ./modules/downloaders.nix
             {
               home-manager.users.benjamin = import ./home.nix;
               home-manager.extraSpecialArgs = { inherit inputs; };
@@ -78,10 +78,10 @@
             ./collections/development.nix
             ./collections/office.nix
             ./collections/uni.nix
+            ./collections/multimedia.nix
             # Modules
             ./modules/common.nix
             ./modules/hyprland
-            ./modules/multimedia.nix
             {
               home-manager.users.benjamin = import ./home.nix;
               home-manager.extraSpecialArgs = { inherit inputs; };
