@@ -76,6 +76,7 @@
     nixfmt # nix language formatter
     doxygen # create documentation
     hugo # blog engine
+    jdk25_headless # Java
 
     # Networking
     whosthere # discover local devices

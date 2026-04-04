@@ -12,10 +12,9 @@
 
   environment.systemPackages = with pkgs; [
     # Image & Graphics
-    gimp
+    gimp # like photoshop but withput selling your soul
     inkscape
-    loupe
-    ente-desktop
+    ente-desktop # encrypted photo backup
     qview # minimal image viewer
 
     # Video & Recording
@@ -23,10 +22,11 @@
     mpv
 
     # Audio
-    spotify
-    kew
     pavucontrol
-    audacity
+    spotify
+    kew # mp3 player in the console
+    audacity # audio editor
+    picard # mp3tag editor
   ];
 
   services.tumbler.enable = true; # Image thumbnails
