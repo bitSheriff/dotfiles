@@ -40,6 +40,16 @@
     ];
   };
 
+  # 2 TB SSD
+  fileSystems."/mnt/storage" = {
+    device = "/dev/disk/by-uuid/f35948cd-ec48-4ed9-a6cc-bc355d1611c8";
+    fsType = "ext4";
+    options = [
+      "defaults"
+      "nofail"
+    ];
+  };
+
   swapDevices = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
