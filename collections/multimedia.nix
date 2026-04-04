@@ -24,6 +24,7 @@
 
     # Video & Recording
     vlc
+    (if config.networking.hostName == "rhodos" then fladder else null) # jellyfin client
 
     # Audio
     pavucontrol
