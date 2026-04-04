@@ -114,16 +114,15 @@
         truncation_symbol = "…/";
         substitutions = {
           "Documents" = "󰈙  ";
-          "Downloads" = " ";
-          "Music" = " ";
+          "Downloads" = "󰇚 ";
+          "Music" = " ";
           "Pictures" = " ";
           "notes" = "";
           "code" = "";
           ".config" = "";
-          "SatanOS" = "󱙧";
           "blog" = "";
           "Audiobooks" = "󰋋";
-          "books" = "";
+          "books" = "󱉟 ";
         };
       };
 
