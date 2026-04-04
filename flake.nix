@@ -2,7 +2,7 @@
   # Dosage: One 'nixos-rebuild switch' daily or as needed for restlessness.
   # Side effects: May include excessive reading of the Nixpkgs manual and
   # an irrational hatred of imperative file changes.
-  description = "Therapeutic NixOS for a recovering distro hopper";
+  description = "Therapeutic NixOS for a recovering distro-hopper";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
