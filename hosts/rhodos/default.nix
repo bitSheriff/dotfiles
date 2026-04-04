@@ -5,9 +5,11 @@
     ./hardware-configuration.nix
   ];
 
+  networking.hostName = "rhodos";
   system.stateVersion = "25.11";
 
-  networking.hostName = "rhodos";
+  ## Trim SSD
+  services.fstrim.enable = true;
 
   hardware.nvidia = {
     modesetting.enable = true;

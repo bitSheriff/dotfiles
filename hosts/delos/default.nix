@@ -5,9 +5,11 @@
     ./hardware-configuration.nix # The generated hardware file
   ];
 
+  networking.hostName = "delos";
   system.stateVersion = "25.11";
 
-  networking.hostName = "delos";
+  ## Trim SSD
+  services.fstrim.enable = true;
 
   # Battery Stuff
   services.power-profiles-daemon.enable = false; # use tlp instead
