@@ -25,6 +25,16 @@
           osc = "no";
           osd-level = 0;
         };
+        bindings = {
+          "l" = "seek 5";
+          "h" = "seek -5";
+          "k" = "seek 60";
+          "j" = "seek -60";
+          "]" = "add speed 0.1";
+          "[" = "add speed -0.1";
+          "}" = "add speed 0.5";
+          "{" = "add speed -0.5";
+        };
       };
 
       xdg.configFile = {
