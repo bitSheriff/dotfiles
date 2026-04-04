@@ -81,5 +81,27 @@
         lsp.enable = true;
       };
     };
+
+    luaConfigRC.markdown-logic = ''
+            -- Toggle Checkboxes
+      vim.keymap.set('n', '<leader>tt', function()
+            local line = vim.api.nvim_get_current_line()
+            local new_line
+
+            if line:match("%[ %]") then
+              new_line = line:gsub("%[ %]", "[x]", 1)
+            elseif line:match("%[x%]") then
+              new_line = line:gsub("%[x%]", "[ ]", 1)
+            -- Improved pattern: Find the bullet (*, -, or +) and any following space
+            elseif line:match("^%s*[%*%-%+]%s*") then
+              new_line = line:gsub("^%s*([%*%-%+])%s*", "%1 [ ] ", 1)
+            end
+
+            if new_line then
+              vim.api.nvim_set_current_line(new_line)
+            end
+          end, { desc = "Toggle Markdown Todo" })
+    '';
+
   };
 }
