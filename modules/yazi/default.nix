@@ -20,6 +20,8 @@
       inherit (pkgs.yaziPlugins) piper;
       inherit (pkgs.yaziPlugins) lazygit;
       inherit (pkgs.yaziPlugins) rsync;
+      inherit (pkgs.yaziPlugins) ouch; # for archives
+      inherit (pkgs.yaziPlugins) mediainfo;
     };
     settings = {
       yazi = {
