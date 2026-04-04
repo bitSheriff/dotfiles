@@ -29,23 +29,62 @@
       typst = [
         {
           trigger = "h1";
-          body = "= ";
+          body = "= $1";
         }
         {
           trigger = "h2";
-          body = "== ";
+          body = "== $1";
         }
         {
           trigger = "h3";
-          body = "=== ";
+          body = "=== $1";
         }
         {
           trigger = "h4";
-          body = "==== ";
+          body = "==== $1";
         }
         {
           trigger = "h5";
-          body = "===== ";
+          body = "===== $1";
+        }
+      ];
+
+      # #### Markdown ####
+      markdown = [
+        {
+          trigger = "h1";
+          body = "# $1";
+        }
+        {
+          trigger = "h2";
+          body = "## $1";
+        }
+        {
+          trigger = "h3";
+          body = "### $1";
+        }
+        {
+          trigger = "h4";
+          body = "#### $1";
+        }
+        {
+          trigger = "h5";
+          body = "#### $1";
+        }
+        {
+          trigger = "callout";
+          body = ''
+            > [!NOTE]
+            > $1
+          '';
+        }
+        {
+          trigger = "cmt";
+          body = "<!-- $1 -->";
+        }
+        {
+          trigger = "td";
+          body = "- [ ] $1";
         }
       ];
     };
