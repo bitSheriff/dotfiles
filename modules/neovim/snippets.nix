@@ -47,6 +47,10 @@
           trigger = "h5";
           body = "===== $1";
         }
+        {
+          trigger = "lnk";
+          body = "#link($1)[$2]";
+        }
       ];
 
       # #### Markdown ####
@@ -85,6 +89,28 @@
         {
           trigger = "td";
           body = "- [ ] $1";
+        }
+        {
+          trigger = "lnk";
+          body = "[$1]($2)";
+        }
+        {
+          trigger = "cb";
+          description = "Code Block";
+          body = ''
+            ```
+            $1
+            ```
+          '';
+        }
+        {
+          trigger = "mb";
+          description = "Math Block";
+          body = ''
+            \$\$
+            $1
+            \$\$
+          '';
         }
       ];
     };
