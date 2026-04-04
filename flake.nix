@@ -53,7 +53,7 @@
             ./collections/gaming.nix
             # Modules
             ./modules/common.nix
-            ./modules/winmgs/hyprland.nix
+            ./modules/hyprland
             ./modules/multimedia.nix
             ./modules/downloaders.nix
             {
@@ -80,7 +80,7 @@
             ./collections/uni.nix
             # Modules
             ./modules/common.nix
-            ./modules/winmgs/hyprland.nix
+            ./modules/hyprland
             ./modules/multimedia.nix
             {
               home-manager.users.benjamin = import ./home.nix;

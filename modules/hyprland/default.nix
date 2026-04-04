@@ -91,23 +91,30 @@
 
   # This ensures environment variables are exported correctly
   services.dbus.enable = true;
-  home-manager.users.benjamin = {
-    # screenshot annotator
-    programs.swappy = {
-      enable = true;
-      settings = {
-        "Config" = {
-          save_dir = "$HOME/Pictures/Screenshots";
-          save_filename_format = "swappy-%Y%m%d-%H%M%S.png";
+  home-manager.users.benjamin =
+    { config, lib, ... }:
+    {
+      # screenshot annotator
+      programs.swappy = {
+        enable = true;
+        settings = {
+          "Config" = {
+            save_dir = "$HOME/Pictures/Screenshots";
+            save_filename_format = "swappy-%Y%m%d-%H%M%S.png";
+          };
         };
       };
-    };
-  };
 
-  home-manager.users.benjamin.home.sessionVariables = {
-    # fix Wayland problem with Rust Tauri
-    # https://github.com/tauri-apps/tauri/issues/10702
-    WEBKIT_DISABLE_DMABUF_RENDERER = "1";
-  };
+      home.sessionVariables = {
+        # fix Wayland problem with Rust Tauri
+        # https://github.com/tauri-apps/tauri/issues/10702
+        WEBKIT_DISABLE_DMABUF_RENDERER = "1";
+      };
+
+      xdg.configFile = {
+        # use a real symmlink here to enable hot releading of the config
+        "hypr".source = config.lib.file.mkOutOfStoreSymlink ./hypr;
+      };
+    };
 
 }
