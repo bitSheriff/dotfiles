@@ -3,7 +3,7 @@
 {
 
   imports = [
-    ./mpv.nix
+    ./mpv
   ];
 
   security.rtkit.enable = true;

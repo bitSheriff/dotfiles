@@ -1,8 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  dotfiles = "/home/benjamin/code/dotfiles/configuration";
-in
 {
 
   environment.systemPackages = with pkgs; [
@@ -31,9 +28,8 @@ in
       };
 
       xdg.configFile = {
-        "mpv/script-opts/modernz.conf".source =
-          config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpv/script-opts/modernz.conf";
-        "mpv/scripts".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/mpv/scripts";
+        "mpv/script-opts/modernz.conf".source = ./script-opts/modernz.conf;
+        "mpv/scripts".source = ./scripts;
       };
 
     };
