@@ -79,7 +79,7 @@ let
 
     (
         cd "$NOTES_DIR" || exit 1 # Exit if NOTES_DIR cannot be changed to
-        file="$(fzf)"             # Capture the output of tv files
+        file="$(fd --extension md | fzf)"             # Capture the output of tv files
         # Trim and sanitize the file name
         sanitized_file=$(echo "$file" | sed 's/[{}]//g' | xargs)
         if [[ -n "$sanitized_file" && -f "$sanitized_file" ]]; then
@@ -504,6 +504,8 @@ in
   environment.systemPackages = with pkgs; [
     obsidian # the best note system
     gum # for cli inputs
+    fd # find files
+    fzf # to select files
     # own scripts
     daily
     notes
