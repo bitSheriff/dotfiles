@@ -37,18 +37,10 @@ in
 
   # link the ssh config
   home.file.".ssh/config".text = ''
-    Host *
-      IdentityAgent ~/.1password/agent.sock
-
-    Host forgejo
-      HostName git-ssh.bitsheriff.dev
-      User git
-      Port 2222
-      ProxyCommand cloudflared access ssh --hostname %h --port %p
-      IdentityFile ~/.ssh/bitsheriff.pub
-
     Include ~/.ssh/hosts
 
+    Host *
+      IdentityAgent ~/.1password/agent.sock
   '';
 
   home.sessionVariables = {
