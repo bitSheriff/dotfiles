@@ -35,7 +35,6 @@
     thunderbird # email
     signal-desktop # chat without Mark Zuckerberg
     cinny-desktop # beautiful matrix chat client
-    localsend # open source AirDrop alternative
 
     qalculate-gtk
     copyq
@@ -82,5 +81,10 @@
     user = "benjamin";
     dataDir = "/home/benjamin/.config/syncthing";
     configDir = "/home/benjamin/.config/syncthing";
+  };
+
+  programs.localsend = {
+    enable = true;
+    openFirewall = true;
   };
 }
