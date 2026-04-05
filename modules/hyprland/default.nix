@@ -9,6 +9,7 @@
 
   imports = [
     ../fuzzel.nix
+    ../wofi.nix
   ];
 
   programs.hyprland = {
@@ -56,7 +57,6 @@
     fastfetch
     starship # Shell prompt
     kitty
-    wofi # application runner
     fuzzel # application runner
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     qutebrowser

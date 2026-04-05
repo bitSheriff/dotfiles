@@ -21,7 +21,6 @@ in
 
   xdg.enable = true;
   xdg.configFile = {
-    "wofi".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/wofi";
   };
   home.file.".local/lib".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../lib";
   home.file.".config/1Password/ssh/agent.toml".text = ''
