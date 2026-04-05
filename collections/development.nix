@@ -78,8 +78,10 @@
     hugo # blog engine
     jdk25_headless # Java
 
-    # Networking
+    # Networking & Security
     whosthere # discover local devices
+    kdePackages.kleopatra
+    gnupg
 
     cinny-desktop # beautiful matrix chat client
   ];
