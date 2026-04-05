@@ -1,7 +1,12 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 
 {
-  home-manager.users.benjamin = {
+  home-manager.users.${username} = {
     programs.git = {
       enable = true;
       lfs.enable = true;

@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 
 {
   imports = [
@@ -7,7 +12,7 @@
     ../zellij.nix
   ];
 
-  home-manager.users.benjamin =
+  home-manager.users.${username} =
     { config, ... }:
     {
       programs.zsh = {

@@ -41,7 +41,11 @@
 
         #############  DESKTOP  #############
         rhodos = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs;
+            username = "benjamin";
+            sopsMod = ./modules/sops.nix;
+          };
           modules = [
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
@@ -56,19 +60,26 @@
             # Modules
             ./modules/common.nix
             ./modules/hyprland
-            {
-              home-manager.users.benjamin = import ./home.nix;
-              home-manager.extraSpecialArgs = { inherit inputs; };
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "backup";
-            }
+            (
+              { username, sopsMod, ... }:
+              {
+                home-manager.users.${username} = import ./users/benjamin.nix;
+                home-manager.extraSpecialArgs = { inherit inputs username sopsMod; };
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.backupFileExtension = "backup";
+              }
+            )
           ];
         };
 
         #############  FRAMEWORK LAPTOP 13"  #############
         delos = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs;
+            username = "benjamin";
+            sopsMod = ./modules/sops.nix;
+          };
           modules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
             home-manager.nixosModules.home-manager
@@ -82,13 +93,16 @@
             # Modules
             ./modules/common.nix
             ./modules/hyprland
-            {
-              home-manager.users.benjamin = import ./home.nix;
-              home-manager.extraSpecialArgs = { inherit inputs; };
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "backup";
-            }
+            (
+              { username, sopsMod, ... }:
+              {
+                home-manager.users.${username} = import ./users/benjamin.nix;
+                home-manager.extraSpecialArgs = { inherit inputs username sopsMod; };
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.backupFileExtension = "backup";
+              }
+            )
           ];
         };
 

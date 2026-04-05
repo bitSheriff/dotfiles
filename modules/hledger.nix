@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 
 let
   timeclock-add = pkgs.writeShellScriptBin "timeclock-add" ''
@@ -226,7 +231,7 @@ in
     clockout = "timeclock-add \${TIMEDOT_WORK_FILE} o";
   };
 
-  home-manager.users.benjamin = {
+  home-manager.users.${username} = {
     xdg.configFile."hledger/hledger.conf".text = ''
       [check] --strict
       [balancesheet] --layout=bare

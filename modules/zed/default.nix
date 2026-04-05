@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 
 {
   imports = [
@@ -13,7 +18,7 @@
     nixd
   ];
 
-  home-manager.users.benjamin = {
+  home-manager.users.${username} = {
     programs.zed-editor = {
       enable = true;
       # Add extensions you might need here

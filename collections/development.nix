@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 
 {
   imports = [
@@ -118,7 +123,7 @@
     ];
   };
 
-  home-manager.users.benjamin = {
+  home-manager.users.${username} = {
 
     # Mise
     programs.mise = {

@@ -1,7 +1,12 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 
 {
-  home-manager.users.benjamin.programs.fuzzel = {
+  home-manager.users.${username}.programs.fuzzel = {
     enable = true;
 
     settings = {

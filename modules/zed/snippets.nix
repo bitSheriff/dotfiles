@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 
 let
   rust = {
@@ -35,7 +40,7 @@ let
 
 in
 {
-  home-manager.users.benjamin = {
+  home-manager.users.${username} = {
     home.file.".config/zed/snippets/rust.json".text = builtins.toJSON rust;
     home.file.".config/zed/snippets/c.json".text = builtins.toJSON cpp;
     home.file.".config/zed/snippets/markdown.json".text = builtins.toJSON markdown;

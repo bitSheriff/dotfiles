@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  username,
   ...
 }:
 
@@ -91,7 +92,7 @@
 
   # This ensures environment variables are exported correctly
   services.dbus.enable = true;
-  home-manager.users.benjamin =
+  home-manager.users.${username} =
     { config, lib, ... }:
     {
       # screenshot annotator

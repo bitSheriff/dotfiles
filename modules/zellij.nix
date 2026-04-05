@@ -1,7 +1,12 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 
 {
-  home-manager.users.benjamin.programs.zellij = {
+  home-manager.users.${username}.programs.zellij = {
     enable = true;
 
     # Structured settings translated to KDL

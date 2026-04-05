@@ -3,20 +3,22 @@
   pkgs,
   lib,
   inputs,
+  username,
+  sopsMod,
   ...
 }:
 
 let
-  dotfiles = "/home/benjamin/code/dotfiles/configuration";
+  dotfiles = "/home/${username}/code/dotfiles/configuration";
 in
 {
   imports = [
     inputs.sops-nix.homeManagerModules.sops
-    ./modules/sops.nix
+    sopsMod
   ];
 
-  home.username = "benjamin";
-  home.homeDirectory = "/home/benjamin";
+  home.username = username;
+  home.homeDirectory = "/home/${username}";
   home.stateVersion = "25.11";
 
   xdg.enable = true;

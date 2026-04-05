@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 
 {
 
@@ -6,7 +11,7 @@
     mpv
   ];
 
-  home-manager.users.benjamin =
+  home-manager.users.${username} =
     { config, lib, ... }:
     {
       programs.mpv = {
