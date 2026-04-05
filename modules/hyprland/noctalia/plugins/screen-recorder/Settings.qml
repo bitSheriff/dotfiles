@@ -460,6 +460,10 @@ ColumnLayout {
                     "name": "1920x1080 (Full HD)"
                 },
                 {
+                    "key": "1920x1200",
+                    "name": "1920x1200 (WUXGA)"
+                },
+                {
                     "key": "2560x1440",
                     "name": "2560x1440 (QHD)"
                 },

@@ -187,6 +187,12 @@
                 },
                 {
                     "defaultSettings": {
+                        "mode": "region"
+                    },
+                    "id": "plugin:screenshot"
+                },
+                {
+                    "defaultSettings": {
                     },
                     "id": "plugin:kde-connect"
                 },
@@ -250,6 +256,9 @@
                     "icon": "noctalia",
                     "id": "ControlCenter",
                     "useDistroLogo": false
+                },
+                {
+                    "id": "plugin:screenshot"
                 }
             ]
         }

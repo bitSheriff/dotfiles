@@ -333,7 +333,7 @@ Item {
               } else if (timerDisplayItem.isEditing && totalSeconds === 0 && timerDisplayItem.inputBuffer !== "") {
                 _cachedText = formatTimeFromDigits(timerDisplayItem.inputBuffer);
               } else if (timerDisplayItem.isEditing && totalSeconds === 0) {
-                _cachedText = formatTime(0, 0);
+                _cachedText = formatTime(remainingSeconds, 0);
               } else {
                 _cachedText = formatTime(remainingSeconds, totalSeconds);
               }
@@ -590,4 +590,3 @@ Item {
     }
   }
 }
-
