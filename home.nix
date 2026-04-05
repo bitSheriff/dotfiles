@@ -25,8 +25,6 @@ in
     "quickshell".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/quickshell";
     "qutebrowser".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/qutebrowser";
     "wofi".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/wofi";
-    "zathura/zathurarc".source =
-      config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/zathura/zathurarc";
   };
   home.file.".local/lib".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../lib";
   home.file.".config/1Password/ssh/agent.toml".text = ''

@@ -2,8 +2,9 @@
 
 {
   imports = [
-    ./../modules/hledger.nix
-    ./../modules/notes.nix
+    ../modules/hledger.nix
+    ../modules/notes.nix
+    ../modules/zathura.nix
   ];
 
   environment.systemPackages = with pkgs; [
