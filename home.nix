@@ -21,8 +21,6 @@ in
 
   xdg.enable = true;
   xdg.configFile = {
-    "quickshell".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/quickshell";
-    "qutebrowser".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/qutebrowser";
     "wofi".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/wofi";
   };
   home.file.".local/lib".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../lib";

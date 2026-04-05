@@ -10,6 +10,7 @@
     ./../modules/zellij.nix
     ./../modules/starship.nix
     ./../modules/opencode
+    ./../modules/qutebrowser
   ];
 
   # System-wide dev tools
@@ -55,7 +56,6 @@
     # Editors and Co
     zed-editor
     obsidian
-    qutebrowser # browser with vim
     meld # diff viewer
 
     # Container / Virt
