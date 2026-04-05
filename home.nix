@@ -29,11 +29,26 @@ in
     "zathura/zathurarc".source =
       config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/zathura/zathurarc";
   };
-  home.file.".ssh".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.ssh";
   home.file.".local/lib".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../lib";
   home.file.".config/1Password/ssh/agent.toml".text = ''
     [[ssh-keys]]
     vault = "bitSheriff"
+  '';
+
+  # link the ssh config
+  home.file.".ssh/config".text = ''
+    Host *
+      IdentityAgent ~/.1password/agent.sock
+
+    Host forgejo
+      HostName git-ssh.bitsheriff.dev
+      User git
+      Port 2222
+      ProxyCommand cloudflared access ssh --hostname %h --port %p
+      IdentityFile ~/.ssh/bitsheriff.pub
+
+    Include ~/.ssh/hosts
+
   '';
 
   home.sessionVariables = {
