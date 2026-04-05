@@ -63,7 +63,7 @@
             (
               { username, sopsMod, ... }:
               {
-                home-manager.users.${username} = import ./users/benjamin.nix;
+                home-manager.users.${username} = import ./users/${username}.nix;
                 home-manager.extraSpecialArgs = { inherit inputs username sopsMod; };
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
@@ -96,7 +96,7 @@
             (
               { username, sopsMod, ... }:
               {
-                home-manager.users.${username} = import ./users/benjamin.nix;
+                home-manager.users.${username} = import ./users/${username}.nix;
                 home-manager.extraSpecialArgs = { inherit inputs username sopsMod; };
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
