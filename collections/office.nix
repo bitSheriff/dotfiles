@@ -42,6 +42,9 @@
 
     # Printers and Scanners
     simple-scan
+
+    # Finance
+    ledger-live-desktop
   ];
 
   # Crucial for office work to ensure documents look the same everywhere.
