@@ -66,7 +66,7 @@
       markdown = {
         enable = true;
         lsp.enable = true;
-        format.enable = true;
+        format.enable = false;
         # render markdown
         extensions.render-markdown-nvim.enable = true;
       };
