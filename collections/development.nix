@@ -9,6 +9,7 @@
     ./../modules/git.nix
     ./../modules/zellij.nix
     ./../modules/starship.nix
+    ./../modules/opencode
   ];
 
   # System-wide dev tools
@@ -43,7 +44,6 @@
     forgejo-cli # same for codeberg and forgejo
     lazygit # the best git tui
     lazydocker # makes docker less pain in the ass
-    opencode
     gemini-cli
 
     timr-tui

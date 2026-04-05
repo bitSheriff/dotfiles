@@ -22,7 +22,6 @@ in
   xdg.enable = true;
   xdg.configFile = {
     "nvim-vanilla".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/nvim-vanilla";
-    "opencode".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/opencode";
     "quickshell".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/quickshell";
     "qutebrowser".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/qutebrowser";
     "wofi".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/wofi";
