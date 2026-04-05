@@ -15,24 +15,28 @@
     jack.enable = true; # Useful if you ever use Pro-Audio tools like Ardour
   };
 
-  environment.systemPackages = with pkgs; [
-    # Image & Graphics
-    gimp # like photoshop but withput selling your soul
-    inkscape
-    ente-desktop # encrypted photo backup
-    qview # minimal image viewer
+  environment.systemPackages =
+    with pkgs;
+    [
+      # Image & Graphics
+      gimp # like photoshop but withput selling your soul
+      inkscape
+      ente-desktop # encrypted photo backup
+      qview # minimal image viewer
 
-    # Video & Recording
-    vlc
-    (if config.networking.hostName == "rhodos" then fladder else null) # jellyfin client
+      # Video & Recording
+      vlc
+    ]
+    ++ lib.optional (config.networking.hostName == "rhodos") fladder
+    ++ [
 
-    # Audio
-    pavucontrol
-    spotify
-    kew # mp3 player in the console
-    audacity # audio editor
-    picard # mp3tag editor
-  ];
+      # Audio
+      pavucontrol
+      spotify
+      kew # mp3 player in the console
+      audacity # audio editor
+      picard # mp3tag editor
+    ];
 
   services.tumbler.enable = true; # Image thumbnails
 
