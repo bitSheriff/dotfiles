@@ -41,10 +41,10 @@
 
         #############  DESKTOP  #############
         rhodos = nixpkgs.lib.nixosSystem {
-          specialArgs = {
+          specialArgs = rec {
             inherit inputs;
             username = "benjamin";
-            dotfiles_path = "/home/benjamin/code/dotfiles"; # sadly cannot use the variable here
+            dotfiles_path = "/home/${username}/code/dotfiles";
             sopsMod = ./modules/sops.nix;
           };
           modules = [
@@ -76,10 +76,10 @@
 
         #############  FRAMEWORK LAPTOP 13"  #############
         delos = nixpkgs.lib.nixosSystem {
-          specialArgs = {
+          specialArgs = rec {
             inherit inputs;
             username = "benjamin";
-            dotfiles_path = "/home/benjamin/code/dotfiles"; # sadly cannot use the variable here
+            dotfiles_path = "/home/${username}/code/dotfiles";
             sopsMod = ./modules/sops.nix;
           };
           modules = [
