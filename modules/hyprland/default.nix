@@ -49,6 +49,7 @@ in
     udiskie # automounter
     gsettings-desktop-schemas # for theme settings
     libnotify
+    nwg-displays # handle multi-monitor setup
 
     # Look-and-Feel
     noctalia-shell
