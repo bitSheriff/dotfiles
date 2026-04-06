@@ -3,12 +3,12 @@
   pkgs,
   inputs,
   username,
+  dotfiles_path,
   ...
 }:
 
 let
-  dotfiles = "/home/${username}/code/dotfiles";
-  hypr_module = "${dotfiles}/modules/hyprland";
+  hypr_module = "${dotfiles_path}/modules/hyprland";
 in
 {
 

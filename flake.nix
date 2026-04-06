@@ -44,6 +44,7 @@
           specialArgs = {
             inherit inputs;
             username = "benjamin";
+            dotfiles_path = "/home/benjamin/code/dotfiles"; # sadly cannot use the variable here
             sopsMod = ./modules/sops.nix;
           };
           modules = [
@@ -78,6 +79,7 @@
           specialArgs = {
             inherit inputs;
             username = "benjamin";
+            dotfiles_path = "/home/benjamin/code/dotfiles"; # sadly cannot use the variable here
             sopsMod = ./modules/sops.nix;
           };
           modules = [
