@@ -7,7 +7,8 @@
 }:
 
 let
-  dotfiles = "/home/${username}/code/dotfiles/configuration";
+  dotfiles = "/home/${username}/code/dotfiles";
+  hypr_module = "${dotfiles}/modules/hyprland";
 in
 {
 
@@ -117,9 +118,9 @@ in
       };
 
       xdg.configFile = {
-        # use a real symmlink here to enable hot releading of the config
-        "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/hypr";
-        "noctalia".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/noctalia";
+        # use a real symmlink here to enable hot releading of the config (needs absolute path, not relative!!!)
+        "hypr".source = config.lib.file.mkOutOfStoreSymlink "${hypr_module}/hypr";
+        "noctalia".source = config.lib.file.mkOutOfStoreSymlink "${hypr_module}/noctalia";
       };
     };
 
