@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  username,
   ...
 }:
 
@@ -17,7 +18,7 @@
 
   sops = {
     defaultSopsFile = ../encrypted/secrets.yaml;
-    age.keyFile = "/home/benjamin/.age/dotfiles.key";
+    age.keyFile = "/home/${username}/.age/dotfiles.key";
   };
 
   nix = {
@@ -95,9 +96,9 @@
   services.gnome.gnome-keyring.enable = true;
 
   # User Configuration
-  users.users.benjamin = {
+  users.users.${username} = {
     isNormalUser = true;
-    description = "Benjamin";
+    description = "${username}";
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -189,7 +190,7 @@
   nixpkgs.config.allowUnfree = true;
   environment.sessionVariables = {
     NIXPKGS_ALLOW_UNFREE = "1"; # needed for packages installed with nix-shell
-    SOPS_AGE_KEY_FILE = "/home/benjamin/.age/dotfiles.key";
+    SOPS_AGE_KEY_FILE = "/home/${username}/.age/dotfiles.key";
 
     # FZF Config options
     FZF_DEFAULT_COMMAND = "fd";
