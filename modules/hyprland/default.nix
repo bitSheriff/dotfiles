@@ -118,8 +118,8 @@ in
 
       xdg.configFile = {
         # use a real symmlink here to enable hot releading of the config
-        "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/hypr";
-        "noctalia".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/noctalia";
+        "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/hypr";
+        "noctalia".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/noctalia";
       };
     };
 
