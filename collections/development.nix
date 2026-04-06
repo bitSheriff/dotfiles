@@ -16,6 +16,8 @@
     ./../modules/starship.nix
     ./../modules/opencode
     ./../modules/qutebrowser
+    ./../modules/vm.nix
+    ./../modules/docker.nix
   ];
 
   # System-wide dev tools
@@ -49,7 +51,6 @@
     gh-dash # manage github issues in the terminal
     forgejo-cli # same for codeberg and forgejo
     lazygit # the best git tui
-    lazydocker # makes docker less pain in the ass
     gemini-cli
 
     timr-tui
@@ -62,13 +63,6 @@
     zed-editor
     obsidian
     meld # diff viewer
-
-    # Container / Virt
-    docker
-    docker-compose
-    #distrobox
-    #distroshelf
-    gnome-boxes
 
     # Languages
     rustup
@@ -90,14 +84,6 @@
 
     cinny-desktop # beautiful matrix chat client
   ];
-
-  # Enable Docker daemon
-  virtualisation.docker.enable = true;
-  # Add your user to the docker group automatically
-  users.users.benjamin.extraGroups = [ "docker" ];
-  virtualisation.podman = {
-    enable = true;
-  };
 
   # Specific Program Modules (enable deeper integration)
   programs.direnv = {
