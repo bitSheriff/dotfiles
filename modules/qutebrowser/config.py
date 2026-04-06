@@ -12,8 +12,8 @@ config = config  # noqa: F821 pylint: disable=E0602,C0103
 config.load_autoconfig()
 
 # load dracula theme
-# theming.dracula_theme(c, config)
-theming.wallust_theme(c, config)
+theming.dracula_theme(c, config)
+# theming.wallust_theme(c, config)
 
 # load keybindings
 keybindings.load_keybindings(config)
@@ -40,6 +40,7 @@ c.url.searchengines = {
         '!dd': 'https://www.duckduckgo.com/?q={}',
         '!w' : 'https://wikipedia.org/wiki/{}',
         # Linux
+        '!ns': 'https://search.nixos.org/packages?channel=unstable&query={}',
         '!aw': 'https://wiki.archlinux.org/?search={}',
         '!apkg': 'https://archlinux.org/packages/?sort=&q={}&maintainer=&flagged=',
         '!gh': 'https://github.com/search?o=desc&q={}&s=stars',
@@ -47,9 +48,8 @@ c.url.searchengines = {
         '!rd': 'https://www.reddit.com/search?q={}',
         '!dc': 'https://www.discogs.com/de/search/?q={}&btn=&type=all',
         # AI
-        # '!gpt' : 'https://chatgpt.com/?q={}&hints=search',
         '!da' : 'https://duckduckgo.com/?q={}&ia=chat&bang=true+', # DuckDuck AI
-        # Media 
+        # Media
         '!yt': 'https://www.youtube.com/results?search_query={}',
         '!sp' : 'https://open.spotify.com/search/{}'
         }
