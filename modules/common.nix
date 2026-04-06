@@ -14,6 +14,7 @@
     ./neovim
     ./networking.nix
     ./kitty.nix
+    ./ssh.nix
   ];
 
   sops = {

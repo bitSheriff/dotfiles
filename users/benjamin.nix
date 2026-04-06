@@ -25,18 +25,6 @@ in
   xdg.configFile = {
   };
   home.file.".local/lib".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../lib";
-  home.file.".config/1Password/ssh/agent.toml".text = ''
-    [[ssh-keys]]
-    vault = "bitSheriff"
-  '';
-
-  # link the ssh config
-  home.file.".ssh/config".text = ''
-    Include ~/.ssh/hosts
-
-    Host *
-      IdentityAgent ~/.1password/agent.sock
-  '';
 
   home.sessionVariables = {
     # Default Programs
