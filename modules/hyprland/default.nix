@@ -6,6 +6,9 @@
   ...
 }:
 
+let
+  dotfiles = "/home/${username}/code/dotfiles/configuration";
+in
 {
 
   imports = [
@@ -114,9 +117,8 @@
 
       xdg.configFile = {
         # use a real symmlink here to enable hot releading of the config
-        "hypr".source = config.lib.file.mkOutOfStoreSymlink ./hypr;
-        # needs to be writeable to update itself, so sadly you have to manually copy it back and forth
-        # "noctalia".source = config.lib.file.mkOutOfStoreSymlink ./noctalia;
+        "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/hypr";
+        "noctalia".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/noctalia";
       };
     };
 
