@@ -9,7 +9,7 @@
   services.openssh = {
     enable = true;
     settings = {
-      # PasswordAuthentication = false; # Disable password login (use SSH keys instead)
+      PasswordAuthentication = false; # Disable password login (only SSH keys are allowed)
       PermitRootLogin = "no";
     };
   };
