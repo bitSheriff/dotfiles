@@ -126,7 +126,9 @@
     curl
     git
     htop
+    zip
     unzip # for .zip
+    rar
     unrar # for .rar
     gnupg
     eza # better `ls`
