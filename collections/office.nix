@@ -35,6 +35,7 @@
     thunderbird # email
     signal-desktop # chat without Mark Zuckerberg
     cinny-desktop # beautiful matrix chat client
+    kdePackages.korganizer # Calendar and more
 
     qalculate-gtk
     copyq

@@ -92,6 +92,7 @@
             [music]="kew ."
             [notes]="notes"
             [timer]="timr"
+            [todo]="todo"
             [wifi]="sudo impala"
         )
 
