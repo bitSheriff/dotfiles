@@ -15,6 +15,7 @@
     ./networking.nix
     ./kitty.nix
     ./ssh.nix
+    ./kdeconnect.nix
   ];
 
   sops = {
@@ -176,7 +177,6 @@
     enableSSHSupport = true;
   };
 
-  programs.kdeconnect.enable = true;
   programs.bat = {
     enable = true;
     settings = {

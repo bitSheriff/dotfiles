@@ -22,16 +22,6 @@ in
   networking.hosts = {
     "127.0.0.1" = [ "syncthing.local" ];
   };
-  networking.firewall = rec {
-    # needed for KDE Connect
-    allowedTCPPortRanges = [
-      {
-        from = 1714;
-        to = 1764;
-      }
-    ];
-    allowedUDPPortRanges = allowedTCPPortRanges;
-  };
 
   services.nginx = {
     enable = true;
