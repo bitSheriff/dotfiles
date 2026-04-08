@@ -15,7 +15,6 @@
     ./networking.nix
     ./kitty.nix
     ./ssh.nix
-    ./kdeconnect.nix
   ];
 
   sops = {

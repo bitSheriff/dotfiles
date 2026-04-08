@@ -15,6 +15,7 @@ in
   imports = [
     ../fuzzel.nix
     ../wofi.nix
+    ../kdeconnect.nix
   ];
 
   programs.hyprland = {
