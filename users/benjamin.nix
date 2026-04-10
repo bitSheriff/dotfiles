@@ -32,7 +32,7 @@ in
     EDITOR = "nvim";
     VISUAL = "nvim";
     BROWSER = "firefox";
-    MANPAGER = "'nvim +Man!'";
+    MANPAGER = "nvim +Man!";
 
     # Directories
     BIN_PATH = "$HOME/.local/bin";
