@@ -13,13 +13,10 @@
   ];
 
   home.packages = [ pkgs.sops ];
-  # Tell agenix where to find the decryption key on the server
   age.identityPaths = [ "~/.age" ];
 
   sops = {
-    # Default secret file location
     defaultSopsFile = ../encrypted/secrets.yaml;
-    # Path to your decryption key (Home Manager path)
     age.keyFile = "${config.home.homeDirectory}/.age/dotfiles.key";
 
     secrets = {

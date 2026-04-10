@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  username,
   ...
 }:
 let
@@ -39,7 +40,7 @@ in
     };
   };
 
-  # 1. Register the secrets for both SSID and PSK for each ID
+  sops.age.keyFile = "/home/${username}/.age/dotfiles.key";
   sops.secrets = lib.listToAttrs (
     lib.concatMap (id: [
       {
@@ -57,7 +58,6 @@ in
     ]) wifi_ids
   );
 
-  # 2. Generate the NetworkManager connection files using templates
   sops.templates = lib.listToAttrs (
     map (id: {
       name = "${id}.nmconnection";
