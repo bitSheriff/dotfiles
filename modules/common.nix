@@ -18,11 +18,6 @@
     ./appimage.nix
   ];
 
-  sops = {
-    defaultSopsFile = ../encrypted/secrets.yaml;
-    age.keyFile = "/home/${username}/.age/dotfiles.key";
-  };
-
   nix = {
     settings = {
       experimental-features = [
@@ -221,8 +216,5 @@
   xdg.mime.defaultApplications = {
     "application/pdf" = [ "org.pwmt.zathura.desktop" ];
   };
-
-  # Tell agenix where to find the decryption key on the server
-  age.identityPaths = [ "~/.age" ];
 
 }

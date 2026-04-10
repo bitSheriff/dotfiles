@@ -1,11 +1,20 @@
 {
   config,
+  inputs,
   pkgs,
   ...
 }:
 
 {
+
+  imports = [
+    inputs.agenix.homeManagerModules.default
+    inputs.sops-nix.homeManagerModules.sops
+  ];
+
   home.packages = [ pkgs.sops ];
+  # Tell agenix where to find the decryption key on the server
+  age.identityPaths = [ "~/.age" ];
 
   sops = {
     # Default secret file location
