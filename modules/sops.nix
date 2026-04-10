@@ -23,20 +23,6 @@
     age.keyFile = "${config.home.homeDirectory}/.age/dotfiles.key";
 
     secrets = {
-      "openai_api_key" = {
-        key = "api_keys/openai";
-      };
-      "github_access_token" = {
-        key = "access_token/github";
-      };
-
-      "uni_email" = {
-        key = "uni/email";
-      };
-      "uni_password" = {
-        key = "uni/password";
-      };
-
       "qutebrowser_urls" = {
         sopsFile = ../encrypted/qutebrowser_urls.txt;
         format = "binary";
@@ -48,12 +34,31 @@
         format = "binary";
         path = "${config.home.homeDirectory}/.ssh/hosts";
       };
+
+      # API Keys and Access Tokens
+
+      "api/openai" = {
+        key = "api_keys/openai";
+      };
+
+      "access/github" = {
+        key = "access_token/github";
+      };
+
+      # University Stuff
+      "uni/email" = {
+        key = "uni/email";
+      };
+      "uni/password" = {
+        key = "uni/password";
+      };
+
     };
   };
 
   # load the data from the files into environment variables
   programs.zsh.initContent = ''
-    export GITHUB_TOKEN="$(cat ${config.sops.secrets.github_access_token.path})"
+    export GITHUB_TOKEN="$(cat ${config.sops.secrets."access/github".path})"
   '';
 
 }
