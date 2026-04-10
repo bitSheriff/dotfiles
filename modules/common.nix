@@ -123,6 +123,7 @@
     curl
     git
     htop
+    btop # better htop
     zip
     unzip # for .zip
     rar
