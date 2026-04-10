@@ -145,6 +145,7 @@ let
     INBOX_FILE="$INBOX"
     INBOX_DIR="$(dirname -- "$INBOX_FILE")"
     LINKS_FILE="$INBOX_DIR/Save 4 Later.md"
+    TODO_FILE="$INBOX_DIR/Task Inbox.md"
 
     create_inbox_file() {
         # line conter
@@ -170,6 +171,9 @@ let
     }
 
     save_link() {
+        # check if file has new line at the end, if not add one
+        test "$(tail -c 1 "$LINKS_FILE" | wc -l)" -eq 0 && echo "" >>"$LINKS_FILE"
+
         local title=$(gum input --placeholder "Title")
         local url=$(gum input --placeholder "URL")
         local notes=$(gum input --placeholder "Notes")
@@ -180,11 +184,24 @@ let
         if [[ -n "$notes" ]]; then
             echo "    - $notes" >>"$LINKS_FILE"
         fi
-
-        echo -e "\n" >>"$LINKS_FILE"
     }
 
-    OPTSTRING="cnlh"
+    save_todo(){
+        # check if file has new line at the end, if not add one
+        test "$(tail -c 1 "$TODO_FILE" | wc -l)" -eq 0 && echo "" >>"$TODO_FILE"
+
+        local title=$(gum input --placeholder "Title")
+        local notes=$(gum input --placeholder "Notes")
+
+        echo "- [ ] $title" >>"$TODO_FILE"
+
+        # add notes if provided
+        if [[ -n "$notes" ]]; then
+            echo "    - $notes" >>"$TODO_FILE"
+        fi
+    }
+
+    OPTSTRING="cnlht"
     while getopts "''${OPTSTRING}" opt; do
         case "''${opt}" in
         h) # help/usage
@@ -194,6 +211,7 @@ let
             echo "  -h ... Print this help/usage message"
             echo "  -c ... Puts the clipboard contents to the inbox file"
             echo "  -n ... Create a new file in the inbox for this item"
+            echo "  -t ... Create a new todo"
             echo "  -l ... Save a link, promts you to enter the name, url and some optional notes for this link"
             echo "         Links will get formated as a Todo"
             exit 0
@@ -208,6 +226,10 @@ let
             ;;
         l) # save link
             save_link
+            exit 0
+            ;;
+        t) # save todo
+            save_todo
             exit 0
             ;;
         esac
