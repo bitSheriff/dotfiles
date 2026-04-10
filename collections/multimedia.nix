@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 
 {
 
@@ -12,7 +17,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    jack.enable = true; # Useful if you ever use Pro-Audio tools like Ardour
+    jack.enable = true;
   };
 
   environment.systemPackages =
@@ -26,16 +31,23 @@
 
       # Video & Recording
       vlc
-    ]
-    ++ lib.optional (config.networking.hostName == "rhodos") fladder
-    ++ [
 
       # Audio
       pavucontrol
       spotify
-      kew # mp3 player in the console
       audacity # audio editor
       picard # mp3tag editor
+    ]
+
+    # Host Specifics
+    ++ lib.optionals (config.networking.hostName == "rhodos") [
+      fladder
+    ]
+
+    # User Specifics
+    ++ lib.optionals (username == "benjamin") [
+      kew # terminal music player
+      musikcube # another terminal music player
     ];
 
   services.tumbler.enable = true; # Image thumbnails
