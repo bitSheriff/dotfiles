@@ -15,6 +15,7 @@
     ./networking.nix
     ./kitty.nix
     ./ssh.nix
+    ./appimage.nix
   ];
 
   sops = {
@@ -224,41 +225,4 @@
   # Tell agenix where to find the decryption key on the server
   age.identityPaths = [ "~/.age" ];
 
-  # run generic linked executables
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    # Add any missing dynamic libraries for unpackaged programs
-    # here, NOT in environment.systemPackages
-    stdenv.cc.cc.lib
-    zlib
-    fuse3
-    icu
-    nss
-    openssl
-    curl
-    expat
-    libuuid
-    libusb1
-    libkrb5
-    libxml2
-    glib
-    linux-pam
-    libGL
-    libX11
-    libXcursor
-    libXi
-    libXrandr
-    libXrender
-    libXcomposite
-    libXdamage
-    libXext
-    libXfixes
-    libxcb
-    libxkbcommon
-    mesa
-    libglvnd
-    gmp
-    ncurses
-    udev
-  ];
 }
