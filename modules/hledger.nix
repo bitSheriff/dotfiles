@@ -194,6 +194,8 @@ in
     hledger-ui
     hledger-web
     hledger-iadd
+    pricehist # fetch stock and crypto prices
+    # own scripts
     timeclock-add
     timedot-add
   ];
