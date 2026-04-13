@@ -17,8 +17,7 @@
         "iconMode": "tabler",
         "ignoreMouseInput": false,
         "overviewLayer": false,
-        "pinnedApps": [
-        ],
+        "pinnedApps": [],
         "position": "center",
         "screenshotAnnotationTool": "",
         "showCategories": true,
@@ -28,8 +27,7 @@
         "viewMode": "list"
     },
     "audio": {
-        "mprisBlacklist": [
-        ],
+        "mprisBlacklist": [],
         "preferredPlayer": "",
         "spectrumFrameRate": 30,
         "spectrumMirrored": true,
@@ -59,8 +57,7 @@
         "middleClickAction": "none",
         "middleClickCommand": "",
         "middleClickFollowMouse": false,
-        "monitors": [
-        ],
+        "monitors": [],
         "mouseWheelAction": "none",
         "mouseWheelWrap": true,
         "outerCorners": true,
@@ -69,8 +66,7 @@
         "rightClickAction": "controlCenter",
         "rightClickCommand": "",
         "rightClickFollowMouse": true,
-        "screenOverrides": [
-        ],
+        "screenOverrides": [],
         "showCapsule": true,
         "showOnWorkspaceSwitch": true,
         "showOutline": false,
@@ -79,8 +75,7 @@
         "widgets": {
             "center": [
                 {
-                    "defaultSettings": {
-                    },
+                    "defaultSettings": {},
                     "id": "plugin:workspace-overview"
                 },
                 {
@@ -175,15 +170,13 @@
             ],
             "right": [
                 {
-                    "blacklist": [
-                    ],
+                    "blacklist": [],
                     "chevronColor": "none",
                     "colorizeIcons": false,
                     "drawerEnabled": true,
                     "hidePassive": false,
                     "id": "Tray",
-                    "pinned": [
-                    ]
+                    "pinned": []
                 },
                 {
                     "defaultSettings": {
@@ -192,8 +185,7 @@
                     "id": "plugin:screenshot"
                 },
                 {
-                    "defaultSettings": {
-                    },
+                    "defaultSettings": {},
                     "id": "plugin:kde-connect"
                 },
                 {
@@ -261,8 +253,7 @@
         }
     },
     "brightness": {
-        "backlightDeviceMappings": [
-        ],
+        "backlightDeviceMappings": [],
         "brightnessStep": 5,
         "enableDdcSupport": false,
         "enforceMinimum": true
@@ -357,8 +348,7 @@
         "enabled": false,
         "gridSnap": false,
         "gridSnapScale": false,
-        "monitorWidgets": [
-        ],
+        "monitorWidgets": [],
         "overviewEnabled": true
     },
     "dock": {
@@ -382,11 +372,9 @@
         "launcherIconColor": "none",
         "launcherPosition": "end",
         "launcherUseDistroLogo": false,
-        "monitors": [
-        ],
+        "monitors": [],
         "onlySameOutput": true,
-        "pinnedApps": [
-        ],
+        "pinnedApps": [],
         "pinnedStatic": false,
         "position": "bottom",
         "showDockIndicator": false,
@@ -396,7 +384,7 @@
     },
     "general": {
         "allowPanelsOnScreenWithoutBar": true,
-        "allowPasswordWithFprintd": false,
+        "allowPasswordWithFprintd": true,
         "animationDisabled": false,
         "animationSpeed": 1,
         "autoStartAuth": false,
@@ -441,8 +429,7 @@
         "lockScreenAnimations": false,
         "lockScreenBlur": 0,
         "lockScreenCountdownDuration": 10000,
-        "lockScreenMonitors": [
-        ],
+        "lockScreenMonitors": [],
         "lockScreenTint": 0,
         "passwordChars": false,
         "radiusRatio": 1,
@@ -534,8 +521,7 @@
         "enabled": true,
         "location": "top_right",
         "lowUrgencyDuration": 3,
-        "monitors": [
-        ],
+        "monitors": [],
         "normalUrgencyDuration": 8,
         "overlayLayer": true,
         "respectExpireTimeout": false,
@@ -564,8 +550,7 @@
             2
         ],
         "location": "top_right",
-        "monitors": [
-        ],
+        "monitors": [],
         "overlayLayer": true
     },
     "plugins": {
@@ -727,8 +712,7 @@
         "directory": "/home/benjamin/Pictures/wallpapers",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
-        "favorites": [
-        ],
+        "favorites": [],
         "fillColor": "#000000",
         "fillMode": "crop",
         "hideWallpaperFilenames": false,

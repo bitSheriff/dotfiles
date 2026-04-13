@@ -35,8 +35,11 @@
   };
 
   # Fingerprint Reader
-  services.fprintd.tod.enable = true;
-  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
+  services.fprintd = {
+    enable = true;
+    # tod.enable = true;
+    # tod.driver = pkgs.libfprint-2-tod1-goodix;
+  };
 
   hardware.graphics = {
     enable = true;
