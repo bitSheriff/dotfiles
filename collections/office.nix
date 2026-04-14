@@ -35,7 +35,11 @@
     thunderbird # email
     signal-desktop # chat without Mark Zuckerberg
     cinny-desktop # beautiful matrix chat client
+
     kdePackages.korganizer # Calendar and more
+    kdePackages.akonadi # needed for korganizer
+    kdePackages.akonadi-search # needed for korganizer
+    kdePackages.kdepim-runtime
 
     qalculate-gtk
     copyq
