@@ -6,6 +6,10 @@
 }:
 
 {
+  environment.systemPackages = with pkgs; [
+    xorg.xauth # needed to forward X11 Sessions
+  ];
+
   services.openssh = {
     enable = true;
     settings = {
