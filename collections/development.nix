@@ -18,6 +18,7 @@
     ./../modules/qutebrowser
     ./../modules/vm.nix
     ./../modules/docker.nix
+    ./../modules/tmux.nix
   ];
 
   # System-wide dev tools
