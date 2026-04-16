@@ -10,8 +10,9 @@
   environment.systemPackages = with pkgs; [
     qemu
     gnome-boxes
-    #distrobox
-    #distroshelf
+
+    distrobox
+    distroshelf # gui for distrobox
   ];
 
 }
