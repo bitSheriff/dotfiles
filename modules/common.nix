@@ -150,7 +150,7 @@
     usbutils
     xdg-utils
     networkmanagerapplet # contains nm-connection-editor for advanced wifi configuration
-    xorg.xauth # needed to forward SSH and more
+    xauth # needed to forward SSH and more
 
     # GUIs
     _1password-gui
