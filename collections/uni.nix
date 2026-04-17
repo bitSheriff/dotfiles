@@ -24,13 +24,13 @@
   home-manager.users.${username}.sops = {
     secrets = {
       "uni/email" = {
-        key = "uni/email";
-        sopsFile = ../encrypted/secrets.yaml;
+        key = "tiss/email";
+        sopsFile = ../encrypted/uni.yaml;
       };
 
       "uni/password" = {
-        key = "uni/password";
-        sopsFile = ../encrypted/secrets.yaml;
+        key = "tiss/password";
+        sopsFile = ../encrypted/uni.yaml;
       };
     };
   };
