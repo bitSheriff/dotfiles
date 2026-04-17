@@ -17,7 +17,7 @@
     ./../modules/opencode
     ./../modules/qutebrowser
     ./../modules/vm.nix
-    ./../modules/docker.nix
+    ./../modules/virtualisation.nix
     ./../modules/tmux.nix
   ];
 
