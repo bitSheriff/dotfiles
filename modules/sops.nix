@@ -42,14 +42,6 @@
         key = "access_token/github";
       };
 
-      # University Stuff
-      "uni/email" = {
-        key = "uni/email";
-      };
-      "uni/password" = {
-        key = "uni/password";
-      };
-
     };
   };
 
