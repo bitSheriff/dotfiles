@@ -8,6 +8,7 @@
 {
   environment.systemPackages = with pkgs; [
     xauth # needed to forward X11 Sessions
+    xhost
   ];
 
   services.openssh = {
