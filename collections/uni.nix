@@ -42,7 +42,7 @@ in
     # octave # free alternative to MATLAB (but why not use python then ...)
     jupyter # python jupyter notebook
     # wireshark-qt # network analyzer
-    gum # needed for clu inputs
+    gum # needed for cli inputs
     openconnect # needed for the University VPN
     oath-toolkit # generate 2FA codes from secret
 
