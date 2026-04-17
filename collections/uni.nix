@@ -39,7 +39,7 @@ in
     thunderbird
     typst
     typesetter # minimal typst editor
-    # octave # free alternative to MATLAB (but my not use python then ...)
+    # octave # free alternative to MATLAB (but why not use python then ...)
     jupyter # python jupyter notebook
     # wireshark-qt # network analyzer
     gum # needed for clu inputs
