@@ -12,6 +12,10 @@
     docker
     docker-compose
     lazydocker # makes docker less pain in the ass
+
+    # Distro Box
+    distrobox
+    distroshelf # gui for distrobox
   ];
 
   # Enable Docker daemon
