@@ -18,6 +18,11 @@ let
   ];
 in
 {
+
+  environment.systemPackages = with pkgs; [
+    ethtool
+  ];
+
   # Networking
   networking.networkmanager.enable = true;
   networking.hosts = {
