@@ -3,6 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     tor
+    tor-browser
     mullvad-vpn
     onionshare # share files over tor
     mat2 # remove metadata from files
