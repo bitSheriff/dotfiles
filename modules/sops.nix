@@ -20,6 +20,12 @@
     age.keyFile = "${config.home.homeDirectory}/.age/dotfiles.key";
 
     secrets = {
+      "profile_picture" = {
+        sopsFile = ../encrypted/.face.enc;
+        format = "binary";
+        path = "${config.home.homeDirectory}/.face";
+      };
+
       "qutebrowser_urls" = {
         sopsFile = ../encrypted/qutebrowser_urls.txt;
         format = "binary";
