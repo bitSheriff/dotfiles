@@ -13,6 +13,7 @@
     # octave # free alternative to MATLAB (but my not use python then ...)
     jupyter # python jupyter notebook
     # wireshark-qt # network analyzer
+    openconnect # needed for the University VPN
   ];
 
 }
