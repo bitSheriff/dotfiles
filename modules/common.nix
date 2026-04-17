@@ -19,15 +19,6 @@
     ./appimage.nix
   ];
 
-  # notify about the changes of nixos-rebuild
-  system.activationScripts.diff = {
-    supportsDryActivation = true;
-    text = ''
-      ${pkgs.nvd}/bin/nvd --nix-bin-dir=${pkgs.nix}/bin diff \
-           /run/current-system "$systemConfig"
-    '';
-  };
-
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -84,7 +75,6 @@
     zsh-syntax-highlighting
     kitty
     vim # just as a backup if everythin burns
-    comma # run nix packages which are not installed
     gum # bash library to build cli tools
     wget
     curl
@@ -102,14 +92,12 @@
     tree # view direvtory structure
     mise # like Nix but on project basis (prob not needed anymore if NixOS runs everywhere)
     atuin # better shell history
-    agenix-cli # needed for age to encrypt nix
     rsync # nobody uses scp anymore
     tldr # better help/man pages for cli programs
     findutils # sometimes you need the old find...
     fd # better find
     _1password-cli
     glow # render markdown in the console
-    nh # nix cli helper
     speedtest-cli # download speed meter
 
     # Services and Co
@@ -155,9 +143,7 @@
     };
   };
 
-  nixpkgs.config.allowUnfree = true;
   environment.sessionVariables = {
-    NIXPKGS_ALLOW_UNFREE = "1"; # needed for packages installed with nix-shell
     SOPS_AGE_KEY_FILE = "/home/${username}/.age/dotfiles.key";
 
     # FZF Config options
@@ -166,10 +152,6 @@
     FZF_ALT_C_COMMAND = "rg --sort-files --files --null 2> /dev/null | xargs -0 dirname | uniq";
 
   };
-
-  nixpkgs.config.permittedInsecurePackages = [
-    "openssl-1.1.1w"
-  ];
 
   services.envfs.enable = true;
 
