@@ -17,7 +17,7 @@
 
   services.meshtasticd = {
     enable = true;
-    user = "$username";
+    user = "benjamin";
     settings = {
       Lora = {
         Module = "auto";

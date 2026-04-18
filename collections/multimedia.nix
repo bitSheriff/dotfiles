@@ -1,6 +1,8 @@
 {
   config,
   pkgs,
+  lib,
+  activeUsers,
   ...
 }:
 
@@ -43,12 +45,9 @@
       fladder
     ]
 
-    # User Specifics
-    ++ lib.optionals (username == "benjamin") [
+    # User Specifics - benjamin only
+    ++ lib.optionals (lib.elem "benjamin" activeUsers) [
       kew # terminal music player
       musikcube # another terminal music player
     ];
-
-  services.tumbler.enable = true; # Image thumbnails
-
 }
