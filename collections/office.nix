@@ -28,6 +28,7 @@
     rnote # PDF annotation and note-taking
     kdePackages.okular
     foliate # ebook reader
+    stirling-pdf-desktop # pdf editor
 
     # Notes & Organization
     obsidian
@@ -53,6 +54,9 @@
 
     # Finance
     ledger-live-desktop
+
+    # Misc
+    blanket # background ambient soundscapes for concentration
   ];
 
   # Crucial for office work to ensure documents look the same everywhere.

@@ -44,6 +44,7 @@ in
     gum # needed for cli inputs
     openconnect # needed for the University VPN
     oath-toolkit # generate 2FA codes from secret
+    blanket # background ambient soundscapes for concentration
 
     # Own Scripts
     tuvpn
