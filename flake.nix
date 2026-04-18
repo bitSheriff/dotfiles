@@ -53,6 +53,7 @@
             ./collections/gaming.nix
             ./collections/multimedia.nix
             ./collections/downloaders.nix
+            ./collections/privacy.nix
             # Modules
             ./modules/common.nix
             ./modules/hyprland
@@ -87,6 +88,7 @@
             ./collections/office.nix
             ./collections/uni.nix
             ./collections/multimedia.nix
+            ./collections/privacy.nix
             # Modules
             ./modules/common.nix
             ./modules/hyprland

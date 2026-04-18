@@ -17,7 +17,6 @@
     ./kitty.nix
     ./ssh.nix
     ./appimage.nix
-    ./privacy.nix
   ];
 
   # Bootloader
