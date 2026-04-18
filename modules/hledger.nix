@@ -223,7 +223,7 @@ let
     update_crypto "XMR/EUR" "Monero"
 
     update_stocks "PAL.VI" "PAL" "Palfinger"
-    update_stocks "AAPL" "AAPL" "Apple"
+    update_stocks "APC.DE" "AAPL" "Apple" # Apple on the XETRA Exchange Frankfurt
     update_stocks "LYP6.DE" "\"LYP6\"" "Amundi Core Stoxx Europe 600"
     update_stocks "EUNL.DE" "EUNL" "iShares Core MSCI World"
   '';
