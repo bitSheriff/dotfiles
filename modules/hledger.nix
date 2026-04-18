@@ -189,10 +189,11 @@ let
   '';
 
   hl-update-prices = pkgs.writeShellScriptBin "hl-update-prices" ''
+    PRICEHIST="${pkgs.pricehist}/bin/pricehist" # will install pricehist if not found in systemPackages
+
     update_currencies() {
       echo "Getting Dollar Price"
-      pricehist fetch ecb EUR/USD -o ledger 2> /dev/null | tail -n 1 >> "$LEDGER_PATH/prices_currencies.hledger"
-
+      $PRICEHIST fetch ecb EUR/USD -o ledger 2> /dev/null | tail -n 1 >> "$LEDGER_PATH/prices_currencies.hledger"
     }
 
     update_crypto(){
@@ -200,8 +201,7 @@ let
       NAME=$2
       CRYPTO_PRICEFILE="$LEDGER_PATH/prices_crypto.hledger"
       echo "Getting $NAME Price..."
-      pricehist fetch coinmarketcap "$TICKER" -o ledger 2> /dev/null | tail -n 1 >> $CRYPTO_PRICEFILE
-
+      $PRICEHIST fetch coinmarketcap "$TICKER" -o ledger 2> /dev/null | tail -n 1 >> "$CRYPTO_PRICEFILE"
     }
 
     update_stocks() {
@@ -212,13 +212,12 @@ let
 
       echo "Getting $NAME Price..."
 
-      pricehist fetch yahoo "$SEARCH" -o ledger 2> /dev/null |
+      $PRICEHIST fetch yahoo "$SEARCH" -o ledger 2> /dev/null |
         tail -n 1 |
         sed "s/$SEARCH/$TICKER/" >> "$STOCKS_PRICEFILE"
     }
 
     update_currencies
-
     update_crypto "BTC/EUR" "Bitcoin"
     update_crypto "TRX/EUR" "Tron"
     update_crypto "XMR/EUR" "Monero"
@@ -227,8 +226,8 @@ let
     update_stocks "AAPL" "AAPL" "Apple"
     update_stocks "LYP6.DE" "\"LYP6\"" "Amundi Core Stoxx Europe 600"
     update_stocks "EUNL.DE" "EUNL" "iShares Core MSCI World"
-
   '';
+
 in
 {
   environment.systemPackages = with pkgs; [
