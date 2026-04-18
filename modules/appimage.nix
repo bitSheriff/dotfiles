@@ -19,6 +19,7 @@
     binfmt = true;
   };
 
+  # Stuff for dynamical-linked executables
   programs.nix-ld = {
     enable = true;
 

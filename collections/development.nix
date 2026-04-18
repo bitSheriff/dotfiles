@@ -16,7 +16,6 @@
     ./../modules/starship.nix
     ./../modules/opencode
     ./../modules/qutebrowser
-    ./../modules/vm.nix
     ./../modules/virtualisation.nix
     ./../modules/tmux.nix
   ];
@@ -120,6 +119,7 @@
         experimental = true;
         age.key_file = "~/.age/mise.key";
       };
+
       globalConfig.tools = {
         usage = "latest";
       };

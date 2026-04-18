@@ -24,7 +24,7 @@
     with pkgs;
     [
       # Image & Graphics
-      gimp # like photoshop but withput selling your soul
+      gimp # like photoshop but without selling your soul
       inkscape
       ente-desktop # encrypted photo backup
       qview # minimal image viewer

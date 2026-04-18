@@ -16,13 +16,19 @@
     # Distro Box
     distrobox
     distroshelf # gui for distrobox
+
+    # Virtual Machines
+    qemu
+    gnome-boxes
+
   ];
 
-  # Enable Docker daemon
+  ## Docker
   virtualisation.docker.enable = true;
-
-  # Add your user to the docker group automatically
-  users.users.${username}.extraGroups = [ "docker" ];
+  users.users.${username}.extraGroups = [
+    "docker"
+    "libvirtd"
+  ];
 
   # mainly used for distrobox
   virtualisation.podman = {
@@ -42,5 +48,15 @@
   environment.sessionVariables = {
     DISTROBOX_ENGINE = "podman";
   };
+
+  ## Libvirt
+  virtualisation.libvirtd.enable = true;
+  # Enable TPM emulation (optional)
+  virtualisation.libvirtd.qemu = {
+    swtpm.enable = true;
+  };
+
+  # Enable USB redirection (optional)
+  virtualisation.spiceUSBRedirection.enable = true;
 
 }
