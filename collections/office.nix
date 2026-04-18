@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  username,
   ...
 }:
 
@@ -80,7 +79,7 @@
     extraBackends = [ pkgs.brscan5 ];
     brscan5.enable = true;
   };
-  users.users.${username}.extraGroups = [
+  users.users.benjamin.extraGroups = [
     "scanner"
     "lp"
   ];
@@ -88,9 +87,9 @@
   # Syncthing
   services.syncthing = {
     enable = true;
-    user = "${username}";
-    dataDir = "/home/${username}/.config/syncthing";
-    configDir = "/home/${username}/.config/syncthing";
+    user = "benjamin";
+    dataDir = "/home/benjamin/.config/syncthing";
+    configDir = "/home/benjamin/.config/syncthing";
   };
 
   programs.localsend = {

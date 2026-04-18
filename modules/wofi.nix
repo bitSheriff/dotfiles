@@ -1,7 +1,8 @@
 {
   config,
   pkgs,
-  username,
+  lib,
+  activeUsers,
   ...
 }:
 
@@ -11,80 +12,77 @@
     mpv
   ];
 
-  home-manager.users.${username} =
-    { config, lib, ... }:
-    {
-      programs.wofi = {
-        enable = true;
-        style = ''
-          /* import the global color definitions */
-          @import url("../theming/colors.css");
+  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+        programs.wofi = {
+          enable = true;
+          style = ''
+            /* import the global color definitions */
+            @import url("../theming/colors.css");
 
-          * {
-            font-family: "JetBrainsMono Nerd Font";
-            font-weight: bold;
-            font-size: 13px;
-          }
+            * {
+              font-family: "JetBrainsMono Nerd Font";
+              font-weight: bold;
+              font-size: 13px;
+            }
 
-          window {
-            margin: 0px;
-            border: 3px solid #bd93f9;
-            border-radius: 10px;
-            background-color: @background;
-            color: @foreground;
-            /* background-color: @background; */
-          }
+            window {
+              margin: 0px;
+              border: 3px solid #bd93f9;
+              border-radius: 10px;
+              background-color: @background;
+              color: @foreground;
+              /* background-color: @background; */
+            }
 
-          #input {
-            margin: 5px;
-            border: none;
-            color: #f8f8f2;
-            background-color: #44475a;
-          }
-
-          #inner-box {
-            margin: 5px;
-            border: none;
-            background-color: #282a36;
-          }
-
-          #outer-box {
-            margin: 5px;
-            border: none;
-            background-color: #282a36;
-          }
-
-          #scroll {
-            margin: 0px;
-            border: none;
-          }
-
-          #text {
-            margin: 5px;
-            border: none;
+            #input {
+              margin: 5px;
+              border: none;
               color: #f8f8f2;
-            }
-
-          #entry.activatable #text {
-              color: #ffffff;
-            }
-
-          #entry > * {
-              color: #f8f8f2;
-            }
-
-          #entry:selected {
               background-color: #44475a;
             }
 
-          #entry:selected #text {
+            #inner-box {
+              margin: 5px;
+              border: none;
+              background-color: #282a36;
+            }
+
+            #outer-box {
+              margin: 5px;
+              border: none;
+              background-color: #282a36;
+            }
+
+            #scroll {
+              margin: 0px;
+              border: none;
+            }
+
+            #text {
+              margin: 5px;
+              border: none;
+              color: #f8f8f2;
+            }
+
+            #entry.activatable #text {
+              color: #ffffff;
+            }
+
+            #entry > * {
+              color: #f8f8f2;
+            }
+
+            #entry:selected {
+              background-color: #44475a;
+            }
+
+            #entry:selected #text {
               font-weight: bold;
             }
 
-        '';
+          '';
 
+        };
       };
-
-    };
 
 }

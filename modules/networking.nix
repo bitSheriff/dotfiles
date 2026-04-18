@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  username,
   ...
 }:
 let
@@ -45,7 +44,7 @@ in
     };
   };
 
-  sops.age.keyFile = "/home/${username}/.age/dotfiles.key";
+  sops.age.keyFile = "/home/benjamin/.age/dotfiles.key";
   sops.secrets = lib.listToAttrs (
     lib.concatMap (id: [
       {

@@ -38,8 +38,8 @@
         rhodos = nixpkgs.lib.nixosSystem {
           specialArgs = rec {
             inherit inputs;
-            username = "benjamin";
-            dotfiles_path = "/home/${username}/code/dotfiles";
+            activeUsers = [ "benjamin" ];
+            dotfiles_path = "/home/benjamin/code/dotfiles";
             sopsMod = ./modules/sops.nix;
           };
           modules = [
@@ -58,10 +58,13 @@
             ./modules/common.nix
             ./modules/hyprland
             (
-              { username, sopsMod, ... }:
+              { activeUsers, sopsMod, inputs, ... }:
               {
-                home-manager.users.${username} = import ./users/${username}.nix;
-                home-manager.extraSpecialArgs = { inherit inputs username sopsMod; };
+                imports = [
+                  (nixpkgs.lib.optionalAttrs (nixpkgs.lib.elem "benjamin" activeUsers) (import ./users/benjamin.nix))
+                  (nixpkgs.lib.optionalAttrs (nixpkgs.lib.elem "guest" activeUsers) (import ./users/guest.nix))
+                ];
+                home-manager.extraSpecialArgs = { inherit inputs activeUsers sopsMod; };
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.backupFileExtension = "backup";
@@ -74,8 +77,8 @@
         delos = nixpkgs.lib.nixosSystem {
           specialArgs = rec {
             inherit inputs;
-            username = "benjamin";
-            dotfiles_path = "/home/${username}/code/dotfiles";
+            activeUsers = [ "benjamin" ];
+            dotfiles_path = "/home/benjamin/code/dotfiles";
             sopsMod = ./modules/sops.nix;
           };
           modules = [
@@ -93,10 +96,13 @@
             ./modules/common.nix
             ./modules/hyprland
             (
-              { username, sopsMod, ... }:
+              { activeUsers, sopsMod, inputs, ... }:
               {
-                home-manager.users.${username} = import ./users/${username}.nix;
-                home-manager.extraSpecialArgs = { inherit inputs username sopsMod; };
+                imports = [
+                  (nixpkgs.lib.optionalAttrs (nixpkgs.lib.elem "benjamin" activeUsers) (import ./users/benjamin.nix))
+                  (nixpkgs.lib.optionalAttrs (nixpkgs.lib.elem "guest" activeUsers) (import ./users/guest.nix))
+                ];
+                home-manager.extraSpecialArgs = { inherit inputs activeUsers sopsMod; };
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.backupFileExtension = "backup";

@@ -1,7 +1,8 @@
 {
   config,
   pkgs,
-  username,
+  lib,
+  activeUsers,
   ...
 }:
 
@@ -21,27 +22,25 @@
 
   networking.firewall.allowedTCPPorts = [ 22 ];
 
-  users.users.${username} = {
+  users.users.benjamin = {
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKaKM4Dwfago4s/0Ap9hFHZMmqoly90mS/3rEl+7prJx"
     ];
   };
 
-  home-manager.users.${username} =
-    { config, ... }:
-    {
-      home.file.".config/1Password/ssh/agent.toml".text = ''
-        [[ssh-keys]]
-        vault = "bitSheriff"
-      '';
+  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+        home.file.".config/1Password/ssh/agent.toml".text = ''
+          [[ssh-keys]]
+          vault = "bitSheriff"
+        '';
 
-      # link the ssh config
-      home.file.".ssh/config".text = ''
-        Include ~/.ssh/hosts
+        # link the ssh config
+        home.file.".ssh/config".text = ''
+          Include ~/.ssh/hosts
 
-        Host *
-          IdentityAgent ~/.1password/agent.sock
-      '';
+          Host *
+            IdentityAgent ~/.1password/agent.sock
+        '';
+      };
 
-    };
 }

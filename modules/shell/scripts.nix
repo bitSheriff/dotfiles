@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  username,
   ...
 }:
 
@@ -9,7 +8,7 @@
   imports = [
   ];
 
-  home-manager.users.${username} =
+  home-manager.users.benjamin =
     { config, ... }:
     let
       # Define scripts as packages

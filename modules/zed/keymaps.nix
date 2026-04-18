@@ -1,14 +1,13 @@
 {
   config,
   pkgs,
-  username,
   ...
 }:
 
 {
   imports = [ ];
 
-  home-manager.users.${username} = {
+  home-manager.users.benjamin = {
     programs.zed-editor = {
       userKeymaps = [
         {

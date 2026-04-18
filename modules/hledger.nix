@@ -1,7 +1,8 @@
 {
   config,
   pkgs,
-  username,
+  lib,
+  activeUsers,
   ...
 }:
 
@@ -278,10 +279,10 @@ in
     clockout = "timeclock-add \${TIMEDOT_WORK_FILE} o";
   };
 
-  home-manager.users.${username} = {
-    xdg.configFile."hledger/hledger.conf".text = ''
-      [check] --strict
-      [balancesheet] --layout=bare
-    '';
-  };
+  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+        xdg.configFile."hledger/hledger.conf".text = ''
+          [check] --strict
+          [balancesheet] --layout=bare
+        '';
+      };
 }

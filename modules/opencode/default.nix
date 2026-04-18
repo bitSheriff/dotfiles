@@ -1,7 +1,8 @@
 {
   config,
   pkgs,
-  username,
+  lib,
+  activeUsers,
   ...
 }:
 
@@ -11,8 +12,7 @@
     opencode
   ];
 
-  home-manager.users.${username} =
-    { config, lib, ... }:
+  home-manager.users.benjamin =
     {
 
       xdg.configFile = {

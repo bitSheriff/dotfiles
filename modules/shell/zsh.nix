@@ -1,7 +1,8 @@
 {
   config,
   pkgs,
-  username,
+  lib,
+  activeUsers,
   ...
 }:
 
@@ -12,7 +13,7 @@
     ../zellij.nix
   ];
 
-  home-manager.users.${username} =
+  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) (
     { config, ... }:
     {
       programs.zsh = {
@@ -164,5 +165,6 @@
         ];
       };
 
-    };
+    }
+  );
 }

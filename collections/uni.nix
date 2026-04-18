@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  username,
   ...
 }:
 let
@@ -9,9 +8,9 @@ let
   # TU VPN
   # needed for some academic services
   tuvpn = pkgs.writeShellScriptBin "tuvpn" ''
-    EMAIL=$(cat "${config.home-manager.users.${username}.sops.secrets."uni/email".path}")
-    PASS=$(cat "${config.home-manager.users.${username}.sops.secrets."uni/password".path}")
-    OTP_SECRET=$(cat "${config.home-manager.users.${username}.sops.secrets."uni/otp_secret".path}")
+    EMAIL=$(cat "${config.home-manager.users.benjamin.sops.secrets."uni/email".path}")
+    PASS=$(cat "${config.home-manager.users.benjamin.sops.secrets."uni/password".path}")
+    OTP_SECRET=$(cat "${config.home-manager.users.benjamin.sops.secrets."uni/otp_secret".path}")
     AUTHGROUP=$(${pkgs.gum}/bin/gum choose "1_TU_getunnelt" "2_Alles_getunnelt")
 
     # Generate the 2FA code
@@ -50,7 +49,7 @@ in
     tuvpn
   ];
 
-  home-manager.users.${username}.sops = {
+  home-manager.users.benjamin.sops = {
     secrets = {
       "uni/email" = {
         key = "tiss/email";

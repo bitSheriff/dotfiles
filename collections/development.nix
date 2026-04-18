@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  username,
   ...
 }:
 
@@ -109,7 +108,7 @@
     ];
   };
 
-  home-manager.users.${username} = {
+  home-manager.users.benjamin = {
 
     # Mise
     programs.mise = {

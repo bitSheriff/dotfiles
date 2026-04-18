@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  username,
   ...
 }:
 
@@ -25,7 +24,7 @@
 
   ## Docker
   virtualisation.docker.enable = true;
-  users.users.${username}.extraGroups = [
+  users.users.benjamin.extraGroups = [
     "docker"
     "libvirtd"
   ];

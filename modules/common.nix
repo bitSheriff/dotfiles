@@ -2,7 +2,6 @@
   config,
   pkgs,
   inputs,
-  username,
   ...
 }:
 
@@ -51,21 +50,7 @@
   services.upower.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
-  # User Configuration
-  users.users.${username} = {
-    isNormalUser = true;
-    description = "${username}";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "video"
-      "audio"
-      "docker"
-    ];
-    shell = pkgs.zsh;
-  };
-
-  # Only things that should be available to every user/root.
+  # System-wide packages and services - user-specific config is in users/ modules
   environment.systemPackages = with pkgs; [
     # terminal tools
     bash # needed only for scripting
@@ -144,7 +129,7 @@
   };
 
   environment.sessionVariables = {
-    SOPS_AGE_KEY_FILE = "/home/${username}/.age/dotfiles.key";
+    SOPS_AGE_KEY_FILE = "/home/benjamin/.age/dotfiles.key";
 
     # FZF Config options
     FZF_DEFAULT_COMMAND = "fd";
