@@ -50,4 +50,6 @@
       kew # terminal music player
       musikcube # another terminal music player
     ];
+
+  services.tumbler.enable = true; # image thumbnails
 }
