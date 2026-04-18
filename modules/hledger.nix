@@ -187,6 +187,48 @@ let
         echo "''${ENTRY}" >> "$FILE"
     fi
   '';
+
+  hl-update-prices = pkgs.writeShellScriptBin "hl-update-prices" ''
+    update_currencies() {
+      echo "Getting Dollar Price"
+      pricehist fetch ecb EUR/USD -o ledger 2> /dev/null | tail -n 1 >> "$LEDGER_PATH/prices_currencies.hledger"
+
+    }
+
+    update_crypto(){
+      TICKER=$1
+      NAME=$2
+      CRYPTO_PRICEFILE="$LEDGER_PATH/prices_crypto.hledger"
+      echo "Getting $NAME Price..."
+      pricehist fetch coinmarketcap "$TICKER" -o ledger 2> /dev/null | tail -n 1 >> $CRYPTO_PRICEFILE
+
+    }
+
+    update_stocks() {
+      SEARCH="$1"
+      TICKER="$2"
+      NAME="$3"
+      STOCKS_PRICEFILE="$LEDGER_PATH/prices_stocks.hledger"
+
+      echo "Getting $NAME Price..."
+
+      pricehist fetch yahoo "$SEARCH" -o ledger 2> /dev/null |
+        tail -n 1 |
+        sed "s/$SEARCH/$TICKER/" >> "$STOCKS_PRICEFILE"
+    }
+
+    update_currencies
+
+    update_crypto "BTC/EUR" "Bitcoin"
+    update_crypto "TRX/EUR" "Tron"
+    update_crypto "XMR/EUR" "Monero"
+
+    update_stocks "PAL.VI" "PAL" "Palfinger"
+    update_stocks "AAPL" "AAPL" "Apple"
+    update_stocks "LYP6.DE" "\"LYP6\"" "Amundi Core Stoxx Europe 600"
+    update_stocks "EUNL.DE" "EUNL" "iShares Core MSCI World"
+
+  '';
 in
 {
   environment.systemPackages = with pkgs; [
@@ -198,6 +240,7 @@ in
     # own scripts
     timeclock-add
     timedot-add
+    hl-update-prices
   ];
 
   # Use interactiveShellInit for all variables to ensure they are available in the shell
@@ -220,6 +263,9 @@ in
   programs.zsh.shellAliases = {
     hl = "hledger";
     hla = "hledger -f \${LEDGER_ALL_FILE}";
+    hlae = "(cd $LEDGER_PATH && nvim $(find . -type f | fzf))";
+
+    hla-gain = "hledger -f \${LEDGER_ALL_FILE} bs --gain --value=now,EUR";
     hl-budget = "hledger bal expenses --budget";
     hl-temp = "hledger-templates";
     hle = "nv \${LEDGER_FILE}";
