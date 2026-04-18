@@ -11,6 +11,9 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    meshtastic
+    meshtasticd
+    contact # tui for meshtastic
   ];
 
   services.meshtasticd = {
