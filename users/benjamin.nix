@@ -19,6 +19,8 @@
       "networkmanager"
       "docker"
       "libvirtd"
+      "dialout"
+      "tty"
     ];
   };
 

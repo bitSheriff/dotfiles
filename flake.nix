@@ -57,8 +57,14 @@
             # Modules
             ./modules/common.nix
             ./modules/hyprland
+            ./modules/meshtastic.nix
             (
-              { activeUsers, sopsMod, inputs, ... }:
+              {
+                activeUsers,
+                sopsMod,
+                inputs,
+                ...
+              }:
               {
                 imports = [
                   (nixpkgs.lib.optionalAttrs (nixpkgs.lib.elem "benjamin" activeUsers) (import ./users/benjamin.nix))
@@ -95,8 +101,14 @@
             # Modules
             ./modules/common.nix
             ./modules/hyprland
+            ./modules/meshtastic.nix
             (
-              { activeUsers, sopsMod, inputs, ... }:
+              {
+                activeUsers,
+                sopsMod,
+                inputs,
+                ...
+              }:
               {
                 imports = [
                   (nixpkgs.lib.optionalAttrs (nixpkgs.lib.elem "benjamin" activeUsers) (import ./users/benjamin.nix))
