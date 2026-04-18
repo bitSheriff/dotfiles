@@ -79,10 +79,6 @@
     extraBackends = [ pkgs.brscan5 ];
     brscan5.enable = true;
   };
-  users.users.benjamin.extraGroups = [
-    "scanner"
-    "lp"
-  ];
 
   # Syncthing
   services.syncthing = {

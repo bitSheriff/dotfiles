@@ -21,6 +21,9 @@
       "libvirtd"
       "dialout"
       "tty"
+      "scanner"
+      "lp"
+
     ];
   };
 
