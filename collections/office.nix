@@ -29,6 +29,7 @@
     kdePackages.okular
     foliate # ebook reader
     stirling-pdf-desktop # pdf editor
+    yacreader # comic reader
 
     # Notes & Organization
     obsidian
