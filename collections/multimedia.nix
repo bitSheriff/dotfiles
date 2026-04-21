@@ -29,6 +29,7 @@
       inkscape
       ente-desktop # encrypted photo backup
       qview # minimal image viewer
+      imagemagick # i think there is nothing it cannot do
 
       # Video & Recording
       vlc
