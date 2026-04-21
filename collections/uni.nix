@@ -1,6 +1,8 @@
 {
   config,
   pkgs,
+  lib,
+  activeUsers,
   ...
 }:
 let
@@ -50,7 +52,7 @@ in
     tuvpn
   ];
 
-  home-manager.users.benjamin.sops = {
+  home-manager.users.benjamin.sops = lib.mkIf (lib.elem "benjamin" activeUsers) {
     secrets = {
       "uni/email" = {
         key = "tiss/email";
