@@ -10,6 +10,7 @@
 
   imports = [
     ../modules/mpv
+    ../modules/rmpc.nix
   ];
 
   security.rtkit.enable = true;
@@ -54,5 +55,4 @@
     ];
 
   services.tumbler.enable = true; # image thumbnails
-  services.mpd.enable = true;
 }
