@@ -40,7 +40,7 @@
       spotify
       audacity # audio editor
       picard # mp3tag editor
-      rmpc # mpd client
+      jellyfin-tui # jellyfin music tui
     ]
 
     # Host Specifics
