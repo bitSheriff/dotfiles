@@ -39,6 +39,7 @@
       spotify
       audacity # audio editor
       picard # mp3tag editor
+      rmpc # mpd client
     ]
 
     # Host Specifics
@@ -53,4 +54,5 @@
     ];
 
   services.tumbler.enable = true; # image thumbnails
+  services.mpd.enable = true;
 }
