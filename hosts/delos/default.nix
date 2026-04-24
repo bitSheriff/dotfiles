@@ -41,6 +41,12 @@
     # tod.driver = pkgs.libfprint-2-tod1-goodix;
   };
 
+  # Increase the timeout for the fingerprint reader before it falls back to password (20 min)
+  environment.etc."fprintd.conf".text = ''
+    [daemon]
+    verify_timeout = 1200
+  '';
+
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
