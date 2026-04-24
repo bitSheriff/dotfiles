@@ -13,13 +13,21 @@
 
   environment.systemPackages = with pkgs; [
     mpc
-    rmpc
+    rmpc # cli mpc client written in rust
   ];
 
   services.mpd = {
     enable = true;
     user = lib.mkIf (lib.elem "benjamin" activeUsers) "benjamin";
     musicDirectory = lib.mkIf (lib.elem "benjamin" activeUsers) "/home/benjamin/Music";
+    settings = {
+      audio_output = [
+        {
+          type = "pulse";
+          name = "PulseAudio";
+        }
+      ];
+    };
   };
 
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {

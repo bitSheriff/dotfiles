@@ -10,7 +10,7 @@
 
   imports = [
     ../modules/mpv
-    ../modules/rmpc.nix
+    ../modules/mpd.nix
   ];
 
   security.rtkit.enable = true;
