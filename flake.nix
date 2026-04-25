@@ -49,6 +49,8 @@
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
             ./hosts/rhodos
+            # Overlays
+            { nixpkgs.overlays = [ (import ./overlays) ]; }
             # Collections
             ./collections/development.nix
             ./collections/office.nix
@@ -95,6 +97,8 @@
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
             ./hosts/delos
+            # Overlays
+            { nixpkgs.overlays = [ (import ./overlays) ]; }
             # Collections
             ./collections/development.nix
             ./collections/office.nix

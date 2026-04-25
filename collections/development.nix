@@ -51,6 +51,7 @@
     forgejo-cli # same for codeberg and forgejo
     lazygit # the best git tui
     gemini-cli
+    siggy # terminal-based Signal client (via overlay)
 
     timr-tui
     zellij # like tmux, but written in rust...
@@ -82,6 +83,7 @@
     gnupg
 
     cinny-desktop # beautiful matrix chat client
+    signal-cli
   ];
 
   # Specific Program Modules (enable deeper integration)
