@@ -19,6 +19,9 @@
       url = "github:NotAShelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Monitor Configurator for Hyprland
+    monique.url = "github:ToRvaLDz/monique";
   };
 
   outputs =

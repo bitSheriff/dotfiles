@@ -14,6 +14,7 @@ in
 {
 
   imports = [
+    inputs.monique.nixosModules.default
     ../fuzzel.nix
     ../wofi.nix
     ../kdeconnect.nix
@@ -33,6 +34,9 @@ in
       };
     };
   };
+
+  # monitor editor for hyprland
+  programs.monique.enable = true;
 
   environment.systemPackages = with pkgs; [
     # Hyprland packages
