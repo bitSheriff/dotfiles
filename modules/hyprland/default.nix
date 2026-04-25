@@ -9,7 +9,7 @@
 }:
 
 let
-  hypr_module = "${dotfiles_path}/modules/hyprland";
+  module_path = "${dotfiles_path}/modules/hyprland";
 in
 {
 
@@ -125,7 +125,7 @@ in
 
       xdg.configFile = {
         # use a real symmlink here to enable hot releading of the config (needs absolute path, not relative!!!)
-        "hypr".source = config.lib.file.mkOutOfStoreSymlink "${hypr_module}/hypr";
+        "hypr".source = config.lib.file.mkOutOfStoreSymlink "${module_path}/hypr";
       };
     };
 
