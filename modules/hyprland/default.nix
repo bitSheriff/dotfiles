@@ -106,26 +106,26 @@ in
   home-manager.users.benjamin =
     { config, lib, ... }:
     {
-      # screenshot annotator
-      programs.swappy = {
-        enable = true;
-        settings = {
-          "Config" = {
-            save_dir = "$HOME/Pictures/Screenshots";
-            save_filename_format = "swappy-%Y%m%d-%H%M%S.png";
+      config = lib.mkIf (lib.elem "benjamin" activeUsers) {
+
+        # screenshot annotator
+        programs.swappy = {
+          enable = true;
+          settings = {
+            "Config" = {
+              save_dir = "$HOME/Pictures/Screenshots";
+              save_filename_format = "swappy-%Y%m%d-%H%M%S.png";
+            };
           };
         };
-      };
 
-      home.sessionVariables = {
-        # fix Wayland problem with Rust Tauri
-        # https://github.com/tauri-apps/tauri/issues/10702
-        WEBKIT_DISABLE_DMABUF_RENDERER = "1";
-      };
+        home.sessionVariables = {
+          WEBKIT_DISABLE_DMABUF_RENDERER = "1";
+        };
 
-      xdg.configFile = {
-        # use a real symmlink here to enable hot releading of the config (needs absolute path, not relative!!!)
-        "hypr".source = config.lib.file.mkOutOfStoreSymlink "${module_path}/hypr";
+        xdg.configFile = {
+          "hypr".source = config.lib.file.mkOutOfStoreSymlink "${module_path}/hypr";
+        };
       };
     };
 

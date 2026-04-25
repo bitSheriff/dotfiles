@@ -38,9 +38,11 @@ in
   home-manager.users.benjamin =
     { config, lib, ... }:
     {
-      xdg.configFile = {
-        # use a real symmlink here to enable hot releading of the config (needs absolute path, not relative!!!)
-        "noctalia".source = config.lib.file.mkOutOfStoreSymlink "${module_path}/noctalia";
+      config = lib.mkIf (lib.elem "benjamin" activeUsers) {
+        xdg.configFile = {
+          # use a real symmlink here to enable hot releading of the config (needs absolute path, not relative!!!)
+          "noctalia".source = config.lib.file.mkOutOfStoreSymlink "${module_path}/noctalia";
+        };
       };
     };
 
