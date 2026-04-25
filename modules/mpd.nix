@@ -19,8 +19,8 @@
   services.mpd = {
     enable = true;
     user = lib.mkIf (lib.elem "benjamin" activeUsers) "benjamin";
-    musicDirectory = lib.mkIf (lib.elem "benjamin" activeUsers) "/home/benjamin/Music";
     settings = {
+      music_directory = lib.mkIf (lib.elem "benjamin" activeUsers) "/home/benjamin/Music";
       audio_output = [
         {
           type = "pulse";
