@@ -188,6 +188,9 @@
                     ]
                 },
                 {
+                    "id": "plugin:clipboard"
+                },
+                {
                     "id": "plugin:screen-toolkit"
                 },
                 {

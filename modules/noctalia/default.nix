@@ -21,18 +21,19 @@ in
     quickshell
 
     # needed for some plugins
-    grim
-    slurp
-    wl-clipboard
-    tesseract
-    imagemagick
-    zbar
+    cliphist
     curl
-    translate-shell
-    wl-screenrec
     ffmpeg
     gifski
+    grim
+    imagemagick
     jq
+    slurp
+    tesseract
+    translate-shell
+    wl-clipboard
+    wl-screenrec
+    zbar
   ];
 
   home-manager.users.benjamin =
