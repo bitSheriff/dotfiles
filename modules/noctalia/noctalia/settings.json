@@ -188,6 +188,9 @@
                     ]
                 },
                 {
+                    "id": "plugin:screen-toolkit"
+                },
+                {
                     "defaultSettings": {
                         "mode": "region"
                     },
