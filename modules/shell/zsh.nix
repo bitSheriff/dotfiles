@@ -82,9 +82,9 @@
           "cd!" = "cd $(fd  --type d --hidden --exclude .git | fzf --ignore-case --no-preview )"; # change directory with fuzzy finder
           count = "'find . -type f | wc -l'"; # count files in the current directory
 
-          nix-switch = "sudo nixos-rebuild switch --flake .#$(hostname)";
-          nix-test = "sudo nixos-rebuild test --flake .#$(hostname)";
-          nix-update = "nix flake update && sudo nixos-rebuild switch --flake .#$(hostname)";
+          nixos-switch = "sudo nixos-rebuild switch --flake .#$(hostname)";
+          nixos-test = "sudo nixos-rebuild test --flake .#$(hostname)";
+          nixos-update = "nix flake update && sudo nixos-rebuild switch --flake .#$(hostname)";
 
           ":q" = "exit"; # quit terminal like vim
           ":c" = "clear"; # clear terminal

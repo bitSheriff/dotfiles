@@ -10,6 +10,7 @@
     agenix-cli # needed for age to encrypt nix
     nh # nix cli helper
     agenix-cli # needed for age to encrypt nix
+    nix-update # update helper for overlays
   ];
 
   nixpkgs.config = {
