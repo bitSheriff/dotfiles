@@ -51,7 +51,6 @@ in
     # Services
     #dunst                     # notification service
     wl-clipboard # clipboard service
-    copyq # clipboard manager
     swappy # screenshot tool
     hyprpolkitagent # polkit agent
     udiskie # automounter

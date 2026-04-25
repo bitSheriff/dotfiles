@@ -20,7 +20,6 @@ configuration/.config/systemd/user/default.target.wants
 configuration/.config/zed/settings_backup.json
 configuration/.config/television/cable
 configuration/.config/Typora
-configuration/.config/copyq
 configuration/.config/mpd/database
 configuration/.config/mpd/state
 configuration/.config/quickshell/noctalia-shell

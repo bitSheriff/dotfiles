@@ -48,7 +48,6 @@
     kdePackages.kdepim-runtime
 
     qalculate-gtk
-    copyq
 
     # Printers and Scanners
     simple-scan
