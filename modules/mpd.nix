@@ -16,21 +16,19 @@
     rmpc # cli mpc client written in rust
   ];
 
-  services.mpd = {
-    enable = true;
-    user = lib.mkIf (lib.elem "benjamin" activeUsers) "benjamin";
-    settings = {
-      music_directory = lib.mkIf (lib.elem "benjamin" activeUsers) "/home/benjamin/Music";
-      audio_output = [
-        {
-          type = "pulse";
-          name = "PulseAudio";
-        }
-      ];
-    };
-  };
-
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+    services.mpd = {
+      enable = true;
+      musicDirectory = "/home/benjamin/Music";
+      extraConfig = ''
+        audio_output {
+          type "pulse"
+          name "PulseAudio"
+          mixer_type "software"
+        }
+      '';
+    };
+
     xdg.configFile."rmpc/config.ron".text = ''
       #![enable(implicit_some)]
       #![enable(unwrap_newtypes)]
