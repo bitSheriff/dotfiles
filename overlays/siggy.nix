@@ -1,4 +1,3 @@
-# pkgs/siggy.nix
 {
   lib,
   rustPlatform,

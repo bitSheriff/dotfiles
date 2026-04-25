@@ -52,6 +52,7 @@
     lazygit # the best git tui
     gemini-cli
     siggy # terminal-based Signal client (via overlay)
+    git-today # recap your daily git work (via overlay)
 
     timr-tui
     zellij # like tmux, but written in rust...
