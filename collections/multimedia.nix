@@ -41,7 +41,7 @@
       audacity # audio editor
       picard # mp3tag editor
       jellyfin-tui # jellyfin music tui
-      gelly # jellyfin and navidrone/subsonic music player
+      feishin # jellyfin and navidrone music player (spotify alike)
     ]
 
     # Host Specifics
