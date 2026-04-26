@@ -14,7 +14,7 @@ rustPlatform.buildRustPackage rec {
     owner = "bitSheriff";
     repo = "git-today";
     rev = "v${version}";
-    hash = "sha256-iZo9ebThFno7NB0HUdGfpZtkq9biciVWISIlcDdJIQQ=";
+    hash = "sha256-jvXhIGyqlQjgZN/Gx/2vsvk1U3SDpypn0mBYumNCOow=";
   };
 
   cargoHash = "sha256-cnGyig8X9OgWFHR9pCIl4NdfjmGTQLWsXoNxEa92H50=";
