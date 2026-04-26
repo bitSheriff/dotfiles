@@ -12,7 +12,7 @@ let
     # has everything to install and run Matlab
     ubuntu-matlab = {
       image = "docker.io/library/ubuntu:latest";
-      additional_packages = "libxft2 libxrender1 libxtst6 libxi6 openjdk-25-jdk eza zoxide";
+      additional_packages = "libxft2 libxrender1 libxtst6 libxi6 default-jdk eza zoxide";
       init = false;
       nvidia = true;
       pull = true;
