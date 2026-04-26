@@ -1,9 +1,33 @@
 {
   config,
   pkgs,
+  lib,
+  activeUsers,
   ...
 }:
+let
+  # 1. Distro Container Configuration
+  distroboxSet = {
+    ubuntu-matlab = {
+      image = "docker.io/library/ubuntu:latest";
+      additional_packages = "libxft2 libxrender1 libxtst6 libxi6 openjdk-25-jdk";
+      init = false;
+      nvidia = true;
+      pull = true;
+      replace = true;
+    };
+  };
 
+  # generate the INI file
+  distroboxIni = pkgs.writeText "distrobox.ini" (lib.generators.toINI { } distroboxSet);
+
+  # script to create or update the defined distros
+  distrobox-init = pkgs.writeShellScriptBin "distrobox-init" ''
+    echo "Constructing Distrobox containers from Nix definition..."
+    ${pkgs.distrobox}/bin/distrobox-assemble create --file ${distroboxIni}
+  '';
+
+in
 {
 
   environment.systemPackages = with pkgs; [
@@ -15,6 +39,7 @@
     # Distro Box
     distrobox
     distroshelf # gui for distrobox
+    distrobox-init # own script to create and update distros from templates
 
     # Virtual Machines
     qemu
@@ -24,7 +49,7 @@
 
   ## Docker
   virtualisation.docker.enable = true;
-  users.users.benjamin.extraGroups = [
+  users.users.benjamin.extraGroups = lib.mkIf (lib.elem "benjamin" activeUsers) [
     "docker"
     "libvirtd"
   ];
