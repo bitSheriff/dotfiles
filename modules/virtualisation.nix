@@ -17,6 +17,12 @@ let
       nvidia = true;
       pull = true;
       replace = true;
+      # executed once after creation
+      post_init_hooks = "";
+      # executed everytime when distro is entered
+      init_hooks = ''
+        echo "Welcome to the MATLAB Distro Box"
+      '';
     };
   };
 
