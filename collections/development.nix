@@ -64,6 +64,7 @@
     zed-editor
     obsidian
     meld # diff viewer
+    smartgit # git gui for when the shit is burning
 
     # Languages
     rustup
