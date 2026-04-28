@@ -12,7 +12,6 @@
     settings = {
       format = lib.concatStrings [
         "[](#CC16C3)"
-        "$nix_shell"
         "$status"
         "$username"
         "$os"
@@ -33,6 +32,7 @@
         "$python"
         "[](fg:#00b8ff bg:#06969A)"
         "$docker_context"
+        "$nix_shell"
         "[](fg:#06969A bg:#33658A)"
         "$time"
         "$memory_usage"
@@ -197,6 +197,20 @@
         python_binary = "python3";
         style = "bg:#00b8ff";
         format = "[ $symbol ($version) ]($style)";
+      };
+
+      docker_context = {
+        disabled = false;
+        # style = "bg:#CC16C3";
+        # format = "[🐋 $context](blue bold)";
+      };
+
+      nix_shell = {
+        disabled = false;
+        style = "bg:#06969A";
+        impure_msg = "󰦕 ";
+        pure_msg = " ";
+        format = "[$symbol$state(\($name\)) ]($style)";
       };
 
       time = {
