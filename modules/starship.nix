@@ -12,7 +12,7 @@
     settings = {
       format = lib.concatStrings [
         "[](#CC16C3)"
-				"$nix_shell"
+        "$nix_shell"
         "$status"
         "$username"
         "$os"
