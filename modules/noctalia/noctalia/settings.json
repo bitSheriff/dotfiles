@@ -517,15 +517,15 @@
         "suspendTimeout": 1800
     },
     "location": {
-        "analogClockInCalendar": false,
+        "analogClockInCalendar": true,
         "autoLocate": false,
-        "firstDayOfWeek": -1,
+        "firstDayOfWeek": 1,
         "hideWeatherCityName": true,
         "hideWeatherTimezone": false,
         "name": "Vienna",
         "showCalendarEvents": true,
         "showCalendarWeather": true,
-        "showWeekNumberInCalendar": false,
+        "showWeekNumberInCalendar": true,
         "use12hourFormat": false,
         "useFahrenheit": false,
         "weatherEnabled": true,
