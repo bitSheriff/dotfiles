@@ -8,6 +8,7 @@ rustPlatform.buildRustPackage rec {
   pname = "siggy";
   version = "1.7.1";
 
+  # https://github.com/johnsideserf/siggy
   src = fetchFromGitHub {
     owner = "johnsideserf";
     repo = "siggy";
