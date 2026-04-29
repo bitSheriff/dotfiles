@@ -5,4 +5,6 @@ default:
 
 # link the current dotfile directory to /etc/nixos
 link:
-    (cd .. && sudo ln -s $(pwd)/dotfiles /etc/nixos)
+    @echo "Link dotfiles"
+    @sudo rm -rf /etc/nixos
+    @sudo ln -s $(pwd) /etc/nixos
