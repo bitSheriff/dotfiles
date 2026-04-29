@@ -30,6 +30,8 @@
         "nix-command"
         "flakes"
       ];
+      max-jobs = 2; # Only build 2 things at once
+      cores = 4; # Only use 4 cores per build
       auto-optimise-store = true;
       warn-dirty = false;
       trusted-users = [

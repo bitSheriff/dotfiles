@@ -44,6 +44,9 @@
     '';
   };
 
+  # zRam creates a compressed RAM drive for swap
+  zramSwap.enable = true;
+
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   services.fwupd.enable = true;
