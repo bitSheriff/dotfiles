@@ -22,6 +22,9 @@
 
     # Monitor Configurator for Hyprland
     monique.url = "github:ToRvaLDz/monique";
+
+    # my own flakes
+    my-flakes.url = "github:bitSheriff/my-flakes";
   };
 
   outputs =
