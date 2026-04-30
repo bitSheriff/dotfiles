@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   environment.systemPackages = with pkgs; [
@@ -8,6 +13,7 @@
     varia # simple download manager
     croc # send files to another computer
     yt-dlp # youtube downloader
+    inputs.my-flakes.packages.${pkgs.stdenv.hostPlatform.system}.jdownloader2
 
   ];
 
