@@ -210,7 +210,7 @@
         style = "bg:#06969A";
         impure_msg = "󰦕 ";
         pure_msg = " ";
-        format = "[$symbol$state(\($name\)) ]($style)";
+        format = "[$symbol(\($name\)) ]($style)";
       };
 
       time = {
