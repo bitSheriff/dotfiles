@@ -1,5 +1,7 @@
 # bitSheriff's Setup
 
+[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+
 > _Therapeutic NixOS for a recovering distro-hopper._
 
 ## The Philosophy
