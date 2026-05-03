@@ -32,7 +32,6 @@
     eza
     gnumake
     age # encryption
-    mise # like nix but on project basis
     just # like makefile but better
     rsync
     bash # mainly for scripting
@@ -75,8 +74,6 @@
     python3
     uv # because python sucks without
     nixfmt # nix language formatter
-    doxygen # create documentation
-    hugo # blog engine
     jdk25_headless # Java
 
     # Networking & Security

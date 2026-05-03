@@ -34,7 +34,6 @@
     # Notes & Organization
     obsidian
     # gromit-mpx # draw on desktop
-    hugo # blog engine
 
     # Communication
     tutanota-desktop # secure encrypted email
@@ -47,7 +46,7 @@
     kdePackages.akonadi-search # needed for korganizer
     kdePackages.kdepim-runtime
 
-    qalculate-gtk
+    qalculate-gtk # cli and gui calculator
 
     # Printers and Scanners
     simple-scan
