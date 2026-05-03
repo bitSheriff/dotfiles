@@ -45,6 +45,7 @@ in
     # wireshark-qt # network analyzer
     gum # needed for cli inputs
     blanket # background ambient soundscapes for concentration
+    mumble # low latency voice rooms
 
     # Own Scripts
     tuvpn
