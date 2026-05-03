@@ -26,5 +26,12 @@
       name = "tokyonight";
       style = "night";
     };
+
+    extraPlugins = {
+      lazygit = {
+        package = pkgs.vimPlugins.lazygit-nvim;
+        # setup = "require('aerial').setup {}";
+      };
+    };
   };
 }

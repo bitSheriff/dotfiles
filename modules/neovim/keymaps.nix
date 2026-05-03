@@ -62,6 +62,13 @@
         silent = true;
         desc = "Flash";
       }
+      {
+        key = "<leader>ll";
+        mode = [ "n" ];
+        action = ":LazyGit<CR>";
+        silent = true;
+        desc = "Open LazyGit";
+      }
     ];
   };
 }
