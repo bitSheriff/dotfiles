@@ -41,6 +41,7 @@
       audacity # audio editor
       picard # mp3tag editor
       feishin # jellyfin and navidrone music player (spotify alike)
+      # asunder # ripping cd's like its 2000
     ]
 
     # Host Specifics
