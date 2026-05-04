@@ -11,6 +11,9 @@
   ## Trim SSD
   services.fstrim.enable = true;
 
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   # Battery Stuff
   services.power-profiles-daemon.enable = false; # use tlp instead
   services.tlp = {
