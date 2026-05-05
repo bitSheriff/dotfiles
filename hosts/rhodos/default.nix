@@ -11,9 +11,6 @@
   ## Trim SSD
   services.fstrim.enable = true;
 
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
-
   hardware.nvidia = {
     open = false; # open driver or closed-source ones
     modesetting.enable = true;

@@ -27,6 +27,7 @@
   console.keyMap = "de";
 
   # Hardware Support & Services
+  hardware.enableRedistributableFirmware = true;
   services.gvfs.enable = true;
   services.udisks2.enable = true;
   services.devmon.enable = true;
@@ -47,7 +48,15 @@
   # zRam creates a compressed RAM drive for swap
   zramSwap.enable = true;
 
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Experimental = true;
+      };
+    };
+  };
   services.blueman.enable = true;
   services.fwupd.enable = true;
   services.upower.enable = true;
@@ -92,6 +101,8 @@
     pciutils
     usbutils
     xdg-utils
+    bluez # provides bluetoothctl
+    bluetui # TUI for bluetooth
     networkmanagerapplet # contains nm-connection-editor for advanced wifi configuration
     xauth # needed to forward SSH and more
 
