@@ -13,6 +13,7 @@
     ./shell/zsh.nix
     ./neovim
     ./networking.nix
+    ./bluetooth.nix
     ./kitty.nix
     ./ssh.nix
     ./appimage.nix
@@ -48,16 +49,6 @@
   # zRam creates a compressed RAM drive for swap
   zramSwap.enable = true;
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-    settings = {
-      General = {
-        Experimental = true;
-      };
-    };
-  };
-  services.blueman.enable = true;
   services.fwupd.enable = true;
   services.upower.enable = true;
   services.gnome.gnome-keyring.enable = true;
@@ -101,8 +92,6 @@
     pciutils
     usbutils
     xdg-utils
-    bluez # provides bluetoothctl
-    bluetui # TUI for bluetooth
     networkmanagerapplet # contains nm-connection-editor for advanced wifi configuration
     xauth # needed to forward SSH and more
 
