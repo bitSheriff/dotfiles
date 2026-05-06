@@ -4,7 +4,11 @@
   inputs,
   ...
 }:
-
+let
+  unblock_bluetooth = pkgs.writeShellScriptBin "unblock-blueooth" ''
+    sudo rfkill unblock bluetooth
+  '';
+in
 {
   imports = [
   ];
@@ -23,6 +27,7 @@
   environment.systemPackages = with pkgs; [
     bluez # provides bluetoothctl
     bluetui # TUI for bluetooth
+    unblock_bluetooth
   ];
 
 }
