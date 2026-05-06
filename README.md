@@ -7,7 +7,7 @@
 ## The Philosophy
 
 NixOS is often described as "reproducible," but I prefer "inevitable." This
-repository serves as the digital blueprint for my infrastructure—a way to ensure
+repository serves as the digital blueprint for my infrastructure — a way to ensure
 that even if I wander, I can always find my way back to a working shell.
 
 ## The Hosts
