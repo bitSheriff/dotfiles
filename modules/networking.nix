@@ -24,6 +24,11 @@ in
 
   # Networking
   networking.networkmanager.enable = true;
+  networking.firewall.allowedTCPPorts = [
+    22
+    # 1701 # weylus
+  ];
+
   networking.hosts = {
     "127.0.0.1" = [ "syncthing.local" ];
   };
