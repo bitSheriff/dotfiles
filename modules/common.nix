@@ -106,6 +106,7 @@
     nemo-fileroller
     libqalculate # calculator CLI
     qalculate-gtk # calculator GUI
+    mission-center # gnome task manager
   ];
 
   programs.zsh = {
