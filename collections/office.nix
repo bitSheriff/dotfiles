@@ -9,6 +9,7 @@
     ../modules/hledger.nix
     ../modules/notes.nix
     ../modules/zathura.nix
+    ../modules/syncthing.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -81,14 +82,6 @@
     enable = true;
     extraBackends = [ pkgs.brscan5 ];
     brscan5.enable = true;
-  };
-
-  # Syncthing
-  services.syncthing = {
-    enable = true;
-    user = "benjamin";
-    dataDir = "/home/benjamin/.config/syncthing";
-    configDir = "/home/benjamin/.config/syncthing";
   };
 
   programs.localsend = {

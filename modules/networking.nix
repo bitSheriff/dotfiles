@@ -29,24 +29,8 @@ in
     # 1701 # weylus
   ];
 
-  networking.hosts = {
-    "127.0.0.1" = [ "syncthing.local" ];
-  };
-
   services.nginx = {
     enable = true;
-    virtualHosts."syncthing.local" = {
-      listen = [
-        {
-          addr = "127.0.0.1";
-          port = 80;
-        }
-      ];
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8384";
-        proxyWebsockets = true;
-      };
-    };
   };
 
   sops.age.keyFile = "/home/benjamin/.age/dotfiles.key";
