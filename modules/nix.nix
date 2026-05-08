@@ -11,7 +11,7 @@
     nh # nix cli helper
     agenix-cli # needed for age to encrypt nix
     nix-update # update helper for overlays
-    nix-output-monitor # better show output
+    nix-output-monitor # better show output (useful for nix build |& nom)
   ];
 
   nixpkgs.config = {
