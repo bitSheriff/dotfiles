@@ -4,7 +4,15 @@
   inputs,
   ...
 }:
+let
+  nb = pkgs.writeShellScriptBin "nb" ''
+    nix build "$@" |& nom
+  '';
 
+  nd = pkgs.writeShellScriptBin "nd" ''
+    nix develop --impure
+  '';
+in
 {
   environment.systemPackages = with pkgs; [
     agenix-cli # needed for age to encrypt nix
@@ -12,6 +20,9 @@
     agenix-cli # needed for age to encrypt nix
     nix-update # update helper for overlays
     nix-output-monitor # better show output (useful for nix build |& nom)
+    # scripts
+    nb
+    nd
   ];
 
   nixpkgs.config = {
