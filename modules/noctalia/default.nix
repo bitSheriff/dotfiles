@@ -33,6 +33,7 @@ in
     translate-shell
     wl-clipboard
     wl-screenrec
+    gpu-screen-recorder
     zbar
   ];
 
