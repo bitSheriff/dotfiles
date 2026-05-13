@@ -63,7 +63,7 @@
         desc = "Flash";
       }
       {
-        key = "<leader>ll";
+        key = "<leader>hl";
         mode = [ "n" ];
         action = ":LazyGit<CR>";
         silent = true;
