@@ -71,6 +71,7 @@ in
     kitty
     fuzzel # application runner
     qutebrowser
+    bemoji # needed for emoji selection
   ];
 
   services.pipewire = {
