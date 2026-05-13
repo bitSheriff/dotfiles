@@ -24,10 +24,22 @@ in
 
   # Networking
   networking.networkmanager.enable = true;
-  networking.firewall.allowedTCPPorts = [
-    22
-    # 1701 # weylus
-  ];
+  networking.firewall = {
+    allowedTCPPorts = [
+      22
+      # 1701 # weylus
+    ];
+    allowedUDPPortRanges = [
+      {
+        from = 7400;
+        to = 7500;
+      } # Common ROS 2 ports
+      {
+        from = 24650;
+        to = 24670;
+      } # Specific range for Domain 69
+    ];
+  };
 
   services.nginx = {
     enable = true;
