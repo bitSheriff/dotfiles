@@ -26,7 +26,8 @@
       # List by default
       zlib
       zstd
-      stdenv.cc.cc
+      stdenv.cc.cc.lib
+      glibc
       curl
       openssl
       attr
