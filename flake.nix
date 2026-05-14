@@ -48,11 +48,10 @@
 
         #############  DESKTOP  #############
         rhodos = nixpkgs.lib.nixosSystem {
-          specialArgs = rec {
+          specialArgs = {
             inherit inputs;
             activeUsers = [ "benjamin" ];
             dotfiles_path = "/home/benjamin/code/dotfiles";
-            sopsMod = ./modules/sops.nix;
           };
           modules = [
             home-manager.nixosModules.home-manager
@@ -76,7 +75,6 @@
             (
               {
                 activeUsers,
-                sopsMod,
                 inputs,
                 ...
               }:
@@ -85,10 +83,10 @@
                   (nixpkgs.lib.optionalAttrs (nixpkgs.lib.elem "benjamin" activeUsers) (import ./users/benjamin.nix))
                   (nixpkgs.lib.optionalAttrs (nixpkgs.lib.elem "guest" activeUsers) (import ./users/guest.nix))
                 ];
-                home-manager.extraSpecialArgs = { inherit inputs activeUsers sopsMod; };
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.backupFileExtension = "backup";
+                home-manager.extraSpecialArgs = { inherit inputs activeUsers; };
               }
             )
           ];
@@ -96,11 +94,10 @@
 
         #############  FRAMEWORK LAPTOP 13"  #############
         delos = nixpkgs.lib.nixosSystem {
-          specialArgs = rec {
+          specialArgs = {
             inherit inputs;
             activeUsers = [ "benjamin" ];
             dotfiles_path = "/home/benjamin/code/dotfiles";
-            sopsMod = ./modules/sops.nix;
           };
           modules = [
             nixos-hardware.nixosModules.framework-13-7040-amd
@@ -123,7 +120,6 @@
             (
               {
                 activeUsers,
-                sopsMod,
                 inputs,
                 ...
               }:
@@ -132,10 +128,10 @@
                   (nixpkgs.lib.optionalAttrs (nixpkgs.lib.elem "benjamin" activeUsers) (import ./users/benjamin.nix))
                   (nixpkgs.lib.optionalAttrs (nixpkgs.lib.elem "guest" activeUsers) (import ./users/guest.nix))
                 ];
-                home-manager.extraSpecialArgs = { inherit inputs activeUsers sopsMod; };
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.backupFileExtension = "backup";
+                home-manager.extraSpecialArgs = { inherit inputs activeUsers; };
               }
             )
           ];
