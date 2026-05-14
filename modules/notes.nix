@@ -68,6 +68,21 @@ let
             print("    open_journal +1 nvim # Opens tomorrow's journal")
             sys.exit(1)
   '';
+  weekly = pkgs.writeShellScriptBin "weekly" ''
+    YEAR=$(date +%G)
+    WEEKNR=$(date +%V)
+    FILENAME="$YEAR-W$WEEKNR.md"
+
+    if [[ -z "$JOURNAL_WEEKLY_PATH" ]]; then
+        echo "Error: Weekly Path not set"
+        exit 1
+    fi
+
+
+    editor="''${1:-nvim}"
+    "$editor" "$JOURNAL_WEEKLY_PATH/$FILENAME"
+  '';
+
   notes = pkgs.writeShellScriptBin "notes" ''
     # Ensure NOTES_DIR is set
     if [[ -z "$NOTES_DIR" ]]; then
@@ -521,6 +536,7 @@ in
     INBOX = "$HOME/notes/Inbox/Inbox.md";
     INBOX_DIR = "$HOME/notes/Inbox";
     JOURNAL_DAILY_PATH = "$HOME/notes/Journal/Daily";
+    JOURNAL_WEEKLY_PATH = "$HOME/notes/Journal/Weekly";
   };
 
   environment.systemPackages = with pkgs; [
@@ -530,6 +546,7 @@ in
     fzf # to select files
     # own scripts
     daily
+    weekly
     notes
     memo
     memo-gui
