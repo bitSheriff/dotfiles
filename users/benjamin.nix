@@ -11,6 +11,7 @@
   # System-level user declaration - only if benjamin is in activeUsers
   users.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
     isNormalUser = true;
+    hashedPasswordFile = config.sops.secrets.user-benjamin.path;
     home = "/home/benjamin";
     shell = pkgs.zsh;
     extraGroups = [
@@ -24,6 +25,15 @@
       "lp"
 
     ];
+  };
+
+  # Passwords for Hosts
+  sops = {
+    defaultSopsFile = ../encrypted/secrets.yaml;
+    secrets.user-benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+      key = "hosts/${config.networking.hostName}/benjamin";
+      neededForUsers = true;
+    };
   };
 
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) (
