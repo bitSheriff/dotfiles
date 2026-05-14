@@ -20,6 +20,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Monitor Configurator for Hyprland
     monique.url = "github:ToRvaLDz/monique";
 
@@ -35,6 +40,7 @@
       nixos-hardware,
       sops-nix,
       nvf,
+      disko,
       ...
     }@inputs:
     {
@@ -51,6 +57,7 @@
           modules = [
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
+            disko.nixosModules.disko
             ./hosts/rhodos
             # Overlays
             { nixpkgs.overlays = [ (import ./overlays) ]; }
@@ -99,6 +106,7 @@
             nixos-hardware.nixosModules.framework-13-7040-amd
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
+            disko.nixosModules.disko
             ./hosts/delos
             # Overlays
             { nixpkgs.overlays = [ (import ./overlays) ]; }
