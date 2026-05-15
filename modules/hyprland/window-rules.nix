@@ -14,36 +14,38 @@
     lib.mkIf (lib.elem "benjamin" activeUsers) {
       wayland.windowManager.hyprland = {
         enable = true;
-        extraConfig = ''
-          windowrule = idle_inhibit fullscreen, match:class .* title:.*
-          windowrule = suppress_event maximize, match:class .*
 
-          # set opacity to 1.0 if firefox is displaying YouTube, Goodnotes
-          windowrule = opacity 1.0 override 1.0 override, match:title (.*)(YouTube)(.*)$
-          windowrule = opacity 1.0 override 1.0 override, match:title (.*)(Twitch)(.*)$
-          windowrule = opacity 1.0 override 1.0 override, match:title (.*)(Prime Video)(.*)$
-          windowrule = opacity 1.0 override 1.0 override, match:title (.*)([Mm]onkeytype)(.*)$
-          windowrule = opacity 1.0 override 1.0 override, match:class (.*)(GoodNotes|Goodnotes)(.*)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(obsidian)(.)*$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(gwenview)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(okular)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(zathura)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(vlc)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(mpv)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(Typora)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(YACReader)$
-          windowrule = opacity 1.0 override 1.0 override, float on, match:title ^(Picture-in-Picture)$
-          windowrule = opacity 1.0 override 1.0 override, match:class nl.jknaapen.fladder
-          windowrule = opacity 1.0 override 1.0 override, match:title rmpc
-
+        settings.windowrule = [
+          "idle_inhibit fullscreen, match:class .* title:.*"
+          "suppress_event maximize, match:class .*"
+          # override opacity for some apps
+          "opacity 1.0 override 1.0 override, match:title (.*)(YouTube)(.*)$"
+          "opacity 1.0 override 1.0 override, match:title (.*)(Twitch)(.*)$"
+          "opacity 1.0 override 1.0 override, match:title (.*)(Prime Video)(.*)$"
+          "opacity 1.0 override 1.0 override, match:title (.*)([Mm]onkeytype)(.*)$"
+          "opacity 1.0 override 1.0 override, match:class (.*)(GoodNotes|Goodnotes)(.*)$"
+          "opacity 1.0 override 1.0 override, match:class ^(.)*(obsidian)(.)*$"
+          "opacity 1.0 override 1.0 override, match:class ^(.)*(gwenview)$"
+          "opacity 1.0 override 1.0 override, match:class ^(.)*(okular)$"
+          "opacity 1.0 override 1.0 override, match:class ^(.)*(zathura)$"
+          "opacity 1.0 override 1.0 override, match:class ^(.)*(vlc)$"
+          "opacity 1.0 override 1.0 override, match:class ^(.)*(mpv)$"
+          "opacity 1.0 override 1.0 override, match:class ^(.)*(Typora)$"
+          "opacity 1.0 override 1.0 override, match:class ^(.)*(YACReader)$"
+          "opacity 1.0 override 1.0 override, float on, match:title ^(Picture-in-Picture)$"
+          "opacity 1.0 override 1.0 override, match:class nl.jknaapen.fladder"
+          "opacity 1.0 override 1.0 override, match:title rmpc"
           # special class which should be floating
-          windowrule = float on, match:class com.github.finefindus.eyedropper
-          windowrule = float on, match:class com.network.manager
+          "float on, match:class com.github.finefindus.eyedropper"
+          "float on, match:class com.network.manager"
 
           # change the border color due to floating and pinned windows
-          windowrule = border_color rgb(FF0000) rgb(880808), match:float 1
-          windowrule = border_color rgb(FF0000) rgb(ef8113), match:pin 1
+          "border_color rgb(FF0000) rgb(880808), match:float 1"
+          "border_color rgb(FF0000) rgb(ef8113), match:pin 1"
 
+        ];
+
+        extraConfig = ''
           windowrule {
             name = "waypaper"
             match:class = (.*)waypaper(.*)
