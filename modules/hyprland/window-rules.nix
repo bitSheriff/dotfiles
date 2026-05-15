@@ -13,8 +13,6 @@
     { config, lib, ... }:
     lib.mkIf (lib.elem "benjamin" activeUsers) {
       wayland.windowManager.hyprland = {
-        enable = true;
-
         settings.windowrule = [
           "idle_inhibit fullscreen, match:class .* title:.*"
           "suppress_event maximize, match:class .*"

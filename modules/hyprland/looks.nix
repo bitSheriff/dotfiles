@@ -13,7 +13,6 @@
     { config, lib, ... }:
     lib.mkIf (lib.elem "benjamin" activeUsers) {
       wayland.windowManager.hyprland = {
-        enable = true;
         settings = {
           animations = {
             enabled = true;
