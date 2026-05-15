@@ -69,6 +69,42 @@
         silent = true;
         desc = "Open LazyGit";
       }
+      {
+        key = "<leader>tt";
+        mode = "n";
+        lua = true;
+        silent = true;
+        desc = "Smart toggle/create Markdown Todo";
+        action = ''
+          function()
+            local line = vim.api.nvim_get_current_line()
+            local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+
+            -- Case 1: Line is completely empty or just whitespace
+            if line:match("^%s*$") then
+              vim.api.nvim_set_current_line(line .. "- [ ] ")
+              -- Move cursor to the end of the newly inserted string
+              vim.api.nvim_win_set_cursor(0, {row, #line + 6})
+              -- Enter insert mode
+              vim.cmd("startinsert!")
+
+            -- Case 2: Line contains an incomplete todo -> Mark as Done
+            elseif line:match("%-%s%[%s%]") then
+              -- Note: gsub is wrapped in () to force a single return value
+              vim.api.nvim_set_current_line((line:gsub("%-%s%[%s%]", "- [x]", 1)))
+
+            -- Case 3: Line contains a done todo -> Mark as Undone
+            elseif line:match("%-%s%[[xX]%]") then
+              vim.api.nvim_set_current_line((line:gsub("%-%s%[[xX]%]", "- [ ]", 1)))
+
+            -- Case 4: Normal text line -> Prepend a todo box, keeping indentation
+            else
+              local indent, rest = line:match("^(%s*)(.*)$")
+              vim.api.nvim_set_current_line(indent .. "- [ ] " .. rest)
+            end
+          end
+        '';
+      }
     ];
   };
 }
