@@ -19,6 +19,12 @@ in
     ../wofi.nix
     ../kdeconnect.nix
     ../noctalia
+    # Hyprland Modules
+    ./autostart.nix
+    ./env.nix
+    ./inputs.nix
+    ./keymaps.nix
+    ./looks.nix
   ];
 
   programs.hyprland = {
@@ -107,24 +113,11 @@ in
     { config, lib, ... }:
     {
       config = lib.mkIf (lib.elem "benjamin" activeUsers) {
-
-        # screenshot annotator
-        programs.swappy = {
-          enable = true;
-          settings = {
-            "Config" = {
-              save_dir = "$HOME/Pictures/Screenshots";
-              save_filename_format = "swappy-%Y%m%d-%H%M%S.png";
-            };
-          };
-        };
-
-        home.sessionVariables = {
-          WEBKIT_DISABLE_DMABUF_RENDERER = "1";
-        };
-
-        xdg.configFile = {
-          "hypr".source = config.lib.file.mkOutOfStoreSymlink "${module_path}/hypr";
+        wayland.windowManager.hyprland = {
+          configType = "hyprlang";
+          extraConfig = ''
+            source = /home/benjamin/.config/hypr/noctalia/noctalia-colors.conf
+          '';
         };
       };
     };
