@@ -115,6 +115,7 @@ in
     {
       config = lib.mkIf (lib.elem "benjamin" activeUsers) {
         wayland.windowManager.hyprland = {
+          enable = true;
           configType = "hyprlang";
           extraConfig = ''
             source = /home/benjamin/.config/hypr/noctalia/noctalia-colors.conf
