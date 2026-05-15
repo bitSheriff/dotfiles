@@ -65,6 +65,11 @@
             };
           };
 
+          misc = {
+            disable_hyprland_logo = true;
+            disable_splash_rendering = true;
+          };
+
           workspace = [
             "special:term-scratchpad, on-created-empty:kitty --class term-scratchpad"
           ];
@@ -133,141 +138,6 @@
             }
           }
 
-          windowrule = idle_inhibit fullscreen, match:class .* title:.*
-          windowrule = suppress_event maximize, match:class .*
-
-          # set opacity to 1.0 if firefox is displaying YouTube, Goodnotes
-          windowrule = opacity 1.0 override 1.0 override, match:title (.*)(YouTube)(.*)$
-          windowrule = opacity 1.0 override 1.0 override, match:title (.*)(Twitch)(.*)$
-          windowrule = opacity 1.0 override 1.0 override, match:title (.*)(Prime Video)(.*)$
-          windowrule = opacity 1.0 override 1.0 override, match:title (.*)([Mm]onkeytype)(.*)$
-          windowrule = opacity 1.0 override 1.0 override, match:class (.*)(GoodNotes|Goodnotes)(.*)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(obsidian)(.)*$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(gwenview)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(okular)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(zathura)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(vlc)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(mpv)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(Typora)$
-          windowrule = opacity 1.0 override 1.0 override, match:class ^(.)*(YACReader)$
-          windowrule = opacity 1.0 override 1.0 override, float on, match:title ^(Picture-in-Picture)$
-          windowrule = opacity 1.0 override 1.0 override, match:class nl.jknaapen.fladder
-          windowrule = opacity 1.0 override 1.0 override, match:title rmpc
-
-          # special class which should be floating
-          windowrule = float on, match:class com.github.finefindus.eyedropper
-          windowrule = float on, match:class com.network.manager
-
-          # change the border color due to floating and pinned windows
-          windowrule = border_color rgb(FF0000) rgb(880808), match:float 1
-          windowrule = border_color rgb(FF0000) rgb(ef8113), match:pin 1
-
-          windowrule {
-            name = "waypaper"
-            match:class = (.*)waypaper(.*)
-            float = on
-            size = 900 500
-            center = on
-          }
-
-          windowrule {
-            name = "dialogs"
-            match:title = (.*)(Open File|Save As|Open Folder)(.*)
-            center = on
-            float = on
-          }
-
-          windowrule {
-            name = "Pop-Up Terminal"
-            match:class = (.*)floating(.*)
-            float = on
-            center = on
-            size = 900 500
-          }
-
-          windowrule {
-            name = "Steam Games"
-            match:class = steam_app_(.*)
-            fullscreen = true
-            opacity = 1.0
-          }
-
-          windowrule {
-            name = "Floatui Fallback"
-            match:class = floatui-.*
-            tag = +floatui
-            size = 800 460
-          }
-
-          windowrule {
-            name = "Floatui Notes"
-            match:class = floatui-notes
-            tag = +floatui
-            size = 900 900
-          }
-
-          windowrule {
-            name = "Floatui Bluetooth"
-            match:class = floatui-bluetooth
-            tag = +floatui
-            size = 800 600
-          }
-
-          windowrule {
-            name = "Floatui Audio Mixer"
-            match:class = floatui-audio
-            tag = +floatui
-            size = 600 450
-          }
-
-          windowrule {
-            name = "Floatui Timer"
-            match:class = floatui-timer
-            tag = +floatui
-            size = 600 300
-          }
-
-          windowrule {
-            name = "Floatui Mastodon"
-            match:class = floatui-mastodon
-            tag = +floatui
-            size = 800 480
-          }
-
-          windowrule {
-            name = "Floatui Matrix"
-            match:class = floatui-matrix
-            tag = +floatui
-            size = 800 480
-          }
-
-          windowrule {
-            name = "Floatui Memo"
-            match:class = floatui-memo
-            tag = +floatui
-            size = 800 480
-          }
-
-          windowrule {
-            name = "Floatui Files"
-            match:class = floatui-files
-            tag = +floatui
-            size = 800 480
-          }
-
-          windowrule {
-            name = "Floatui Wifi"
-            match:class = floatui-wifi
-            tag = +floatui
-            size = 800 680
-          }
-
-          windowrule {
-            name = "Floatui"
-            match:tag = floatui
-            float = on
-            center = on
-          }
         '';
       };
 

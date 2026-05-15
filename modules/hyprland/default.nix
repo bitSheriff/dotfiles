@@ -25,6 +25,7 @@ in
     ./inputs.nix
     ./keymaps.nix
     ./looks.nix
+    ./window-rules.nix
   ];
 
   programs.hyprland = {
