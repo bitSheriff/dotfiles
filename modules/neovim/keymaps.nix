@@ -105,6 +105,26 @@
           end
         '';
       }
+
+      ## Notes ##
+      {
+        mode = "n";
+        key = "<leader>nn";
+        action = "<cmd>Obsidian new";
+        desc = "Create new note";
+      }
+      {
+        mode = "n";
+        key = "<leader>nd";
+        action = "<cmd>Obsidian today<CR>";
+        desc = "Open daily notes";
+      }
+      {
+        mode = "n";
+        key = "<leader>nf";
+        action = "<cmd>Obsidian quick_switch<CR>";
+        desc = "Toggle concealer";
+      }
     ];
   };
 }

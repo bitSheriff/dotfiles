@@ -6,6 +6,7 @@
     ./looks.nix
     ./keymaps.nix
     ./snippets.nix
+    ./notes.nix
   ];
 
   environment.systemPackages = with pkgs; [
