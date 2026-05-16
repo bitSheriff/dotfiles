@@ -20,6 +20,7 @@ in
 
   environment.systemPackages = with pkgs; [
     ethtool
+    linux-wifi-hotspot # create wifi hotspots
   ];
 
   # Networking
