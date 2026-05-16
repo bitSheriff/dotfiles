@@ -134,7 +134,7 @@
           {
             key = "<delete>";
             context = "files";
-            command = "git update-index --assume-unchanged";
+            command = "git update-index --assume-unchanged {{ .SelectedFile.Name }}";
           }
           {
             key = "Q";
