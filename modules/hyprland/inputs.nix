@@ -25,6 +25,10 @@
           };
         };
 
+        gesture = [
+          "3, horizontal, workspace,"
+        ];
+
         cursor = {
           hide_on_key_press = true;
         };
