@@ -125,6 +125,18 @@
         action = "<cmd>Obsidian quick_switch<CR>";
         desc = "Toggle concealer";
       }
+      {
+        mode = "n";
+        key = "<leader>nl";
+        action = "<cmd>Obsidian follow_link<CR>";
+        desc = "Follow link";
+      }
+      {
+        mode = "v";
+        key = "<leader>nl";
+        action = "<cmd>Obsidian link<CR>";
+        desc = "Create link";
+      }
     ];
   };
 }

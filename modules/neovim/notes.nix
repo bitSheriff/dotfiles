@@ -21,6 +21,12 @@ in
           folder = "Journal/Daily";
           date_format = "YYYY-MM-DD";
         };
+
+        link = {
+          style = "wiki";
+          format = "absolute";
+          auto_update = false;
+        };
       };
     };
   };
