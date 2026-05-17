@@ -142,7 +142,6 @@
             "$mainMod SHIFT, F, pin"
             "$mainMod CTRL, F, fullscreen"
             "$mainMod ALT, F, exec, killall -SIGUSR1 waybar"
-            "$mainMod SHIFT, W, togglesplit"
             "$mainMod CTRL, W, exec, ~/.config/hypr/scripts/zen-mode.sh"
 
             "$mainMod, 1, workspace, 1"

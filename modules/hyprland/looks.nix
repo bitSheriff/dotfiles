@@ -34,15 +34,9 @@
             ];
           };
 
-          dwindle = {
-            pseudotile = true;
-            preserve_split = true;
-          };
-
           misc = {
             font_family = "Comic Mono";
             force_default_wallpaper = 0;
-            vfr = true;
           };
 
           ecosystem = {
