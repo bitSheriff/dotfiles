@@ -8,6 +8,7 @@ in
     notes.obsidian = {
       enable = true;
       setupOpts = {
+        legacy_commands = false;
         frontmatter.enabled = false; # can fuck up my metadata
         workspaces = [
           {
