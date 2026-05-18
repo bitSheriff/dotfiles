@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   inputs,
   ...
 }:
@@ -50,6 +51,16 @@ in
         "root"
         "@wheel"
       ];
+
+      substituters = [
+        "http://rhodos.local:5000" # own cache server
+        "https://cache.nixos.org/"
+      ];
+
+      trusted-public-keys = [
+        "local-network-cache:local-network-cache:bGwTUJA5yO+yGUXDXFnqPz5hvaUtlW4VnHt9k8uxMOU="
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      ];
     };
 
     # keeps your drive from filling up with old generations
@@ -80,4 +91,15 @@ in
            /run/current-system "$systemConfig"
     '';
   };
+
+  ## OWN NIX CACHE ##
+  services.harmonia.cache = {
+    enable = config.networking.hostName == "rhodos";
+    # Point this to the secure location where your private key is stored
+    signKeyPaths = [ config.sops.secrets.nix_cache_priv.path ];
+  };
+
+  # Open the port in the firewall so other local machines can reach it
+  networking.firewall.allowedTCPPorts = lib.optionals (config.networking.hostName == "rhodos") [ 5000 ];
+
 }

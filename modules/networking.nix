@@ -46,6 +46,16 @@ in
     enable = true;
   };
 
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    publish = {
+      enable = true;
+      addresses = true;
+      workstation = true;
+    };
+  };
+
   sops.age.keyFile = "/home/benjamin/.age/dotfiles.key";
   sops.secrets = lib.listToAttrs (
     lib.concatMap (id: [

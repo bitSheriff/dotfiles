@@ -27,13 +27,21 @@
     ];
   };
 
-  # Passwords for Hosts
+  # System Wide Secrets
   sops = {
     defaultSopsFile = ../encrypted/secrets.yaml;
-    secrets.user-benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
-      key = "hosts/${config.networking.hostName}/benjamin";
-      neededForUsers = true;
+    secrets = {
+      # User password
+      user-benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+        key = "hosts/${config.networking.hostName}/benjamin";
+        neededForUsers = true;
+      };
+
+      "nix_cache_priv" = {
+        key = "nix/cache/rhodos/priv";
+      };
     };
+
   };
 
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) (
