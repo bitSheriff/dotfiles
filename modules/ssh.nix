@@ -41,8 +41,6 @@
       Host *
         IdentityAgent ~/.1password/agent.sock
 
-      Host delos rhodos
-        ConnectionAttempts 1
     '';
   };
 

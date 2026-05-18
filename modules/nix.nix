@@ -53,8 +53,9 @@ in
       ];
 
       substituters = [
-        "ssh://benjamin@delos"
-        "ssh://benjamin@rhodos"
+        # not stable enough if device is offline
+        # "ssh://benjamin@delos"
+        # "ssh://benjamin@rhodos"
         "https://cache.nixos.org/"
       ];
 
