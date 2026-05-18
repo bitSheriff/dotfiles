@@ -29,18 +29,21 @@
   };
 
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
-        home.file.".config/1Password/ssh/agent.toml".text = ''
-          [[ssh-keys]]
-          vault = "bitSheriff"
-        '';
+    home.file.".config/1Password/ssh/agent.toml".text = ''
+      [[ssh-keys]]
+      vault = "bitSheriff"
+    '';
 
-        # link the ssh config
-        home.file.".ssh/config".text = ''
-          Include ~/.ssh/hosts
+    # link the ssh config
+    home.file.".ssh/config".text = ''
+      Include ~/.ssh/hosts
 
-          Host *
-            IdentityAgent ~/.1password/agent.sock
-        '';
-      };
+      Host *
+        IdentityAgent ~/.1password/agent.sock
+
+      Host delos rhodos
+        ConnectionAttempts 1
+    '';
+  };
 
 }
