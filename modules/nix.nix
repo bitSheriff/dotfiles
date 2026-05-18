@@ -58,7 +58,7 @@ in
       ];
 
       trusted-public-keys = [
-        "local-network-cache:local-network-cache:bGwTUJA5yO+yGUXDXFnqPz5hvaUtlW4VnHt9k8uxMOU="
+        "local-network-cache:bGwTUJA5yO+yGUXDXFnqPz5hvaUtlW4VnHt9k8uxMOU="
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       ];
     };
@@ -100,6 +100,8 @@ in
   };
 
   # Open the port in the firewall so other local machines can reach it
-  networking.firewall.allowedTCPPorts = lib.optionals (config.networking.hostName == "rhodos") [ 5000 ];
+  networking.firewall.allowedTCPPorts = lib.optionals (config.networking.hostName == "rhodos") [
+    5000
+  ];
 
 }
