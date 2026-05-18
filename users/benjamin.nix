@@ -113,7 +113,38 @@
 
       xdg = {
         enable = true;
-        configFile = {
+        mime = {
+          enable = true;
+        };
+        mimeApps = {
+          enable = true;
+
+          defaultApplications = {
+            # get desktop file names: ls /run/current-system/sw/share/applications/ | grep X
+
+            # Office Stuff
+            "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+            # Media
+            "image/png" = [ "com.interversehq.qView.desktop" ];
+            "image/jpeg" = [ "com.interversehq.qView.desktop" ];
+            "image/webp" = [ "com.interversehq.qView.desktop" ];
+            "video/mp4" = [ "mpv.desktop" ];
+            # Web
+            "x-scheme-handler/https" = [ "firefox.desktop" ];
+            # Archives
+            "application/zip" = [ "peazip.desktop" ];
+            "application/x-zip-compressed" = [ "peazip.desktop" ];
+            "application/x-tar" = [ "peazip.desktop" ]; # .tar
+            "application/gzip" = [ "peazip.desktop" ]; # .tar.gz / .tgz
+            "application/x-gzip" = [ "peazip.desktop" ];
+            "application/bzip2" = [ "peazip.desktop" ]; # .tar.bz2
+            "application/x-bzip2" = [ "peazip.desktop" ];
+            "application/x-xz" = [ "peazip.desktop" ]; # .tar.xz
+            "application/x-zstd" = [ "peazip.desktop" ]; # .tar.zst
+            "application/x-7z-compressed" = [ "peazip.desktop" ]; # .7z
+            "application/x-rar" = [ "peazip.desktop" ]; # .rar
+            "application/x-rar-compressed" = [ "peazip.desktop" ];
+          };
         };
       };
 
