@@ -41,12 +41,13 @@
         key = "nix/cache/rhodos/priv";
       };
 
+      # root needs this ssh key to update the nix store from known devices (like a private nix cache)
       root_ssh_key = {
-        key = "root/ssh/priv";
+        key = "ssh/root/priv";
         path = "/root/.ssh/id_ed25519";
         owner = "root";
         group = "root";
-        mode = "0400"; # Read-only for root, exactly as SSH requires
+        mode = "0400";
       };
     };
 
@@ -215,26 +216,35 @@
         age.keyFile = "${config.home.homeDirectory}/.age/dotfiles.key";
 
         secrets = {
-          "profile_picture" = {
+          profile_picture = {
             sopsFile = ../encrypted/.face.enc;
             format = "binary";
             path = "${config.home.homeDirectory}/.face";
           };
 
-          "qutebrowser_urls" = {
+          qutebrowser_urls = {
             sopsFile = ../encrypted/qutebrowser_urls.txt;
             format = "binary";
             path = "${config.home.homeDirectory}/.config/qutebrowser/bookmarks/urls";
           };
 
-          "ssh_hosts" = {
+          # SSH Stuff
+          ssh_hosts = {
             sopsFile = ../encrypted/ssh_hosts.txt;
             format = "binary";
             path = "${config.home.homeDirectory}/.ssh/hosts";
           };
 
-          # API Keys and Access Tokens
+          ssh_key_general = {
+            key = "ssh/general/priv";
+            path = "${config.home.homeDirectory}/.ssh/id_ed25519";
+          };
+          ssh_key_general_pub = {
+            key = "ssh/general/pub";
+            path = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
+          };
 
+          # API Keys and Access Tokens
           "api/openai" = {
             key = "api_keys/openai";
           };
