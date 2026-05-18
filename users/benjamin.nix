@@ -40,6 +40,14 @@
       "nix_cache_priv" = {
         key = "nix/cache/rhodos/priv";
       };
+
+      root_ssh_key = {
+        key = "root/ssh/priv";
+        path = "/root/.ssh/id_ed25519";
+        owner = "root";
+        group = "root";
+        mode = "0400"; # Read-only for root, exactly as SSH requires
+      };
     };
 
   };
