@@ -17,6 +17,7 @@
     ./kitty.nix
     ./ssh.nix
     ./appimage.nix
+    ./global-sops.nix
   ];
 
   # Bootloader

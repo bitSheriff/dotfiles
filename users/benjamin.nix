@@ -27,32 +27,6 @@
     ];
   };
 
-  # System Wide Secrets
-  sops = {
-    defaultSopsFile = ../encrypted/secrets.yaml;
-    secrets = {
-      # User password
-      user-benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
-        key = "hosts/${config.networking.hostName}/benjamin";
-        neededForUsers = true;
-      };
-
-      "nix_cache_priv" = {
-        key = "nix/cache/rhodos/priv";
-      };
-
-      # root needs this ssh key to update the nix store from known devices (like a private nix cache)
-      root_ssh_key = {
-        key = "ssh/root/priv";
-        path = "/root/.ssh/id_ed25519";
-        owner = "root";
-        group = "root";
-        mode = "0400";
-      };
-    };
-
-  };
-
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) (
     {
       config,
