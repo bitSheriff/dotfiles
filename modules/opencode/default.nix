@@ -24,7 +24,7 @@
         keybinds = {
           leader = "alt+b";
         };
-        theme = "system";
+        theme = "kanagawa";
         diff_style = "auto";
         mouse = true;
       };
