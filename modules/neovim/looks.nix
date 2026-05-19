@@ -5,6 +5,7 @@
   ...
 }:
 let
+  # leave empty for builtin theme
   colorscheme = "kanagawa";
 in
 {
@@ -27,8 +28,8 @@ in
     visuals.rainbow-delimiters.enable = true; # rainbow brackets
     ui.nvim-ufo.enable = true; # show folding levels
 
-    # Theme
-    theme = {
+    # Theme (only taken if no colorscheme plugin is selected)
+    theme = lib.mkIf (colorscheme == "") {
       enable = true;
       name = "tokyonight";
       style = "night";
