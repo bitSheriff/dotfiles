@@ -14,6 +14,8 @@
     packages = [ pkgs.apparmor-profiles ];
   };
 
+  services.mullvad-vpn.enable = true;
+
   # Advanced Kernel Hardening (does not work with nvidia)
   # boot.kernel.sysctl = {
   #   # Restrict dmesg access to root to prevent info leaks
