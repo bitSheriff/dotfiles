@@ -21,6 +21,8 @@
           "opacity 1.0 override 1.0 override, match:title (.*)(Twitch)(.*)$"
           "opacity 1.0 override 1.0 override, match:title (.*)(Prime Video)(.*)$"
           "opacity 1.0 override 1.0 override, match:title (.*)([Mm]onkeytype)(.*)$"
+          "opacity 1.0 override 1.0 override, match:title (.*)(Jitsi Meet)(.*)$"
+
           "opacity 1.0 override 1.0 override, match:class (.*)(GoodNotes|Goodnotes)(.*)$"
           "opacity 1.0 override 1.0 override, match:class ^(.)*(obsidian)(.)*$"
           "opacity 1.0 override 1.0 override, match:class ^(.)*(gwenview)$"
