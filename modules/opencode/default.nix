@@ -12,15 +12,30 @@
     opencode
   ];
 
-  home-manager.users.benjamin =
-    {
+  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+    programs.opencode = {
+      enable = true;
+      settings = {
+        autoupdate = true;
+        plugin = [ "opencode-gemini-auth@latest" ];
+      };
 
-      xdg.configFile = {
-        "opencode/opencode.json".source = ./opencode.json;
-        "opencode/agents".source = ./agents;
-        "opencode/skills".source = ./skills;
+      tui = {
+        keybinds = {
+          leader = "alt+b";
+        };
+        theme = "system";
+        diff_style = "auto";
+        mouse = true;
       };
 
     };
+
+    xdg.configFile = {
+      "opencode/agents".source = ./agents;
+      "opencode/skills".source = ./skills;
+    };
+
+  };
 
 }
