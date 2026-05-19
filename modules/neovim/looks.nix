@@ -1,5 +1,12 @@
-{ config, pkgs, ... }:
-
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  colorscheme = "kanagawa";
+in
 {
   programs.nvf.settings.vim = {
     # UI plugins
@@ -30,7 +37,12 @@
     extraPlugins = {
       lazygit = {
         package = pkgs.vimPlugins.lazygit-nvim;
-        # setup = "require('aerial').setup {}";
+      };
+
+      ## COLORSCHEME Plugins
+      kanagawa = lib.mkIf (colorscheme == "kanagawa") {
+        package = pkgs.vimPlugins.kanagawa-nvim;
+        setup = "require('kanagawa').load('wave')";
       };
     };
   };
