@@ -126,11 +126,13 @@ in
     with pkgs;
     [
       # Image & Graphics
-      gimp # like photoshop but without selling your soul
-      inkscape
+      # gimp # like photoshop but without selling your soul
+      # inkscape
       ente-desktop # encrypted photo backup
       qview # minimal image viewer
+      gthumb # viewer and simple editor
       imagemagick # i think there is nothing it cannot do
+      pinta # simple image manipulation
 
       # Video & Recording
       vlc
@@ -142,6 +144,7 @@ in
       picard # mp3tag editor
       feishin # jellyfin and navidrone music player (spotify alike)
       # asunder # ripping cd's like its 2000
+
       digest-mp3s
     ]
 
