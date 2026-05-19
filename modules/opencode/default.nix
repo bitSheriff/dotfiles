@@ -29,6 +29,14 @@
         mouse = true;
       };
 
+      web = {
+        enable = true;
+        extraArgs = [
+          "--port"
+          "4096"
+        ];
+      };
+
     };
 
     xdg.configFile = {

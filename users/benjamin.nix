@@ -227,12 +227,17 @@
             key = "access_token/github";
           };
 
+          "access/opencode" = {
+            key = "access_token/opencode";
+          };
+
         };
       };
 
       # load the data from the files into environment variables
       programs.zsh.initContent = ''
         export GITHUB_TOKEN="$(cat ${config.sops.secrets."access/github".path})"
+        export OPENCODE_SERVER_PASSWORD="$(cat ${config.sops.secrets."access/opencode".path})"
       '';
 
     }
