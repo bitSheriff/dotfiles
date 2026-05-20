@@ -28,6 +28,9 @@
     # Monitor Configurator for Hyprland
     monique.url = "github:ToRvaLDz/monique";
 
+    # git-today
+    git-today.url = "github:bitSheriff/git-today";
+
     # my own flakes
     my-flakes.url = "github:bitSheriff/my-flakes";
   };
@@ -59,7 +62,7 @@
             disko.nixosModules.disko
             ./hosts/rhodos
             # Overlays
-            { nixpkgs.overlays = [ (import ./overlays) ]; }
+            { nixpkgs.overlays = [ (import ./overlays inputs) ]; }
             # Collections
             ./collections/development.nix
             ./collections/office.nix
@@ -106,7 +109,7 @@
             disko.nixosModules.disko
             ./hosts/delos
             # Overlays
-            { nixpkgs.overlays = [ (import ./overlays) ]; }
+            { nixpkgs.overlays = [ (import ./overlays inputs) ]; }
             # Collections
             ./collections/development.nix
             ./collections/office.nix

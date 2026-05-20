@@ -1,8 +1,8 @@
 # overlays/default.nix
-final: prev: {
+inputs: final: prev: {
   # Signal TUI client
   siggy = final.callPackage ./siggy.nix { };
 
   # git-today recaps your daily git work
-  git-today = final.callPackage ./git-today.nix { };
+  git-today = inputs.git-today.packages.${final.stdenv.hostPlatform.system}.default;
 }
