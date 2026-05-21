@@ -3,7 +3,7 @@
     "#989583",
     "#504239"
   ],
-  "paletteColors": [],
+  "paletteColors": "",
   "installedLangs": [
     "afr",
     "amh",
@@ -139,14 +139,22 @@
   "videoPath": "",
   "filenameFormat": "",
   "detectedRecorder": "wl-screenrec",
+  "recordSkipConfirmation": false,
+  "recordCopyToClipboard": false,
+  "gifMaxSeconds": 30,
   "detectedCompositor": "hyprland",
   "stateIsRunning": false,
   "stateActiveTool": "",
   "stateMirrorVisible": false,
-  "resultHex": "#989583",
-  "resultRgb": "rgb(152, 149, 131)",
-  "resultHsv": "hsv(51, 14%, 60%)",
-  "resultHsl": "hsl(51, 9%, 55%)",
-  "colorCapturePath": "/tmp/screen-toolkit-colorpicker.png",
-  "colorCacheBust": 1777138221082
+  "resultHex": "",
+  "resultRgb": "",
+  "resultHsv": "",
+  "resultHsl": "",
+  "colorCapturePath": "",
+  "colorCacheBust": 0,
+  "ocrResult": "",
+  "ocrCapturePath": "",
+  "qrResult": "",
+  "qrCapturePath": "",
+  "translateResult": ""
 }
