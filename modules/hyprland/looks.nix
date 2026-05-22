@@ -63,6 +63,27 @@
             disable_splash_rendering = true;
           };
 
+          decoration = {
+            rounding = 10;
+            active_opacity = 0.95;
+            inactive_opacity = 0.9;
+            fullscreen_opacity = 1.0;
+
+            shadow = {
+              enabled = true;
+              range = 4;
+              render_power = 3;
+              # color = "$tertiary";
+            };
+
+            blur = {
+              enabled = true;
+              size = 3;
+              passes = 1;
+              vibrancy = 0.1696;
+            };
+          };
+
           workspace = [
             "special:term-scratchpad, on-created-empty:kitty --class term-scratchpad"
           ];
@@ -107,27 +128,6 @@
               gradient_rounding = 5
               gaps_in = 1
               gaps_out = 1
-            }
-          }
-
-          decoration {
-            rounding = 10
-            active_opacity = 0.95
-            inactive_opacity = 0.9
-            fullscreen_opacity = 1.0
-
-            shadow {
-              enabled = true
-              range = 4
-              render_power = 3
-              color = $tertiary
-            }
-
-            blur {
-              enabled = true
-              size = 3
-              passes = 1
-              vibrancy = 0.1696
             }
           }
 
