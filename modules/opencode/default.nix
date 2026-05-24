@@ -15,22 +15,36 @@
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
     programs.opencode = {
       enable = true;
+
+      # ssettings in `opencode.json`
       settings = {
-        autoupdate = true;
-        plugin = [ "opencode-gemini-auth@latest" ];
-        git = {
-          commit = false;
-          push = false;
-        };
-        privacy.mask_secrets = true;
-        rg.extraArgs = [ "--hidden" ];
-        nix = {
-          sandbox = true;
-          formatter = "nixfmt";
-          auto_direnv = true;
+        plugin = [
+          "opencode-gemini-auth@latest"
+          "@simonwjackson/opencode-direnv"
+        ];
+        formatter = true;
+        permission = {
+          read = {
+            "*" = "allow";
+            "*.env" = "ask";
+            "*.env.example" = "allow";
+          };
+          git = {
+            "*" = "ask";
+            pull = "allow";
+            push = "allow";
+            commit = "deny";
+          };
+          nix = {
+            check = "allow";
+            develop = "allow";
+            "build *" = "allow";
+            "run *" = "allow";
+          };
         };
       };
 
+      # settings in `tui.json`
       tui = {
         keybinds = {
           leader = "alt+b";
