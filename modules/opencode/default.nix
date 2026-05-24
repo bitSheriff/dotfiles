@@ -18,6 +18,17 @@
       settings = {
         autoupdate = true;
         plugin = [ "opencode-gemini-auth@latest" ];
+        git = {
+          commit = false;
+          push = false;
+        };
+        privacy.mask_secrets = true;
+        rg.extraArgs = [ "--hidden" ];
+        nix = {
+          sandbox = true;
+          formatter = "nixfmt";
+          auto_direnv = true;
+        };
       };
 
       tui = {
@@ -27,6 +38,8 @@
         theme = "kanagawa";
         diff_style = "auto";
         mouse = true;
+        icons = true;
+        sidebar = "left";
       };
 
       web = {
