@@ -117,6 +117,7 @@ in
         wayland.windowManager.hyprland = {
           enable = true;
           configType = "hyprlang";
+          sourceFirst = true;
           extraConfig = ''
             source = /home/benjamin/.config/hypr/noctalia/noctalia-colors.conf
           '';
