@@ -75,6 +75,7 @@
             ./modules/common.nix
             ./modules/hyprland
             ./modules/meshtastic.nix
+            # ./modules/forgejo.nix
             (
               {
                 activeUsers,

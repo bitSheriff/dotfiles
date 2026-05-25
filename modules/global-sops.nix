@@ -27,6 +27,10 @@
         key = "nix/cache/rhodos/priv";
       };
 
+      codeberg_runner_token = {
+        key = "access_token/forgejo_runner/codeberg/token";
+      };
+
       # root needs this ssh key to update the nix store from known devices (like a private nix cache)
       root_ssh_key = {
         key = "ssh/root/priv";
