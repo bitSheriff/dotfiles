@@ -216,15 +216,7 @@
         open = {
           rules = [
             {
-              name = "*/";
-              use = [
-                "edit"
-                "open"
-                "reveal"
-              ];
-            }
-            {
-              mime = "application/epub+zip";
+              mime = "application/epub";
               use = [ "viewEpub" ];
             }
             {
