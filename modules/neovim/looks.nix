@@ -27,6 +27,8 @@ in
     ui.noice.enable = true; # notifications
     visuals.rainbow-delimiters.enable = true; # rainbow brackets
     ui.nvim-ufo.enable = true; # show folding levels
+    mini.indentscope.enable = true; # show indentation with colored lines
+    mini.hipatterns.enable = true; # show color constants in their real color
 
     # Theme (only taken if no colorscheme plugin is selected)
     theme = lib.mkIf (colorscheme == "") {

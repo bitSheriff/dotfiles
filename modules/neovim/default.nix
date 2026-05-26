@@ -64,11 +64,15 @@
       telescope.enable = true;
       autocomplete.nvim-cmp.enable = true;
       git.gitsigns.enable = true;
-      autopairs.nvim-autopairs.enable = true;
-      comments.comment-nvim.enable = true;
+
+      # handle commenting lines
+      mini.comment.enable = true;
 
       # enable ciq, change in quotes movement
       mini.ai.enable = true;
+
+      # auto close braces, brackets and stuff
+      mini.pairs.enable = true;
 
       # move lines up and done
       mini.move = {
