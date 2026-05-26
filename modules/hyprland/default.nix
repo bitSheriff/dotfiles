@@ -26,6 +26,9 @@ in
     ./keymaps.nix
     ./looks.nix
     ./window-rules.nix
+    ./hypridle.nix
+    ./hyprlock.nix
+    ./hyprpaper.nix
   ];
 
   programs.hyprland = {
