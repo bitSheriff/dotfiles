@@ -67,6 +67,9 @@
       autopairs.nvim-autopairs.enable = true;
       comments.comment-nvim.enable = true;
 
+      # enable ciq, change in quotes movement
+      mini.ai.enable = true;
+
       # move lines up and done
       mini.move = {
         enable = true;
