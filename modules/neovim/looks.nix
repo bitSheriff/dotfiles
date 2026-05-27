@@ -21,7 +21,10 @@ in
       setupOpts.git.enable = true;
     };
 
-    dashboard.alpha.enable = true;
+    dashboard.alpha = {
+      enable = true;
+      theme = "theta";
+    };
     tabline.nvimBufferline.enable = true;
     ui.colorizer.enable = true; # display RGB values in their color
     ui.noice.enable = true; # notifications
