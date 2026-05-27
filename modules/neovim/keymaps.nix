@@ -69,8 +69,10 @@
         silent = true;
         desc = "Open LazyGit";
       }
+
+      ## Notes ##
       {
-        key = "<leader>tt";
+        key = "<leader>nt";
         mode = "n";
         lua = true;
         silent = true;
@@ -105,8 +107,6 @@
           end
         '';
       }
-
-      ## Notes ##
       {
         mode = "n";
         key = "<leader>nn";
