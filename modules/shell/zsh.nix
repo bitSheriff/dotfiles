@@ -113,7 +113,7 @@
           sync = "rsync -rtu '$1' '$2' && rsync -rtu '$2' '$1'";
 
           # heast oida
-          oida = "sudo !!";
+          oida = "sudo $(fc -ln -1)";
 
         };
 
