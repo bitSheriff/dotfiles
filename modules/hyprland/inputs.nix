@@ -13,25 +13,31 @@
     { config, lib, ... }:
     lib.mkIf (lib.elem "benjamin" activeUsers) {
       wayland.windowManager.hyprland.settings = {
-        input = {
-          kb_layout = "de";
-          kb_options = "caps:escape";
-          follow_mouse = 1;
-          sensitivity = 0;
-          touchpad = {
-            natural_scroll = false;
-            disable_while_typing = true;
-            clickfinger_behavior = true;
+        config = {
+          input = {
+            kb_layout = "de";
+            kb_options = "caps:escape";
+            follow_mouse = 1;
+            sensitivity = 0;
+            touchpad = {
+              natural_scroll = false;
+              disable_while_typing = true;
+              clickfinger_behavior = true;
+            };
+          };
+
+          cursor = {
+            hide_on_key_press = true;
           };
         };
 
         gesture = [
-          "3, horizontal, workspace,"
+          {
+            fingers = 3;
+            direction = "horizontal";
+            action = "workspace";
+          }
         ];
-
-        cursor = {
-          hide_on_key_press = true;
-        };
 
         device = [
           {
@@ -43,12 +49,18 @@
         ];
 
         monitor = [
-          ",preferred,auto,1"
-          "desc:BOE 0x0BCA, 2256x1504@59.999, 0x0, 1"
-        ];
-
-        bindl = [
-          ",switch:on:Lid Switch,exec,systemctl suspend"
+          {
+            output = "";
+            mode = "preferred";
+            position = "auto";
+            scale = "1";
+          }
+          {
+            output = "desc:BOE 0x0BCA";
+            mode = "2256x1504@59.999";
+            position = "0x0";
+            scale = "1";
+          }
         ];
       };
     };
