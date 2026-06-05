@@ -20,12 +20,6 @@ in
     ../kdeconnect.nix
     ../noctalia
     # Hyprland Modules
-    ./autostart.nix
-    ./env.nix
-    ./inputs.nix
-    ./keymaps.nix
-    ./looks.nix
-    ./window-rules.nix
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
@@ -117,13 +111,24 @@ in
     { config, lib, ... }:
     {
       config = lib.mkIf (lib.elem "benjamin" activeUsers) {
-        wayland.windowManager.hyprland = {
+
+        programs.swappy = {
           enable = true;
-          configType = "lua";
-          sourceFirst = true;
-          # extraConfig = ''
-          #   colors = require("noctalia.noctalia-colors")
-          # '';
+          settings = {
+            "Config" = {
+              save_dir = "$HOME/Pictures/Screenshots";
+              save_filename_format = "swappy-%Y%m%d-%H%M%S.png";
+            };
+          };
+        };
+
+        xdg.configFile = {
+          "hypr" = {
+            source = ./lua;
+            recursive = true;
+          };
+          "hypr/noctalia".source =
+            config.lib.file.mkOutOfStoreSymlink "${dotfiles_path}/modules/hyprland/noctalia";
         };
       };
     };
