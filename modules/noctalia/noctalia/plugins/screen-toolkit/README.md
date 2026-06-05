@@ -87,8 +87,8 @@ When recording is active, the plugin icon shows a red pulsing dot. Clicking the 
 ### Arch Linux
 
 ```bash
-sudo pacman -S grim slurp hyprpicker wl-clipboard tesseract tesseract-data-eng imagemagick zbar curl translate-shell ffmpeg jq wl-screenrec python python-gobject xdg-desktop-portal
-yay -S gifski
+sudo pacman -S grim slurp hyprpicker wl-clipboard tesseract tesseract-data-eng imagemagick zbar curl translate-shell ffmpeg jq python python-gobject xdg-desktop-portal
+yay -S gifski wl-screenrec-git
 ```
 
 ### Debian / Ubuntu
