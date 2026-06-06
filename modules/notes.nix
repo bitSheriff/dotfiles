@@ -68,217 +68,270 @@ let
             print("    open_journal +1 nvim # Opens tomorrow's journal")
             sys.exit(1)
   '';
-  weekly = pkgs.writeShellScriptBin "weekly" ''
-    YEAR=$(date +%G)
-    WEEKNR=$(date +%V)
-    FILENAME="$YEAR-W$WEEKNR.md"
+  weekly = pkgs.writeShellApplication {
+    name = "weekly";
+    runtimeInputs = [ pkgs.coreutils ];
+    text = ''
+      YEAR=$(date +%G)
+      WEEKNR=$(date +%V)
+      FILENAME="$YEAR-W$WEEKNR.md"
 
-    if [[ -z "$JOURNAL_WEEKLY_PATH" ]]; then
-        echo "Error: Weekly Path not set"
-        exit 1
-    fi
+      if [[ -z "''${JOURNAL_WEEKLY_PATH:-}" ]]; then
+          echo "Error: Weekly Path not set"
+          exit 1
+      fi
 
+      editor="''${1:-nvim}"
+      "$editor" "$JOURNAL_WEEKLY_PATH/$FILENAME"
+    '';
+  };
 
-    editor="''${1:-nvim}"
-    "$editor" "$JOURNAL_WEEKLY_PATH/$FILENAME"
-  '';
+  notes = pkgs.writeShellApplication {
+    name = "notes";
+    runtimeInputs = [ pkgs.fd pkgs.fzf pkgs.gnused pkgs.findutils pkgs.coreutils ];
+    text = ''
+      # Ensure NOTES_DIR is set
+      if [[ -z "''${NOTES_DIR:-}" ]]; then
+          echo "Error: NOTES_DIR is not set. Please set it to the directory where your notes are stored."
+          exit 1
+      fi
 
-  notes = pkgs.writeShellScriptBin "notes" ''
-    # Ensure NOTES_DIR is set
-    if [[ -z "$NOTES_DIR" ]]; then
-        echo "Error: NOTES_DIR is not set. Please set it to the directory where your notes are stored."
-        exit 1
-    fi
+      editor="''${1:-nvim}" # Use the first argument if provided, otherwise default to nvim
 
-    editor="''${1:-nvim}" # Use the first argument if provided, otherwise default to nvim
+      (
+          cd "$NOTES_DIR" || exit 1 # Exit if NOTES_DIR cannot be changed to
+          file="$(fd --extension md | fzf || true)"             # Capture the output of tv files
+          # Trim and sanitize the file name
+          if [[ -n "$file" ]]; then
+              sanitized_file=$(echo "$file" | sed 's/[{}]//g' | xargs)
+              if [[ -f "$sanitized_file" ]]; then
+                  # Use the editor to open the selected file
+                  "$editor" "$sanitized_file"
+              else
+                  echo "Error: No valid file selected or file does not exist."
+              fi
+          fi
+      )
+    '';
+  };
 
-    (
-        cd "$NOTES_DIR" || exit 1 # Exit if NOTES_DIR cannot be changed to
-        file="$(fd --extension md | fzf)"             # Capture the output of tv files
-        # Trim and sanitize the file name
-        sanitized_file=$(echo "$file" | sed 's/[{}]//g' | xargs)
-        if [[ -n "$sanitized_file" && -f "$sanitized_file" ]]; then
-            # Use the editor to open the selected file
-            "$editor" "$sanitized_file"
-        else
-            echo "Error: No valid file selected or file does not exist."
-        fi
-    )
-  '';
+  memo = pkgs.writeShellApplication {
+    name = "memo";
+    runtimeInputs = [ pkgs.coreutils pkgs.gum ];
+    text = ''
+      # Preamble of the Memo
+      MEMO_PRE="- **$(date +%H:%M):** "
+      LINES_PRE="    - "
 
-  memo = pkgs.writeShellScriptBin "memo" ''
-    # Preamble of the Memo
-    MEMO_PRE="- **$(date +%H:%M):** "
-    LINES_PRE="    - "
+      if [[ -z "''${JOURNAL_DAILY_PATH:-}" ]]; then
+          echo "Error: JOURNAL_DAILY_PATH not set"
+          exit 1
+      fi
 
-    # Journal File where the memo gets added
-    JOURNAL=$JOURNAL_DAILY_PATH/$(date +"%F").md
+      # Journal File where the memo gets added
+      JOURNAL="$JOURNAL_DAILY_PATH/$(date +"%F").md"
 
-    # check if file has new line at the end, if not add one
-    test "$(tail -c 1 "$JOURNAL" | wc -l)" -eq 0 && echo "" >>"$JOURNAL"
+      # check if file exists, if not create it
+      if [[ ! -f "$JOURNAL" ]]; then
+          touch "$JOURNAL"
+      fi
 
-    # decide if the input was given as a positional argument or parsed into (stdin)
-    if [ $# -gt 0 ]; then
-        # If there are arguments, join them into a single string and process
-        input="$*"
-        echo "$MEMO_PRE""$input" >>"$JOURNAL"
-    else
+      # check if file has new line at the end, if not add one
+      if [[ -s "$JOURNAL" ]]; then
+          test "$(tail -c 1 "$JOURNAL" | wc -l)" -eq 0 && echo "" >>"$JOURNAL"
+      fi
 
-        # Otherwise, use gum write to get the input
-        input=$(gum write --header "Memo" --show-line-numbers --char-limit 0)
+      # decide if the input was given as a positional argument or parsed into (stdin)
+      if [ $# -gt 0 ]; then
+          # If there are arguments, join them into a single string and process
+          input="$*"
+          echo "$MEMO_PRE""$input" >>"$JOURNAL"
+      else
 
-        # line counter
-        count=0
+          # Otherwise, use gum write to get the input
+          input=$(gum write --header "Memo" --show-line-numbers --char-limit 0)
 
-        # Process the input line by line
-        while IFS= read -r line; do
-            # just print the preamble on the first line
-            if [ $count -eq 0 ]; then
-                # Process the first line differently
-                echo "$MEMO_PRE""$line" >>"$JOURNAL"
-            else
-                # Process the remaining lines
-                echo "$LINES_PRE""$line" >>"$JOURNAL"
-            fi
+          # line counter
+          count=0
 
-            # Increment the counter
-            count=$((count + 1))
-        done <<<"$input"
-    fi
-  '';
+          # Process the input line by line
+          while IFS= read -r line; do
+              # just print the preamble on the first line
+              if [ $count -eq 0 ]; then
+                  # Process the first line differently
+                  echo "$MEMO_PRE""$line" >>"$JOURNAL"
+              else
+                  # Process the remaining lines
+                  echo "$LINES_PRE""$line" >>"$JOURNAL"
+              fi
 
-  memo-gui = pkgs.writeShellScriptBin "memo-gui" ''
-    kitty --class floating --title "Pop-up Terminal" -e memo
-  '';
+              # Increment the counter
+              count=$((count + 1))
+          done <<<"$input"
+      fi
+    '';
+  };
 
-  inbox = pkgs.writeShellScriptBin "inbox" ''
-    # Preamble of the Memo
-    INBOX_PRE=""
-    INBOX_POST=""
+  memo-gui = pkgs.writeShellApplication {
+    name = "memo-gui";
+    runtimeInputs = [ pkgs.kitty memo ];
+    text = ''
+      kitty --class floating --title "Pop-up Terminal" -e memo
+    '';
+  };
 
-    # Journal File where the memo gets added
-    INBOX_FILE="$INBOX"
-    INBOX_DIR="$(dirname -- "$INBOX_FILE")"
-    LINKS_FILE="$INBOX_DIR/Save 4 Later.md"
-    TODO_FILE="$INBOX_DIR/Task Inbox.md"
+  inbox = pkgs.writeShellApplication {
+    name = "inbox";
+    runtimeInputs = [ pkgs.coreutils pkgs.gum pkgs.wl-clipboard ];
+    text = ''
+      # Journal File where the memo gets added
+      if [[ -z "''${INBOX:-}" ]]; then
+          echo "Error: INBOX environment variable not set"
+          exit 1
+      fi
+      INBOX_FILE="$INBOX"
+      INBOX_DIR="$(dirname -- "$INBOX_FILE")"
+      LINKS_FILE="$INBOX_DIR/Save 4 Later.md"
+      TODO_FILE="$INBOX_DIR/Task Inbox.md"
 
-    create_inbox_file() {
-        # line conter
-        count=0
-        filename=""
+      create_inbox_file() {
+          # line conter
+          count=0
+          filename=""
 
-        while IFS= read -r line; do
-            # just print the preamble on the first line
-            if [ $count -eq 0 ]; then
-                # the first line is the name of the file
-                filename="$INBOX_DIR/$line.md"
+          while IFS= read -r line; do
+              # just print the preamble on the first line
+              if [ $count -eq 0 ]; then
+                  # the first line is the name of the file
+                  filename="$INBOX_DIR/$line.md"
 
-                # write the name of the file as first Heading
-                echo "# $line" >>"$filename"
-            else
-                # Process the remaining lines
-                echo "$line" >>"$filename"
-            fi
+                  # write the name of the file as first Heading
+                  echo "# $line" >>"$filename"
+              else
+                  # Process the remaining lines
+                  echo "$line" >>"$filename"
+              fi
 
-            # Increment the counter
-            count=$((count + 1))
-        done
-    }
+              # Increment the counter
+              count=$((count + 1))
+          done
+      }
 
-    save_link() {
-        # check if file has new line at the end, if not add one
-        test "$(tail -c 1 "$LINKS_FILE" | wc -l)" -eq 0 && echo "" >>"$LINKS_FILE"
+      save_link() {
+          # check if file exists, if not create it
+          if [[ ! -f "$LINKS_FILE" ]]; then
+              touch "$LINKS_FILE"
+          fi
+          # check if file has new line at the end, if not add one
+          if [[ -s "$LINKS_FILE" ]]; then
+              test "$(tail -c 1 "$LINKS_FILE" | wc -l)" -eq 0 && echo "" >>"$LINKS_FILE"
+          fi
 
-        local title=$(gum input --placeholder "Title")
-        local url=$(gum input --placeholder "URL")
-        local notes=$(gum input --placeholder "Notes")
+          local title
+          title=$(gum input --placeholder "Title")
+          local url
+          url=$(gum input --placeholder "URL")
+          local notes
+          notes=$(gum input --placeholder "Notes")
 
-        echo "- [ ] [$title]($url)" >>"$LINKS_FILE"
+          echo "- [ ] [$title]($url)" >>"$LINKS_FILE"
 
-        # add notes if provided
-        if [[ -n "$notes" ]]; then
-            echo "    - $notes" >>"$LINKS_FILE"
-        fi
-    }
+          # add notes if provided
+          if [[ -n "$notes" ]]; then
+              echo "    - $notes" >>"$LINKS_FILE"
+          fi
+      }
 
-    save_todo(){
-        # check if file has new line at the end, if not add one
-        test "$(tail -c 1 "$TODO_FILE" | wc -l)" -eq 0 && echo "" >>"$TODO_FILE"
+      save_todo(){
+          # check if file exists, if not create it
+          if [[ ! -f "$TODO_FILE" ]]; then
+              touch "$TODO_FILE"
+          fi
+          # check if file has new line at the end, if not add one
+          if [[ -s "$TODO_FILE" ]]; then
+              test "$(tail -c 1 "$TODO_FILE" | wc -l)" -eq 0 && echo "" >>"$TODO_FILE"
+          fi
 
-        local title=$(gum input --placeholder "Title")
-        local notes=$(gum input --placeholder "Notes")
+          local title
+          title=$(gum input --placeholder "Title")
+          local notes
+          notes=$(gum input --placeholder "Notes")
 
-        echo "- [ ] $title" >>"$TODO_FILE"
+          echo "- [ ] $title" >>"$TODO_FILE"
 
-        # add notes if provided
-        if [[ -n "$notes" ]]; then
-            echo "    - $notes" >>"$TODO_FILE"
-        fi
-    }
+          # add notes if provided
+          if [[ -n "$notes" ]]; then
+              echo "    - $notes" >>"$TODO_FILE"
+          fi
+      }
 
-    OPTSTRING="cnlht"
-    while getopts "''${OPTSTRING}" opt; do
-        case "''${opt}" in
-        h) # help/usage
-            echo "inbox [opt] [text]"
-            echo "Little script to save text in the inbox file. If no text is provided at stdin, it will provide promt(s) to fill in some text. Collecting text with stdin makes it possible to parse output of other programs to the inbox file."
-            echo "Usage:"
-            echo "  -h ... Print this help/usage message"
-            echo "  -c ... Puts the clipboard contents to the inbox file"
-            echo "  -n ... Create a new file in the inbox for this item"
-            echo "  -t ... Create a new todo"
-            echo "  -l ... Save a link, promts you to enter the name, url and some optional notes for this link"
-            echo "         Links will get formated as a Todo"
-            exit 0
-            ;;
-        c) # clipboard option
-            echo -e "\n$(wl-paste)" >>"$INBOX_FILE"
-            exit 0
-            ;;
-        n) # create new file
-            create_inbox_file
-            exit 0
-            ;;
-        l) # save link
-            save_link
-            exit 0
-            ;;
-        t) # save todo
-            save_todo
-            exit 0
-            ;;
-        esac
-    done
+      OPTSTRING="cnlht"
+      while getopts "''${OPTSTRING}" opt; do
+          case "''${opt}" in
+          h) # help/usage
+              echo "inbox [opt] [text]"
+              echo "Little script to save text in the inbox file. If no text is provided at stdin, it will provide promt(s) to fill in some text. Collecting text with stdin makes it possible to parse output of other programs to the inbox file."
+              echo "Usage:"
+              echo "  -h ... Print this help/usage message"
+              echo "  -c ... Puts the clipboard contents to the inbox file"
+              echo "  -n ... Create a new file in the inbox for this item"
+              echo "  -t ... Create a new todo"
+              echo "  -l ... Save a link, promts you to enter the name, url and some optional notes for this link"
+              echo "         Links will get formated as a Todo"
+              exit 0
+              ;;
+          c) # clipboard option
+              printf "\n%s\n" "$(wl-paste)" >>"$INBOX_FILE"
+              exit 0
+              ;;
+          n) # create new file
+              create_inbox_file
+              exit 0
+              ;;
+          l) # save link
+              save_link
+              exit 0
+              ;;
+          t) # save todo
+              save_todo
+              exit 0
+              ;;
+          *)
+              exit 1
+              ;;
+          esac
+      done
 
-    # decide if the input was given as a positional argument or parsed into (stdin)
-    if [ $# -gt 0 ]; then
-        # If there are arguments, join them into a single string and process
-        input="$*"
-        echo -e "\n$input\n" >>"$INBOX_FILE"
-    else
-        # Otherwise, use gum write to get the input (stdin)
-        input=$(gum write --header "Inbox" --show-line-numbers --char-limit 0)
+      # decide if the input was given as a positional argument or parsed into (stdin)
+      if [ $# -gt 0 ]; then
+          # If there are arguments, join them into a single string and process
+          input="$*"
+          printf "\n%s\n\n" "$input" >>"$INBOX_FILE"
+      else
+          # Otherwise, use gum write to get the input (stdin)
+          input=$(gum write --header "Inbox" --show-line-numbers --char-limit 0)
 
-        # line conter
-        count=0
+          # line conter
+          count=0
 
-        while IFS= read -r line; do
-            # just print the preamble on the first line
-            if [ $count -eq 0 ]; then
-                # Process the first line differently
-                echo -e "\n$line" >>"$INBOX_FILE"
-            else
-                # Process the remaining lines
-                echo "$line" >>"$INBOX_FILE"
-            fi
+          while IFS= read -r line; do
+              # just print the preamble on the first line
+              if [ $count -eq 0 ]; then
+                  # Process the first line differently
+                  printf "\n%s\n" "$line" >>"$INBOX_FILE"
+              else
+                  # Process the remaining lines
+                  echo "$line" >>"$INBOX_FILE"
+              fi
 
-            # Increment the counter
-            count=$((count + 1))
-        done <<<"$input"
+              # Increment the counter
+              count=$((count + 1))
+          done <<<"$input"
 
-        echo -e "\n" >>"$INBOX_FILE"
-    fi
-  '';
+          printf "\n\n" >>"$INBOX_FILE"
+      fi
+    '';
+  };
   todo = pkgs.writers.writePython3Bin "todo" { } ''
     import os
     import sys
