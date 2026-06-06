@@ -21,6 +21,7 @@ in
     agenix-cli # needed for age to encrypt nix
     nix-update # update helper for overlays
     nix-output-monitor # better show output (useful for nix build |& nom)
+    comma # run packages (installed or not) with ,
     # scripts
     nb
     nd
