@@ -25,6 +25,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
   time.timeZone = "Europe/Vienna";
   i18n.defaultLocale = "en_US.UTF-8";
+  boot.kernel.sysctl = {
+    # increase the file watchers, else Obsidian can have problems
+    "fs.inotify.max_user_watches" = 524288;
+  };
 
   console.keyMap = "de";
 
