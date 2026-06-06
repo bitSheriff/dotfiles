@@ -106,6 +106,10 @@
           autoUpdate = true;
         };
       };
+
+      ignores = [
+        ".antigravitycli/"
+      ];
     };
 
     # Delta: A better diff tool
