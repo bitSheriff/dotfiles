@@ -27,6 +27,7 @@ hl.window_rule({ match = { class = "mpv" }, opacity = "1.0 override" })
 local opaque_titles = {
     ".*YouTube.*",
     ".*Twitch.*",
+    "Picture-in-Picture",
 }
 
 for _, title_pattern in ipairs(opaque_titles) do
