@@ -182,6 +182,9 @@ hl.bind("SUPER + CTRL + E", hl.dsp.submap("files"))
 hl.bind("SUPER + CTRL + C", hl.dsp.submap("code"))
 hl.bind("SUPER + CTRL + D", hl.dsp.submap("apps"))
 
+hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
+hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
 for i = 1, 9 do
     hl.bind("SUPER + " .. i, hl.dsp.focus({ workspace = i }))
     hl.bind("SUPER + SHIFT + " .. i, hl.dsp.window.move({ workspace = i, silent = true }))
