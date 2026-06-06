@@ -123,10 +123,19 @@ in
         };
 
         xdg.configFile = {
-          "hypr" = {
-            source = ./lua;
+          "hypr/config" = {
+            source = ./config;
             recursive = true;
           };
+          "hypr/hyprland.lua".text = ''
+            require("config.monitors")
+            require("config.env")
+            require("config.startup")
+            require("config.options")
+            require("config.rules")
+            require("config.animations")
+            require("config.binds")
+          '';
           "hypr/noctalia".source =
             config.lib.file.mkOutOfStoreSymlink "${dotfiles_path}/modules/hyprland/noctalia";
         };
