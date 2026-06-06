@@ -50,6 +50,7 @@
     forgejo-cli # same for codeberg and forgejo
     lazygit # the best git tui
     gemini-cli
+    antigravity-cli
     siggy # terminal-based Signal client (via overlay)
     git-today # recap your daily git work (via overlay)
 

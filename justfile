@@ -1,6 +1,6 @@
 set shell := ["bash", "-uc"]
 
-HOSTNAMES := "rhodos delios"
+HOSTNAMES := "rhodos delos"
 
 default:
     just choose
