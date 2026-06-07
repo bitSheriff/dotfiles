@@ -88,7 +88,13 @@ let
 
   notes = pkgs.writeShellApplication {
     name = "notes";
-    runtimeInputs = [ pkgs.fd pkgs.fzf pkgs.gnused pkgs.findutils pkgs.coreutils ];
+    runtimeInputs = [
+      pkgs.fd
+      pkgs.fzf
+      pkgs.gnused
+      pkgs.findutils
+      pkgs.coreutils
+    ];
     text = ''
       # Ensure NOTES_DIR is set
       if [[ -z "''${NOTES_DIR:-}" ]]; then
@@ -117,7 +123,10 @@ let
 
   memo = pkgs.writeShellApplication {
     name = "memo";
-    runtimeInputs = [ pkgs.coreutils pkgs.gum ];
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.gum
+    ];
     text = ''
       # Preamble of the Memo
       MEMO_PRE="- **$(date +%H:%M):** "
@@ -174,7 +183,10 @@ let
 
   memo-gui = pkgs.writeShellApplication {
     name = "memo-gui";
-    runtimeInputs = [ pkgs.kitty memo ];
+    runtimeInputs = [
+      pkgs.kitty
+      memo
+    ];
     text = ''
       kitty --class floating --title "Pop-up Terminal" -e memo
     '';
@@ -182,7 +194,11 @@ let
 
   inbox = pkgs.writeShellApplication {
     name = "inbox";
-    runtimeInputs = [ pkgs.coreutils pkgs.gum pkgs.wl-clipboard ];
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.gum
+      pkgs.wl-clipboard
+    ];
     text = ''
       # Journal File where the memo gets added
       if [[ -z "''${INBOX:-}" ]]; then

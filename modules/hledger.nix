@@ -280,9 +280,9 @@ in
   };
 
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
-        xdg.configFile."hledger/hledger.conf".text = ''
-          [check] --strict
-          [balancesheet] --layout=bare
-        '';
-      };
+    xdg.configFile."hledger/hledger.conf".text = ''
+      [check] --strict
+      [balancesheet] --layout=bare
+    '';
+  };
 }

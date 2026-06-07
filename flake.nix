@@ -33,6 +33,12 @@
 
     # my own flakes
     my-flakes.url = "github:bitSheriff/my-flakes";
+
+    # treefmt-nix for formatting
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -44,34 +50,32 @@
       sops-nix,
       nvf,
       disko,
+      treefmt-nix,
       ...
     }@inputs:
     let
-      supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-    in
-    {
-      formatter = forAllSystems (system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        pkgs.writeShellApplication {
-          name = "formatter";
-          runtimeInputs = [
-            pkgs.nixfmt
-            pkgs.rustfmt
-          ];
-          text = ''
-            for file in "$@"; do
-              if [[ "$file" == *.nix ]]; then
-                nixfmt "$file"
-              elif [[ "$file" == *.rs ]]; then
-                rustfmt "$file"
-              fi
-            done
-          '';
+      treefmtEval = forAllSystems (
+        system:
+        treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} {
+          projectRootFile = "flake.nix";
+          programs.nixfmt.enable = true;
+          programs.rustfmt.enable = true;
         }
       );
+    in
+    {
+      formatter = forAllSystems (system: treefmtEval.${system}.config.build.wrapper);
+
+      checks = forAllSystems (system: {
+        formatting = treefmtEval.${system}.config.build.check self;
+      });
 
       nixosConfigurations = {
 
