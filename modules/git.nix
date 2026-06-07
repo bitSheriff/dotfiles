@@ -109,6 +109,7 @@
 
       ignores = [
         ".antigravitycli/"
+        ".direnv/"
       ];
     };
 
