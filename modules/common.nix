@@ -128,8 +128,6 @@
     settings = {
       italic-text = "always";
       map-syntax = [
-        "*.ino:C++"
-        ".ignore:Git Ignore"
       ];
       pager = "less";
       paging = "never";
