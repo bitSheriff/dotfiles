@@ -28,6 +28,7 @@ local opaque_titles = {
     ".*YouTube.*",
     ".*Twitch.*",
     "Picture-in-Picture",
+    ".*Jitsi Meet.*",
 }
 
 for _, title_pattern in ipairs(opaque_titles) do
