@@ -46,7 +46,33 @@
       disko,
       ...
     }@inputs:
+    let
+      supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+    in
     {
+      formatter = forAllSystems (system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        pkgs.writeShellApplication {
+          name = "formatter";
+          runtimeInputs = [
+            pkgs.nixfmt
+            pkgs.rustfmt
+          ];
+          text = ''
+            for file in "$@"; do
+              if [[ "$file" == *.nix ]]; then
+                nixfmt "$file"
+              elif [[ "$file" == *.rs ]]; then
+                rustfmt "$file"
+              fi
+            done
+          '';
+        }
+      );
+
       nixosConfigurations = {
 
         #############  DESKTOP  #############
