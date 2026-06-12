@@ -13,7 +13,7 @@
     ./../modules/git.nix
     ./../modules/zellij.nix
     ./../modules/starship.nix
-    ./../modules/opencode
+    ./../modules/agentic
     ./../modules/qutebrowser
     ./../modules/virtualisation.nix
     ./../modules/tmux.nix
@@ -49,8 +49,6 @@
     gh-dash # manage github issues in the terminal
     forgejo-cli # same for codeberg and forgejo
     lazygit # the best git tui
-    gemini-cli
-    antigravity-cli
     siggy # terminal-based Signal client (via overlay)
     git-today # recap your daily git work (via overlay)
 
