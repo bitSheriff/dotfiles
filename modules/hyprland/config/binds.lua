@@ -13,6 +13,8 @@ hl.define_submap("note", function()
     hl.bind("escape", hl.dsp.submap("reset"))
 end)
 
+hl.bind("SUPER + G", hl.dsp.group.toggle())
+hl.bind("SUPER + SHIFT + G", hl.dsp.group.lock({ action = "toggle" }))
 hl.define_submap("group", function()
     hl.bind("G", hl.dsp.group.toggle())
     hl.bind("SHIFT + G", hl.dsp.group.lock({ action = "toggle" }))
@@ -180,7 +182,7 @@ hl.bind("SUPER + ALT + Return", hl.dsp.workspace.toggle_special("term-scratchpad
 
 hl.bind("SUPER + N", hl.dsp.submap("note"))
 hl.bind("SUPER + SHIFT + N", hl.dsp.workspace.toggle_special("note"))
-hl.bind("SUPER + SHIFT + G", hl.dsp.submap("group"))
+hl.bind("SUPER + SHIFT + ALT + G", hl.dsp.submap("group"))
 hl.bind("SUPER + SHIFT + R", hl.dsp.submap("resize"))
 hl.bind("SUPER + SHIFT + Print", hl.dsp.submap("screen"))
 hl.bind("SUPER + CTRL + E", hl.dsp.submap("files"))
