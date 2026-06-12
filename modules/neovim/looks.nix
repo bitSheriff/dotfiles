@@ -18,7 +18,14 @@ in
     # File tree on the side
     filetree.nvimTree = {
       enable = true;
-      setupOpts.git.enable = true;
+      setupOpts = {
+        git.enable = true;
+        filters.exclude = [
+          "^.git$"
+          "^.venv$"
+          "^build$"
+        ];
+      };
     };
 
     dashboard.alpha = {
