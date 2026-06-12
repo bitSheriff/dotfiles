@@ -18,6 +18,7 @@
     ./ssh.nix
     ./appimage.nix
     ./global-sops.nix
+    ./keyboards.nix
   ];
 
   # Bootloader
