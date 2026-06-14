@@ -15,6 +15,7 @@
     [
       gemini-cli
       antigravity-cli
+      mistral-vibe
     ]
     # Host Specifics (strong gaming PC with dedicated GPU)
     ++ lib.optionals (config.networking.hostName == "rhodos") [
