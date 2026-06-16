@@ -45,17 +45,11 @@
     kitty
 
     # TUIs
-    gh
-    gh-dash # manage github issues in the terminal
-    forgejo-cli # same for codeberg and forgejo
-    lazygit # the best git tui
     siggy # terminal-based Signal client (via overlay)
     git-today # recap your daily git work (via overlay)
 
     timr-tui
     zellij # like tmux, but written in rust...
-    delta # git viewer
-    serie # git graph viewer in the terminal
     sshs # ssh viewer
 
     # Editors and Co

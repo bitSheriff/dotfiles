@@ -7,6 +7,16 @@
 }:
 
 {
+  environment.systemPackages = with pkgs; [
+    gh
+    gh-dash # manage github issues in the terminal
+    forgejo-cli # same for codeberg and forgejo
+    lazygit # the best git tui
+    gitte # Gtk4 Git Client
+    delta # git viewer
+    serie # git graph viewer in the terminal
+  ];
+
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
     programs.git = {
       enable = true;
