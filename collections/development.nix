@@ -59,7 +59,7 @@
     meld # diff viewer
     smartgit # git gui for when the shit is burning
 
-    # Languages
+    # Languages, most of these tools are in project flakes
     rustup
     glibc
     gcc
@@ -103,21 +103,10 @@
     ];
   };
 
+  ##################
+  ## HOME MANAGER ##
+  ##################
   home-manager.users.benjamin = {
-
-    # Mise
-    programs.mise = {
-      enable = true;
-      enableZshIntegration = true;
-      globalConfig.settings = {
-        experimental = true;
-        age.key_file = "~/.age/mise.key";
-      };
-
-      globalConfig.tools = {
-        usage = "latest";
-      };
-    };
 
     # LazyGit
     programs.lazygit = {

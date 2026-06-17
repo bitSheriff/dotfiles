@@ -41,8 +41,6 @@ in
     typst
     typesetter # minimal typst editor
     # octave # free alternative to MATLAB (but why not use python then ...)
-    jupyter # python jupyter notebook
-    # wireshark-qt # network analyzer
     gum # needed for cli inputs
     blanket # background ambient soundscapes for concentration
     mumble # low latency voice rooms
@@ -51,8 +49,11 @@ in
     tuvpn
   ];
 
-  home-manager.users.benjamin.sops = lib.mkIf (lib.elem "benjamin" activeUsers) {
-    secrets = {
+  ##################
+  ## HOME MANAGER ##
+  ##################
+  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+    sops.secrets = {
       "uni/email" = {
         key = "tiss/email";
         sopsFile = ../encrypted/uni.yaml;

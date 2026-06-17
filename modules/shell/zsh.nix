@@ -138,11 +138,6 @@
         silent = true;
       };
 
-      programs.mise = {
-        enable = true;
-        enableZshIntegration = true;
-      };
-
       programs.starship = {
         enable = true;
         enableZshIntegration = true;

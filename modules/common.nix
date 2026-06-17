@@ -84,7 +84,6 @@
     zoxide # smarter `cd` command
     television # like fzf but more fancy
     tree # view direvtory structure
-    mise # like Nix but on project basis (prob not needed anymore if NixOS runs everywhere)
     atuin # better shell history
     rsync # nobody uses scp anymore
     tldr # better help/man pages for cli programs
