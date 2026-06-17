@@ -18,6 +18,7 @@
     ./../modules/virtualisation.nix
     ./../modules/tmux.nix
     ./../modules/news.nix
+    ./../modules/matrix.nix
   ];
 
   # System-wide dev tools
@@ -75,7 +76,6 @@
     kdePackages.kleopatra
     gnupg
 
-    cinny-desktop # beautiful matrix chat client
     signal-cli
   ];
 
