@@ -15,6 +15,7 @@
   environment.systemPackages =
     with pkgs;
     [
+      mcp-nixos # mcp server so agents can access Nix and NixOS resources
       # mistral-vibe # needs a build!!!
     ]
     # Host Specifics (strong gaming PC with dedicated GPU)
