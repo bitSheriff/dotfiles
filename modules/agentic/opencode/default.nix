@@ -32,17 +32,19 @@
             "*.env" = "ask";
             "*.env.example" = "allow";
           };
-          git = {
-            "*" = "ask";
-            pull = "allow";
-            push = "allow";
-            commit = "deny";
-          };
-          nix = {
-            check = "allow";
-            develop = "allow";
-            "build *" = "allow";
-            "run *" = "allow";
+          bash = {
+            git = {
+              "*" = "ask";
+              pull = "allow";
+              push = "allow";
+              commit = "deny";
+            };
+            nix = {
+              check = "allow";
+              develop = "allow";
+              "build *" = "allow";
+              "run *" = "allow";
+            };
           };
         };
       };
