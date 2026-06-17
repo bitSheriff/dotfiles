@@ -7,6 +7,9 @@
 }:
 
 {
+  ##################
+  ## HOME MANAGER ##
+  ##################
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
     programs.zellij = {
       enable = true;
