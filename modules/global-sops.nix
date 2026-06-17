@@ -27,7 +27,7 @@ let
         exit 0
       fi
 
-      SECRETS_FILE="''${1:-${../encrypted/secrets.yaml}}"
+      SECRETS_FILE="''${1:-${../encrypted/logins.yaml}}"
 
       if [ ! -f "$SECRETS_FILE" ]; then
         echo "Error: Secrets file '$SECRETS_FILE' not found." >&2
@@ -75,7 +75,7 @@ let
         exit 0
       fi
 
-      SECRETS_FILE="''${1:-${../encrypted/secrets.yaml}}"
+      SECRETS_FILE="''${1:-${../encrypted/logins.yaml}}"
 
       if [ ! -f "$SECRETS_FILE" ]; then
         echo "Error: Secrets file '$SECRETS_FILE' not found." >&2
@@ -88,7 +88,7 @@ let
         | select(.[0] != "sops") 
         | map(tostring) 
         | join(".")
-        | select(startswith("otp_secrets"))
+        | select(endswith("otp"))
       ' | fzf --header="Select an OTP Profile:" --height=40% --layout=reverse)
 
       # Exit cleanly if the user cancels out of fzf with ESC
