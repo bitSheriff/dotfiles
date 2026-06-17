@@ -23,5 +23,13 @@
       settings = { };
     };
 
+    sops.secrets = {
+      iamb_config = {
+        sopsFile = ../encrypted/iamb_config.txt;
+        format = "binary";
+        path = "${config.users.users.benjamin.home}/.config/iamb/config.toml";
+      };
+
+    };
   };
 }
