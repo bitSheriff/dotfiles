@@ -107,10 +107,68 @@ in
 
   # This ensures environment variables are exported correctly
   services.dbus.enable = true;
+
+  ##################
+  ## HOME MANAGER ##
+  ##################
   home-manager.users.benjamin =
     { config, lib, ... }:
     {
       config = lib.mkIf (lib.elem "benjamin" activeUsers) {
+        wayland.windowManager.hyprland = {
+          enable = true;
+          configType = "lua";
+          extraLuaFiles = {
+            "animations.lua" = {
+              autoLoad = true;
+              content = ./config/animations.lua;
+            };
+
+            "binds.lua" = {
+              autoLoad = true;
+              content = ./config/binds.lua;
+            };
+
+            "env.lua" = {
+              autoLoad = true;
+              content = ./config/env.lua;
+            };
+
+            "monitors.lua" = {
+              autoLoad = true;
+              content = ./config/monitors.lua;
+            };
+
+            "options.lua" = {
+              autoLoad = true;
+              content = ./config/options.lua;
+            };
+
+            "rules.lua" = {
+              autoLoad = true;
+              content = ./config/rules.lua;
+            };
+
+            "startup.lua" = {
+              autoLoad = true;
+              content = ./config/startup.lua;
+            };
+          };
+
+          extraConfig = ''
+            require("noctalia.noctalia-colors")
+          '';
+        };
+
+        xdg.configFile = {
+          "hypr/config" = {
+            source = ./config;
+            recursive = true;
+          };
+
+          "hypr/noctalia".source =
+            config.lib.file.mkOutOfStoreSymlink "${dotfiles_path}/modules/hyprland/noctalia";
+        };
 
         programs.swappy = {
           enable = true;
@@ -122,23 +180,6 @@ in
           };
         };
 
-        xdg.configFile = {
-          "hypr/config" = {
-            source = ./config;
-            recursive = true;
-          };
-          "hypr/hyprland.lua".text = ''
-            require("config.monitors")
-            require("config.env")
-            require("config.startup")
-            require("config.options")
-            require("config.rules")
-            require("config.animations")
-            require("config.binds")
-          '';
-          "hypr/noctalia".source =
-            config.lib.file.mkOutOfStoreSymlink "${dotfiles_path}/modules/hyprland/noctalia";
-        };
       };
     };
 
