@@ -19,7 +19,7 @@
     ./../modules/tmux.nix
     ./../modules/news.nix
     ./../modules/matrix.nix
-    # ./../modules/irc.nix
+    ./../modules/irc.nix
   ];
 
   # System-wide dev tools
