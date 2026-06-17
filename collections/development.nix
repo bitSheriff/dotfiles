@@ -17,6 +17,7 @@
     ./../modules/qutebrowser
     ./../modules/virtualisation.nix
     ./../modules/tmux.nix
+    ./../modules/news.nix
   ];
 
   # System-wide dev tools
