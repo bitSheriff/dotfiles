@@ -8,6 +8,7 @@
 
 {
   environment.systemPackages = with pkgs; [
+    git
     gh
     gh-dash # manage github issues in the terminal
     forgejo-cli # same for codeberg and forgejo
@@ -17,6 +18,9 @@
     serie # git graph viewer in the terminal
   ];
 
+  ##################
+  ## HOME MANAGER ##
+  ##################
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
     programs.git = {
       enable = true;

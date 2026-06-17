@@ -3,18 +3,18 @@
   pkgs,
   inputs,
   lib,
+  activeUsers,
   ...
 }:
 {
   imports = [
     ./opencode
+    ./antigravity-cli.nix
   ];
 
   environment.systemPackages =
     with pkgs;
     [
-      gemini-cli
-      antigravity-cli
       # mistral-vibe # needs a build!!!
     ]
     # Host Specifics (strong gaming PC with dedicated GPU)
@@ -25,5 +25,12 @@
   services.ollama = lib.mkIf (config.networking.hostName == "rhodos") {
     enable = true;
     package = pkgs.ollama-cuda;
+  };
+
+  ##################
+  ## HOME MANAGER ##
+  ##################
+  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+
   };
 }
