@@ -105,6 +105,14 @@ in
                 "/mode bitSheriff +x" # hide your IP
               ];
             };
+            twitch = {
+              name = "Twitch";
+              server = "irc.chat.twitch.tv";
+              port = 6697;
+              nickname = "banschomin";
+              password_file = "${config.sops.secrets.irc_twitch_banschomin.path}";
+              tls = true;
+            };
           };
           buffer = {
             nickname = {
@@ -162,6 +170,10 @@ in
         irc_libera_key = {
           sopsFile = ../encrypted/secrets.yaml;
           key = "irc/liberachat/key";
+        };
+        irc_twitch_banschomin = {
+          sopsFile = ../encrypted/secrets.yaml;
+          key = "irc/twitch/banschomin";
         };
       };
     };
