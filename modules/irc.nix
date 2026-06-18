@@ -87,6 +87,7 @@ in
               channels = [
                 "#halloy"
                 "#nixos"
+                "#technicalrenaissance" # Joshua Blais Community
               ];
               nickname = "bitSheriff";
               alt_nicks = [
