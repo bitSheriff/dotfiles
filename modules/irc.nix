@@ -78,7 +78,7 @@ in
           theme = "booberry";
           font = {
             family = "Comic Mono";
-            size = 13;
+            size = 15;
           };
           runtime.backend.hardware = "best";
           servers = {
