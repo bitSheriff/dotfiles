@@ -89,7 +89,14 @@ in
                 "#nixos"
               ];
               nickname = "bitSheriff";
+              alt_nicks = [
+                "bitSheriff_"
+                "bitSheriff__"
+              ];
               nick_password_file = "${config.sops.secrets.irc_libera_passwordfile.path}";
+              on_connect = [
+                "/mode bitSheriff +x" # hide your IP
+              ];
             };
           };
         };
@@ -102,8 +109,23 @@ in
         exec = "halloy";
         icon = "org.squidowl.halloy";
         terminal = false;
-        categories = [ "Network" "Chat" "InstantMessaging" ];
-        mimeType = [ "x-scheme-handler/irc" "x-scheme-handler/ircs" ];
+        categories = [
+          "Network"
+          "Chat"
+          "InstantMessaging"
+        ];
+        mimeType = [
+          "x-scheme-handler/irc"
+          "x-scheme-handler/ircs"
+        ];
+      };
+
+      xdg.mimeApps = {
+        enable = true;
+        defaultApplications = {
+          "x-scheme-handler/irc" = [ "halloy.desktop" ];
+          "x-scheme-handler/ircs" = [ "halloy.desktop" ];
+        };
       };
 
       xdg.configFile = {
