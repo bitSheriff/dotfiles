@@ -68,8 +68,9 @@ in
   ##################
   ## HOME MANAGER ##
   ##################
-  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) (
-    { config, ... }: {
+  home-manager.users.benjamin =
+    { config, ... }:
+    lib.mkIf (lib.elem "benjamin" activeUsers) {
 
       programs.halloy = {
         enable = true;
@@ -94,6 +95,17 @@ in
         };
       };
 
+      xdg.desktopEntries.halloy = {
+        name = "Halloy";
+        genericName = "IRC Client";
+        comment = "IRC client written in Rust";
+        exec = "halloy";
+        icon = "org.squidowl.halloy";
+        terminal = false;
+        categories = [ "Network" "Chat" "InstantMessaging" ];
+        mimeType = [ "x-scheme-handler/irc" "x-scheme-handler/ircs" ];
+      };
+
       xdg.configFile = {
         "halloy/themes/booberry.toml".source =
           (pkgs.formats.toml { }).generate "booberry.toml"
@@ -107,6 +119,5 @@ in
           key = "irc/liberachat";
         };
       };
-    }
-  );
+    };
 }
