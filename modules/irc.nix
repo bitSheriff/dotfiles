@@ -94,10 +94,28 @@ in
                 "bitSheriff_"
                 "bitSheriff__"
               ];
-              nick_password_file = "${config.sops.secrets.irc_libera_passwordfile.path}";
+
+              # Authentication with SSL
+              sasl.external = {
+                cert = "${config.sops.secrets.irc_libera_cert.path}";
+                key = "${config.sops.secrets.irc_libera_key.path}";
+              };
+              # send messages on sever connect event
               on_connect = [
                 "/mode bitSheriff +x" # hide your IP
               ];
+            };
+          };
+          buffer = {
+            nickname = {
+              # hide the nickname if the user writes (consecutive) within 2m
+              hide_consecutive.enabled = {
+                smart = 2 * 60;
+              };
+              brackets = {
+                left = "<";
+                right = ">";
+              };
             };
           };
         };
@@ -137,9 +155,13 @@ in
 
       # Secret defined inside Home Manager
       sops.secrets = {
-        irc_libera_passwordfile = {
+        irc_libera_cert = {
           sopsFile = ../encrypted/secrets.yaml;
-          key = "irc/liberachat";
+          key = "irc/liberachat/cert";
+        };
+        irc_libera_key = {
+          sopsFile = ../encrypted/secrets.yaml;
+          key = "irc/liberachat/key";
         };
       };
     };
