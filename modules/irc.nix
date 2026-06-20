@@ -82,29 +82,29 @@ in
           };
           runtime.backend.hardware = "best";
           servers = {
-            liberachat = {
-              server = "irc.libera.chat";
-              channels = [
-                "#halloy"
-                "#nixos"
-                "#technicalrenaissance" # Joshua Blais Community
-              ];
-              nickname = "bitSheriff";
-              alt_nicks = [
-                "bitSheriff_"
-                "bitSheriff__"
-              ];
-
-              # Authentication with SSL
-              sasl.external = {
-                cert = "${config.sops.secrets.irc_libera_cert.path}";
-                key = "${config.sops.secrets.irc_libera_key.path}";
-              };
-              # send messages on sever connect event
-              on_connect = [
-                "/mode bitSheriff +x" # hide your IP
-              ];
-            };
+            # liberachat = {
+            #   server = "irc.libera.chat";
+            #   channels = [
+            #     "#halloy"
+            #     "#nixos"
+            #     "#technicalrenaissance" # Joshua Blais Community
+            #   ];
+            #   nickname = "bitSheriff";
+            #   alt_nicks = [
+            #     "bitSheriff_"
+            #     "bitSheriff__"
+            #   ];
+            #
+            #   # Authentication with SSL
+            #   sasl.external = {
+            #     cert = "${config.sops.secrets.irc_libera_cert.path}";
+            #     key = "${config.sops.secrets.irc_libera_key.path}";
+            #   };
+            #   # send messages on sever connect event
+            #   on_connect = [
+            #     "/mode bitSheriff +x" # hide your IP
+            #   ];
+            # };
 
             soju = {
               server = "irc.lowlevelkings.xyz";
@@ -117,6 +117,11 @@ in
                 username = "bitSheriff";
                 password_file = "${config.sops.secrets.irc_soju_password.path}";
               };
+              channels = [
+                "#halloy"
+                "#nixos"
+                "#technicalrenaissance" # Joshua Blais Community
+              ];
             };
 
             twitch = {
