@@ -105,6 +105,20 @@ in
                 "/mode bitSheriff +x" # hide your IP
               ];
             };
+
+            soju = {
+              server = "irc.lowlevelkings.xyz";
+              nickname = "bitSheriff";
+              port = 6697;
+              use_tls = true;
+              use_websocket = false;
+              websocket_path = "/socket";
+              sasl.plain = {
+                username = "bitSheriff";
+                password_file = "${config.sops.secrets.irc_soju_password.path}";
+              };
+            };
+
             twitch = {
               name = "Twitch";
               server = "irc.chat.twitch.tv";
@@ -112,6 +126,7 @@ in
               nickname = "banschomin";
               password_file = "${config.sops.secrets.irc_twitch_banschomin.path}";
               tls = true;
+
             };
           };
           buffer = {
@@ -174,6 +189,10 @@ in
         irc_twitch_banschomin = {
           sopsFile = ../encrypted/secrets.yaml;
           key = "irc/twitch/banschomin";
+        };
+        irc_soju_password = {
+          sopsFile = ../encrypted/secrets.yaml;
+          key = "irc/soju/password";
         };
       };
     };
