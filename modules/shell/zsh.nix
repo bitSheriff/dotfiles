@@ -115,7 +115,7 @@
           # heast oida
           oida = "sudo $(fc -ln -1)";
 
-          # upload text to termbin
+          # upload text to termbin (usage: echo "abc" | termbin, or: cat "FILE.txt" | termbin)
           termbin = "nc termbin.com 9999";
 
         };
