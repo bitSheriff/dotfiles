@@ -115,6 +115,9 @@
           # heast oida
           oida = "sudo $(fc -ln -1)";
 
+          # upload text to termbin
+          termbin = "nc termbin.com 9999";
+
         };
 
         history = {
