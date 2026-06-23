@@ -134,10 +134,11 @@ in
               content = ./config/env.lua;
             };
 
-            "monitors.lua" = {
-              autoLoad = true;
-              content = ./config/monitors.lua;
-            };
+            # done by gui applications
+            # "monitors.lua" = {
+            #   autoLoad = true;
+            #   content = ./config/monitors.lua;
+            # };
 
             "options.lua" = {
               autoLoad = true;
@@ -157,6 +158,7 @@ in
 
           extraConfig = ''
             require("noctalia.noctalia-colors")
+            require("monitors")
           '';
         };
 
