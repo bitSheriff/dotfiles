@@ -176,29 +176,36 @@
         done
       '';
 
-      templates = pkgs.writeShellScriptBin "templates" ''
-        TEMPLATE_DIR="$HOME/Templates"
-        copy_content_to_clipboard() {
-            local file="$1"
-            if [ -L "$file" ]; then file=$(readlink -f "$file"); fi
-            if [ -f "$file" ]; then
-                cat "$file" | ${pkgs.wl-clipboard}/bin/wl-copy
-                echo "Content of $(basename "$file") copied to clipboard."
-            fi
-        }
-        export FZF_DEFAULT_COMMAND="${pkgs.fd}/bin/fd . $TEMPLATE_DIR"
-        selected_file=$(${pkgs.fd}/bin/fd --type f --type l --follow --exclude .git . "$TEMPLATE_DIR" | ${pkgs.fzf}/bin/fzf --height=10 --reverse --border)
-        if [ -z "$selected_file" ]; then exit 0; fi
-        if [ "$1" = "--clip" ]; then
-            copy_content_to_clipboard "$selected_file"
-        else
-            if [ -L "$selected_file" ]; then target_file=$(readlink -f "$selected_file"); else target_file="$selected_file"; fi
-            echo "Enter new filename (leave empty to use original name): "
-            read new_filename
-            dest_filename=''${new_filename:-$(basename "$target_file")}
-            cp "$target_file" "./$dest_filename"
-        fi
-      '';
+      templates = pkgs.writeShellApplication {
+        name = "templates";
+        runtimeInputs = [
+          pkgs.nix
+          pkgs.gum
+          pkgs.jq
+        ];
+        text = ''
+          DOTFILES_DIR="''${DOTFILES_DIR:-$HOME/code/dotfiles}"
+
+          if [ ! -d "''${DOTFILES_DIR}" ]; then
+              echo "Error: Dotfiles directory not found at ''${DOTFILES_DIR}" >&2
+              exit 1
+          fi
+
+          selected=$(nix flake show --json "''${DOTFILES_DIR}" --extra-experimental-features "nix-command flakes" 2>/dev/null | \
+                     jq -r '.templates | to_entries[] | "\(.key) - \(.value.description)"' | \
+                     gum choose --header "Select a template to initialize:" || true)
+
+          if [ -z "''${selected}" ]; then
+              echo "No template selected. Exiting."
+              exit 0
+          fi
+
+          template="''${selected%% *}"
+
+          echo "Initializing template \"''${template}\"..."
+          nix flake init -t "''${DOTFILES_DIR}#''${template}" --extra-experimental-features "nix-command flakes"
+        '';
+      };
 
       worktree-init = pkgs.writeShellScriptBin "worktree-init" ''
         url=''${1}
