@@ -254,6 +254,7 @@ in
     export TIMEDOT_PATH="$HOME/notes/Journal/_time"
     export TIMEDOT_ALL_FILE="$TIMEDOT_PATH/all.journal"
     export TIMEDOT_SEMESTER_FILE="$TIMEDOT_PATH/uni/2026SS.timedot"
+    export TIMEDOT_SEMESTER_CLOCK_FILE="$TIMEDOT_PATH/uni/2026SS.timeclock"
 
     export LEDGER_ACCOUNTS_FILE="$LEDGER_PATH/$(date +%Y)_accounts.hledger"
     export TIMEDOT_FILE="$TIMEDOT_PATH/$(date +%Y).timedot"
@@ -273,7 +274,13 @@ in
     td = "hledger -f \${TIMEDOT_ALL_FILE}";
     tde = "(cd $TIMEDOT_PATH && nvim $(find . -type f | fzf))";
     tda = "timedot-add \${TIMEDOT_FILE}";
+
+    # Uni
     tdauni = "timedot-add \${TIMEDOT_SEMESTER_FILE}";
+    uniin = "timeclock-add \${TIMEDOT_SEMESTER_CLOCK_FILE} i";
+    uniout = "timeclock-add \${TIMEDOT_SEMESTER_CLOCK_FILE} o";
+
+    # Work
     tdawork = "timeclock-add \${TIMEDOT_WORK_FILE}";
     clockin = "timeclock-add \${TIMEDOT_WORK_FILE} i";
     clockout = "timeclock-add \${TIMEDOT_WORK_FILE} o";
