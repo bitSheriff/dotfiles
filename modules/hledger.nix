@@ -46,7 +46,7 @@ let
         if command -v gum >/dev/null 2>&1; then
             # Prompt for account if not provided
             if [ -z "$ACCOUNT" ]; then
-                ACCOUNT=$(hledger -f "$FILE" accounts | gum filter --placeholder "Select account")
+                ACCOUNT=$(hledger -f "$FILE" accounts | gum filter --no-strict --placeholder "Select account")
                 if [ -z "$ACCOUNT" ]; then exit 0; fi
             fi
 
@@ -106,7 +106,7 @@ let
     # Get inputs using gum if available, otherwise fallback to fzf/read
     if command -v gum >/dev/null 2>&1; then
         # Select account using hledger and gum
-        ACCOUNT=$(hledger -f "$FILE" accounts | gum filter --placeholder "Select account")
+        ACCOUNT=$(hledger -f "$FILE" accounts | gum filter --no-strict --placeholder "Select account")
 
         # Exit if no account selected (e.g., user pressed Esc)
         if [ -z "$ACCOUNT" ]; then
