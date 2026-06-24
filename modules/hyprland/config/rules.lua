@@ -15,6 +15,7 @@ hl.window_rule({ match = { class = "^(term-scratchpad)$" }, workspace = "special
 hl.window_rule({ match = { class = "^(quick-settings)$" }, float = true, size = "500 700", move = "100%-520 50", pin = true })
 hl.window_rule({ match = { class = "^(noctalia-shell)$", title = "^(launcher)$" }, float = true, size = "100% 100%", move = "0 0", pin = true, no_anim = true })
 hl.window_rule({ match = { title = "^(floating)$" }, float = true, size = "1000 700", center = true })
+hl.window_rule({ match = { class = "^(floatui-).*$" }, float = true, size = "1000 700", center = true })
 hl.workspace_rule({ workspace = "special:term-scratchpad", on_created_empty = "kitty --class term-scratchpad" })
 
 -- Producitivity Tools
