@@ -1,7 +1,8 @@
 {
-  "browser.translations.automaticallyPopup" = true;
+  "browser.translations.automaticallyPopup" = false;
   "browser.aboutConfig.showWarning" = false; # disable about:config warning
   "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+  "extensions.activeThemeID" = "{9b615f11-c3a3-46bd-97a8-1721bb8122b9}";
   "browser.startup.page" = 1; # 0=blank, 1=home, 2=last visited page, 3=resume previous session
   "browser.startup.homepage" = "about:home";
 

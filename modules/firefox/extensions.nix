@@ -19,6 +19,7 @@
       (extension "ublock-origin" "uBlock0@raymondhill.net" "menupanel")
       (extension "vimium" "{d7742d87-e61d-4b78-b8a1-b469842139fa}" "menupanel")
       (extension "new-window-without-toolbar" "new-window-without-toolbar@tkrkt.com" "menupanel")
+      (extension "alpenglow-dark" "{9b615f11-c3a3-46bd-97a8-1721bb8122b9}" "menupanel")
       (extension "1password-x-password-manager" "{d634138d-c276-4fc8-924b-40a0ea21d284}" "navbar")
     ];
   "3rdparty".Extensions = {
