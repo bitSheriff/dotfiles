@@ -108,5 +108,9 @@
       title = "Reddit";
       url = "https://www.reddit.com";
     }
+    {
+      title = "Tuta";
+      url = "https://www.tuta.com";
+    }
   ];
 }
