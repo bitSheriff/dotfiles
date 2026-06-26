@@ -16,10 +16,10 @@
       (extension "*" "" "menupanel")
       (extension "sponsorblock" "sponsorBlocker@ajay.app" "menupanel")
       (extension "darkreader" "addon@darkreader.org" "menupanel")
-      (extension "ublock-origin" "uBlock0@raymondhill.net" "navbar")
+      (extension "ublock-origin" "uBlock0@raymondhill.net" "menupanel")
       (extension "vimium" "{d7742d87-e61d-4b78-b8a1-b469842139fa}" "menupanel")
       (extension "new-window-without-toolbar" "new-window-without-toolbar@tkrkt.com" "menupanel")
-      (extension "1password" "{d634138d-c276-4fc8-924b-40a0ea21d284}" "menupanel")
+      (extension "1password-x-password-manager" "{d634138d-c276-4fc8-924b-40a0ea21d284}" "navbar")
     ];
   "3rdparty".Extensions = {
     "uBlock0@raymondhill.net".adminSettings = {

@@ -25,3 +25,4 @@ configuration/.config/mpd/state
 configuration/.config/quickshell/noctalia-shell
 /configuration/.config/zed/themes/noctalia.json
 /.antigravitycli
+/result
