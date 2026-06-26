@@ -33,6 +33,7 @@
         search = import ./search.nix;
       };
     };
+    home.file.".mozilla/firefox/default/search.json.mozlz4".force = lib.mkForce true;
   };
 
 }
