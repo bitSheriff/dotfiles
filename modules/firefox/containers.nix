@@ -1,9 +1,4 @@
 {
-  dangerous = {
-    color = "red";
-    icon = "fruit";
-    id = 2;
-  };
   coding = {
     color = "green";
     icon = "chill";

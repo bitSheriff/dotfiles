@@ -82,133 +82,31 @@
   # -- Pinned shortcuts
   # --
   "browser.newtabpage.pinned" = [
-    {
-      title = "Abhinandh";
-      url = "https://abhinandhs.in/";
-    } # 25
-    {
-      title = "My website";
-      url = "https://abhinandh-s.github.io/site/";
-    } # 20
+
     {
       title = "Github";
-      url = "https://github.com/abhinandh-s";
-    } # 8
-    {
-      title = "Deno";
-      url = "https://fresh.deno.dev";
-    } # 1
-    {
-      title = "MyNixOs";
-      url = "https://mynixos.com";
-    } # 2
+      url = "https://github.com/bitSheriff";
+    }
     {
       title = "NixOS Search";
       url = "https://search.nixos.org/packages";
-    } # 10
-    {
-      title = "figma";
-      url = "https://www.figma.com/files/team/";
-    } # 15
+    }
+
     {
       title = "NixOS WiKi";
       url = "https://nixos.wiki/";
-    } # 14
+    }
     {
       title = "Whatsapp";
       url = "https://web.whatsapp.com/";
-    } # 13
-    {
-      title = "Rust Doc";
-      url = "https://doc.rust-lang.org/stable/book";
-    } # 3
-    {
-      title = "Typst";
-      url = "https://typst.app/";
-    } # 30
-    {
-      title = "Rust by Examples";
-      url = "https://doc.rust-lang.org/rust-by-example/index.html";
-    } # 31
-    {
-      title = "Dash Deno";
-      url = "https://dash.deno.com/projects/abhinandhs/analytics/24h";
-    } # 32
-    {
-      title = "Crates";
-      url = "https://crates.io";
-    } # 4
+    }
     {
       title = "Youtube";
       url = "https://www.youtube.com";
-    } # 5
+    }
     {
       title = "Reddit";
       url = "https://www.reddit.com";
-    } # 6
-    {
-      title = "ChatGPT";
-      url = "https://chatgpt.com";
-    } # 7
-    {
-      title = "Catppuccin";
-      url = "https://catppuccin.com/palette";
-    } # 9
-    {
-      title = "X";
-      url = "https://x.com";
-    } # 11
-    {
-      title = "Dropbox";
-      url = "https://www.dropbox.com/home";
-    } # 12
-    {
-      title = "Jellyfin Server";
-      url = "http://localhost:8096/web/index.html#/home.html";
-    } # 16
-    {
-      title = "Nerd Icons";
-      url = "https://www.nerdfonts.com/cheat-sheet";
-    } # 17
-    {
-      title = "Unsplash";
-      url = "https://unsplash.com/t/wallpapers";
-    } # 18
-    {
-      title = "Pinterest";
-      url = "https://www.pinterest.com/";
-    } # 19
-    {
-      title = "Flipkart";
-      url = "https://www.flipkart.com/";
-    } # 21
-    {
-      title = "Amazon";
-      url = "https://www.amazon.in/";
-    } # 22
-    {
-      title = "proton mail";
-      url = "https://mail.proton.me/u/0/inbox";
-    } # 23
-    {
-      title = "proton drive";
-      url = "https://drive.proton.me/u/0/";
-    } # 24
-    {
-      title = "Color Picker";
-      url = "https://hslpicker.com/";
-    } # 26
-    {
-      title = "Localhost:8080";
-      url = "127.0.0.1:8080";
-    } # 27
-    {
-      title = "Org-roam";
-      url = "https://www.orgroam.com/manual.html";
-    } # 28
-    {
-      title = "Org mode";
-      url = "https://orgmode.org/manual/index.html#SEC_Contents";
-    } # 29
+    }
   ];
 }
