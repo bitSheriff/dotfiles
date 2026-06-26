@@ -19,6 +19,7 @@
     ./appimage.nix
     ./global-sops.nix
     ./keyboards.nix
+    ./firefox
   ];
 
   # Bootloader
