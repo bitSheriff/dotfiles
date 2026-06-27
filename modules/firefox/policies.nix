@@ -24,7 +24,7 @@ in
     BehaviorPrivateBrowsing = "reject";
   };
 
-  DefaultDownloadDirectory = "\${home}/downloads";
+  DefaultDownloadDirectory = "\${home}/Downloads";
   DisableAppUpdate = true;
   DisableFeedbackCommands = true;
   DisableBuiltinPDFViewer = true; # Considered a security liability
