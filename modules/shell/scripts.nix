@@ -153,29 +153,6 @@
         echo "''${@:$((random_index + 1)):1}"
       '';
 
-      st-conflict = pkgs.writeShellScriptBin "st-conflict" ''
-        if ! command -v ${pkgs.meld}/bin/meld &>/dev/null; then
-            echo "Error: meld is not installed."
-            exit 1
-        fi
-        mapfile -t conflict_files < <(${pkgs.fd}/bin/fd -I -t f "\.sync-conflict-")
-        if [ ''${#conflict_files[@]} -eq 0 ]; then
-            echo "No Syncthing conflict files found."
-            exit 0
-        fi
-        for conflict_file in "''${conflict_files[@]}"; do
-            original_file=$(echo "$conflict_file" | sed -E 's/\.sync-conflict-[0-9]{8}-[0-9]{6}-[A-Z0-9]{7}//')
-            if [ ! -f "$original_file" ]; then
-                continue
-            fi
-            ${pkgs.meld}/bin/meld "$original_file" "$conflict_file"
-            read -p "Delete conflict file '$conflict_file'? [y/N] " response
-            case "$response" in
-            [yY][eE][sS] | [yY]) rm -v "$conflict_file" ;;
-            esac
-        done
-      '';
-
       templates = pkgs.writeShellApplication {
         name = "templates";
         runtimeInputs = [
@@ -323,7 +300,6 @@
         floatui
         gopen
         randomselect
-        st-conflict
         templates
         worktree-init
         ytd

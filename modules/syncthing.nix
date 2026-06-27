@@ -5,23 +5,27 @@
   ...
 }:
 let
-  sync_resolve = pkgs.writeShellScriptBin "sync-resolve" ''
-    FD="${pkgs.fd}/bin/fd"
-      MELD="${pkgs.meld}/bin/meld"
-
+  sync_resolve = pkgs.writeShellApplication {
+    name = "sync-resolve";
+    runtimeInputs = with pkgs; [
+      fd
+      meld
+      gnused
+    ];
+    text = ''
       # We use fd to find conflicts and loop through them
-      $FD ".sync-conflict-" . --type f | while read -r conflict_file; do
+      fd --hidden --no-ignore --exclude .git --exclude .stversions --exclude .trash ".sync-conflict-" . --type f | while read -r conflict_file; do
 
         # Extract the original filename
-        original_file=$(echo "$conflict_file" | sed -E 's/\.sync-conflict-[0-9]{8}-[0-9]{6}-[A-Z0-9]+(\.[^.]+)?$/\1/')
+        original_file=$(printf '%s\n' "$conflict_file" | sed -E 's/\.sync-conflict-[0-9]{8}-[0-9]{6}-[A-Z0-9]+(\.[^.]+)?$/\1/')
 
         if [ -f "$original_file" ]; then
           echo "------------------------------------------------"
           echo "Conflict found: $conflict_file"
           # Open Meld. Script pauses here until Meld is closed.
-          $MELD "$original_file" "$conflict_file"
+          meld "$original_file" "$conflict_file"
 
-          echo -n "Delete conflict file? [y/N] "
+          printf "Delete conflict file? [y/N] "
           read -r confirm < /dev/tty
 
           if [[ "$confirm" =~ ^[yY]$ ]]; then
@@ -38,7 +42,8 @@ let
 
       echo "------------------------------------------------"
       echo "Process complete."
-  '';
+    '';
+  };
 in
 {
   imports = [
