@@ -90,7 +90,7 @@ in
 
   DontCheckDefaultBrowser = true; # Stop being attention whore
 
-  DownloadDirectory = "\${home}/downloads";
+  DownloadDirectory = "\${home}/Downloads";
 
   EnableTrackingProtection = {
     Value = true;
