@@ -622,4 +622,50 @@ in
     inbox
     todo
   ];
+
+  systemd.user.services.note-backup = {
+    description = "Backup notes daily with git";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.writeShellScript "note-backup" ''
+        # Ensure NOTES_DIR is set, fallback to ~/notes
+        NOTES_DIR="''${NOTES_DIR:-$HOME/notes}"
+        if [ ! -d "$NOTES_DIR" ]; then
+          echo "Notes directory $NOTES_DIR does not exist."
+          exit 0
+        fi
+
+        cd "$NOTES_DIR"
+
+        if [ ! -d .git ]; then
+          echo "Initializing git repository in $NOTES_DIR"
+          ${pkgs.git}/bin/git init
+        fi
+
+        # Ensure git config has user and email (local settings to avoid failure)
+        if ! ${pkgs.git}/bin/git config user.name >/dev/null 2>&1; then
+          ${pkgs.git}/bin/git config --local user.name "Note Backup Service"
+        fi
+        if ! ${pkgs.git}/bin/git config user.email >/dev/null 2>&1; then
+          ${pkgs.git}/bin/git config --local user.email "note-backup@localhost"
+        fi
+
+        ${pkgs.git}/bin/git add -A
+
+        # Check if there are changes to commit, otherwise do nothing
+        if ! ${pkgs.git}/bin/git diff --cached --quiet; then
+          ${pkgs.git}/bin/git commit --no-gpg-sign -m "$(${pkgs.coreutils}/bin/date '+%Y-%m-%d %H:%M')"
+        fi
+      ''}";
+    };
+  };
+
+  systemd.user.timers.note-backup = {
+    description = "Timer for daily note backup";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;
+    };
+  };
 }
