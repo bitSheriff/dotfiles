@@ -15,7 +15,7 @@
 
   programs.gamemode.enable = true; # for performance mode
 
-  boot.kernelPackages = pkgs.linuxPackages_zen; # kernel package with ntsync support
+  # boot.kernelPackages = pkgs.linuxPackages_zen; # kernel package with ntsync support
   boot.kernelModules = [ "ntsync" ]; # enhance gaming performance for wine/proton games
   boot.kernelParams = [ "ntsync.ntsync_enabled=1" ];
 
