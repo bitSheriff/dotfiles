@@ -16,11 +16,27 @@
       ];
       definedAliases = [ "@np" ];
     };
+
     "Nix Options" = {
       definedAliases = [ "@no" ];
       urls = [
         {
           template = "https://search.nixos.org/options";
+          params = [
+            {
+              name = "query";
+              value = "{searchTerms}";
+            }
+          ];
+        }
+      ];
+    };
+
+    "HomeManager Options" = {
+      definedAliases = [ "@hm" ];
+      urls = [
+        {
+          template = "https://home-manager-options.extranix.com/";
           params = [
             {
               name = "query";
