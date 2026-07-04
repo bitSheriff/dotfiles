@@ -21,7 +21,7 @@
     ]
     # Host Specifics (strong gaming PC with dedicated GPU)
     ++ lib.optionals (config.networking.hostName == "rhodos") [
-      (alpaca.override { ollama = ollama-cuda; }) # GUI chat app for ollama
+      # (alpaca.override { ollama = ollama-cuda; }) # GUI chat app for ollama
       lmstudio # Lm Studio for local AI
     ];
 
