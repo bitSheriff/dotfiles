@@ -6,6 +6,7 @@ let
     import sys
     from datetime import datetime, timedelta
     import subprocess
+    import argparse
 
     # Define the default editor
     DEFAULT_EDITOR = "nvim"
@@ -39,34 +40,27 @@ let
         subprocess.run([editor_to_use, journal_file])
 
 
-    # Main logic
-    if __name__ == "__main__":
-        if len(sys.argv) == 1:
-            # No arguments: Open today's journal with the default editor
-            open_daily_journal()
-        elif len(sys.argv) == 2:
-            # Only editor is specified
-            editor_arg = sys.argv[1]
-            open_daily_journal(editor=editor_arg)
-        elif len(sys.argv) == 3:
-            # Offset and editor are specified
-            try:
-                offset_arg = int(sys.argv[1])
-            except ValueError:
-                print("Offset must be an integer.")
-                sys.exit(1)
-            editor_arg = sys.argv[2]
-            open_daily_journal(offset=offset_arg, editor=editor_arg)
-        else:
-            # Incorrect usage
-            print("Usage: open_journal [offset] editor")
-            print("  If offset is provided, editor must also be specified.")
-            print("  Examples:")
-            print("    open_journal         # Opens today's journal")
-            print("    open_journal nvim    # Opens today's journal with nvim")
-            print("    open_journal -1 nvim # Opens yesterday's journal")
-            print("    open_journal +1 nvim # Opens tomorrow's journal")
+    def main():
+        parser = argparse.ArgumentParser(description="Open daily journal file.")
+        parser.add_argument(
+            "-o", "--offset", type=int, default=0,
+            help="Day offset. Positive for future, negative for past."
+        )
+        parser.add_argument(
+            "-p", "--program", type=str, default=DEFAULT_EDITOR,
+            help="Program to open the journal with."
+        )
+        args = parser.parse_args()
+
+        try:
+            open_daily_journal(offset=args.offset, editor=args.program)
+        except EnvironmentError as e:
+            print(f"Error: {e}", file=sys.stderr)
             sys.exit(1)
+
+
+    if __name__ == "__main__":
+        main()
   '';
   weekly = pkgs.writeShellApplication {
     name = "weekly";
