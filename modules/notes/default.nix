@@ -1,85 +1,6 @@
 { config, pkgs, ... }:
 
 let
-  daily = pkgs.writers.writePython3Bin "daily" { } ''
-    import os
-    import sys
-    from datetime import datetime, timedelta
-    import subprocess
-    import argparse
-
-    # Define the default editor
-    DEFAULT_EDITOR = "nvim"
-
-
-    def open_daily_journal(offset=0, editor=None):
-        """
-        Opens the daily journal file with the given editor.
-
-        Parameters:
-        - offset (int): The day offset. Positive for future, negative for past.
-        - editor (str): The editor to use.
-        """
-        # Determine the editor to use
-        editor_to_use = editor or DEFAULT_EDITOR
-
-        # Define the NOTES_DIR environment variable
-        daily_dir = os.getenv("JOURNAL_DAILY_PATH")
-        if not daily_dir:
-            msg = "JOURNAL_DAILY_PATH environment variable is not set."
-            raise EnvironmentError(msg)
-
-        # Calculate the target date with the offset
-        target_date = datetime.now() + timedelta(days=offset)
-        formatted_date = target_date.strftime("%Y-%m-%d")
-
-        # Construct the path to the journal file
-        journal_file = os.path.join(daily_dir, f"{formatted_date}.md")
-
-        # Open the file with the chosen editor
-        subprocess.run([editor_to_use, journal_file])
-
-
-    def main():
-        parser = argparse.ArgumentParser(description="Open daily journal file.")
-        parser.add_argument(
-            "-o", "--offset", type=int, default=0,
-            help="Day offset. Positive for future, negative for past."
-        )
-        parser.add_argument(
-            "-p", "--program", type=str, default=DEFAULT_EDITOR,
-            help="Program to open the journal with."
-        )
-        args = parser.parse_args()
-
-        try:
-            open_daily_journal(offset=args.offset, editor=args.program)
-        except EnvironmentError as e:
-            print(f"Error: {e}", file=sys.stderr)
-            sys.exit(1)
-
-
-    if __name__ == "__main__":
-        main()
-  '';
-  weekly = pkgs.writeShellApplication {
-    name = "weekly";
-    runtimeInputs = [ pkgs.coreutils ];
-    text = ''
-      YEAR=$(date +%G)
-      WEEKNR=$(date +%V)
-      FILENAME="$YEAR-W$WEEKNR.md"
-
-      if [[ -z "''${JOURNAL_WEEKLY_PATH:-}" ]]; then
-          echo "Error: Weekly Path not set"
-          exit 1
-      fi
-
-      editor="''${1:-nvim}"
-      "$editor" "$JOURNAL_WEEKLY_PATH/$FILENAME"
-    '';
-  };
-
   notes = pkgs.writeShellApplication {
     name = "notes";
     runtimeInputs = [
@@ -594,6 +515,10 @@ let
   '';
 in
 {
+  imports = [
+    ./jour.nix
+  ];
+
   environment.sessionVariables = {
     NOTES_DIR = "$HOME/notes";
     INBOX = "$HOME/notes/Inbox/Inbox.md";
@@ -608,14 +533,17 @@ in
     fd # find files
     fzf # to select files
     # own scripts
-    daily
-    weekly
     notes
     memo
     memo-gui
     inbox
     todo
   ];
+
+  programs.zsh.shellAliases = {
+    daily = "jour";
+    weekly = "jour --weekly";
+  };
 
   systemd.user.services.note-backup = {
     description = "Backup notes daily with git";

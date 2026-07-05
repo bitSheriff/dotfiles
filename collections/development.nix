@@ -9,7 +9,7 @@
     ./../modules/neovim
     ./../modules/yazi
     ./../modules/zed
-    ./../modules/notes.nix
+    ./../modules/notes
     ./../modules/git.nix
     ./../modules/zellij.nix
     ./../modules/starship.nix

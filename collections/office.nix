@@ -7,7 +7,7 @@
 {
   imports = [
     ../modules/hledger.nix
-    ../modules/notes.nix
+    ../modules/notes
     ../modules/zathura.nix
     ../modules/syncthing.nix
   ];
