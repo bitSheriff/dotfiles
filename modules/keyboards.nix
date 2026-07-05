@@ -11,9 +11,14 @@
 
   hardware.keyboard.zsa.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    keymapp # for ZSA keyboards
-    ttyper # terminal typing game
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+      keymapp # for ZSA keyboards
+      ttyper # terminal typing game
+    ]
+    ++ lib.optionals (config.networking.hostName == "rhodos") [
+      solaar # logitec devices
+    ];
 
 }
