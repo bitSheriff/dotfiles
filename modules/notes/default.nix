@@ -42,6 +42,7 @@ in
     ./jour.nix # for handling journal entries
     ./todo.nix # for handling todo and inbox items
     ./memo.nix # for handling memos
+    ./obsidian.nix # obsidian stuff
   ];
 
   environment.sessionVariables = {
