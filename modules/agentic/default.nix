@@ -25,10 +25,10 @@
       lmstudio # Lm Studio for local AI
     ];
 
-  services.ollama = lib.mkIf (config.networking.hostName == "rhodos") {
-    enable = true;
-    package = pkgs.ollama-cuda;
-  };
+  # services.ollama = lib.mkIf (config.networking.hostName == "rhodos") {
+  #   enable = true;
+  #   package = pkgs.ollama-cuda;
+  # };
 
   ##################
   ## HOME MANAGER ##
