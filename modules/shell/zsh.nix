@@ -149,6 +149,7 @@
       programs.fzf = {
         enable = true;
         enableZshIntegration = true;
+        historyWidget.command = ""; # use atuin for shell history search
         defaultCommand = "fd --hidden --strip-cwd-prefix --exclude '.git'";
         defaultOptions = [
           "--layout=reverse"
