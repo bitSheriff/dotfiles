@@ -272,7 +272,7 @@ in
     hle = "nv \${LEDGER_FILE}";
 
     td = "hledger -f \${TIMEDOT_ALL_FILE}";
-    tde = "(cd $TIMEDOT_PATH && nvim $(find . -type f | fzf))";
+    tde = "(cd $TIMEDOT_PATH && nvim $(fd -t f -e timedot -e timeclock -E .stversions | fzf))";
     tda = "timedot-add \${TIMEDOT_FILE}";
 
     # Uni
