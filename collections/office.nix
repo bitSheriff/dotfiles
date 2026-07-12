@@ -51,6 +51,7 @@
 
     # Printers and Scanners
     simple-scan
+    ocrmypdf # ocr pdfs in command line
 
     # Finance
     ledger-live-desktop
