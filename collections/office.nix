@@ -34,6 +34,7 @@
 
     # Notes & Organization
     obsidian
+    supernote-tool
     # gromit-mpx # draw on desktop
 
     # Communication
