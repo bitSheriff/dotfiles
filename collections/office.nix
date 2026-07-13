@@ -10,6 +10,7 @@
     ../modules/notes
     ../modules/zathura.nix
     ../modules/syncthing.nix
+    ../modules/supernote.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -34,7 +35,6 @@
 
     # Notes & Organization
     obsidian
-    supernote-tool
     # gromit-mpx # draw on desktop
 
     # Communication

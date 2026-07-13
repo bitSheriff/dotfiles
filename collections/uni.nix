@@ -33,6 +33,7 @@ in
 {
   imports = [
     ../modules/zathura.nix
+    ../modules/supernote.nix
   ];
 
   environment.systemPackages = with pkgs; [
