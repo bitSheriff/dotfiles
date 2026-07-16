@@ -58,6 +58,7 @@
           autocrlf = "input";
           compression = 9;
           whitespace = "trailing-space";
+          pager = "delta";
         };
         merge = {
           tool = "meld";
