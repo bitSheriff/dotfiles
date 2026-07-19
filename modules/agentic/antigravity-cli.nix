@@ -10,6 +10,10 @@
   imports = [
   ];
 
+  environment.systemPackages = with pkgs; [
+    antigravity
+  ];
+
   ##################
   ## HOME MANAGER ##
   ##################
