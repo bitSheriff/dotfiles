@@ -18,6 +18,7 @@
       mcp-nixos # mcp server so agents can access Nix and NixOS resources
       # mistral-vibe # needs a build!!!
       antigravity
+      claude-code
     ]
     # Host Specifics (strong gaming PC with dedicated GPU)
     ++ lib.optionals (config.networking.hostName == "rhodos") [
