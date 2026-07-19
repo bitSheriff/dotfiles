@@ -9,4 +9,3 @@ inputs: final: prev: {
   # supernote-tool for Ratta Supernote
   supernote-tool = final.python3Packages.callPackage ./supernote-tool.nix { };
 }
-
