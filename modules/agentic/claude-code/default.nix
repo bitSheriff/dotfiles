@@ -20,6 +20,12 @@
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
     programs.claude-code = {
       enable = true;
+      skills = {
+
+      };
+      rulesDir = ./rules;
+      commandsDir = ./commands;
+      agentsDir = ./agents;
     };
 
   };
