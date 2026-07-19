@@ -26,6 +26,30 @@
       rulesDir = ./rules;
       commandsDir = ./commands;
       agentsDir = ./agents;
+
+      settings = {
+        theme = "dark";
+        includeCoAuthoredBy = false;
+        permissions = {
+          additionalDirectories = [
+            "../docs/"
+          ];
+          allow = [
+            "Bash(git diff:*)"
+            "Edit"
+            "WebFetch"
+          ];
+          ask = [
+            "Bash(git push:*)"
+          ];
+          defaultMode = "acceptEdits";
+          deny = [
+            "Bash(curl:*)"
+            "Read(./.env)"
+            "Read(./secrets/**)"
+          ];
+        };
+      };
     };
 
   };
