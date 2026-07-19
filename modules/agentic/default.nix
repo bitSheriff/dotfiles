@@ -9,8 +9,8 @@
 {
   imports = [
     ./opencode
+    ./claude-code
     ./antigravity-cli.nix
-    ./claude-code.nix
   ];
 
   environment.systemPackages =
