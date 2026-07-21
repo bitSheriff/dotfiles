@@ -43,10 +43,17 @@ let
 
     # Interactive selection if needed
     if [ -z "$ACCOUNT" ] || [ -z "$ACTION" ]; then
+        # Try to get existing accounts, suppress errors if file is empty/invalid
+        EXISTING_ACCOUNTS=$(hledger -f "$FILE" accounts 2>/dev/null || true)
+
         if command -v gum >/dev/null 2>&1; then
             # Prompt for account if not provided
             if [ -z "$ACCOUNT" ]; then
-                ACCOUNT=$(hledger -f "$FILE" accounts | gum filter --no-strict --placeholder "Select account")
+                if [ -z "$EXISTING_ACCOUNTS" ]; then
+                    ACCOUNT=$(gum input --placeholder "New file. Enter account name:")
+                else
+                    ACCOUNT=$(echo "$EXISTING_ACCOUNTS" | gum filter --no-strict --placeholder "Select or type account")
+                fi
                 if [ -z "$ACCOUNT" ]; then exit 0; fi
             fi
 
@@ -59,7 +66,13 @@ let
         elif command -v fzf >/dev/null 2>&1; then
             # Prompt for account if not provided
             if [ -z "$ACCOUNT" ]; then
-                ACCOUNT=$(hledger -f "$FILE" accounts | fzf --header "Select account")
+                if [ -z "$EXISTING_ACCOUNTS" ]; then
+                    printf "New file. Enter account name: "
+                    read -r ACCOUNT
+                else
+                    # --print-query allows typing a new account not in the list. tail -1 grabs either the selection or the typed query.
+                    ACCOUNT=$(echo "$EXISTING_ACCOUNTS" | fzf --header "Select account (or type new & press Enter)" --print-query | tail -1)
+                fi
                 if [ -z "$ACCOUNT" ]; then exit 0; fi
             fi
 
@@ -274,6 +287,8 @@ in
     td = "hledger -f \${TIMEDOT_ALL_FILE}";
     tde = "(cd $TIMEDOT_PATH && nvim $(fd -t f -e timedot -e timeclock -E .stversions | fzf))";
     tda = "timedot-add \${TIMEDOT_FILE}";
+    clkin = "timeclock-add $(fd . \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) i";
+    clkout = "timeclock-add $(fd . \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) o";
 
     # Uni
     tdauni = "timedot-add \${TIMEDOT_SEMESTER_FILE}";
