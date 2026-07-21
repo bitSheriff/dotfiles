@@ -29,8 +29,10 @@
 
       settings = {
         theme = "dark";
+        tui = "fullscreen";
         includeCoAuthoredBy = false;
         permissions = {
+          defaultMode = "acceptEdits";
           additionalDirectories = [
             "../docs/"
           ];
@@ -38,11 +40,14 @@
             "Bash(git diff:*)"
             "Edit"
             "WebFetch"
+            "Bash(nix build:*)"
+            "Bash(nix run:*)"
+            "Bash(nix flake check:*)"
           ];
           ask = [
             "Bash(git push:*)"
+            "Bash(git commit:*)"
           ];
-          defaultMode = "acceptEdits";
           deny = [
             "Bash(curl:*)"
             "Read(./.env)"
