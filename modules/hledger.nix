@@ -202,6 +202,77 @@ let
     fi
   '';
 
+  timeclock-timer =
+    let
+      # The TUI timer command. Change this to swap out the timer.
+      timerCmd = "timr-tui";
+    in
+    pkgs.writeShellApplication {
+      name = "timeclock-timer";
+      runtimeInputs = with pkgs; [
+        hledger
+        gum
+        fzf
+        timr-tui
+        timeclock-add
+      ];
+      text = ''
+        # The timer command is kept in a variable so it can be changed easily.
+        TIMER_CMD="${timerCmd}"
+
+        # Check if file argument is provided
+        if [ $# -eq 0 ]; then
+            echo "Usage: $0 <file>"
+            exit 1
+        fi
+
+        FILE="$1"
+
+        # Check if file exists
+        if [ ! -f "$FILE" ]; then
+            echo "File not found: $FILE"
+            exit 1
+        fi
+
+        # Select the account/project (same selection as clkin/clkout)
+        EXISTING_ACCOUNTS=$(hledger -f "$FILE" accounts 2>/dev/null || true)
+
+        ACCOUNT=""
+        if command -v gum >/dev/null 2>&1; then
+            if [ -z "$EXISTING_ACCOUNTS" ]; then
+                ACCOUNT=$(gum input --placeholder "New file. Enter account name:")
+            else
+                ACCOUNT=$(echo "$EXISTING_ACCOUNTS" | gum filter --no-strict --placeholder "Select or type account")
+            fi
+        elif command -v fzf >/dev/null 2>&1; then
+            if [ -z "$EXISTING_ACCOUNTS" ]; then
+                printf "New file. Enter account name: "
+                read -r ACCOUNT
+            else
+                # --print-query allows typing a new account not in the list. tail -1 grabs either the selection or the typed query.
+                ACCOUNT=$(echo "$EXISTING_ACCOUNTS" | fzf --header "Select account (or type new & press Enter)" --print-query | tail -1)
+            fi
+        else
+            echo "Error: neither gum nor fzf found for selection"
+            exit 1
+        fi
+
+        # Exit if no account selected (e.g. user pressed Esc)
+        if [ -z "$ACCOUNT" ]; then
+            exit 0
+        fi
+
+        # Clock in for the selected project/file
+        timeclock-add "$FILE" i "$ACCOUNT"
+
+        # Start the TUI timer; clock out once it exits (regardless of exit status)
+        "$TIMER_CMD" || true
+
+        # Clock out the same project/file
+        timeclock-add "$FILE" o "$ACCOUNT"
+      '';
+    };
+
   hl-update-prices = pkgs.writeShellScriptBin "hl-update-prices" ''
     PRICEHIST="${pkgs.pricehist}/bin/pricehist" # will install pricehist if not found in systemPackages
 
@@ -252,6 +323,7 @@ in
     pricehist # fetch stock and crypto prices
     # own scripts
     timeclock-add
+    timeclock-timer
     timedot-add
     hl-update-prices
   ];
@@ -289,6 +361,7 @@ in
     tda = "timedot-add \${TIMEDOT_FILE}";
     clkin = "timeclock-add $(fd . \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) i";
     clkout = "timeclock-add $(fd . \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) o";
+    clktimer = "timeclock-timer $(fd . \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf)";
 
     # Uni
     tdauni = "timedot-add \${TIMEDOT_SEMESTER_FILE}";
