@@ -7,6 +7,53 @@
 }:
 
 let
+  # Helper: collect accounts from a hledger file AND any sibling files that
+  # share the same basename in the same directory (e.g. 2026SS.timeclock next
+  # to 2026SS.timedot). timedot and timeclock syntaxes cannot be mixed in a
+  # single hledger invocation, so each file is parsed on its own and the
+  # results are merged, sorted and de-duplicated.
+  #
+  # Not meant to be used directly; it is a helper for the timeclock/timedot
+  # add scripts to build a unified account list for gum/fzf selection.
+  hl-accounts = pkgs.writeShellApplication {
+    name = "hl-accounts";
+    runtimeInputs = with pkgs; [
+      hledger
+      coreutils
+    ];
+    text = ''
+      if [ $# -eq 0 ]; then
+          echo "Usage: $0 <file>" >&2
+          exit 1
+      fi
+
+      FILE="$1"
+
+      DIR=$(dirname -- "$FILE")
+      BASENAME=$(basename -- "$FILE")
+      # Strip the final extension to get the shared basename (stem).
+      STEM="''${BASENAME%.*}"
+
+      # File extensions hledger knows how to parse.
+      EXTENSIONS="journal timedot timeclock hledger ledger"
+
+      {
+          # Always include the given file itself.
+          hledger -f "$FILE" accounts 2>/dev/null || true
+
+          # Plus any sibling files sharing the same basename (stem).
+          for ext in $EXTENSIONS; do
+              candidate="$DIR/$STEM.$ext"
+              # Skip the input file (already handled above) and missing files.
+              [ "$candidate" = "$FILE" ] && continue
+              if [ -f "$candidate" ]; then
+                  hledger -f "$candidate" accounts 2>/dev/null || true
+              fi
+          done
+      } | sort -u
+    '';
+  };
+
   timeclock-add = pkgs.writeShellScriptBin "timeclock-add" ''
     # Check if file argument is provided
     if [ $# -eq 0 ]; then
@@ -43,8 +90,9 @@ let
 
     # Interactive selection if needed
     if [ -z "$ACCOUNT" ] || [ -z "$ACTION" ]; then
-        # Try to get existing accounts, suppress errors if file is empty/invalid
-        EXISTING_ACCOUNTS=$(hledger -f "$FILE" accounts 2>/dev/null || true)
+        # Try to get existing accounts (from this file and its siblings),
+        # suppress errors if file is empty/invalid
+        EXISTING_ACCOUNTS=$(hl-accounts "$FILE" 2>/dev/null || true)
 
         if command -v gum >/dev/null 2>&1; then
             # Prompt for account if not provided
@@ -118,8 +166,8 @@ let
 
     # Get inputs using gum if available, otherwise fallback to fzf/read
     if command -v gum >/dev/null 2>&1; then
-        # Select account using hledger and gum
-        ACCOUNT=$(hledger -f "$FILE" accounts | gum filter --no-strict --placeholder "Select account")
+        # Select account using hledger (this file + siblings) and gum
+        ACCOUNT=$(hl-accounts "$FILE" | gum filter --no-strict --placeholder "Select account")
 
         # Exit if no account selected (e.g., user pressed Esc)
         if [ -z "$ACCOUNT" ]; then
@@ -139,7 +187,7 @@ let
     else
         # Fallback to fzf for account selection
         if command -v fzf >/dev/null 2>&1; then
-            ACCOUNT=$(hledger -f "$FILE" accounts | fzf --header "Select account")
+            ACCOUNT=$(hl-accounts "$FILE" | fzf --header "Select account")
         else
             echo "Error: Neither gum nor fzf found for account selection"
             exit 1
@@ -217,6 +265,7 @@ let
         fzf
         termdown
         timeclock-add
+        hl-accounts
       ];
       text = ''
         # The timer command is kept in a variable so it can be changed easily.
@@ -241,7 +290,7 @@ let
         fi
 
         # Select the account/project (same selection as clkin/clkout)
-        EXISTING_ACCOUNTS=$(hledger -f "$FILE" accounts 2>/dev/null || true)
+        EXISTING_ACCOUNTS=$(hl-accounts "$FILE" 2>/dev/null || true)
 
         ACCOUNT=""
         if command -v gum >/dev/null 2>&1; then
@@ -334,6 +383,7 @@ in
     hledger-iadd
     pricehist # fetch stock and crypto prices
     # own scripts
+    hl-accounts
     timeclock-add
     timeclock-timer
     timedot-add
