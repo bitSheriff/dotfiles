@@ -205,7 +205,9 @@ let
   timeclock-timer =
     let
       # The TUI timer command. Change this to swap out the timer.
-      timerCmd = "timr-tui";
+      # termdown with no time argument runs as a stopwatch counting forward
+      # (press 'q' to quit).
+      timerCmd = "termdown";
     in
     pkgs.writeShellApplication {
       name = "timeclock-timer";
@@ -213,7 +215,7 @@ let
         hledger
         gum
         fzf
-        timr-tui
+        termdown
         timeclock-add
       ];
       text = ''
@@ -222,11 +224,15 @@ let
 
         # Check if file argument is provided
         if [ $# -eq 0 ]; then
-            echo "Usage: $0 <file>"
+            echo "Usage: $0 <file> [time]"
+            echo "  time: optional termdown timespec (e.g. 25m, '1h 5m 30s', 12:00)."
+            echo "        If given, runs a countdown instead of a stopwatch."
             exit 1
         fi
 
         FILE="$1"
+        # Optional countdown duration; empty means stopwatch mode.
+        TIME_ARG="''${2:-}"
 
         # Check if file exists
         if [ ! -f "$FILE" ]; then
@@ -265,8 +271,14 @@ let
         # Clock in for the selected project/file
         timeclock-add "$FILE" i "$ACCOUNT"
 
-        # Start the TUI timer; clock out once it exits (regardless of exit status)
-        "$TIMER_CMD" || true
+        # Run the timer, then clock out once it exits (regardless of exit
+        # status). With a time argument termdown counts down; without one it
+        # runs as a stopwatch counting up.
+        if [ -n "$TIME_ARG" ]; then
+            "$TIMER_CMD" "$TIME_ARG" || true
+        else
+            "$TIMER_CMD" || true
+        fi
 
         # Clock out the same project/file
         timeclock-add "$FILE" o "$ACCOUNT"
