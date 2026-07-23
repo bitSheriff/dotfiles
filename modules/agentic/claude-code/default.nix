@@ -47,9 +47,9 @@
           ask = [
             "Bash(git push:*)"
             "Bash(git commit:*)"
+            "Bash(curl:*)"
           ];
           deny = [
-            "Bash(curl:*)"
             "Read(./.env)"
             "Read(./secrets/**)"
           ];
