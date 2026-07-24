@@ -173,14 +173,14 @@ in
     Camera = {
       # 		Allow = [https =//example.org,https =//example.org =1234];
       # 		Block = [https =//example.edu];
-      BlockNewRequests = true;
-      Locked = true;
+      BlockNewRequests = false; # false => Firefox shows the permission prompt per-site
+      Locked = false; # false => allow changing the setting in the UI
     };
     Microphone = {
       Allow = [ ];
       Block = [ ];
-      BlockNewRequests = true;
-      Locked = true;
+      BlockNewRequests = false; # false => Firefox shows the permission prompt per-site
+      Locked = false; # false => allow changing the setting in the UI
     };
     Location = {
       # 		Allow = [https =//example.org];
