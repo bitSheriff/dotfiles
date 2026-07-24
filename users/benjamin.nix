@@ -225,6 +225,10 @@
             key = "api_keys/openai";
           };
 
+          "api/openrouter" = {
+            key = "api_keys/openrouter";
+          };
+
           "access/github" = {
             key = "access_token/github";
           };
@@ -240,6 +244,7 @@
       programs.zsh.initContent = ''
         export GITHUB_TOKEN="$(cat ${config.sops.secrets."access/github".path})"
         export OPENCODE_SERVER_PASSWORD="$(cat ${config.sops.secrets."access/opencode".path})"
+        export OPENROUTER_API_KEY="$(cat ${config.sops.secrets."access/openrouter".path})"
       '';
 
     }
