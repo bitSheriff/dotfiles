@@ -11,6 +11,7 @@
     ./opencode
     ./claude-code
     ./antigravity-cli.nix
+    ./herdr.nix
   ];
 
   environment.systemPackages =
