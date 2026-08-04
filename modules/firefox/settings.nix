@@ -97,10 +97,6 @@
       url = "https://nixos.wiki/";
     }
     {
-      title = "Whatsapp";
-      url = "https://web.whatsapp.com/";
-    }
-    {
       title = "Youtube";
       url = "https://www.youtube.com";
     }
@@ -111,6 +107,10 @@
     {
       title = "Tuta";
       url = "https://www.tuta.com";
+    }
+    {
+      title = "Supernote";
+      url = "https://www.cloud.supernote.com";
     }
   ];
 }
