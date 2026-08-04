@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   imports = [
@@ -40,6 +45,23 @@
         foldlevelstart = 99;
         foldcolumn = "1";
       };
+
+      # Per-language indentation overrides. The global default above is 4 spaces;
+      # Nix (matching nixfmt's output) uses 2.
+      autocmds = [
+        {
+          event = [ "FileType" ];
+          pattern = [ "nix" ];
+          desc = "Use 2-space indentation for Nix files";
+          callback = lib.generators.mkLuaInline ''
+            function()
+              vim.bo.shiftwidth = 2
+              vim.bo.tabstop = 2
+              vim.bo.softtabstop = 2
+            end
+          '';
+        }
+      ];
 
       # luaConfigPost = ''
       #   vim.api.nvim_create_autocmd("BufReadPost", {
