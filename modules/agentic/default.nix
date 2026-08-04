@@ -1,40 +1,40 @@
 {
-  config,
-  pkgs,
-  inputs,
-  lib,
-  activeUsers,
-  ...
+    config,
+    pkgs,
+    inputs,
+    lib,
+    activeUsers,
+    ...
 }:
 {
-  imports = [
-    ./opencode
-    ./claude-code
-    ./antigravity-cli.nix
-    ./herdr.nix
-  ];
-
-  environment.systemPackages =
-    with pkgs;
-    [
-      mcp-nixos # mcp server so agents can access Nix and NixOS resources
-      # mistral-vibe # needs a build!!!
-    ]
-    # Host Specifics (strong gaming PC with dedicated GPU)
-    ++ lib.optionals (config.networking.hostName == "rhodos") [
-      # (alpaca.override { ollama = ollama-cuda; }) # GUI chat app for ollama
-      lmstudio # Lm Studio for local AI
+    imports = [
+        ./opencode
+        ./claude-code
+        ./antigravity.nix
+        ./herdr.nix
     ];
 
-  # services.ollama = lib.mkIf (config.networking.hostName == "rhodos") {
-  #   enable = true;
-  #   package = pkgs.ollama-cuda;
-  # };
+    environment.systemPackages =
+        with pkgs;
+        [
+            mcp-nixos # mcp server so agents can access Nix and NixOS resources
+            # mistral-vibe # needs a build!!!
+        ]
+        # Host Specifics (strong gaming PC with dedicated GPU)
+        ++ lib.optionals (config.networking.hostName == "rhodos") [
+            # (alpaca.override { ollama = ollama-cuda; }) # GUI chat app for ollama
+            lmstudio # Lm Studio for local AI
+        ];
 
-  ##################
-  ## HOME MANAGER ##
-  ##################
-  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+    # services.ollama = lib.mkIf (config.networking.hostName == "rhodos") {
+    #   enable = true;
+    #   package = pkgs.ollama-cuda;
+    # };
 
-  };
+    ##################
+    ## HOME MANAGER ##
+    ##################
+    home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+
+    };
 }
