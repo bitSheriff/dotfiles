@@ -78,7 +78,7 @@ let
       };
 
       sound = {
-        enabled = true;
+        enabled = false;
         # Optional custom mp3s (relative paths resolve from this config's dir).
         # path = "sounds/notification.mp3";
         # done_path = "sounds/done.mp3";
