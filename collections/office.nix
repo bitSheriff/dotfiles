@@ -11,6 +11,7 @@
     ../modules/zathura.nix
     ../modules/syncthing.nix
     ../modules/supernote.nix
+    ../modules/marktext.nix
   ];
 
   environment.systemPackages =

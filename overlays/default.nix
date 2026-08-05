@@ -9,6 +9,12 @@ inputs: final: prev: {
   # supernote-tool for Ratta Supernote
   supernote-tool = final.python3Packages.callPackage ./supernote-tool.nix { };
 
+  # marktext markdown editor. nixpkgs tracks the develop branch but lags far
+  # behind (snapshot 2025-11-19), and there is no recent stable release. Pin to
+  # the upstream v0.20.0-rc.1 prebuilt AppImage instead. Bump url+hash in
+  # ./marktext.nix to update; see its `version`.
+  marktext = final.callPackage ./marktext.nix { };
+
   # nixpkgs bumped glaze 7.9.1 -> 8.0.0 (PR #548864, 2026-08-04), but hyprland
   # 0.56.1 requires glaze in range `7...<8`. With glaze 8, find_package fails and
   # hyprland tries to FetchContent-clone glaze over the network, which the build
