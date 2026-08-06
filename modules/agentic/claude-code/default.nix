@@ -20,12 +20,12 @@
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
     programs.claude-code = {
       enable = true;
-      skills = {
-
-      };
       rulesDir = ./rules;
       commandsDir = ./commands;
       agentsDir = ./agents;
+      skills = {
+        sort-ebooks = ./skills/sort-ebooks;
+      };
 
       settings = {
         theme = "dark";
@@ -37,12 +37,22 @@
             "../docs/"
           ];
           allow = [
-            "Bash(git diff:*)"
             "Edit"
             "WebFetch"
-            "Bash(nix build:*)"
-            "Bash(nix run:*)"
-            "Bash(nix flake check:*)"
+            "Bash(echo \"exit: $?\")" # print last exit code
+
+            # Git Stuff
+            "Bash(git diff *)"
+            "Bash(git lfs *)"
+
+            # Nix Stuff
+            "Bash(nix build *)"
+            "Bash(nix run *)"
+            "Bash(nix flake check *)"
+            "Bash(nix --version)"
+            "Bash(nix develop *)"
+            "Bash(nix fmt *)"
+            "Bash(nix log *)"
           ];
           ask = [
             "Bash(git push:*)"
