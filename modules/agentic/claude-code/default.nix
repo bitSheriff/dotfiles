@@ -24,7 +24,13 @@
       commandsDir = ./commands;
       agentsDir = ./agents;
       skills = {
-        sort-ebooks = ./skills/sort-ebooks;
+        sort-ebooks = ../skills/sort-ebooks;
+
+        # Obsidian
+        obsidian-bases = ../skills/obsidian-bases;
+        obsidian-cli = ../skills/obsidian-cli;
+        obsidian-markdown = ../skills/obsidian-markdown;
+        json-canvas = ../skills/json-canvas;
       };
 
       settings = {
