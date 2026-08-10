@@ -216,8 +216,11 @@
         open = {
           rules = [
             {
-              mime = "application/epub";
-              use = [ "viewEpub" ];
+              mime = "application/epub+zip";
+              use = [
+                "viewEpub"
+                "reveal"
+              ];
             }
             {
               mime = "text/plain";
