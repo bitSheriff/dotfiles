@@ -223,6 +223,16 @@
               ];
             }
             {
+              # comic books are just renamed rar/zip archives, so they can only
+              # be told apart by name; must come before the archive rules
+              url = "*.{cbr,cbz,CBR,CBZ}";
+              use = [
+                "viewPDF"
+                "extract"
+                "reveal"
+              ];
+            }
+            {
               mime = "text/plain";
               use = [
                 "openMarkdown"
