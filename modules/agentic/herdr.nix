@@ -21,7 +21,7 @@ let
       # Executable for new interactive panes. Empty -> $SHELL, then /bin/sh.
       default_shell = "";
       shell_mode = "auto";
-      new_cwd = "follow";
+      new_cwd = "~/code"; # "follow" has problems with .envrc files which activate a flake -> cannot break out of it even if directory is changed
     };
 
     update = {
