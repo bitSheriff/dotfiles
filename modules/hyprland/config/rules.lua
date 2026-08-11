@@ -22,6 +22,7 @@ hl.workspace_rule({ workspace = "special:term-scratchpad", on_created_empty = "k
 hl.window_rule({ match = { class = "org.pwmt.zathura" }, opacity = "1.0 override" })
 hl.window_rule({ match = { class = "org.kde.okular" }, opacity = "1.0 override" })
 hl.window_rule({ match = { class = "obsidian" }, opacity = "1.0 override" })
+hl.window_rule({ match = { class = "org.freecad.FreeCAD" }, opacity = "1.0 override" })
 
 -- Media
 hl.window_rule({ match = { class = "mpv" }, opacity = "1.0 override" })
