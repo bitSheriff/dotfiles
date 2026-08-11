@@ -23,6 +23,67 @@
 
   "browser.tabs.inTitlebar" = 0;
 
+  # ------------------------------ #
+  # -- Toolbar layout ------------ #
+  # ------------------------------ #
+  # NOTE: pinning this keeps the toolbars identical on every machine.
+  # Downside: changes made in "Customize Toolbar" are reverted on the next start.
+  # `currentVersion` must match the CustomizableUI version of the running Firefox,
+  # otherwise the UI migrations re-run on every launch. Re-read the pref from
+  # about:config after a Firefox upgrade introduces new buttons.
+  "browser.uiCustomization.state" = builtins.toJSON {
+    placements = {
+      widget-overflow-fixed-list = [ ];
+      unified-extensions-area = [
+        "new-window-without-toolbar_tkrkt_com-browser-action"
+        "addon_darkreader_org-browser-action"
+        "ublock0_raymondhill_net-browser-action"
+        "sponsorblocker_ajay_app-browser-action"
+      ];
+      nav-bar = [
+        "sidebar-button"
+        "back-button"
+        "forward-button"
+        "stop-reload-button"
+        "home-button"
+        "customizableui-special-spring1"
+        "vertical-spacer"
+        "urlbar-container"
+        "customizableui-special-spring2"
+        "downloads-button"
+        "fxa-toolbar-menu-button"
+        "reset-pbm-toolbar-button"
+        "unified-extensions-button"
+        "_d634138d-c276-4fc8-924b-40a0ea21d284_-browser-action" # 1Password
+        "new-tab-button"
+        "alltabs-button"
+      ];
+      toolbar-menubar = [ "menubar-items" ];
+      TabsToolbar = [ ];
+      vertical-tabs = [ "tabbrowser-tabs" ];
+      PersonalToolbar = [ "personal-bookmarks" ];
+    };
+    seen = [
+      "reset-pbm-toolbar-button"
+      "new-window-without-toolbar_tkrkt_com-browser-action"
+      "addon_darkreader_org-browser-action"
+      "ublock0_raymondhill_net-browser-action"
+      "_d634138d-c276-4fc8-924b-40a0ea21d284_-browser-action"
+      "sponsorblocker_ajay_app-browser-action"
+      "developer-button"
+    ];
+    dirtyAreaCache = [
+      "unified-extensions-area"
+      "nav-bar"
+      "toolbar-menubar"
+      "TabsToolbar"
+      "vertical-tabs"
+      "PersonalToolbar"
+    ];
+    currentVersion = 24;
+    newElementCount = 3;
+  };
+
   "reader.color_scheme" = "custom";
   "reader.colors_menu.enabled" = true; # what does this do ?
   "reader.content_width" = 4;
