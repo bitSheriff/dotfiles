@@ -1,0 +1,6 @@
+#!/data/data/com.termux/files/usr/bin/bash
+# Termux:Widget shortcut, clock in from the home screen
+
+source ~/.bashrc
+
+clkin
