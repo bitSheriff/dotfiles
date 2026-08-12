@@ -69,7 +69,7 @@ timeclock-add() {
     if [ -z "$ACCOUNT" ] || [ -z "$ACTION" ]; then
         # Try to get existing accounts (from this file and its siblings),
         # suppress errors if file is empty/invalid
-        EXISTING_ACCOUNTS=$(hl-accounts "$FILE" 2>/dev/null || true)
+        EXISTING_ACCOUNTS=$(hledger -f "$FILE" accounts 2>/dev/null || true)
 
         if command -v gum >/dev/null 2>&1; then
             # Prompt for account if not provided
@@ -127,9 +127,26 @@ timeclock-add() {
 
 }
 
+clkin() {
+    local REL_FILE
+    REL_FILE=$(cd "${TIME_PATH}" && fd --extension=timeclock --type f | fzf)
+
+    if [ -n "$REL_FILE" ]; then
+        timeclock-add "${TIME_PATH}/${REL_FILE}" i
+    fi
+}
+
+clkout() {
+    local REL_FILE
+    REL_FILE=$(cd "${TIME_PATH}" && fd --extension=timeclock --type f | fzf)
+
+    if [ -n "$REL_FILE" ]; then
+        timeclock-add "${TIME_PATH}/${REL_FILE}" o
+    fi
+}
+
 alias hl=hledger
 alias hla="hledger -f $LEDGER_ALL_FILE"
-# eval "$(mise activate bash)"
 alias timedot="hledger -f $HOME/notes/Journal/_time/2026.timedot"
 alias td="hledger -f $HOME/notes/Journal/_time/all.journal"
 alias tda="~/.local/bin/timedot-add ${TIMEDOT_FILE}"
@@ -137,6 +154,3 @@ alias tdauni="~/.local/bin/timedot-add ${TIMEDOT_SEM_FILE}"
 alias tdawork="~/.local/bin/timeclock-add ${TIMEDOT_WORK_FILE}"
 alias nv=nvim
 alias todo=~/.local/bin/todo
-
-alias clkin='FILE=$(cd "${TIME_PATH}" && fd --extension=timeclock --type f | fzf) && [ -n "$FILE" ] && timeclock-add "${TIME_PATH}/${FILE}" i'
-alias clkout='FILE=$(cd "${TIME_PATH}" && fd --extension=timeclock --type f | fzf) && [ -n "$FILE" ] && timeclock-add "${TIME_PATH}/${FILE}" o'
