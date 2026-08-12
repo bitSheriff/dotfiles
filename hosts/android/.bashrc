@@ -153,4 +153,4 @@ alias tda="~/.local/bin/timedot-add ${TIMEDOT_FILE}"
 alias tdauni="~/.local/bin/timedot-add ${TIMEDOT_SEM_FILE}"
 alias tdawork="~/.local/bin/timeclock-add ${TIMEDOT_WORK_FILE}"
 alias nv=nvim
-alias todo=~/.local/bin/todo
+alias pulldots="(cd ~/code/dotfiles && git pull)"

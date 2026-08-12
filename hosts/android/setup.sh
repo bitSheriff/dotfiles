@@ -32,6 +32,7 @@ setup_termux() {
     mkdir -p ~/.termux
     ln -sf "${SCRIPT_DIR}/termux.properties" ~/.termux/termux.properties
     termux-reload-settings
+    setup_shortcuts
 }
 
 install_packages() {
@@ -88,6 +89,3 @@ setup_git
 
 echo "Setting up ssh"
 setup_ssh
-
-echo "Setting up widget shortcuts"
-setup_shortcuts
