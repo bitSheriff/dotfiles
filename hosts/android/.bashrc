@@ -67,51 +67,32 @@ timeclock-add() {
 
     # Interactive selection if needed
     if [ -z "$ACCOUNT" ] || [ -z "$ACTION" ]; then
+        if ! command -v fzf >/dev/null 2>&1; then
+            echo "Error: Missing arguments and fzf not found for selection"
+            exit 1
+        fi
+
         # Try to get existing accounts (from this file and its siblings),
         # suppress errors if file is empty/invalid
         EXISTING_ACCOUNTS=$(hledger -f "$FILE" accounts 2>/dev/null || true)
 
-        if command -v gum >/dev/null 2>&1; then
-            # Prompt for account if not provided
-            if [ -z "$ACCOUNT" ]; then
-                if [ -z "$EXISTING_ACCOUNTS" ]; then
-                    ACCOUNT=$(gum input --placeholder "New file. Enter account name:")
-                else
-                    ACCOUNT=$(echo "$EXISTING_ACCOUNTS" | gum filter --no-strict --placeholder "Select or type account")
-                fi
-                if [ -z "$ACCOUNT" ]; then exit 0; fi
+        # Prompt for account if not provided
+        if [ -z "$ACCOUNT" ]; then
+            if [ -z "$EXISTING_ACCOUNTS" ]; then
+                printf "New file. Enter account name: "
+                read -r ACCOUNT
+            else
+                # --print-query allows typing a new account not in the list. tail -1 grabs either the selection or the typed query.
+                ACCOUNT=$(echo "$EXISTING_ACCOUNTS" | fzf --header "Select account (or type new & press Enter)" --print-query | tail -1)
             fi
+            if [ -z "$ACCOUNT" ]; then exit 0; fi
+        fi
 
-            # Prompt for action if not provided
-            if [ -z "$ACTION" ]; then
-                ACTION_SEL=$(printf "in\nout" | gum choose --header "Select action")
-                if [ -z "$ACTION_SEL" ]; then exit 0; fi
-                [ "$ACTION_SEL" == "in" ] && ACTION="i" || ACTION="o"
-            fi
-        elif command -v fzf >/dev/null 2>&1; then
-            # Prompt for account if not provided
-            if [ -z "$ACCOUNT" ]; then
-                if [ -z "$EXISTING_ACCOUNTS" ]; then
-                    printf "New file. Enter account name: "
-                    read -r ACCOUNT
-                else
-                    # --print-query allows typing a new account not in the list. tail -1 grabs either the selection or the typed query.
-                    ACCOUNT=$(echo "$EXISTING_ACCOUNTS" | fzf --header "Select account (or type new & press Enter)" --print-query | tail -1)
-                fi
-                if [ -z "$ACCOUNT" ]; then exit 0; fi
-            fi
-
-            # Prompt for action if not provided
-            if [ -z "$ACTION" ]; then
-                ACTION_SEL=$(printf "in\nout" | fzf --header "Select action")
-                if [ -z "$ACTION_SEL" ]; then exit 0; fi
-                [ "$ACTION_SEL" == "in" ] && ACTION="i" || ACTION="o"
-            fi
-        else
-            if [ -z "$ACCOUNT" ] || [ -z "$ACTION" ]; then
-                echo "Error: Missing arguments and neither gum nor fzf found for selection"
-                exit 1
-            fi
+        # Prompt for action if not provided
+        if [ -z "$ACTION" ]; then
+            ACTION_SEL=$(printf "in\nout" | fzf --header "Select action")
+            if [ -z "$ACTION_SEL" ]; then exit 0; fi
+            [ "$ACTION_SEL" == "in" ] && ACTION="i" || ACTION="o"
         fi
     fi
 
