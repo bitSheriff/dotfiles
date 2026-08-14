@@ -30,6 +30,9 @@
         userChrome = import ./userChrome.nix;
         settings = import ./settings.nix;
         containers = import ./containers.nix;
+        # firefox replaces the symlink with a real file on every launch, so without
+        # this every activation tries to back it up and trips over the last backup
+        containersForce = true;
         search = import ./search.nix;
       };
     };
