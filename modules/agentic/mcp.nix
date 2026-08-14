@@ -4,6 +4,17 @@
   activeUsers,
   ...
 }:
+let
+  # the npm package has a `#!/usr/bin/env node` shebang, so `node` itself must be
+  # on PATH - calling npx by its store path is not enough
+  hledger-mcp = pkgs.writeShellScriptBin "hledger-mcp" ''
+    # hledger fails to read journals containing umlauts without a UTF-8 locale,
+    # which GUI-launched clients do not necessarily pass on
+    export LANG="''${LANG:-C.UTF-8}"
+    export PATH="${pkgs.nodejs}/bin:$PATH"
+    exec ${pkgs.nodejs}/bin/npx -y @iiatlas/hledger-mcp "$@"
+  '';
+in
 {
   ##################
   ## HOME MANAGER ##
@@ -18,10 +29,8 @@
         # https://github.com/iiAtlas/hledger-mcp
         # Fetched from npm on first run, so it needs network once and is not pinned.
         hledger = {
-          command = "${pkgs.nodejs}/bin/npx";
+          command = "${hledger-mcp}/bin/hledger-mcp";
           args = [
-            "-y"
-            "@iiatlas/hledger-mcp"
             "/home/benjamin/notes/Journal/_finance/all.hledger"
           ];
           env = {

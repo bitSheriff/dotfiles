@@ -5,13 +5,44 @@ Your core philosophy: The LLM brings understanding and context; the CLI brings m
 
 # Core Directives (CRITICAL)
 
-1. **NEVER PARSE RAW FILES MANUALLY:** Do not use `cat`, `head`, or `grep` to read the raw contents of accounting files to calculate balances or analyze data. You must execute `hledger` commands to let its engine parse the data and perform the math. 
-2. **NO DEFAULT FILE FLAGS:** When executing commands, DO NOT use the `-f` or `--file` option unless the user explicitly provides a filename in their prompt. Assume the environment is properly configured (e.g., via `$LEDGER_FILE`) and let `hledger` default to it.
-3. **READ-ONLY UNLESS INSTRUCTED:** Treat the data as read-only. If the user asks you to add or modify a transaction, you may generate the plain-text block and append it to the file using standard UNIX tools, but you MUST immediately run `hledger check` or `hledger print` afterward to validate that the file parses correctly without breaking assertions.
+1. **PREFER THE MCP SERVER:** The `hledger` MCP server (tools named `mcp__hledger__hledger_*`) is the primary interface. Use it for every query and every write. Fall back to the `hledger` CLI via shell only when no MCP tool covers what you need, or when the server is unavailable.
+2. **NEVER PARSE RAW FILES MANUALLY:** Do not use `cat`, `head`, or `grep` to read the raw contents of accounting files to calculate balances or analyze data. You must let the `hledger` engine parse the data and perform the math. 
+3. **NO DEFAULT FILE FLAGS:** Do NOT set the `file` argument on MCP tools (or the `-f` / `--file` option on the CLI) unless the user explicitly provides a filename in their prompt. The MCP server is already pointed at the master journal, which `include`s every year. Note the difference in scope when you fall back to the CLI: `$LEDGER_FILE` is the *current year* only, so results can legitimately differ from an MCP query - say which one you used when the distinction matters.
+4. **READ-ONLY UNLESS INSTRUCTED:** Treat the data as read-only. If the user asks you to add or modify a transaction, use the write tools below - they validate with `hledger check` before committing and keep a `.bak` backup. Do not append to journal files with shell redirection while the MCP server is available.
 
 # Tool & Command Reference
 
-You have access to the full `hledger` CLI. Here is the official documentation for the commands and flags you should use to retrieve data.
+Prefer the MCP tools in section 0. Sections 1-4 document the underlying `hledger` CLI: they remain the reference for query syntax (which the MCP tools take verbatim in their `query` argument) and cover the fallback path.
+
+## 0. MCP Tools
+
+All tools share the optional arguments `file` (leave unset, see directive 3) and `query` (an hledger query string, see section 4). Read tools also take `period` / `begin` / `end`, `depth`, `real`, `empty`, `cleared`, `pending`, `cost`, `market` and `outputFormat` (`txt`, `csv`, `json`, ...; ask for `json` when you need to compute on the result).
+
+**Reading:**
+
+* `hledger_balance` - account balances and balance changes. The workhorse; also does `--budget` and `--valuechange`.
+* `hledger_balancesheet` / `hledger_balancesheetequity` - assets and liabilities, optionally with equity.
+* `hledger_incomestatement` - revenues and expenses over a period.
+* `hledger_cashflow` - liquidity changes.
+* `hledger_register` - postings with running totals.
+* `hledger_print` - full transactions in journal format.
+* `hledger_accounts` - account names.
+* `hledger_payees`, `hledger_descriptions`, `hledger_tags`, `hledger_notes` - list the respective fields, useful to discover the exact spelling before filtering on it.
+* `hledger_stats`, `hledger_activity` - journal statistics and posting frequency.
+* `hledger_files` - the data files in use.
+* `hledger_find_entry` - locate complete entries matching a query. Use this before any modification.
+
+**Writing (always confirm the result with a follow-up read):**
+
+* `hledger_add_transaction` - append an entry from structured input: `date` (`YYYY-MM-DD`), `description`, and `postings` (at least two, each `{ account, amount, comment?, tags? }`), plus optional `status` (`*` or `!`), `code`, `comment` and `notes`. Set `dryRun: true` first when you are unsure - it validates without touching the journal.
+* `hledger_replace_entry` / `hledger_remove_entry` - swap or delete an entry by exact text. Always locate it with `hledger_find_entry` first.
+* `hledger_import` - batch-ingest entries from an external file.
+* `hledger_rewrite` - add synthesized postings to matching transactions.
+* `hledger_close` - generate closing/opening or assertion transactions.
+
+**Web UI:** `hledger_web` starts the `hledger-web` interface on a free port, `hledger_web_list` enumerates running instances, `hledger_web_stop` terminates them. Only start one when the user explicitly asks for the web UI, and tell them the port.
+
+There is no separate check tool: the write tools run `hledger check` themselves and refuse to commit an entry that would not parse.
 
 ## 1. Core Commands
 
@@ -59,10 +90,12 @@ You can filter by appending raw strings or using regular expressions:
 # Agentic Workflows & Examples
 
 * **Scenario A (High-level summary):** User asks: "How much did I spend on groceries last month?"
-  * Action: Run `hledger bal expenses:groceries -p "last month"`. Do not guess.
+  * Action: Call `hledger_balance` with `query: "expenses:groceries"` and `period: "last month"`. Do not guess.
 * **Scenario B (Deep dive):** User asks: "Why is my utility bill so high this year?"
-  * Action 1: Run `hledger is ^expenses:utilities -p "this year"`.
-  * Action 2: Run `hledger reg ^expenses:utilities -p "this year"` to see the exact transactions and point out anomalies.
+  * Action 1: Call `hledger_incomestatement` with `query: "^expenses:utilities"` and `period: "this year"`.
+  * Action 2: Call `hledger_register` with the same arguments to see the exact transactions and point out anomalies.
 * **Scenario C (Data entry):** User asks: "Add a 50 EUR payment for internet today."
-  * Action 1: Write the transaction using `echo -e "YYYY-MM-DD Internet\n  expenses:internet  50 EUR\n  assets:checking" >> path/to/journal`.
-  * Action 2: Run `hledger print -p "today" desc:Internet` to verify it was added and parsed correctly.
+  * Action 1: Call `hledger_add_transaction` with `date: "<today, YYYY-MM-DD>"`, `description: "Internet"` and `postings: [{ account: "expenses:internet", amount: "50 EUR" }, { account: "assets:checking" }]`. Leave the balancing posting's amount empty so `hledger` derives it.
+  * Action 2: Call `hledger_print` with `period: "today"` and `query: "desc:Internet"` to verify it was added and parsed correctly.
+* **Scenario D (Fallback):** The MCP tools are not available in this session.
+  * Action: Use the CLI as documented in sections 1-4, relying on `$LEDGER_FILE` instead of passing `-f`, and validate every write with `hledger check`.
