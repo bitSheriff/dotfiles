@@ -23,6 +23,9 @@
       rulesDir = ./rules;
       commandsDir = ./commands;
       agentsDir = ./agents;
+      # pull in the shared MCP servers from `programs.mcp.servers` (../mcp.nix)
+      enableMcpIntegration = true;
+
       skills = {
         sort-ebooks = ../skills/sort-ebooks;
         hledger = ../skills/hledger;

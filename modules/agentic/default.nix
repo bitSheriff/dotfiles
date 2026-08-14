@@ -8,6 +8,7 @@
 }:
 {
   imports = [
+    ./mcp.nix
     ./opencode
     ./claude-code
     ./antigravity.nix

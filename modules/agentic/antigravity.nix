@@ -20,6 +20,10 @@
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
     programs.antigravity-cli = {
       enable = true;
+
+      # pull in the shared MCP servers from `programs.mcp.servers` (./mcp.nix)
+      enableMcpIntegration = true;
+
       # BUG IN ANTIGRAVITY
       # fails to start if config is read-only
       #

@@ -19,6 +19,9 @@
     programs.opencode = {
       enable = true;
 
+      # pull in the shared MCP servers from `programs.mcp.servers` (../mcp.nix)
+      enableMcpIntegration = true;
+
       # ssettings in `opencode.json`
       settings = {
         plugin = [
