@@ -25,6 +25,7 @@
       agentsDir = ./agents;
       skills = {
         sort-ebooks = ../skills/sort-ebooks;
+        hledger = ../skills/hledger;
 
         # Obsidian
         obsidian-bases = ../skills/obsidian-bases;
