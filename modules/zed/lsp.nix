@@ -6,25 +6,30 @@
 }:
 
 {
-  # hledger support in Zed, matching ../neovim/hledger.nix.
+  # Language server configuration for Zed. One block per LSP; the general
+  # editor settings live in ./default.nix.
   #
-  # Unlike Neovim, Zed cannot register a language server from settings alone —
-  # a WASM extension is required (zed-industries/zed#52653, closed as not
-  # planned). The upstream author publishes one, "hledger"
-  # (github:juev/hledger-zed), which supplies the language, the tree-sitter
-  # ledger grammar and the hledger-lsp server binding.
-  #
-  # Caveat: Zed downloads that extension itself at first launch, so it is not
-  # Nix-managed. What we *can* pin declaratively is the LSP binary, via
-  # lsp.hledger-lsp.binary.path — without it the extension fetches a binary
-  # from GitHub releases on its own.
+  # Note that Zed cannot register a language server from settings alone — a
+  # WASM extension is required (zed-industries/zed#52653, closed as not
+  # planned). So each server here needs a matching entry in `extensions`, and
+  # Zed downloads that extension itself on first launch; it is not Nix-managed.
+  # What we can pin declaratively is the server binary, via
+  # `lsp.<name>.binary.path`.
 
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
     programs.zed-editor = {
-      extensions = [ "hledger" ];
+      extensions = [
+        # Supplies the hledger language, the tree-sitter ledger grammar and the
+        # hledger-lsp binding. See https://github.com/juev/hledger-zed
+        "hledger"
+      ];
 
       userSettings = {
+        # hledger — see ../neovim/hledger.nix for the Neovim equivalent, and
+        # ../../overlays/hledger-lsp.nix for the package.
         lsp.hledger-lsp = {
+          # Without this the extension fetches its own binary from GitHub
+          # releases; pointing at the store path reuses the one Nix built.
           binary.path = lib.getExe pkgs.hledger-lsp;
 
           # initialization_options rather than settings: the server gates its

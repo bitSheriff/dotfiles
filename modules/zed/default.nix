@@ -11,7 +11,7 @@
     ./keymaps.nix
     ./tasks.nix
     ./snippets.nix
-    ./hledger.nix
+    ./lsp.nix
   ];
 
   # System-wide dev tools
