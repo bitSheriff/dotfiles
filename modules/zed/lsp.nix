@@ -64,6 +64,14 @@
           formatter = "language_server";
           format_on_save = "on";
         };
+
+        # The extension claims .journal/.hledger/.ledger but not .timedot, so
+        # timedot files would otherwise open as plain text. Mapping them onto
+        # the hledger language buys syntax highlighting; the language server is
+        # switched off for that tree by ~/notes/Journal/_time/.zed/settings.json,
+        # which is what keeps the balance-check noise away. Unlike Neovim, Zed
+        # cannot run a second server instance with per-directory settings.
+        file_types.hledger = [ "*.timedot" ];
       };
     };
   };

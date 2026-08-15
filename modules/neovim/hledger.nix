@@ -11,16 +11,25 @@
   programs.nvf.settings.vim = {
 
     # `.journal` already maps to "ledger" in Neovim's builtin filetype table;
-    # `.hledger` and `.prices` do not. `.timedot`/`.timeclock` are deliberately
-    # left out — they are different syntaxes that hledger-lsp cannot parse.
+    # `.hledger` and `.prices` do not. timedot gets a filetype of its own so it
+    # can be driven by a separate server instance (see hledger_timedot below);
+    # timeclock gets one purely for the comment string, as hledger-lsp cannot
+    # parse it at all.
     filetype.extension = {
       hledger = "ledger";
       prices = "ledger";
+      timedot = "timedot";
+      timeclock = "timeclock";
     };
 
     treesitter.grammars = [
       pkgs.vimPlugins.nvim-treesitter.grammarPlugins.ledger
     ];
+
+    # timedot is close enough to journal syntax (date header, indented account,
+    # amount) that the ledger parser highlights it usefully. timeclock is not,
+    # so it is left unregistered.
+    treesitter.filetypeMappings.ledger = [ "timedot" ];
 
     lsp.servers.hledger_lsp = {
       enable = true;
@@ -81,6 +90,47 @@
       };
     };
 
+    # A second instance for timedot files. hledger-lsp has no timedot reader,
+    # but timedot happens to parse as journal syntax well enough that
+    # completion, hover and symbols all work; the one thing it gets wrong is
+    # that a timedot posting is single-sided and so never "balances". Hence a
+    # separate server rather than reusing hledger_lsp: these settings must not
+    # leak into real journals, where an unbalanced transaction is a real error.
+    lsp.servers.hledger_timedot = {
+      enable = true;
+      cmd = [ (lib.getExe pkgs.hledger-lsp) ];
+      filetypes = [ "timedot" ];
+      root_markers = [
+        "all.journal"
+        ".git"
+      ];
+
+      # init_options, not settings: `features` is only read during Initialize,
+      # because the server cannot re-register LSP capabilities afterwards.
+      init_options.hledger = {
+        diagnostics = {
+          # The whole point of this instance.
+          unbalancedTransactions = false;
+          undeclaredAccounts = false;
+          undeclaredCommodities = false;
+        };
+
+        features = {
+          # timedot files are aligned by `timedot-add` (../hledger.nix) to a
+          # fixed 40-column account field. The journal formatter aligns on the
+          # decimal point instead, so leaving it on would rewrite these files
+          # on every save — formatOnSave is global. Turning the capability off
+          # makes vim.lsp.buf.format a no-op here.
+          formatting = false;
+          # Every timedot posting elides its counterpart, so an "inferred
+          # amount" hint would be attached to every single line.
+          inlayHints = false;
+        };
+
+        cli.path = lib.getExe pkgs.hledger;
+      };
+    };
+
     luaConfigPost = ''
       -- hledger-lsp ships custom semantic token types with no default
       -- highlight groups. Re-applied on colorscheme changes, which reset them.
@@ -95,8 +145,12 @@
           code = "Special",
           status = "Operator",
         }
-        for token, group in pairs(links) do
-          vim.api.nvim_set_hl(0, "@lsp.type." .. token .. ".ledger", { link = group })
+        -- Neovim suffixes semantic token groups with the buffer's filetype,
+        -- so each filetype an hledger-lsp instance serves needs its own set.
+        for _, ft in ipairs({ "ledger", "timedot" }) do
+          for token, group in pairs(links) do
+            vim.api.nvim_set_hl(0, "@lsp.type." .. token .. "." .. ft, { link = group })
+          end
         end
       end
 
@@ -163,12 +217,21 @@
         vim.api.nvim_win_set_cursor(0, { pos[1], edit.range.start.character + #edit.newText })
       end
 
+      -- Posting indentation applies to timedot too; the <Tab> alignment keymap
+      -- does not, since that instance has the formatting capability disabled.
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = "ledger",
-        desc = "hledger: posting indentation and amount alignment on <Tab>",
+        pattern = { "ledger", "timedot" },
+        desc = "hledger: indent new posting lines",
         callback = function(args)
           vim.bo[args.buf].autoindent = true
           vim.bo[args.buf].indentexpr = "v:lua.hledger_indentexpr()"
+        end,
+      })
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "ledger",
+        desc = "hledger: align amounts on <Tab>",
+        callback = function(args)
           vim.keymap.set("i", "<Tab>", hledger_tab, { buffer = args.buf })
         end,
       })
