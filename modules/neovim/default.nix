@@ -8,6 +8,7 @@
 {
   imports = [
     ./langs.nix
+    ./hledger.nix
     ./looks.nix
     ./keymaps.nix
     ./snippets.nix

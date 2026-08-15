@@ -15,4 +15,7 @@ inputs: final: prev: {
   # ./marktext.nix to update; see its `version`.
   marktext = final.callPackage ./marktext.nix { };
 
+  # LSP server for hledger journal files, not (yet) in nixpkgs
+  hledger-lsp = final.callPackage ./hledger-lsp.nix { };
+
 }
