@@ -119,7 +119,7 @@ in
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
     # Overwrite preferences.json on every rebuild with the declarative copy.
     # Trade-off: changes made in MarkText's own settings UI are reset on the
-    # next `nixos-rebuild`. Manage the values you care about here instead.
+    # next `nixos-rebuild`.
     home.activation.marktextPreferences = {
       after = [ "writeBoundary" ];
       before = [ ];
