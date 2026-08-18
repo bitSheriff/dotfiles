@@ -32,7 +32,7 @@ let
     fontSize = 16;
     lineHeight = 1.6;
     wrapCodeBlocks = true;
-    editorLineWidth = "";
+    editorLineWidth = "80%"; # maximum editor area width. empty string, suffixes of ch (characters), px (pixels) or % (percentage) are allowed
     codeFontSize = 14;
     codeFontFamily = "DejaVu Sans Mono";
     codeBlockLineNumbers = true;
