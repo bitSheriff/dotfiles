@@ -6,7 +6,7 @@ export LEDGER_ALL_FILE=$FINANCE_PATH/all.hledger
 
 export TIME_PATH=$NOTES_DIR/Journal/_time
 export TIMEDOT_FILE=$TIME_PATH/2026.timedot
-export TIMEDOT_SEM_FILE=$TIME_PATH/uni/2026SS.timedot
+export TIMEDOT_SEMESTER_FILE=$TIME_PATH/uni/2026SS.timedot
 export TIMEDOT_WORK_FILE=$TIME_PATH/work/2026.timeclock
 
 bknotes() {
@@ -131,7 +131,7 @@ alias hla="hledger -f $LEDGER_ALL_FILE"
 alias timedot="hledger -f $HOME/notes/Journal/_time/2026.timedot"
 alias td="hledger -f $HOME/notes/Journal/_time/all.journal"
 alias tda="~/.local/bin/timedot-add ${TIMEDOT_FILE}"
-alias tdauni="~/.local/bin/timedot-add ${TIMEDOT_SEM_FILE}"
+alias tdauni="~/.local/bin/timedot-add ${TIMEDOT_SEMESTER_FILE}"
 alias tdawork="~/.local/bin/timeclock-add ${TIMEDOT_WORK_FILE}"
 alias nv=nvim
 alias pulldots="(cd ~/code/dotfiles && git pull)"
