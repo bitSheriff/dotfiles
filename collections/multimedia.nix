@@ -152,13 +152,20 @@ in
     # Host Specifics
     ++ lib.optionals (config.networking.hostName == "rhodos") [
       fladder
-    ]
-
-    # User Specifics - benjamin only
-    ++ lib.optionals (lib.elem "benjamin" activeUsers) [
-      kew # terminal music player
-      musikcube # another terminal music player
     ];
 
   services.tumbler.enable = true; # image thumbnails
+
+  ##################
+  ## HOME MANAGER ##
+  ##################
+  home-manager.users.benjamin =
+    { config, ... }:
+    lib.mkIf (lib.elem "benjamin" activeUsers) {
+      home.packages = with pkgs; [
+        kew # terminal music player
+        musikcube # another terminal music player
+        cliamp # music and radio terminal player
+      ];
+    };
 }
