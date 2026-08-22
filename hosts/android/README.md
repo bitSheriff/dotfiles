@@ -96,8 +96,15 @@ distribution, and it ships under the package id `com.termux.nix`.
   from the package list. The `~/.shortcuts/*` entries are still generated
   because they are usable launchers on their own, but no home-screen widget
   will pick them up.
-* **`termux-*` commands come from options, not packages.** See the
-  `android-integration` block in `default.nix`.
+* **`termux-*` commands are unavailable.** They come from `android-integration`
+  options rather than packages, and every one of those has to be compiled on
+  the phone — none are in `cache.nixos.org` or `nix-on-droid.cachix.org` — where
+  the build dies in `unpackPhase` under proot
+  ([nix-on-droid#480](https://github.com/nix-community/nix-on-droid/issues/480)).
+  The whole block is commented out in `default.nix` with the details. What that
+  costs, and the replacement for each: storage permission via the Android
+  settings toggle, wake lock via the app's notification, and a session restart
+  instead of `termux-reload-settings`.
 * **The home directory moved** from `/data/data/com.termux/files/home` to
   `/data/data/com.termux.nix/files/home`, which is why `paths.nix` exists
   rather than the hard-coded paths the old `.bashrc` had.

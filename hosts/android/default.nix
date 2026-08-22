@@ -116,6 +116,19 @@ in
     experimental-features = nix-command flakes
   '';
 
+  # proot-static is cross-compiled for Android and is never in cache.nixos.org
+  # -- nix-on-droid's own cache is the only place it exists prebuilt, and the
+  # phone cannot build it. Stated explicitly so a fresh bootstrap cannot end up
+  # without it.
+  nix.substituters = [
+    "https://cache.nixos.org"
+    "https://nix-on-droid.cachix.org"
+  ];
+  nix.trustedPublicKeys = [
+    "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+    "nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU="
+  ];
+
   time.timeZone = "Europe/Vienna";
 
   # Keep a .bak of anything already in /etc so activation cannot fail on a
