@@ -65,18 +65,13 @@ in
       cacert
       git
 
-      # The tools the old setup.sh installed with `pkg install`.
-      # fzf is missing on purpose: home-manager installs it, because it also
-      # writes its config (./home.nix).
-      # termux-api is gone for good, see the android-integration note above.
       fd
       gum
       inetutils # ping, telnet and friends
       neovim
       openssh
+      just
 
-      # hledger itself. Every one of these has an aarch64-linux build in
-      # cache.nixos.org, so the phone never has to compile Haskell.
       hledger
     ])
     ++ (with commands; [
