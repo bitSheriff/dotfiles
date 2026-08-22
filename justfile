@@ -2,12 +2,12 @@ set shell := ["bash", "-uc"]
 
 HOSTNAMES := "rhodos delos"
 
+default:
+    just --choose
+
 # build the phone config; run this on the phone itself, inside nix-on-droid
 android:
     nix-on-droid switch --flake {{ justfile_directory() }}#android
-
-default:
-    just choose
 
 # link the current dotfile directory to /etc/nixos
 link:
