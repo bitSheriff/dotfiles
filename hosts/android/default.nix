@@ -16,33 +16,34 @@ let
   commands = import ./commands.nix { inherit pkgs paths; };
 in
 {
-  # All of android-integration is off, and it is not a matter of taste.
-  #
-  # Every one of these options pulls in a package that has to be compiled on
-  # the phone -- none of the eight are in cache.nixos.org or in
-  # nix-on-droid.cachix.org -- and compiling them fails in unpackPhase under
-  # proot:
+  # The Termux replacements. None of these eight are in any binary cache, so
+  # they are compiled on the phone, which used to fail in unpackPhase:
   #
   #   cp: setting permissions for 'source': No such file or directory
   #   do not know how to unpack source archive /nix/store/...-source
   #
-  # https://github.com/nix-community/nix-on-droid/issues/480, open since
-  # October 2025. Re-enable once that is fixed; nothing else here depends on
-  # it. Until then:
-  #   * storage permission -> Android settings, see build.activationAfter below
-  #   * wake lock          -> the app's own notification
-  #   * termux.properties  -> restart the session instead of reloading
+  # That is https://github.com/nix-community/nix-on-droid/issues/480, and it
+  # looks like the same class of bug as #495: proot mistranslating a syscall.
+  # Re-enabled now that the patched proot from
+  # https://github.com/nix-community/nix-on-droid/pull/529 is live -- see the
+  # proot note in ./README.md, the app's bundled one is too old and has to be
+  # swapped in by hand.
   #
-  # android-integration = {
-  #   am.enable = true;
-  #   termux-open.enable = true;
-  #   termux-open-url.enable = true;
-  #   termux-reload-settings.enable = true;
-  #   termux-setup-storage.enable = true;
-  #   termux-wake-lock.enable = true;
-  #   termux-wake-unlock.enable = true;
-  #   xdg-open.enable = true;
-  # };
+  # termux-setup-storage is the one that actually matters: granting the storage
+  # permission in Android settings does NOT create ~/storage. The symlinks come
+  # from the app's setupStorageSymlinks(), which only runs when the permission
+  # is requested through the app's own flow, and this command is what triggers
+  # that.
+  android-integration = {
+    am.enable = true; # launch Android activities from the shell
+    termux-open.enable = true; # open a file with an Android app
+    termux-open-url.enable = true;
+    termux-reload-settings.enable = true; # apply ./termux.properties
+    termux-setup-storage.enable = true; # create ~/storage/*
+    termux-wake-lock.enable = true; # keep long git pulls alive
+    termux-wake-unlock.enable = true;
+    xdg-open.enable = true;
+  };
 
   environment.packages =
     (with pkgs; [
@@ -95,18 +96,21 @@ in
       dots-switch
     ]);
 
-  # Nag about the storage permission, because without ~/storage there are no
-  # notes and every hledger command below is pointless.
+  # Create ~/storage, because without it there are no notes and every hledger
+  # command above is pointless.
   #
-  # This cannot request the permission itself while android-integration is
-  # disabled (see above), so it points at the toggle instead. Granting it in
-  # the app settings is what creates ~/storage/documents and friends -- the
-  # termux-setup-storage command only ever triggered the same dialog.
+  # termux-setup-storage does the work, and it has to: the Android permission
+  # toggle alone grants access but never creates the symlinks (see the
+  # android-integration note). Guarded so a declined dialog cannot fail the
+  # switch, and only run when ~/storage is actually missing.
   build.activationAfter.storage = ''
     if [ ! -d "${paths.storageDir}" ]; then
-      echo "No ${paths.storageDir} yet, so ${paths.notesDir} cannot exist."
-      echo "Grant storage access: Android settings -> Apps -> Nix-on-Droid"
-      echo "-> Permissions -> Files, then restart the app."
+      echo "Requesting Android storage permission (needed for ${paths.notesDir})"
+      $DRY_RUN_CMD termux-setup-storage || true
+      if [ ! -d "${paths.storageDir}" ]; then
+        echo "Still no ${paths.storageDir}. Accept the dialog, or run"
+        echo "termux-setup-storage by hand once this switch has finished."
+      fi
     fi
   '';
 
