@@ -7,16 +7,22 @@
 # applied by `nix-on-droid switch`.
 #
 # What is left here is what Nix cannot do for us:
-#   * clone the dotfiles, because the flake has to exist before it can be built
 #   * ask Android for the storage permission
 #   * generate the SSH key, because a private key must not live in the store
+#   * clone the repo locally, so the config can be edited on the phone
+#
+# The order matters. The switch runs FIRST, straight from the remote flake:
+# Nix fetches a github: ref as a tarball and needs no git to do it, so the
+# switch is what installs git. Fetching git separately beforehand would
+# download and unpack a second, unpinned copy of nixpkgs -- ten quiet minutes
+# under proot for something the switch provides anyway.
 #
 # Run it inside the nix-on-droid app:
-#   bash <(curl -sL https://.../setup.sh)   or, once cloned:
-#   ./hosts/android/setup.sh
+#   bash <(curl -sL https://raw.githubusercontent.com/bitSheriff/dotfiles/master/hosts/android/setup.sh)
 
 set -euo pipefail
 
+DOTFILES_REMOTE="${DOTFILES_REMOTE:-github:bitSheriff/dotfiles}"
 DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/bitSheriff/dotfiles.git}"
 DOTFILES_PATH="${DOTFILES_PATH:-${HOME}/code/dotfiles}"
 CONFIG_NAME="${CONFIG_NAME:-android}"
@@ -40,16 +46,21 @@ enable_flakes() {
     fi
 }
 
-clone_dotfiles() {
+switch() {
+    # Build from whatever is already on disk if this is a re-run, otherwise
+    # from the remote, which needs no git.
+    local flake="${DOTFILES_REMOTE}"
     if [ -d "${DOTFILES_PATH}/.git" ]; then
-        log "Dotfiles already present, pulling"
-        nix run nixpkgs#git -- -C "${DOTFILES_PATH}" pull --ff-only || warn "pull failed, continuing with what is on disk"
-        return
+        flake="${DOTFILES_PATH}"
     fi
 
-    log "Cloning dotfiles into ${DOTFILES_PATH}"
-    mkdir -p "$(dirname "${DOTFILES_PATH}")"
-    nix run nixpkgs#git -- clone "${DOTFILES_REPO}" "${DOTFILES_PATH}"
+    log "Building ${CONFIG_NAME} from ${flake}"
+    warn "This unpacks nixpkgs into the store, which is slow and silent under"
+    warn "proot. Expect several minutes with no output, and keep the app in the"
+    warn "foreground or Android will suspend it. --print-build-logs so at least"
+    warn "the build steps are visible."
+
+    nix-on-droid switch --print-build-logs --flake "${flake}#${CONFIG_NAME}"
 }
 
 setup_storage() {
@@ -57,13 +68,11 @@ setup_storage() {
         log "Storage already set up"
     else
         log "Requesting storage permission"
-        # Provided by android-integration.termux-setup-storage in
-        # ./default.nix; on the very first run the config is not active yet, so
-        # fall back to the app's own copy if the command is missing.
+        # Installed by the switch above (android-integration in ./default.nix).
         if command -v termux-setup-storage >/dev/null 2>&1; then
             termux-setup-storage
         else
-            warn "termux-setup-storage not on PATH yet; grant storage access in"
+            warn "termux-setup-storage still not on PATH. Grant storage access in"
             warn "Android settings -> Apps -> Nix-on-Droid -> Permissions, then re-run."
             return
         fi
@@ -75,9 +84,18 @@ setup_storage() {
     fi
 }
 
-switch() {
-    log "Building ${CONFIG_NAME}"
-    nix-on-droid switch --flake "${DOTFILES_PATH}#${CONFIG_NAME}"
+clone_dotfiles() {
+    # Only so the config can be edited on the phone; the switch above did not
+    # need it. git comes from the generation that was just activated.
+    if [ -d "${DOTFILES_PATH}/.git" ]; then
+        log "Dotfiles already present, pulling"
+        git -C "${DOTFILES_PATH}" pull --ff-only || warn "pull failed, keeping what is on disk"
+        return
+    fi
+
+    log "Cloning dotfiles into ${DOTFILES_PATH}"
+    mkdir -p "$(dirname "${DOTFILES_PATH}")"
+    git clone "${DOTFILES_REPO}" "${DOTFILES_PATH}"
 }
 
 setup_ssh() {
@@ -95,9 +113,9 @@ setup_ssh() {
 }
 
 enable_flakes
-clone_dotfiles
-setup_storage
 switch
+setup_storage
+clone_dotfiles
 setup_ssh
 
 log "Done. Open a new session, then use 'dots-switch' for future rebuilds."

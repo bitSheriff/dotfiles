@@ -51,8 +51,8 @@ in
       git
 
       # The tools the old setup.sh installed with `pkg install`.
-      # git and fzf are missing on purpose: home-manager installs those,
-      # because it also writes their config (./home.nix).
+      # fzf is missing on purpose: home-manager installs it, because it also
+      # writes its config (./home.nix).
       # termux-api is gone for good, see the android-integration note above.
       fd
       gum

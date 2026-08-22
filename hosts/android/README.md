@@ -23,10 +23,26 @@ Install nix-on-droid from F-Droid, open it, let it bootstrap, then:
 bash <(curl -sL https://raw.githubusercontent.com/bitSheriff/dotfiles/master/hosts/android/setup.sh)
 ```
 
-It enables flakes, clones the dotfiles, asks for the storage permission, runs
-`nix-on-droid switch --flake ~/code/dotfiles#android` and generates an SSH key.
-Add the printed public key to Forgejo, then run `bkinit` to attach the notes
-directory to the backup remote.
+It enables flakes, switches straight from `github:bitSheriff/dotfiles#android`,
+asks for the storage permission, clones the repo to `~/code/dotfiles` for later
+edits, and generates an SSH key. Add the printed public key to Forgejo, then run
+`bkinit` to attach the notes directory to the backup remote.
+
+The switch comes first on purpose. Nix fetches a `github:` flake ref as a
+tarball and needs no git to do it, so the switch is what installs git. Running
+`nix run nixpkgs#git` beforehand would download and unpack a second, *unpinned*
+copy of nixpkgs first.
+
+**Expect long silences.** Unpacking nixpkgs into the store means writing
+~200k files through `proot`, which intercepts every syscall. It prints nothing
+while it does so; several quiet minutes is normal, not a hang. Two things help:
+
+* Keep the app in the foreground, or acquire the wakelock from its
+  notification. Android suspends backgrounded processes and the build simply
+  stops, with no error.
+* `nix flake metadata nixpkgs` is the quick probe. If *that* hangs it is the
+  fetch/unpack; if it prints, the fetch is cached and evaluation is the slow
+  part.
 
 ## Afterwards
 
