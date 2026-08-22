@@ -5,8 +5,8 @@
   ...
 }:
 let
-  sync_resolve = pkgs.writeShellApplication {
-    name = "sync-resolve";
+  st_resolve = pkgs.writeShellApplication {
+    name = "st-resolve";
     runtimeInputs = with pkgs; [
       fd
       meld
@@ -50,7 +50,7 @@ in
   ];
 
   environment.systemPackages = with pkgs; [
-    sync_resolve
+    st_resolve
   ];
 
   services.syncthing = {
