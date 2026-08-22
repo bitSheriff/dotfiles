@@ -132,6 +132,9 @@ in
         $DRY_RUN_CMD ln -sfn "$root/Pictures" "${paths.storageDir}/pictures"
         $DRY_RUN_CMD ln -sfn "$root/Music" "${paths.storageDir}/music"
         $DRY_RUN_CMD ln -sfn "$root/Movies" "${paths.storageDir}/movies"
+
+        # Obsidian
+        $DRY_RUN_CMD ln -sfn "$root/Documents/notes" "$HOME/notes"
       fi
     fi
   '';
