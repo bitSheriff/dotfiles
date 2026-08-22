@@ -56,6 +56,7 @@
       # Printers and Scanners
       simple-scan
       ocrmypdf # ocr pdfs in command line
+      system-config-printer # GUI to configure CUPS devices
 
       # Finance
       ledger-live-desktop
