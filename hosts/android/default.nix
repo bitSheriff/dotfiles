@@ -16,34 +16,34 @@ let
   commands = import ./commands.nix { inherit pkgs paths; };
 in
 {
-  # The Termux replacements. None of these eight are in any binary cache, so
-  # they are compiled on the phone, which used to fail in unpackPhase:
+  # All of android-integration stays off. None of these eight are in any binary
+  # cache, so they get compiled on the phone, and that fails in unpackPhase:
   #
   #   cp: setting permissions for 'source': No such file or directory
   #   do not know how to unpack source archive /nix/store/...-source
   #
-  # That is https://github.com/nix-community/nix-on-droid/issues/480, and it
-  # looks like the same class of bug as #495: proot mistranslating a syscall.
-  # Re-enabled now that the patched proot from
-  # https://github.com/nix-community/nix-on-droid/pull/529 is live -- see the
-  # proot note in ./README.md, the app's bundled one is too old and has to be
-  # swapped in by hand.
+  # https://github.com/nix-community/nix-on-droid/issues/480. Retested with the
+  # patched proot from PR #529 live (the one that fixed the activation hang,
+  # see ./README.md) and it fails identically, so despite the resemblance this
+  # is NOT the same syscall bug -- it is its own problem, still open.
   #
-  # termux-setup-storage is the one that actually matters: granting the storage
-  # permission in Android settings does NOT create ~/storage. The symlinks come
-  # from the app's setupStorageSymlinks(), which only runs when the permission
-  # is requested through the app's own flow, and this command is what triggers
-  # that.
-  android-integration = {
-    am.enable = true; # launch Android activities from the shell
-    termux-open.enable = true; # open a file with an Android app
-    termux-open-url.enable = true;
-    termux-reload-settings.enable = true; # apply ./termux.properties
-    termux-setup-storage.enable = true; # create ~/storage/*
-    termux-wake-lock.enable = true; # keep long git pulls alive
-    termux-wake-unlock.enable = true;
-    xdg-open.enable = true;
-  };
+  # The only one worth having was termux-setup-storage, and
+  # build.activationAfter.storage below replaces it outright, so nothing here
+  # is load-bearing any more. What is lost:
+  #   * wake lock          -> the app's own notification
+  #   * termux.properties  -> restart the session instead of reloading
+  #   * am / termux-open / xdg-open -> no opening files in Android apps
+  #
+  # android-integration = {
+  #   am.enable = true;
+  #   termux-open.enable = true;
+  #   termux-open-url.enable = true;
+  #   termux-reload-settings.enable = true;
+  #   termux-setup-storage.enable = true;
+  #   termux-wake-lock.enable = true;
+  #   termux-wake-unlock.enable = true;
+  #   xdg-open.enable = true;
+  # };
 
   environment.packages =
     (with pkgs; [
@@ -96,20 +96,42 @@ in
       dots-switch
     ]);
 
-  # Create ~/storage, because without it there are no notes and every hledger
-  # command above is pointless.
+  # Create ~/storage ourselves, standing in for termux-setup-storage, which
+  # cannot be built (see the android-integration note above).
   #
-  # termux-setup-storage does the work, and it has to: the Android permission
-  # toggle alone grants access but never creates the symlinks (see the
-  # android-integration note). Guarded so a declined dialog cannot fail the
-  # switch, and only run when ~/storage is actually missing.
+  # That command was never doing anything clever: it broadcasts an intent that
+  # makes the app run TermuxInstaller.setupStorageSymlinks(), which symlinks a
+  # handful of well-known directories out of /storage/emulated/0. The names and
+  # targets below are exactly the set that function creates. Granting the
+  # storage permission is still a manual step -- Android settings -> Apps ->
+  # Nix-on-Droid -> Permissions -> Files -- but once granted, this session runs
+  # as the app's uid and can make the links itself.
   build.activationAfter.storage = ''
     if [ ! -d "${paths.storageDir}" ]; then
-      echo "Requesting Android storage permission (needed for ${paths.notesDir})"
-      $DRY_RUN_CMD termux-setup-storage || true
-      if [ ! -d "${paths.storageDir}" ]; then
-        echo "Still no ${paths.storageDir}. Accept the dialog, or run"
-        echo "termux-setup-storage by hand once this switch has finished."
+      # /sdcard is a symlink to the same place on every current Android, but
+      # proot does not always expose both.
+      root=""
+      for candidate in /storage/emulated/0 /sdcard; do
+        if [ -d "$candidate" ]; then
+          root="$candidate"
+          break
+        fi
+      done
+
+      if [ -z "$root" ]; then
+        echo "Shared storage is not visible from here, so ${paths.storageDir} cannot be created."
+        echo "Grant it in Android settings -> Apps -> Nix-on-Droid -> Permissions -> Files,"
+        echo "restart the app, then run: nix-on-droid switch --flake <flake>#${paths.configName}"
+      else
+        echo "Linking ${paths.storageDir} to $root"
+        $DRY_RUN_CMD mkdir -p "${paths.storageDir}"
+        $DRY_RUN_CMD ln -sfn "$root" "${paths.storageDir}/shared"
+        $DRY_RUN_CMD ln -sfn "$root/Documents" "${paths.storageDir}/documents"
+        $DRY_RUN_CMD ln -sfn "$root/Download" "${paths.storageDir}/downloads"
+        $DRY_RUN_CMD ln -sfn "$root/DCIM" "${paths.storageDir}/dcim"
+        $DRY_RUN_CMD ln -sfn "$root/Pictures" "${paths.storageDir}/pictures"
+        $DRY_RUN_CMD ln -sfn "$root/Music" "${paths.storageDir}/music"
+        $DRY_RUN_CMD ln -sfn "$root/Movies" "${paths.storageDir}/movies"
       fi
     fi
   '';
