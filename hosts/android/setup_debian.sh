@@ -16,22 +16,22 @@ set -euo pipefail
 # resolve the repo dir, so the script can be called from anywhere
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# everything the .bashrc needs: fzf for every prompt, openssh-client for the
-# notes remote, neovim for the nv alias.
-#
-# No gum: it is noticeably slower to start than fzf on the phone, and fzf
-# --print-query covers the one thing gum filter --no-strict did that plain fzf
-# does not (entering an account that is not in the list).
+# everything the .bashrc needs: fzf for clkin/clkout, gum for the nicer
+# prompts, openssh-client for the notes remote, neovim for the nv alias.
+# gum only exists from trixie onwards; it is optional, the .bashrc falls back
+# to fzf without it.
 PACKAGES=(
     ca-certificates
     fd-find
     fzf
     git
     hledger
-    hledger-ui
     less
     neovim
     openssh-client
+)
+OPTIONAL_PACKAGES=(
+    gum
 )
 
 log() { printf '\n\033[1;34m==>\033[0m %s\n' "$1"; }
@@ -40,6 +40,15 @@ warn() { printf '\033[1;33m !\033[0m %s\n' "$1"; }
 install_packages() {
     sudo apt-get update -y
     sudo apt-get install -y "${PACKAGES[@]}"
+
+    # Installed one at a time so a missing package on an older Debian does not
+    # abort the whole run.
+    local pkg
+    for pkg in "${OPTIONAL_PACKAGES[@]}"; do
+        if ! sudo apt-get install -y "${pkg}" 2>/dev/null; then
+            warn "optional package '${pkg}' unavailable on this Debian, skipping"
+        fi
+    done
 }
 
 setup_local_bin() {
@@ -83,7 +92,7 @@ setup_storage() {
     printf '     %s\n' "${candidates[@]}"
     if [ -d /mnt/shared ]; then
         warn "/mnt/shared currently contains:"
-        find /mnt/shared -maxdepth 1 -mindepth 1 -printf '     %f\n' 2>/dev/null || true
+        ls -1 /mnt/shared 2>/dev/null | sed 's/^/     /' || true
         warn "Once the notes are there, re-run this script, or write the path"
         warn "into ~/.config/dotfiles-notes-path as NOTES_DIR=/full/path."
     else
