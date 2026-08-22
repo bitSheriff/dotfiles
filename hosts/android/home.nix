@@ -121,14 +121,11 @@ in
   '';
 
   home.file = {
-    # Extra keys row, bell and margins. Read by the app itself; the
-    # activation below reloads it.
+    # Extra keys row, bell and margins. Read by the app itself. The old
+    # setup_termux ran `termux-reload-settings` here; that command is part of
+    # android-integration, which cannot be built (see ./default.nix), so a
+    # change to this file needs the session restarted instead.
     ".termux/termux.properties".source = ./termux.properties;
   }
   // shortcutFiles;
-
-  # Replaces `termux-reload-settings` at the end of the old setup_termux.
-  home.activation.reloadTermuxSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    run --quiet ${pkgs.bashInteractive}/bin/bash -c "termux-reload-settings || true"
-  '';
 }

@@ -67,15 +67,13 @@ setup_storage() {
     if [ -d "${HOME}/storage" ]; then
         log "Storage already set up"
     else
-        log "Requesting storage permission"
-        # Installed by the switch above (android-integration in ./default.nix).
-        if command -v termux-setup-storage >/dev/null 2>&1; then
-            termux-setup-storage
-        else
-            warn "termux-setup-storage still not on PATH. Grant storage access in"
-            warn "Android settings -> Apps -> Nix-on-Droid -> Permissions, then re-run."
-            return
-        fi
+        # termux-setup-storage is part of android-integration, which cannot be
+        # built on-device right now (see ./default.nix). The command only ever
+        # triggered the permission dialog anyway; the toggle does the same.
+        warn "No ~/storage yet. Grant storage access in"
+        warn "Android settings -> Apps -> Nix-on-Droid -> Permissions -> Files,"
+        warn "restart the app, then run this script again."
+        return
     fi
 
     if [ ! -d "${NOTES_DIR}" ]; then

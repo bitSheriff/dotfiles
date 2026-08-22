@@ -44,6 +44,22 @@ while it does so; several quiet minutes is normal, not a hang. Two things help:
   fetch/unpack; if it prints, the fetch is cached and evaluation is the slow
   part.
 
+### Getting the repo onto a machine without git
+
+Ranked, because the obvious answer is the slow one:
+
+1. **Don't.** Build from `github:bitSheriff/dotfiles#android` as above. The
+   switch installs git; clone afterwards, when it costs nothing.
+2. **Need the files before any build?** `nix flake prefetch
+   github:bitSheriff/dotfiles` prints a store path. Copy it out and
+   `chmod -R u+w`. Uses nothing but nix, but yields a snapshot, not a repo.
+3. **Really need git first?** Pin it to the revision `flake.lock` already
+   uses, so the nixpkgs fetch is shared with the switch rather than duplicated:
+   `nix shell github:NixOS/nixpkgs/<rev-from-flake.lock>#git -c git clone ...`
+
+`nix flake clone` is *not* an option despite the name: it shells out to the
+git binary and dies with `executing "git": No such file or directory`.
+
 ## Afterwards
 
 ```sh

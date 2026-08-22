@@ -16,19 +16,33 @@ let
   commands = import ./commands.nix { inherit pkgs paths; };
 in
 {
-  # The Termux replacements. Plugin apps (Termux:API, Termux:Widget) cannot
-  # attach to nix-on-droid because it ships under a different package id, so
-  # these wrappers are the whole of the Android integration that is available.
-  android-integration = {
-    am.enable = true; # launch Android activities from the shell
-    termux-open.enable = true; # open a file with an Android app
-    termux-open-url.enable = true;
-    termux-reload-settings.enable = true; # apply ./termux.properties
-    termux-setup-storage.enable = true; # create ~/storage/*
-    termux-wake-lock.enable = true; # keep long git pulls alive
-    termux-wake-unlock.enable = true;
-    xdg-open.enable = true;
-  };
+  # All of android-integration is off, and it is not a matter of taste.
+  #
+  # Every one of these options pulls in a package that has to be compiled on
+  # the phone -- none of the eight are in cache.nixos.org or in
+  # nix-on-droid.cachix.org -- and compiling them fails in unpackPhase under
+  # proot:
+  #
+  #   cp: setting permissions for 'source': No such file or directory
+  #   do not know how to unpack source archive /nix/store/...-source
+  #
+  # https://github.com/nix-community/nix-on-droid/issues/480, open since
+  # October 2025. Re-enable once that is fixed; nothing else here depends on
+  # it. Until then:
+  #   * storage permission -> Android settings, see build.activationAfter below
+  #   * wake lock          -> the app's own notification
+  #   * termux.properties  -> restart the session instead of reloading
+  #
+  # android-integration = {
+  #   am.enable = true;
+  #   termux-open.enable = true;
+  #   termux-open-url.enable = true;
+  #   termux-reload-settings.enable = true;
+  #   termux-setup-storage.enable = true;
+  #   termux-wake-lock.enable = true;
+  #   termux-wake-unlock.enable = true;
+  #   xdg-open.enable = true;
+  # };
 
   environment.packages =
     (with pkgs; [
@@ -81,18 +95,18 @@ in
       dots-switch
     ]);
 
-  # Ask for the storage permission on first activation. The app pops the
-  # Android dialog; once granted it symlinks ~/storage/documents and friends.
-  # Guarded so a declined permission cannot fail the whole switch.
+  # Nag about the storage permission, because without ~/storage there are no
+  # notes and every hledger command below is pointless.
+  #
+  # This cannot request the permission itself while android-integration is
+  # disabled (see above), so it points at the toggle instead. Granting it in
+  # the app settings is what creates ~/storage/documents and friends -- the
+  # termux-setup-storage command only ever triggered the same dialog.
   build.activationAfter.storage = ''
     if [ ! -d "${paths.storageDir}" ]; then
-      echo "Requesting Android storage permission (needed for ${paths.notesDir})"
-      # termux-tools is internal to nix-on-droid rather than an attribute of
-      # pkgs, so this goes through PATH. On the very first switch the command
-      # is not there yet and ./setup.sh handles it instead.
-      if command -v termux-setup-storage >/dev/null 2>&1; then
-        $DRY_RUN_CMD termux-setup-storage || true
-      fi
+      echo "No ${paths.storageDir} yet, so ${paths.notesDir} cannot exist."
+      echo "Grant storage access: Android settings -> Apps -> Nix-on-Droid"
+      echo "-> Permissions -> Files, then restart the app."
     fi
   '';
 
