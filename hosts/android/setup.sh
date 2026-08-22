@@ -1,91 +1,103 @@
-#! /data/data/com.termux/files/usr/bin/bash
-# Setup script for the Termux host, safe to run again on an already set up phone.
+#!/usr/bin/env bash
+# Bootstrap for the Android host, safe to run again on an already set up phone.
+#
+# This used to `pkg install` a package list and symlink dotfiles by hand. It
+# does none of that any more: packages, .bashrc, termux.properties, the git
+# config and the shortcuts are all declared in ./default.nix and ./home.nix and
+# applied by `nix-on-droid switch`.
+#
+# What is left here is what Nix cannot do for us:
+#   * clone the dotfiles, because the flake has to exist before it can be built
+#   * ask Android for the storage permission
+#   * generate the SSH key, because a private key must not live in the store
+#
+# Run it inside the nix-on-droid app:
+#   bash <(curl -sL https://.../setup.sh)   or, once cloned:
+#   ./hosts/android/setup.sh
 
 set -euo pipefail
 
-# resolve the repo dir, so the script can be called from anywhere
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/bitSheriff/dotfiles.git}"
+DOTFILES_PATH="${DOTFILES_PATH:-${HOME}/code/dotfiles}"
+CONFIG_NAME="${CONFIG_NAME:-android}"
 
-# everything the .bashrc needs: fzf for clkin/clkout, openssh for the notes
-# remote, inetutils for the ping in bknotes, neovim for the nv alias
-PACKAGES=(
-    fd
-    fzf
-    git
-    gum
-    inetutils
-    neovim
-    openssh
-    termux-api
-    hledger
-)
+# The notes directory lives on the Android documents mount, which only exists
+# after the storage permission has been granted.
+NOTES_DIR="${HOME}/storage/documents/notes"
 
-setup_bash() {
-    ln -sf "${SCRIPT_DIR}/.bashrc" ~/.bashrc
+log() { printf '\n\033[1;34m==>\033[0m %s\n' "$1"; }
+warn() { printf '\033[1;33m !\033[0m %s\n' "$1"; }
+
+enable_flakes() {
+    # nix-on-droid ships without flakes enabled, and the very first build has
+    # to be a flake build. Once the config is active, ./default.nix keeps this
+    # in /etc/nix/nix.conf; this file is only the seed.
+    local conf="${HOME}/.config/nix/nix.conf"
+
+    if ! grep -qs "experimental-features" "${conf}" 2>/dev/null; then
+        mkdir -p "$(dirname "${conf}")"
+        echo "experimental-features = nix-command flakes" >>"${conf}"
+    fi
 }
 
-setup_termux() {
-    if [ ! -d ~/storage ]; then
-        termux-setup-storage
+clone_dotfiles() {
+    if [ -d "${DOTFILES_PATH}/.git" ]; then
+        log "Dotfiles already present, pulling"
+        nix run nixpkgs#git -- -C "${DOTFILES_PATH}" pull --ff-only || warn "pull failed, continuing with what is on disk"
+        return
     fi
 
-    mkdir -p ~/.termux
-    ln -sf "${SCRIPT_DIR}/termux.properties" ~/.termux/termux.properties
-    termux-reload-settings
-    setup_shortcuts
+    log "Cloning dotfiles into ${DOTFILES_PATH}"
+    mkdir -p "$(dirname "${DOTFILES_PATH}")"
+    nix run nixpkgs#git -- clone "${DOTFILES_REPO}" "${DOTFILES_PATH}"
 }
 
-install_packages() {
-    pkg update -y && pkg upgrade -y
+setup_storage() {
+    if [ -d "${HOME}/storage" ]; then
+        log "Storage already set up"
+    else
+        log "Requesting storage permission"
+        # Provided by android-integration.termux-setup-storage in
+        # ./default.nix; on the very first run the config is not active yet, so
+        # fall back to the app's own copy if the command is missing.
+        if command -v termux-setup-storage >/dev/null 2>&1; then
+            termux-setup-storage
+        else
+            warn "termux-setup-storage not on PATH yet; grant storage access in"
+            warn "Android settings -> Apps -> Nix-on-Droid -> Permissions, then re-run."
+            return
+        fi
+    fi
 
-    pkg install -y "${PACKAGES[@]}"
-
+    if [ ! -d "${NOTES_DIR}" ]; then
+        warn "${NOTES_DIR} does not exist yet."
+        warn "Sync or clone the notes there, then run 'bkinit'."
+    fi
 }
 
-setup_git() {
-    git config --global user.name "bitSheriff"
-    git config --global user.email "root@bitsheriff.dev"
-    git config --global core.editor "nvim"
-    git config --global init.defaultBranch "main"
-    git config --global pull.rebase true
-    git config --global rebase.autoStash true
-    git config --global push.autoSetupRemote true
+switch() {
+    log "Building ${CONFIG_NAME}"
+    nix-on-droid switch --flake "${DOTFILES_PATH}#${CONFIG_NAME}"
 }
 
 setup_ssh() {
-    local key=~/.ssh/id_ed25519
+    local key="${HOME}/.ssh/id_ed25519"
 
     if [ ! -f "${key}" ]; then
-        mkdir -p ~/.ssh
-        chmod 700 ~/.ssh
-        ssh-keygen -t ed25519 -C "termux@android" -f "${key}" -N ""
+        log "Generating SSH key"
+        mkdir -p "${HOME}/.ssh"
+        chmod 700 "${HOME}/.ssh"
+        ssh-keygen -t ed25519 -C "nix-on-droid@android" -f "${key}" -N ""
     fi
 
-    echo "Public key, add it to Forgejo before running bkinit:"
+    log "Public key, add it to Forgejo before running bkinit:"
     cat "${key}.pub"
 }
 
-setup_shortcuts() {
-    # scripts for the Termux:Widget home screen widget
-    mkdir -p ~/.shortcuts
-
-    for shortcut in "${SCRIPT_DIR}"/shortcuts/*; do
-        chmod +x "${shortcut}"
-        ln -sf "${shortcut}" ~/.shortcuts/"$(basename "${shortcut}")"
-    done
-}
-
-echo "Installing Packages"
-install_packages
-
-echo "Setting up bash"
-setup_bash
-
-echo "General Termux settings"
-setup_termux
-
-echo "Setting up git"
-setup_git
-
-echo "Setting up ssh"
+enable_flakes
+clone_dotfiles
+setup_storage
+switch
 setup_ssh
+
+log "Done. Open a new session, then use 'dots-switch' for future rebuilds."

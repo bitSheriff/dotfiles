@@ -1,12 +1,41 @@
-{
-  config,
-  pkgs,
-  lib,
-  activeUsers,
-  ...
-}:
+# The hledger helper scripts, as plain derivations.
+#
+# This file deliberately takes only `pkgs` and returns packages, so it can be
+# consumed both by the NixOS module (./default.nix) and by the nix-on-droid
+# configuration (../../hosts/android), which has no NixOS module system.
+#
+# Every script appends its own dependencies to PATH instead of relying on the
+# surrounding environment, so they also work from a Termux-style bootstrap
+# where the system PATH is nearly empty.
+{ pkgs }:
 
 let
+  inherit (pkgs) lib;
+
+  # Tools the scripts shell out to. Appended (not prepended) to PATH so an
+  # interactive user's own binaries still win.
+  runtimePath = lib.makeBinPath (
+    with pkgs;
+    [
+      hledger
+      gum
+      fzf
+      coreutils
+      gnugrep
+      gnused
+    ]
+  );
+
+  # Wrap writeShellScriptBin so every script gets the PATH fallback. Scripts
+  # that call a sibling script (hl-accounts) append it themselves.
+  writeScript =
+    name: text:
+    pkgs.writeShellScriptBin name ''
+      export PATH="$PATH:${runtimePath}"
+      ${text}
+    '';
+in
+rec {
   # Helper: collect accounts from a hledger file AND any sibling files that
   # share the same basename in the same directory (e.g. 2026SS.timeclock next
   # to 2026SS.timedot). timedot and timeclock syntaxes cannot be mixed in a
@@ -54,7 +83,9 @@ let
     '';
   };
 
-  timeclock-add = pkgs.writeShellScriptBin "timeclock-add" ''
+  timeclock-add = writeScript "timeclock-add" ''
+    export PATH="$PATH:${lib.makeBinPath [ hl-accounts ]}"
+
     # Check if file argument is provided
     if [ $# -eq 0 ]; then
         echo "Usage: $0 <file> [in|out|i|o] [account]"
@@ -149,7 +180,9 @@ let
     echo "$ENTRY" >>"$FILE"
   '';
 
-  timedot-add = pkgs.writeShellScriptBin "timedot-add" ''
+  timedot-add = writeScript "timedot-add" ''
+    export PATH="$PATH:${lib.makeBinPath [ hl-accounts ]}"
+
     # Check if file argument is provided
     if [ $# -eq 0 ]; then
         echo "Usage: $0 <file>"
@@ -373,73 +406,4 @@ let
     update_stocks "LYP6.DE" "\"LYP6\"" "Amundi Core Stoxx Europe 600"
     update_stocks "EUNL.DE" "EUNL" "iShares Core MSCI World"
   '';
-
-in
-{
-  environment.systemPackages = with pkgs; [
-    hledger
-    hledger-ui
-    hledger-web
-    hledger-iadd
-    pricehist # fetch stock and crypto prices
-    # own scripts
-    hl-accounts
-    timeclock-add
-    timeclock-timer
-    timedot-add
-    hl-update-prices
-  ];
-
-  # Use interactiveShellInit for all variables to ensure they are available in the shell
-  # and properly expanded with $HOME and $(date).
-  programs.zsh.interactiveShellInit = ''
-    export LEDGER_PATH="$HOME/notes/Journal/_finance"
-    export LEDGER_FILE="$LEDGER_PATH/2026.hledger"
-    export LEDGER_ALL_FILE="$LEDGER_PATH/all.hledger"
-    export LEDGER_TEMPLATE_FILE="$LEDGER_PATH/templates.hledger"
-
-    export TIMEDOT_PATH="$HOME/notes/Journal/_time"
-    export TIMEDOT_ALL_FILE="$TIMEDOT_PATH/all.journal"
-    export TIMEDOT_SEMESTER_FILE="$TIMEDOT_PATH/uni/2026SS.timedot"
-    export TIMEDOT_SEMESTER_CLOCK_FILE="$TIMEDOT_PATH/uni/2026SS.timeclock"
-
-    export LEDGER_ACCOUNTS_FILE="$LEDGER_PATH/$(date +%Y)_accounts.hledger"
-    export TIMEDOT_FILE="$TIMEDOT_PATH/$(date +%Y).timedot"
-    export TIMEDOT_WORK_FILE="$TIMEDOT_PATH/work/$(date +%Y).timeclock"
-  '';
-
-  programs.zsh.shellAliases = {
-    hl = "hledger";
-    hla = "hledger -f \${LEDGER_ALL_FILE}";
-    hlae = "(cd $LEDGER_PATH && nvim $(find . -type f | fzf))";
-
-    hla-gain = "hledger -f \${LEDGER_ALL_FILE} bs --gain --value=now,EUR";
-    hl-budget = "hledger bal expenses --budget";
-    hl-temp = "hledger-templates";
-    hle = "nv \${LEDGER_FILE}";
-
-    td = "hledger -f \${TIMEDOT_ALL_FILE}";
-    tde = "(cd $TIMEDOT_PATH && nvim $(fd -t f -e timedot -e timeclock -E .stversions | fzf))";
-    tda = "timedot-add \${TIMEDOT_FILE}";
-    clkin = "FILE=$(fd . \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-add \"\$FILE\" i";
-    clkout = "FILE=$(fd . \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-add \"\$FILE\" o";
-    clktimer = "FILE=$(fd . \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-timer \"\$FILE\"";
-
-    # Uni
-    tdauni = "timedot-add \${TIMEDOT_SEMESTER_FILE}";
-    uniin = "timeclock-add \${TIMEDOT_SEMESTER_CLOCK_FILE} i";
-    uniout = "timeclock-add \${TIMEDOT_SEMESTER_CLOCK_FILE} o";
-
-    # Work
-    tdawork = "timeclock-add \${TIMEDOT_WORK_FILE}";
-    clockin = "timeclock-add \${TIMEDOT_WORK_FILE} i";
-    clockout = "timeclock-add \${TIMEDOT_WORK_FILE} o";
-  };
-
-  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
-    xdg.configFile."hledger/hledger.conf".text = ''
-      [check] --strict
-      [balancesheet] --layout=bare
-    '';
-  };
 }

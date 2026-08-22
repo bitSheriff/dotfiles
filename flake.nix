@@ -25,6 +25,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Nix on the phone. Termux-the-terminal-emulator, none of Termux-the-distro.
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     # Monitor Configurator for Hyprland
     monique.url = "github:ToRvaLDz/monique";
 
@@ -51,6 +58,7 @@
       nvf,
       disko,
       treefmt-nix,
+      nix-on-droid,
       ...
     }@inputs:
     let
@@ -73,6 +81,23 @@
     {
       formatter = forAllSystems (system: treefmtEval.${system}.config.build.wrapper);
       templates = import ./templates;
+
+      #############  PIXEL PHONE (nix-on-droid)  #############
+      # Build with `nix-on-droid switch --flake .#android` on the phone, or
+      # `just android` from a machine that can reach it.
+      #
+      # Not a nixosSystem: nix-on-droid has no NixOS module system, so
+      # ./modules cannot be imported. The shared part is
+      # ./modules/hledger/scripts.nix, which is plain derivations.
+      nixOnDroidConfigurations.android = nix-on-droid.lib.nixOnDroidConfiguration {
+        pkgs = import nixpkgs {
+          system = "aarch64-linux";
+          # nix-on-droid patches a handful of packages (proot, the bootstrap
+          # tools) and expects its own overlay to be applied.
+          overlays = [ nix-on-droid.overlays.default ];
+        };
+        modules = [ ./hosts/android ];
+      };
 
       checks = forAllSystems (system: {
         formatting = treefmtEval.${system}.config.build.check self;

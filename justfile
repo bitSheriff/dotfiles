@@ -2,6 +2,17 @@ set shell := ["bash", "-uc"]
 
 HOSTNAMES := "rhodos delos"
 
+# build the phone config; run this on the phone itself, inside nix-on-droid
+android:
+    nix-on-droid switch --flake {{ justfile_directory() }}#android
+
+# check that the phone config still evaluates, from any machine.
+# --impure because nix-on-droid's bootstrap uses builtins.storePath, and this
+# stops short of the activation package, whose aarch64 proot binary cannot be
+# substituted off-device.
+android-check:
+    nix eval --impure --json .#nixOnDroidConfigurations.android.config.environment.packages --apply 'ps: map (p: p.name) ps'
+
 default:
     just choose
 

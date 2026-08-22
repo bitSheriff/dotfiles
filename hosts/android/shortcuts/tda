@@ -1,6 +1,0 @@
-#!/data/data/com.termux/files/usr/bin/bash
-# Termux:Widget shortcut, clock out from the home screen
-
-source ~/.bashrc
-
-tda
