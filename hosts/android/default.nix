@@ -106,35 +106,44 @@ in
   # storage permission is still a manual step -- Android settings -> Apps ->
   # Nix-on-Droid -> Permissions -> Files -- but once granted, this session runs
   # as the app's uid and can make the links itself.
+  # Every link is re-asserted on each switch rather than only when
+  # ${paths.storageDir} is missing. ln -sfn and mkdir -p are idempotent, so the
+  # cost is nothing, and a link added to this list later actually appears
+  # instead of waiting for a phone that no longer has a first run.
   build.activationAfter.storage = ''
-    if [ ! -d "${paths.storageDir}" ]; then
-      # /sdcard is a symlink to the same place on every current Android, but
-      # proot does not always expose both.
-      root=""
-      for candidate in /storage/emulated/0 /sdcard; do
-        if [ -d "$candidate" ]; then
-          root="$candidate"
-          break
-        fi
-      done
+    # /sdcard is a symlink to the same place on every current Android, but
+    # proot does not always expose both.
+    root=""
+    for candidate in /storage/emulated/0 /sdcard; do
+      if [ -d "$candidate" ]; then
+        root="$candidate"
+        break
+      fi
+    done
 
-      if [ -z "$root" ]; then
-        echo "Shared storage is not visible from here, so ${paths.storageDir} cannot be created."
-        echo "Grant it in Android settings -> Apps -> Nix-on-Droid -> Permissions -> Files,"
-        echo "restart the app, then run: nix-on-droid switch --flake <flake>#${paths.configName}"
-      else
-        echo "Linking ${paths.storageDir} to $root"
-        $DRY_RUN_CMD mkdir -p "${paths.storageDir}"
-        $DRY_RUN_CMD ln -sfn "$root" "${paths.storageDir}/shared"
-        $DRY_RUN_CMD ln -sfn "$root/Documents" "${paths.storageDir}/documents"
-        $DRY_RUN_CMD ln -sfn "$root/Download" "${paths.storageDir}/downloads"
-        $DRY_RUN_CMD ln -sfn "$root/DCIM" "${paths.storageDir}/dcim"
-        $DRY_RUN_CMD ln -sfn "$root/Pictures" "${paths.storageDir}/pictures"
-        $DRY_RUN_CMD ln -sfn "$root/Music" "${paths.storageDir}/music"
-        $DRY_RUN_CMD ln -sfn "$root/Movies" "${paths.storageDir}/movies"
+    if [ -z "$root" ]; then
+      echo "Shared storage is not visible from here, so ${paths.storageDir} cannot be created."
+      echo "Grant it in Android settings -> Apps -> Nix-on-Droid -> Permissions -> Files,"
+      echo "restart the app, then run: nix-on-droid switch --flake <flake>#${paths.configName}"
+    else
+      [ -d "${paths.storageDir}" ] || echo "Linking ${paths.storageDir} to $root"
 
-        # Obsidian
-        $DRY_RUN_CMD ln -sfn "$root/Documents/notes" "$HOME/notes"
+      $DRY_RUN_CMD mkdir -p "${paths.storageDir}"
+      $DRY_RUN_CMD ln -sfn "$root" "${paths.storageDir}/shared"
+      $DRY_RUN_CMD ln -sfn "$root/Documents" "${paths.storageDir}/documents"
+      $DRY_RUN_CMD ln -sfn "$root/Download" "${paths.storageDir}/downloads"
+      $DRY_RUN_CMD ln -sfn "$root/DCIM" "${paths.storageDir}/dcim"
+      $DRY_RUN_CMD ln -sfn "$root/Pictures" "${paths.storageDir}/pictures"
+      $DRY_RUN_CMD ln -sfn "$root/Music" "${paths.storageDir}/music"
+      $DRY_RUN_CMD ln -sfn "$root/Movies" "${paths.storageDir}/movies"
+
+      # The Obsidian vault, one hop from $HOME instead of three. Points at
+      # ${paths.notesDir} rather than at $root directly, so it follows
+      # notesDir in ./paths.nix if that ever moves.
+      $DRY_RUN_CMD ln -sfn "${paths.notesDir}" "${paths.notesLink}"
+
+      if [ ! -e "${paths.notesLink}/" ]; then
+        echo "Note: ${paths.notesLink} is a dangling link, ${paths.notesDir} does not exist yet."
       fi
     fi
   '';

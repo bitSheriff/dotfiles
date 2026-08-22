@@ -14,6 +14,10 @@ rec {
   storageDir = "${homeDir}/storage";
   notesDir = "${storageDir}/documents/notes";
 
+  # Convenience symlink to notesDir, created by build.activationAfter.storage,
+  # so the vault is reachable as ~/notes instead of ~/storage/documents/notes.
+  notesLink = "${homeDir}/notes";
+
   financePath = "${notesDir}/Journal/_finance";
   timePath = "${notesDir}/Journal/_time";
 
