@@ -1,8 +1,50 @@
-# Android host (nix-on-droid)
+# Android host
 
-The Pixel, managed by [nix-on-droid](https://github.com/nix-community/nix-on-droid)
-instead of plain Termux. Everything the old `setup.sh` did with `pkg install`
-and symlinks is declarative now.
+Two ways to run the Pixel, because the Nix one is currently blocked:
+
+| | Bootstrap | Status |
+| --- | --- | --- |
+| **Debian VM** (Android 15+ Linux Terminal) | `setup_debian.sh` | **in use** |
+| **nix-on-droid** | `setup.sh` | on ice, see below |
+
+## Debian VM (current)
+
+Android 15+ ships a real Debian VM behind the Terminal app — no proot, so apt
+and ordinary binaries just work. `setup_debian.sh` installs the packages, links
+`.bashrc`, locates the shared-storage notes directory, and sets up git and ssh.
+
+```sh
+sudo apt-get update && sudo apt-get install -y git
+git clone https://github.com/bitSheriff/dotfiles.git ~/code/dotfiles
+~/code/dotfiles/hosts/android/setup_debian.sh
+```
+
+Two things to know:
+
+* **The hledger helpers are duplicated** into `.bashrc` as shell functions,
+  rather than shared with `../../modules/hledger/scripts.nix`. Deliberate: this
+  host has no Nix, and leaving the NixOS module alone beats de-duplicating three
+  functions. Fix a bug in one, fix it in the other.
+* **hledger is whatever Debian ships** — 1.25 on bookworm, 1.32 on trixie,
+  1.52 on sid, against 1.52 on the desktop. Anything below 1.40 silently ignores
+  `hledger.conf`; the setup script checks and says so.
+
+Storage lands under `/mnt/shared`, but how much of it is visible depends on the
+Android version (16 QPR2 exposes nearly all shared storage, older builds only
+Downloads). Rather than guess, `setup_debian.sh` probes for the notes directory
+and records the result in `~/.config/dotfiles-notes-path`, which `.bashrc`
+sources.
+
+## nix-on-droid (on ice)
+
+Blocked on [nix-on-droid#495](https://github.com/nix-community/nix-on-droid/issues/495):
+the proot bundled in the app cannot translate the `TCGETS2`/`TCSETS2` ioctls
+current glibc uses, so activation dies with `getting pseudoterminal attributes:
+Permission denied`. [PR #529](https://github.com/nix-community/nix-on-droid/pull/529)
+fixes it, but F-Droid's newest app build (June 2025) predates it, and the
+activation step that would install the patched proot runs *after* the step that
+fails. Everything below still describes that setup; it should work once a new
+app release lands.
 
 ## Layout
 

@@ -123,44 +123,29 @@ timeclock-add() {
     [ -n "$ACCOUNT_ARG" ] && ACCOUNT="$ACCOUNT_ARG"
 
     if [ -z "$ACCOUNT" ] || [ -z "$ACTION" ]; then
+        if ! command -v fzf >/dev/null 2>&1; then
+            echo "Error: Missing arguments and fzf not found for selection"
+            return 1
+        fi
+
         EXISTING_ACCOUNTS=$(hl-accounts "$FILE" 2>/dev/null || true)
 
-        if command -v gum >/dev/null 2>&1; then
-            if [ -z "$ACCOUNT" ]; then
-                if [ -z "$EXISTING_ACCOUNTS" ]; then
-                    ACCOUNT=$(gum input --placeholder "New file. Enter account name:")
-                else
-                    ACCOUNT=$(echo "$EXISTING_ACCOUNTS" | gum filter --no-strict --placeholder "Select or type account")
-                fi
-                [ -z "$ACCOUNT" ] && return 0
+        if [ -z "$ACCOUNT" ]; then
+            if [ -z "$EXISTING_ACCOUNTS" ]; then
+                printf "New file. Enter account name: "
+                read -r ACCOUNT
+            else
+                # --print-query allows typing a new account not in the list.
+                # tail -1 grabs either the selection or the typed query.
+                ACCOUNT=$(echo "$EXISTING_ACCOUNTS" | fzf --header "Select account (or type new & press Enter)" --print-query | tail -1)
             fi
+            [ -z "$ACCOUNT" ] && return 0
+        fi
 
-            if [ -z "$ACTION" ]; then
-                ACTION_SEL=$(printf "in\nout" | gum choose --header "Select action")
-                [ -z "$ACTION_SEL" ] && return 0
-                [ "$ACTION_SEL" = "in" ] && ACTION="i" || ACTION="o"
-            fi
-        elif command -v fzf >/dev/null 2>&1; then
-            if [ -z "$ACCOUNT" ]; then
-                if [ -z "$EXISTING_ACCOUNTS" ]; then
-                    printf "New file. Enter account name: "
-                    read -r ACCOUNT
-                else
-                    # --print-query allows typing a new account not in the list.
-                    # tail -1 grabs either the selection or the typed query.
-                    ACCOUNT=$(echo "$EXISTING_ACCOUNTS" | fzf --header "Select account (or type new & press Enter)" --print-query | tail -1)
-                fi
-                [ -z "$ACCOUNT" ] && return 0
-            fi
-
-            if [ -z "$ACTION" ]; then
-                ACTION_SEL=$(printf "in\nout" | fzf --header "Select action")
-                [ -z "$ACTION_SEL" ] && return 0
-                [ "$ACTION_SEL" = "in" ] && ACTION="i" || ACTION="o"
-            fi
-        else
-            echo "Error: Missing arguments and neither gum nor fzf found for selection"
-            return 1
+        if [ -z "$ACTION" ]; then
+            ACTION_SEL=$(printf "in\nout" | fzf --header "Select action")
+            [ -z "$ACTION_SEL" ] && return 0
+            [ "$ACTION_SEL" = "in" ] && ACTION="i" || ACTION="o"
         fi
     fi
 
@@ -187,26 +172,20 @@ timedot-add() {
         return 1
     fi
 
-    if command -v gum >/dev/null 2>&1; then
-        ACCOUNT=$(hl-accounts "$FILE" | gum filter --no-strict --placeholder "Select account")
-        [ -z "$ACCOUNT" ] && return 0
-
-        AMOUNT=$(gum input --placeholder "Amount")
-        [ -z "$AMOUNT" ] && return 0
-
-        COMMENT=$(gum input --placeholder "Comment (optional)")
-    elif command -v fzf >/dev/null 2>&1; then
-        ACCOUNT=$(hl-accounts "$FILE" | fzf --header "Select account")
-        [ -z "$ACCOUNT" ] && return 0
-
-        read -r -p "Amount: " AMOUNT
-        [ -z "$AMOUNT" ] && return 0
-
-        read -r -p "Comment (optional): " COMMENT
-    else
-        echo "Error: Neither gum nor fzf found for account selection"
+    if ! command -v fzf >/dev/null 2>&1; then
+        echo "Error: fzf not found for account selection"
         return 1
     fi
+
+    # --print-query so a new account can be typed, not just picked. This is
+    # what gum filter --no-strict used to allow.
+    ACCOUNT=$(hl-accounts "$FILE" | fzf --header "Select account (or type new & press Enter)" --print-query | tail -1)
+    [ -z "$ACCOUNT" ] && return 0
+
+    read -r -p "Amount: " AMOUNT
+    [ -z "$AMOUNT" ] && return 0
+
+    read -r -p "Comment (optional): " COMMENT
 
     # 4 spaces indent, account padded to 40, then the amount.
     ENTRY=$(printf "    %-40s    %s" "$ACCOUNT" "$AMOUNT")
