@@ -31,7 +31,7 @@ export LEDGER_FILE="$FINANCE_PATH/private/$YEAR.hledger"
 export LEDGER_ALL_FILE="$FINANCE_PATH/all.hledger"
 
 export TIME_PATH="$NOTES_DIR/Journal/_time"
-export TIMEDOT_FILE="$TIME_PATH/$YEAR.timedot"
+export TIMEDOT_FILE="$TIME_PATH/private/$YEAR.timedot"
 export TIMEDOT_ALL_FILE="$TIME_PATH/all.journal"
 export TIMEDOT_SEMESTER_FILE="$TIME_PATH/uni/2026SS.timedot"
 export TIMEDOT_WORK_FILE="$TIME_PATH/work/$YEAR.timeclock"

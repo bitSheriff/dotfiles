@@ -43,7 +43,7 @@ in
     export TIMEDOT_SEMESTER_CLOCK_FILE="$TIMEDOT_PATH/uni/2026SS.timeclock"
 
     export LEDGER_ACCOUNTS_FILE="$LEDGER_PATH/$(date +%Y)_accounts.hledger"
-    export TIMEDOT_FILE="$TIMEDOT_PATH/$(date +%Y).timedot"
+    export TIMEDOT_FILE="$TIMEDOT_PATH/private/$(date +%Y).timedot"
     export TIMEDOT_WORK_FILE="$TIMEDOT_PATH/work/$(date +%Y).timeclock"
   '';
 

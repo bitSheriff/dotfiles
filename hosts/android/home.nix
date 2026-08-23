@@ -24,7 +24,7 @@ let
     export LEDGER_ALL_FILE="$FINANCE_PATH/all.hledger"
 
     export TIME_PATH="$NOTES_DIR/Journal/_time"
-    export TIMEDOT_FILE="$TIME_PATH/$(date +%Y).timedot"
+    export TIMEDOT_FILE="$TIME_PATH/private/$(date +%Y).timedot"
     export TIMEDOT_ALL_FILE="$TIME_PATH/all.journal"
     export TIMEDOT_SEMESTER_FILE="$TIME_PATH/${paths.semesterTimedot}"
     export TIMEDOT_WORK_FILE="$TIME_PATH/work/$(date +%Y).timeclock"
