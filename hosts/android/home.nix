@@ -20,7 +20,7 @@ let
     export NOTES_DIR="${paths.notesDir}"
 
     export FINANCE_PATH="$NOTES_DIR/Journal/_finance"
-    export LEDGER_FILE="$FINANCE_PATH/$(date +%Y).hledger"
+    export LEDGER_FILE="$FINANCE_PATH/private/$(date +%Y).hledger"
     export LEDGER_ALL_FILE="$FINANCE_PATH/all.hledger"
 
     export TIME_PATH="$NOTES_DIR/Journal/_time"

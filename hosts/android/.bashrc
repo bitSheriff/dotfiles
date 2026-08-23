@@ -27,7 +27,7 @@ export NOTES_DIR
 YEAR="$(date +%Y)"
 
 export FINANCE_PATH="$NOTES_DIR/Journal/_finance"
-export LEDGER_FILE="$FINANCE_PATH/$YEAR.hledger"
+export LEDGER_FILE="$FINANCE_PATH/private/$YEAR.hledger"
 export LEDGER_ALL_FILE="$FINANCE_PATH/all.hledger"
 
 export TIME_PATH="$NOTES_DIR/Journal/_time"

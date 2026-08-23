@@ -33,7 +33,7 @@ in
   # and properly expanded with $HOME and $(date).
   programs.zsh.interactiveShellInit = ''
     export LEDGER_PATH="$HOME/notes/Journal/_finance"
-    export LEDGER_FILE="$LEDGER_PATH/2026.hledger"
+    export LEDGER_FILE="$LEDGER_PATH/private/2026.hledger"
     export LEDGER_ALL_FILE="$LEDGER_PATH/all.hledger"
     export LEDGER_TEMPLATE_FILE="$LEDGER_PATH/templates.hledger"
 
