@@ -11,7 +11,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    antigravity-ide # the GUI
+    # antigravity-ide # the GUI
   ];
 
   ##################
