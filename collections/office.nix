@@ -29,7 +29,7 @@
 
       # Editors & Viewers
       libreoffice-stable
-      typora # most beautiful markdown editor
+      # typora # most beautiful markdown editor
       rnote # PDF annotation and note-taking
       kdePackages.okular
       foliate # ebook reader

@@ -171,8 +171,8 @@
               for = "unix";
             }
             {
-              run = ''typora "$@"'';
-              desc = "Typora";
+              run = ''marktext "$@"'';
+              desc = "Marktext";
               block = false;
               for = "unix";
             }
