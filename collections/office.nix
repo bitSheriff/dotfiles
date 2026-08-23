@@ -28,7 +28,7 @@
       pdfgrep # search in multiple pdfs
 
       # Editors & Viewers
-      libreoffice-fresh # like beta version
+      libreoffice-stable
       typora # most beautiful markdown editor
       rnote # PDF annotation and note-taking
       kdePackages.okular

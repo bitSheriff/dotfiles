@@ -13,7 +13,7 @@ let
   };
 
   # Extract once so we can pull the .desktop file and icon out of the image.
-  appimageContents = appimageTools.extractType2 { inherit pname version src; };
+  appimageContents = appimageTools.extract { inherit pname version src; };
 in
 appimageTools.wrapType2 {
   inherit pname version src;
