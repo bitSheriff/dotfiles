@@ -56,7 +56,7 @@ in
 
   # Add a timedot entry to this year's file.
   tda = mkCmd "tda" [ timedot-add ] ''
-    timedot-add "$TIME_PATH/$(date +%Y).timedot" "$@"
+    timedot-add "$TIME_PATH/private/$(date +%Y).timedot" "$@"
   '';
 
   # Add a timedot entry to the current semester's file.
