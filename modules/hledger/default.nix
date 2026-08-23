@@ -50,7 +50,7 @@ in
   programs.zsh.shellAliases = {
     hl = "hledger";
     hla = "hledger -f \${LEDGER_ALL_FILE}";
-    hlae = "(cd $LEDGER_PATH && nvim $(find . -type f | fzf))";
+    hlae = "(cd $LEDGER_PATH && nvim $(fd . --type f -E .stversions -e hledger | fzf))";
 
     hla-gain = "hledger -f \${LEDGER_ALL_FILE} bs --gain --value=now,EUR";
     hl-budget = "hledger bal expenses --budget";
