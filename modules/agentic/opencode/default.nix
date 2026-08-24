@@ -25,7 +25,6 @@
       # ssettings in `opencode.json`
       settings = {
         plugin = [
-          "opencode-gemini-auth@latest"
           "@simonwjackson/opencode-direnv"
         ];
         formatter = true;
