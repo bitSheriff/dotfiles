@@ -13,6 +13,7 @@
     ./claude-code
     ./antigravity.nix
     ./herdr.nix
+    ./pi-agent.nix
   ];
 
   environment.systemPackages =
