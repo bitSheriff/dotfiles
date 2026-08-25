@@ -20,7 +20,7 @@
             "space m P" = "markdown::OpenPreviewToTheSide";
             "space f p" = "projects::OpenRecent";
             "space s w" = "pane::DeploySearch";
-            "space a c" = "assistant::ToggleFocus";
+            "space a c" = "agent::ToggleFocus";
             "g f" = "editor::OpenExcerpts";
             "space f" = "file_finder::Toggle";
             "space e" = "workspace::ToggleLeftDock";

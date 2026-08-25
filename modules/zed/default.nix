@@ -6,6 +6,22 @@
   ...
 }:
 
+let
+  # `pi` itself speaks its own JSON-RPC dialect (`pi --mode rpc`), not ACP, so
+  # Zed cannot drive it directly. pi-acp is the adapter that bridges the two:
+  # it talks ACP to Zed over stdio and spawns `pi --mode rpc` underneath.
+  # It is not in nixpkgs, so npx fetches it on first launch — pin the version
+  # so the bridge cannot drift under us. See https://github.com/svkozak/pi-acp
+  piAcpVersion = "0.0.33";
+
+  pi-acp = pkgs.writeShellScriptBin "pi-acp" ''
+    # nodejs up front for npx; pi-coding-agent appended so the home-manager
+    # wrapper (which carries `extraPackages`) still wins if it is on PATH.
+    export PATH="${lib.makeBinPath [ pkgs.nodejs ]}:$PATH:${lib.makeBinPath [ pkgs.pi-coding-agent ]}"
+    exec npx --yes "pi-acp@${piAcpVersion}" "$@"
+  '';
+in
+
 {
   imports = [
     ./keymaps.nix
@@ -57,16 +73,24 @@
             model = "gpt-4.1";
           };
         };
-        agent_servers = {
-          gemini-custom = {
-            type = "custom";
-            command = "gemini";
-          };
 
-          gemini = {
-            ignore_system_version = false;
+        agent_servers = {
+          # Every entry is an internally tagged enum since Zed 1.16: "custom"
+          # for a command we spawn ourselves, "registry" to let Zed fetch and
+          # manage the adapter from its ACP registry (`zed: acp registry`).
+          # Entries without `type` are what Zed flags as deprecated settings.
+          Pi = {
+            type = "custom";
+            command = lib.getExe pi-acp;
+            args = [ ];
+            env = {
+              # Lets pi resolve Zed's @-mentions instead of receiving them as
+              # plain text.
+              PI_ACP_ENABLE_EMBEDDED_CONTEXT = "true";
+            };
           };
         };
+
         edit_predictions = {
           mode = "subtle";
           disabled_globs = [
@@ -85,9 +109,6 @@
         };
         outline_panel = {
           dock = "right";
-        };
-        notification_panel = {
-          dock = "left";
         };
 
         indent_guides = {
@@ -141,24 +162,15 @@
         };
 
         # Git
+        # Note: Zed has no auto-fetch settings — the `autoFetch*` keys that
+        # used to live here are VS Code's and were silently ignored. The
+        # on/off switch is `disable_git` (inverted), not `enabled`.
         git = {
-          enabled = true;
-          autoFetch = true;
-          autoFetchInterval = 300;
-          autoFetchOnFocus = true;
-          autoFetchOnWindowChange = true;
-          autoFetchOnBuild = true;
-          autoFetchOnBuildEvents = [
-            "build"
-            "run"
-            "debug"
-          ];
-          autoFetchOnBuildEventsDelay = 1500;
-          autoFetchOnBuildDelay = 1500;
           git_gutter = "tracked_files";
           inline_blame = {
             enabled = true;
-            position = "right";
+            # "inline" renders after the line, "status_bar" at the bottom.
+            location = "inline";
           };
         };
 
@@ -190,6 +202,7 @@
         };
 
         # Language Specifics
+        # Keys are Zed language names and are case-sensitive: "Nix", not "nix".
         languages = {
           Markdown = {
             format_on_save = "on";
@@ -210,8 +223,7 @@
             format_on_save = "on";
             tab_size = 2;
           };
-          # Keeping your Nix settings from before
-          nix = {
+          Nix = {
             formatter = "language_server";
             format_on_save = "on";
             tab_size = 2;
@@ -222,20 +234,23 @@
         lsp = {
           rust-analyzer = {
             initialization_options = {
-              checkOnSave = {
+              # rust-analyzer moved the command off `checkOnSave`, which is now
+              # just the on/off flag.
+              checkOnSave = true;
+              check = {
                 command = "clippy";
               };
             };
           };
         };
 
-        # File Types
+        # File Types — keyed by Zed language name, same as `languages` above.
         file_types = {
-          latex = [
+          LaTeX = [
             "*.cfg"
             "*.sty"
           ];
-          dotnev = [ ".env.*" ]; # Preserved typo from original "dotnev"
+          "Shell Script" = [ ".env.*" ];
         };
       };
     };
