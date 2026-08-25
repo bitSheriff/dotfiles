@@ -109,6 +109,7 @@ hl.bind("SUPER + SHIFT + W", hl.dsp.exec_cmd("noctalia-shell ipc call wallpaper 
 hl.bind("SUPER + SHIFT + D", hl.dsp.exec_cmd("fuzzel"))
 hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m region --clipboard-only --freeze"))
 hl.bind("SUPER + Print", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | swappy -f -"))
+
 hl.bind("SUPER + period", hl.dsp.exec_cmd("BEMOJI_PICKER_CMD='wofi -d --hide-scroll --width=350 --location=center' bemoji -n -e | wl-copy"))
 hl.bind("SUPER + CTRL + period", hl.dsp.exec_cmd("(FZF_DEFAULT_OPTS='' unipicker --copy-command wl-copy --command 'wofi -d') | wl-copy"))
 hl.bind("SUPER + CTRL + E", hl.dsp.exec_cmd("hyprpicker -a"))

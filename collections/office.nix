@@ -12,6 +12,7 @@
     ../modules/syncthing.nix
     ../modules/supernote.nix
     ../modules/marktext.nix
+    ../modules/screenshots.nix
   ];
 
   environment.systemPackages =

@@ -136,7 +136,6 @@ in
 
       # Video & Recording
       vlc
-      kooha # screen recorder
 
       # Audio
       pavucontrol
