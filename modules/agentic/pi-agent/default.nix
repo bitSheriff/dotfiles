@@ -23,7 +23,7 @@ in
       enable = true;
       extraPackages = with pkgs; [ nodejs ];
       settings = {
-        theme = "dark";
+        theme = "synthwave-84";
         enableInstallTelemetry = false;
         quietStartup = true;
         enabledModels = [
@@ -43,12 +43,15 @@ in
           "npm:@juicesharp/rpiv-ask-user-question"
           "npm:context-mode"
           "npm:pi-claude-auth" # use Claude Code Subscription
+          # Themes
+          "npm:pi-theme-synthwave-84"
         ];
       };
     };
 
     home.file = {
       ".pi/agent/skills".source = ../_skills;
+      ".pi/agent/extensions".source = ./extensions;
     };
 
   };
