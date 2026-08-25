@@ -52,11 +52,17 @@ in
 
         # default Provider and Setting
         defaultProvider = "anthropic";
-        defaultModel = "claude-sonnet-4-5";
+        defaultModel = "claude-sonnet-5";
         # other models are not displayed
         enabledModels = [
-          "claude-*"
-          "deepseek/deepseek-v4*" # DeepSeek models only from deepseek themself
+          # Claude Models
+          "claude-haiku-4-5" # fast
+          "claude-sonnet-5" # normal tasks
+          "claude-opus-5" # hard tasks, debugging
+
+          # OpenRouter Models
+          "deepseek/deepseek-v4-flash"
+          "deepseek/deepseek-v4-pro"
         ];
       };
     };
