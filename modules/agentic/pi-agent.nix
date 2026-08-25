@@ -24,6 +24,12 @@ in
       extraPackages = with pkgs; [ nodejs ];
       settings = {
         theme = "dark";
+        enableInstallTelemetry = false;
+        quietStartup = true;
+        enabledModels = [
+          "claude-*"
+          "deepseek-*"
+        ];
         npmCommand = [ "${lib.getExe' pkgs.nodejs "npm"}" ];
         compaction = {
           enabled = true;
@@ -31,14 +37,19 @@ in
           reserveTokens = 16384;
           defaultThinkingLevel = "medium";
         };
-        defaultModel = "deepseek/deepseek-v4-flash";
         packages = [
           "npm:pi-mcp-adapter"
           "npm:pi-web-access"
           "npm:@juicesharp/rpiv-ask-user-question"
           "npm:context-mode"
+          "npm:pi-claude-auth" # use Claude Code Subscription
         ];
       };
     };
+
+    home.file = {
+      ".pi/agent/skills".source = ./skills;
+    };
+
   };
 }
