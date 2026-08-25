@@ -51,19 +51,19 @@
         opener = {
           edit = [
             {
-              run = ''nvim "$@"'';
+              run = ''nvim %s'';
               desc = "neovim";
               block = true;
               for = "unix";
             }
             {
-              run = ''zed "$@"'';
+              run = ''zed %s'';
               desc = "zed";
               block = false;
               for = "unix";
             }
             {
-              run = ''zed -n "$@"'';
+              run = ''zed -n %s'';
               desc = "zed (new workspace)";
               block = false;
               for = "unix";
@@ -71,19 +71,19 @@
           ];
           open = [
             {
-              run = ''xdg-open "$@"'';
+              run = ''xdg-open %s'';
               desc = "Open";
               for = "linux";
             }
             {
-              run = ''open "$@"'';
+              run = ''open %s'';
               desc = "Open";
               for = "macos";
             }
           ];
           reveal = [
             {
-              run = ''xdg-open "$(dirname "$0")"'';
+              run = ''xdg-open %d1'';
               desc = "Reveal";
               for = "linux";
             }
@@ -113,7 +113,7 @@
           ];
           play = [
             {
-              run = ''mpv "$@"'';
+              run = ''mpv %s'';
               orphan = true;
               for = "unix";
             }
@@ -126,32 +126,32 @@
           ];
           viewPDF = [
             {
-              run = ''zathura "$@"'';
+              run = ''zathura %s'';
               orphan = true;
               for = "unix";
             }
             {
-              run = ''okular "$@"'';
+              run = ''okular %s'';
               orphan = true;
               for = "unix";
             }
           ];
           viewImage = [
             {
-              run = ''qview "$@"'';
+              run = ''qview %s'';
               orphan = true;
               for = "unix";
             }
           ];
           viewEpub = [
             {
-              run = ''foliate "$@"'';
+              run = ''foliate %s'';
               orphan = true;
               for = "unix";
               desc = "Open with Foliate";
             }
             {
-              run = ''okular "$@"'';
+              run = ''okular %s'';
               orphan = true;
               for = "unix";
               desc = "Open with Okular";
@@ -159,19 +159,19 @@
           ];
           openMarkdown = [
             {
-              run = ''nvim "$@"'';
+              run = ''nvim %s'';
               desc = "neovim";
               block = true;
               for = "unix";
             }
             {
-              run = ''zed "$@"'';
+              run = ''zed %s'';
               desc = "Zed";
               block = false;
               for = "unix";
             }
             {
-              run = ''marktext "$@"'';
+              run = ''marktext %s'';
               desc = "Marktext";
               block = false;
               for = "unix";
@@ -179,13 +179,13 @@
           ];
           openMusic = [
             {
-              run = ''kew play "$@"'';
+              run = ''kew play %s'';
               desc = "Open with Kew";
               block = true;
               for = "unix";
             }
             {
-              run = ''picard "$@"'';
+              run = ''picard %s'';
               desc = "Open with MuiscBrainz Picard";
               block = false;
               for = "unix";
@@ -193,13 +193,13 @@
           ];
           openVideo = [
             {
-              run = ''mpv "$@"'';
+              run = ''mpv %s'';
               orphan = true;
               for = "unix";
               block = false;
             }
             {
-              run = ''haruna "$@"'';
+              run = ''haruna %s'';
               orphan = true;
               for = "unix";
               block = false;
@@ -207,7 +207,7 @@
           ];
           openDiffMerger = [
             {
-              run = ''meld "$@"'';
+              run = ''meld %s'';
               desc = "Open with Meld";
               block = false;
             }
