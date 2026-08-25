@@ -26,11 +26,10 @@ in
         theme = "synthwave-84";
         enableInstallTelemetry = false;
         quietStartup = true;
-        enabledModels = [
-          "claude-*"
-          "deepseek-*"
-        ];
         npmCommand = [ "${lib.getExe' pkgs.nodejs "npm"}" ];
+        defaultProjectTrust = "always"; # always trust new projects
+        tuiMode = "fullscreen";
+        externalEditor = "zeditor";
         compaction = {
           enabled = true;
           keepRecentTokens = 20000;
@@ -38,13 +37,26 @@ in
           defaultThinkingLevel = "medium";
         };
         packages = [
-          "npm:pi-mcp-adapter"
-          "npm:pi-web-access"
-          "npm:@juicesharp/rpiv-ask-user-question"
+          "npm:pi-mcp-adapter" # enable mcp
+          "npm:pi-web-access" # enable web search with multiple tools
+          "npm:@juicesharp/rpiv-ask-user-question" # ask the user questions
           "npm:context-mode"
-          "npm:pi-claude-auth" # use Claude Code Subscription
+          "npm:@juicesharp/rpiv-todo" # work with todos
+
+          # Providers and Login
+          "npm:pi-claude-auth" # use Claude Code Subscription (uses claude instance for login, so i guess you need it installed)
+
           # Themes
           "npm:pi-theme-synthwave-84"
+        ];
+
+        # default Provider and Setting
+        defaultProvider = "anthropic";
+        defaultModel = "claude-sonnet-4-5";
+        # other models are not displayed
+        enabledModels = [
+          "claude-*"
+          "deepseek/deepseek-v4*" # DeepSeek models only from deepseek themself
         ];
       };
     };
