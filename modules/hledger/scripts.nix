@@ -263,8 +263,25 @@ rec {
     LINE_NUM=$(grep -n "^$DATE" "$FILE" | cut -d: -f1)
 
     if [ -z "$LINE_NUM" ]; then
-        echo "Date $DATE not found in $FILE"
-        exit 1
+        # The date header does not exist yet. Rather than failing, create it at
+        # the end of the file - but tell the user, so a typo in the file (or a
+        # wrong file) does not silently grow a new day block.
+        WARNING="Warning: date $DATE not found in $FILE - creating the date header"
+        if command -v gum >/dev/null 2>&1; then
+            gum style --foreground 3 "$WARNING" >&2
+        else
+            echo "$WARNING" >&2
+        fi
+
+        # Make sure the file ends with a newline and that a blank line separates
+        # the new block from the previous one.
+        if [ -s "$FILE" ]; then
+            [ -n "$(tail -c 1 "$FILE")" ] && echo "" >>"$FILE"
+            [ -n "$(tail -n 1 "$FILE")" ] && echo "" >>"$FILE"
+        fi
+
+        printf '%s\n%s\n' "$DATE" "''${ENTRY}" >>"$FILE"
+        exit 0
     fi
 
     # Find the first blank line after the date header to determine insertion point
