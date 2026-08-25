@@ -16,6 +16,10 @@ let
   '';
 in
 {
+  environment.systemPackages = with pkgs; [
+    mcp-nixos # mcp server so agents can access Nix and NixOS resources
+  ];
+
   ##################
   ## HOME MANAGER ##
   ##################

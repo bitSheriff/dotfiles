@@ -11,15 +11,14 @@
     ./mcp.nix
     ./opencode
     ./claude-code
+    ./pi-agent
     ./antigravity.nix
     ./herdr.nix
-    ./pi-agent.nix
   ];
 
   environment.systemPackages =
     with pkgs;
     [
-      mcp-nixos # mcp server so agents can access Nix and NixOS resources
       # mistral-vibe # needs a build!!!
     ]
     # Host Specifics (strong gaming PC with dedicated GPU)

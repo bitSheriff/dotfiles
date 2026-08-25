@@ -48,7 +48,7 @@ in
     };
 
     home.file = {
-      ".pi/agent/skills".source = ./_skills;
+      ".pi/agent/skills".source = ../_skills;
     };
 
   };
