@@ -63,7 +63,7 @@ in
 
     home.file = {
       ".pi/agent/skills".source = ../_skills;
-      ".pi/agent/extensions".source = ./extensions;
+      ".pi/agent/extensions".source = ./extensions; # exclusive to pi-coding-agent
     };
 
   };
