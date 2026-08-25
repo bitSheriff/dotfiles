@@ -22,7 +22,7 @@
       enable = true;
       rulesDir = ./rules;
       commandsDir = ./commands;
-      agentsDir = ./agents;
+      agentsDir = ../_agents;
       # pull in the shared MCP servers from `programs.mcp.servers` (../mcp.nix)
       enableMcpIntegration = true;
 
