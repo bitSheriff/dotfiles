@@ -27,14 +27,14 @@
       enableMcpIntegration = true;
 
       skills = {
-        sort-ebooks = ../skills/sort-ebooks;
-        hledger = ../skills/hledger;
+        sort-ebooks = ../_skills/sort-ebooks;
+        hledger = ../_skills/hledger;
 
         # Obsidian
-        obsidian-bases = ../skills/obsidian-bases;
-        obsidian-cli = ../skills/obsidian-cli;
-        obsidian-markdown = ../skills/obsidian-markdown;
-        json-canvas = ../skills/json-canvas;
+        obsidian-bases = ../_skills/obsidian-bases;
+        obsidian-cli = ../_skills/obsidian-cli;
+        obsidian-markdown = ../_skills/obsidian-markdown;
+        json-canvas = ../_skills/json-canvas;
       };
 
       settings = {

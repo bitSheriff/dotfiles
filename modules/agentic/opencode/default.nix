@@ -73,7 +73,7 @@
 
     xdg.configFile = {
       "opencode/agents".source = ./agents;
-      "opencode/skills".source = ../skills;
+      "opencode/skills".source = ../_skills;
     };
 
   };
