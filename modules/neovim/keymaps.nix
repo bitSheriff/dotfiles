@@ -137,6 +137,15 @@
         action = "<cmd>Obsidian link<CR>";
         desc = "Create link";
       }
+
+      ## Todo ##
+      ### inline code todos and stuff ###
+      {
+        mode = "n";
+        key = "<leader>tl";
+        action = "<cmd>TodoTelescope<CR>";
+        desc = "View Todo List";
+      }
     ];
   };
 }
