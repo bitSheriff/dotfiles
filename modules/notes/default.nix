@@ -100,6 +100,13 @@ in
         if ! ${pkgs.git}/bin/git diff --cached --quiet; then
           ${pkgs.git}/bin/git commit --no-gpg-sign -m "$(${pkgs.coreutils}/bin/date '+%Y-%m-%d %H:%M')"
         fi
+
+        # add NAS server as backup
+        ${pkgs.git}/bin/git remote add backup ssh://git@10.0.0.151:2222/bitSheriff/notes.git || true
+
+        # create a unique branch
+        ${pkgs.git}/bin/git checkout -B $(hostname)
+        ${pkgs.git}/bin/git push origin
       ''}";
     };
   };
