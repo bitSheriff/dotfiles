@@ -25,10 +25,10 @@ let
           # Open Meld. Script pauses here until Meld is closed.
           meld "$original_file" "$conflict_file"
 
-          printf "Delete conflict file? [y/N] "
+          printf "Delete conflict file? [Y/n] "
           read -r confirm < /dev/tty
 
-          if [[ "$confirm" =~ ^[yY]$ ]]; then
+          if [[ ! "$confirm" =~ ^[nN]$ ]]; then
             rm "$conflict_file"
             echo "✓ Deleted."
           else
