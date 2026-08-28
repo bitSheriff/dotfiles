@@ -60,9 +60,9 @@ in
     td = "hledger -f \${TIMEDOT_ALL_FILE}";
     tde = "(cd $TIMEDOT_PATH && nvim $(fd -t f -e timedot -e timeclock -E .stversions | fzf))";
     tda = "timedot-add \${TIMEDOT_FILE}";
-    clkin = "FILE=$(fd . \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-add \"\$FILE\" i";
-    clkout = "FILE=$(fd . \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-add \"\$FILE\" o";
-    clktimer = "FILE=$(fd . \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-timer \"\$FILE\"";
+    clkin = "FILE=$(fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-add \"\$FILE\" i";
+    clkout = "FILE=$(fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-add \"\$FILE\" o";
+    clktimer = "FILE=$(fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-timer \"\$FILE\"";
 
     # Uni
     tdauni = "timedot-add \${TIMEDOT_SEMESTER_FILE}";
