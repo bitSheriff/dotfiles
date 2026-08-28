@@ -63,6 +63,9 @@
             "Bash(nix develop *)"
             "Bash(nix fmt *)"
             "Bash(nix log *)"
+
+            # MCP
+            "mcp__plugin_hm_*" # allow all MCPs which were configured with HomeManager
           ];
           ask = [
             "Bash(git push:*)"
