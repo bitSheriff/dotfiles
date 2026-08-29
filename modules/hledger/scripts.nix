@@ -185,7 +185,8 @@ rec {
 
     # Check if file argument is provided
     if [ $# -eq 0 ]; then
-        echo "Usage: $0 <file>"
+        echo "Usage: $0 <file> [date]"
+        echo "  date: optional, ISO format (YYYY-MM-DD), defaults to today"
         exit 1
     fi
 
@@ -195,6 +196,17 @@ rec {
     if [ ! -f "$FILE" ]; then
         echo "File not found: $FILE"
         exit 1
+    fi
+
+    # Optional second argument: date in ISO format (YYYY-MM-DD), defaults to today
+    if [ -n "''${2:-}" ]; then
+        if ! [[ "$2" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+            echo "Invalid date: $2 (expected ISO format YYYY-MM-DD)"
+            exit 1
+        fi
+        DATE="$2"
+    else
+        DATE=$(date +%Y-%m-%d)
     fi
 
     # Get inputs using gum if available, otherwise fallback to fzf/read
@@ -255,9 +267,6 @@ rec {
         fi
         ENTRY=$(printf "%s    %s" "$ENTRY" "$COMMENT")
     fi
-
-    # Get current date in YYYY-MM-DD format
-    DATE=$(date +%Y-%m-%d)
 
     # Find the line number of the date header
     LINE_NUM=$(grep -n "^$DATE" "$FILE" | cut -d: -f1)
