@@ -29,7 +29,26 @@ let
             "-p", "--program", type=str, default=DEFAULT_EDITOR,
             help="Program to open the journal with."
         )
+        parser.add_argument(
+            "-d", "--date", type=str, default=None,
+            help=(
+                "Date in ISO format (YYYY-MM-DD) to open the journal for. "
+                "Overrides --offset."
+            )
+        )
         args = parser.parse_args()
+
+        base_date = datetime.now()
+        if args.date:
+            try:
+                base_date = datetime.strptime(args.date, "%Y-%m-%d")
+            except ValueError:
+                print(
+                    f"Error: Invalid date '{args.date}'. "
+                    "Expected ISO format YYYY-MM-DD.",
+                    file=sys.stderr
+                )
+                sys.exit(1)
 
         editor_to_use = args.program or DEFAULT_EDITOR
 
@@ -43,7 +62,7 @@ let
                 )
                 sys.exit(1)
 
-            target_date = datetime.now() + timedelta(weeks=args.offset)
+            target_date = base_date + timedelta(weeks=args.offset)
             iso_year, iso_week, _ = target_date.isocalendar()
             filename = f"{iso_year}-W{iso_week:02d}.md"
             journal_file = os.path.join(weekly_dir, filename)
@@ -57,7 +76,7 @@ let
                 )
                 sys.exit(1)
 
-            target_date = datetime.now() + timedelta(days=args.offset)
+            target_date = base_date + timedelta(days=args.offset)
             formatted_date = target_date.strftime("%Y-%m-%d")
             journal_file = os.path.join(daily_dir, f"{formatted_date}.md")
 
