@@ -119,6 +119,12 @@
             ./hosts/rhodos
             # Overlays
             { nixpkgs.overlays = [ (import ./overlays inputs) ]; }
+            # Feature flags (cfg.*)
+            ./cfg.nix
+            {
+              cfg.notes.obsidian = true;
+              cfg.office.libre-office.enable = true;
+            }
             # Collections
             ./collections/development.nix
             ./collections/office.nix
@@ -167,6 +173,12 @@
             ./hosts/delos
             # Overlays
             { nixpkgs.overlays = [ (import ./overlays inputs) ]; }
+            # Feature flags (cfg.*)
+            ./cfg.nix
+            {
+              cfg.notes.obsidian = true;
+              cfg.office.libre-office.enable = true;
+            }
             # Collections
             ./collections/development.nix
             ./collections/office.nix

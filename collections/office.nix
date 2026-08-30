@@ -29,7 +29,6 @@
       pdfgrep # search in multiple pdfs
 
       # Editors & Viewers
-      libreoffice-stable
       # typora # most beautiful markdown editor
       rnote # PDF annotation and note-taking
       kdePackages.okular
@@ -38,7 +37,6 @@
       # yacreader # comic reader
 
       # Notes & Organization
-      obsidian
       # gromit-mpx # draw on desktop
 
       # Communication
@@ -70,7 +68,8 @@
     ++ lib.optionals (config.networking.hostName == "rhodos") [
       # Building Stuff
       freecad
-    ];
+    ]
+    ++ lib.optionals config.cfg.office.libre-office.enable [ pkgs.libreoffice-stable ];
 
   # Crucial for office work to ensure documents look the same everywhere.
   fonts.packages = with pkgs; [

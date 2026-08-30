@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   notes = pkgs.writeShellApplication {
@@ -53,14 +58,16 @@ in
     JOURNAL_WEEKLY_PATH = "$HOME/notes/Journal/Weekly";
   };
 
-  environment.systemPackages = with pkgs; [
-    obsidian # the best note system
-    gum # for cli inputs
-    fd # find files
-    fzf # to select files
+  environment.systemPackages =
+    with pkgs;
+    [
+      gum # for cli inputs
+      fd # find files
+      fzf # to select files
 
-    notes
-  ];
+      notes
+    ]
+    ++ lib.optionals config.cfg.notes.obsidian [ obsidian ]; # the best note system
 
   programs.zsh.shellAliases = {
     daily = "jour";

@@ -1,11 +1,16 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   notesDir = "~/notes";
 in
 {
   programs.nvf.settings.vim = {
     binds.whichKey.register."<leader>n" = "+Notes";
-    notes.obsidian = {
+    notes.obsidian = lib.mkIf config.cfg.notes.obsidian {
       enable = true;
       setupOpts = {
         legacy_commands = false;
