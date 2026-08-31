@@ -26,8 +26,8 @@ let
             )
         )
         parser.add_argument(
-            "-p", "--program", type=str, default=DEFAULT_EDITOR,
-            help="Program to open the journal with."
+            "-e", "--editor", type=str, default=DEFAULT_EDITOR,
+            help="Editor to open the journal with."
         )
         parser.add_argument(
             "-d", "--date", type=str, default=None,
@@ -50,7 +50,7 @@ let
                 )
                 sys.exit(1)
 
-        editor_to_use = args.program or DEFAULT_EDITOR
+        editor_to_use = args.editor or DEFAULT_EDITOR
 
         if args.weekly:
             weekly_dir = os.getenv("JOURNAL_WEEKLY_PATH")
