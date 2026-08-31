@@ -255,6 +255,24 @@ rec {
         read -p "Comment (optional): " COMMENT
     fi
 
+    # hledger's timedot amounts only understand plain hours (5.4) or
+    # quantity units (30m, 2h). Convert a more human H:MM entry (e.g. 3:20
+    # for 3 hours 20 minutes) into whole minutes (e.g. 200m) instead of
+    # decimal hours, so there's no floating point rounding (3:20 as hours
+    # would be a repeating decimal). The colon always separates hours and
+    # minutes, never seconds.
+    if [[ "$AMOUNT" == *:* ]]; then
+        HOURS_PART="''${AMOUNT%%:*}"
+        MINUTES_PART="''${AMOUNT#*:}"
+
+        if [[ ! "$HOURS_PART" =~ ^[0-9]+$ ]] || [[ ! "$MINUTES_PART" =~ ^[0-9]+$ ]]; then
+            echo "Invalid amount: $AMOUNT (expected H:MM, e.g. 3:20)"
+            exit 1
+        fi
+
+        AMOUNT="$((10#$HOURS_PART * 60 + 10#$MINUTES_PART))m"
+    fi
+
     # Construct the entry: 4 spaces indent, account, 4+ spaces, amount
     # Using 40 characters for the account field to keep things somewhat aligned
     ENTRY=$(printf "    %-40s    %s" "$ACCOUNT" "$AMOUNT")
