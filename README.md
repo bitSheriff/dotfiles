@@ -45,6 +45,31 @@ land.
 
 ---
 
-[^1]: https://www.gnu.org/software/stow/
+### 🏺 Android
 
-[^2]: https://github.com/FiloSottile/age
+**The Pocket Colony**
+
+- **The Myth:** No single island, but the archipelago in miniature—every
+  Cycladic settlement had to survive on whatever scraps of soil and stone it
+  was given, proof that civilization doesn't need a mainland to take root.
+- **The Hardware:** My phone. Since Android won't host a proper NixOS
+  installation, it relies on [nix-on-droid][3], a project that brings the Nix
+  package manager (built on top of Termux) to Android without requiring root.
+  It's a small, sandboxed outpost of nixpkgs living in my pocket—no mainland,
+  but still governed by the same laws.
+- **Installation:** Install [nix-on-droid from F-Droid][4], launch it once to
+  let it bootstrap, then point it at this flake to build and activate the
+  configuration:
+
+  ```sh
+  just android
+  ```
+
+  which expands to:
+
+  ```sh
+  nix-on-droid switch --flake .#android
+  ```
+
+[3]: https://github.com/nix-community/nix-on-droid
+[4]: https://f-droid.org/packages/com.termux.nix
