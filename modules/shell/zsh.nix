@@ -16,14 +16,10 @@
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) (
     { config, ... }:
     {
-      home.packages = [
-        pkgs.deja # better zsh suggestions
-      ];
-
       programs.zsh = {
         enable = true;
         enableCompletion = true;
-        autosuggestion.enable = false; # use deja instead
+        autosuggestion.enable = true;
         syntaxHighlighting.enable = true;
         dotDir = "${config.xdg.configHome}/zsh";
 
@@ -39,7 +35,6 @@
           # Tool initializations that don't have HM modules or need custom flags
           eval "$(tv init zsh)"
           eval "$(zoxide init zsh --cmd cd)"
-          eval "$(deja init zsh)"
 
           # Ghostty integration
           if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
