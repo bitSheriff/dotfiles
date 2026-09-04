@@ -59,6 +59,9 @@
           VISUAL = "nvim";
           BROWSER = "firefox";
           MANPAGER = "nvim +Man!";
+          EDITOR_MD = "${pkgs.marktext}/bin/marktext";
+          DIFF_TOOL = "${pkgs.meld}/bin/meld";
+          MERGE_TOOL = "${pkgs.meld}/bin/meld";
 
           # Directories
           BIN_PATH = "$HOME/.local/bin";
