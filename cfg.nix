@@ -32,12 +32,36 @@ with lib;
       };
     };
 
+    ############
+    ## Office ##
+    ############
     office = {
       libre-office = {
         enable = mkOption {
           type = types.bool;
           default = false;
           description = "Install LibreOffice.";
+        };
+      };
+    };
+
+    ############
+    ## Gaming ##
+    ############
+    gaming = {
+      steam = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install Steam";
+        };
+      };
+
+      heroic-launcher = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install Heroic Games Launcher";
         };
       };
     };
