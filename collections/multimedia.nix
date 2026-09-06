@@ -111,6 +111,7 @@ in
   imports = [
     ../modules/mpv
     ../modules/mpd.nix
+    ../modules/kew.nix
   ];
 
   security.rtkit.enable = true;
@@ -162,7 +163,7 @@ in
     { config, ... }:
     lib.mkIf (lib.elem "benjamin" activeUsers) {
       home.packages = with pkgs; [
-        kew # terminal music player
+        # kew # terminal music player -> own module now
         musikcube # another terminal music player
         cliamp # music and radio terminal player
       ];

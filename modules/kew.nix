@@ -1,0 +1,200 @@
+{
+  config, # Top-level NixOS config
+  pkgs,
+  inputs,
+  lib,
+  activeUsers,
+  ...
+}:
+let
+  kewrc = ''
+    [miscellaneous]
+
+    path=~/Music
+    allowNotifications=1
+    hideLogo=0
+    hideHelp=0
+    hideSideCover=0
+
+    # Delay when drawing title in track view, set to 0 to have no delay.
+    titleDelay=9
+
+    # Same as '--quitonstop' flag, exits after playing the whole playlist.
+    quitOnStop=0
+
+    # Glimmering text on the bottom row.
+    hideGlimmeringText=0
+
+    # Replay gain check first, can be either 0=track, 1=album or 2=disabled.
+    replayGainCheckFirst=0
+
+    # Save Repeat and Shuffle Settings.
+    saveRepeatShuffleSettings=1
+
+    repeatState=0
+
+    shuffleEnabled=0
+
+    # Set the window title to the title of the currently playing track
+    trackTitleAsWindowTitle=1
+
+
+    [colors]
+
+    # Theme's go in ~/.config/kew/themes (on Linux/FreeBSD/Android), 
+    # and ~/Library/Preferences/kew/themes (on macOS), 
+    theme=
+
+    # Color Mode is:
+    # 0 = 16-bit color palette from default theme, 
+    # 1 = Colors derived from track cover, 
+    # 2 = Colors derived from TrueColor theme, 
+
+    # Color Mode:
+    colorMode=0
+
+    # Terminal color theme is default.theme in 
+    # ~/.config/kew/themes (on Linux/FreeBSD/Android), 
+    # and ~/Library/Preferences/kew/themes (on macOS).
+
+
+    [track cover]
+
+    coverEnabled=1
+    coverAnsi=0
+
+
+    [mouse]
+
+    mouseEnabled=1
+
+
+    [visualizer]
+
+    visualizerEnabled=1
+    visualizerHeight=6
+    visualizerBrailleMode=0
+
+    # How colors are laid out in the spectrum visualizer. 0=lighten, 1=brightness depending on bar height, 2=reversed, 3=reversed darken.
+    visualizerColorType=2
+
+    # 0=Thin bars, 1=Bars twice the width, 2=Auto (depends on window size).
+    visualizerBarWidth=2
+
+
+    [progress bar]
+
+    # Progress bar in track view
+    # The progress bar can be configured in many ways.
+    # When copying the values below, be sure to include values that are empty spaces or things will get messed up.
+    # Be sure to have the actual uncommented values last.
+    # For instance use the below values for a pill muncher mode:
+
+    #progressBarElapsedEvenChar= 
+    #progressBarElapsedOddChar= 
+    #progressBarApproachingEvenChar=•
+    #progressBarApproachingOddChar=·
+    #progressBarCurrentEvenChar=ᗧ
+    #progressBarCurrentOddChar=ᗧ
+
+    # To have a thick line: 
+
+    #progressBarElapsedEvenChar=━
+    #progressBarElapsedOddChar=━
+    #progressBarApproachingEvenChar=━
+    #progressBarApproachingOddChar=━
+    #progressBarCurrentEvenChar=━
+    #progressBarCurrentOddChar=━
+
+    # To have dots (the original): 
+
+    #progressBarElapsedEvenChar=■
+    #progressBarElapsedOddChar= 
+    #progressBarApproachingEvenChar==
+    #progressBarApproachingOddChar= 
+    #progressBarCurrentEvenChar=■
+    #progressBarCurrentOddChar= 
+
+    # Current values: 
+
+    progressBarElapsedEvenChar=━
+    progressBarElapsedOddChar=━
+    progressBarApproachingEvenChar=━
+    progressBarApproachingOddChar=━
+    progressBarCurrentEvenChar=━
+    progressBarCurrentOddChar=━
+
+
+    [key bindings]
+
+    bind = Space, playPause
+    bind = Shift+Tab, prevView
+    bind = Tab, nextView
+    bind = +, volUp, +5%
+    bind = =, volUp, +5%
+    bind = -, volDown, -5%
+    bind = h, prevSong
+    bind = l, nextSong
+    bind = k, scrollUp
+    bind = j, scrollDown
+    bind = p, playPause
+    bind = n, toggleNotifications
+    bind = v, toggleVisualizer
+    bind = b, toggleAscii
+    bind = r, toggleRepeat
+    bind = i, cycleColorMode
+    bind = t, cycleThemes
+    bind = c, cycleVisualization
+    bind = s, shuffle
+    bind = a, seekBack
+    bind = d, seekForward
+    bind = o, sortLibrary
+    bind = m, showLyricsPage
+    bind = Shift+s, stop
+    bind = x, exportPlaylist
+    bind = ., addToFavorites_playlist
+    bind = u, updateLibrary
+    bind = f, moveSongUp
+    bind = g, moveSongDown
+    bind = Enter, enqueue
+    bind = Shift+g, enqueue
+    bind = Backspace, clearPlaylist
+    bind = Alt+Enter, enqueueAndPlay
+    bind = Left, prevSong
+    bind = Right, nextSong
+    bind = Up, scrollUp
+    bind = Down, scrollDown
+    bind = 2, showPlaylist
+    bind = 3, showLibrary
+    bind = 4, showTrack
+    bind = 5, showSearch
+    bind = 6, showHelp
+    bind = PgDn, nextPage
+    bind = PgUp, prevPage
+    bind = Del, remove
+    bind = mouseMiddle, enqueueAndPlay
+    bind = mouseRight, playPause
+    bind = mouseWheelDown, scrollDown
+    bind = mouseWheelUp, scrollUp
+    bind = q, quit
+    bind = Esc, quit
+    bind = Unknown, EVENT_NONE
+  '';
+in
+{
+  imports = [ ];
+
+  environment.systemPackages = with pkgs; [ kew ];
+
+  ##################
+  ## HOME MANAGER ##
+  ##################
+  home-manager.users.benjamin =
+    { config, ... }:
+    lib.mkIf (lib.elem "benjamin" activeUsers) {
+
+      xdg.configFile = {
+        "kew/kewrc".text = kewrc;
+      };
+    };
+}
