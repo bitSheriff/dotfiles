@@ -47,7 +47,19 @@ let
     );
 in
 {
-  imports = scanDir ./collections ++ scanDir ./modules;
+  # imports = scanDir ./collections ++ ./modules/common.nix;
+  imports = [
+    ./modules/common.nix
+    ./modules/hyprland
+    # Collections
+    ./collections/development.nix
+    ./collections/downloaders.nix
+    ./collections/gaming.nix
+    ./collections/multimedia.nix
+    ./collections/office.nix
+    ./collections/privacy.nix
+    ./collections/uni.nix
+  ];
 
   options.cfg = {
     notes = {
