@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 # Central place to declare toggleable "features" for this flake.
 #
@@ -258,6 +258,37 @@ in
           default = false;
           description = "Forgejo/Codeberg Actions runner. WIP, not fully working yet.";
         };
+      };
+    };
+
+    #########
+    ## Env ##
+    #########
+    # General environment variables, exported wherever the shell (modules/shell/zsh.nix)
+    # or other consumers pick them up.
+    env = {
+      editor = mkOption {
+        type = types.str;
+        default = "${pkgs.neovim}/bin/nvim";
+        description = "Default $EDITOR / $VISUAL.";
+      };
+
+      terminal = mkOption {
+        type = types.str;
+        default = "${pkgs.kitty}/bin/kitty";
+        description = "Default $TERMINAL.";
+      };
+
+      browser = mkOption {
+        type = types.str;
+        default = "${pkgs.firefox}/bin/firefox";
+        description = "Default $BROWSER.";
+      };
+
+      pager = mkOption {
+        type = types.str;
+        default = "${pkgs.bat}/bin/bat";
+        description = "Default $PAGER.";
       };
     };
 

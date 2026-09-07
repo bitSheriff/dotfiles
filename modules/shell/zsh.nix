@@ -6,6 +6,9 @@
   ...
 }:
 
+let
+  cfg = config.cfg;
+in
 {
   imports = [
     ./scripts.nix
@@ -13,7 +16,7 @@
     ../zellij.nix
   ];
 
-  config = lib.mkIf config.cfg.shell.zsh.enable {
+  config = lib.mkIf cfg.shell.zsh.enable {
     home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) (
       { config, ... }:
       {

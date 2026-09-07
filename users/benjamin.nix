@@ -28,6 +28,9 @@
   };
 
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) (
+    let
+      envCfg = config.cfg.env;
+    in
     {
       config,
       pkgs,
@@ -53,11 +56,12 @@
         file.".local/lib".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/../lib";
 
         sessionVariables = {
-          # Default Programs
-          TERMINAL = "kitty";
-          EDITOR = "nvim";
-          VISUAL = "nvim";
-          BROWSER = "firefox";
+          # Default Programs (from cfg.env, see cfg.nix)
+          EDITOR = envCfg.editor;
+          VISUAL = envCfg.editor;
+          TERMINAL = envCfg.terminal;
+          BROWSER = envCfg.browser;
+          PAGER = envCfg.pager;
           MANPAGER = "nvim +Man!";
           EDITOR_MD = "${pkgs.marktext}/bin/marktext";
           DIFF_TOOL = "${pkgs.meld}/bin/meld";
