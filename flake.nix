@@ -119,6 +119,7 @@
             ./cfg.nix
             {
               cfg.notes.obsidian = true;
+              cfg.development.zed.enable = true;
               cfg.browser.qutebrowser.enable = true;
               cfg.desktop.hyprland.enable = true;
               cfg.development.enable = true;
@@ -171,6 +172,7 @@
             ./cfg.nix
             {
               cfg.notes.obsidian = true;
+              cfg.development.zed.enable = true;
               cfg.browser.qutebrowser.enable = true;
               cfg.desktop.hyprland.enable = true;
               cfg.development.enable = true;

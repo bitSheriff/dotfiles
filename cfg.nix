@@ -67,6 +67,14 @@ in
         default = false;
         description = "Development tooling: editors, terminals, languages, vscode, direnv, git, etc.";
       };
+
+      zed = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install and configure the Zed editor (modules/zed).";
+        };
+      };
     };
 
     ################
