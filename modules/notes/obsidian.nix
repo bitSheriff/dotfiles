@@ -12,7 +12,7 @@
   ## HOME MANAGER ##
   ##################
   home-manager.users.benjamin =
-    lib.mkIf (config.cfg.notes.obsidian && lib.elem "benjamin" activeUsers)
+    lib.mkIf (config.cfg.notes.obsidian.enable && lib.elem "benjamin" activeUsers)
       {
         programs.obsidian = {
           enable = true;

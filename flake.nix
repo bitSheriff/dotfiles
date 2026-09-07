@@ -118,7 +118,8 @@
             # Feature flags (cfg.*)
             ./cfg.nix
             {
-              cfg.notes.obsidian = true;
+              cfg.notes.obsidian.enable = true;
+              cfg.notes.supernote.enable = true;
               cfg.development.zed.enable = true;
               cfg.development.agentic.enable = true;
               cfg.development.agentic.pi-coding-agent.enable = true;
@@ -174,7 +175,8 @@
             # Feature flags (cfg.*)
             ./cfg.nix
             {
-              cfg.notes.obsidian = true;
+              cfg.notes.obsidian.enable = true;
+              cfg.notes.supernote.enable = true;
               cfg.development.zed.enable = true;
               cfg.development.agentic.enable = true;
               cfg.development.agentic.pi-coding-agent.enable = true;

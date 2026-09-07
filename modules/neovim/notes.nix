@@ -10,7 +10,7 @@ in
 {
   programs.nvf.settings.vim = {
     binds.whichKey.register."<leader>n" = "+Notes";
-    notes.obsidian = lib.mkIf config.cfg.notes.obsidian {
+    notes.obsidian = lib.mkIf config.cfg.notes.obsidian.enable {
       enable = true;
       setupOpts = {
         legacy_commands = false;

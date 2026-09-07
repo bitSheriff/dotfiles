@@ -34,7 +34,7 @@ in
 
       notes_script
     ]
-    ++ lib.optionals config.cfg.notes.obsidian [ obsidian ]; # the best note system
+    ++ lib.optionals config.cfg.notes.obsidian.enable [ obsidian ]; # the best note system
 
   programs.zsh.shellAliases = {
     daily = "jour";
