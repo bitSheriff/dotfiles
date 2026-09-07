@@ -114,58 +114,60 @@ in
     ../modules/kew.nix
   ];
 
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
-
-  environment.systemPackages =
-    with pkgs;
-    [
-      # Image & Graphics
-      # gimp # like photoshop but without selling your soul
-      # inkscape
-      ente-desktop # encrypted photo backup
-      qview # minimal image viewer
-      gthumb # viewer and simple editor
-      imagemagick # i think there is nothing it cannot do
-      pinta # simple image manipulation
-
-      # Video & Recording
-      vlc
-
-      # Audio
-      pavucontrol
-      spotify
-      audacity # audio editor
-      picard # mp3tag editor
-      feishin # jellyfin and navidrone music player (spotify alike)
-      # asunder # ripping cd's like its 2000
-
-      digest-mp3s
-    ]
-
-    # Host Specifics
-    ++ lib.optionals (config.networking.hostName == "rhodos") [
-      fladder
-    ];
-
-  services.tumbler.enable = true; # image thumbnails
-
-  ##################
-  ## HOME MANAGER ##
-  ##################
-  home-manager.users.benjamin =
-    { config, ... }:
-    lib.mkIf (lib.elem "benjamin" activeUsers) {
-      home.packages = with pkgs; [
-        # kew # terminal music player -> own module now
-        musikcube # another terminal music player
-        cliamp # music and radio terminal player
-      ];
+  config = lib.mkIf config.cfg.multimedia.enable {
+    security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
     };
+
+    environment.systemPackages =
+      with pkgs;
+      [
+        # Image & Graphics
+        # gimp # like photoshop but without selling your soul
+        # inkscape
+        ente-desktop # encrypted photo backup
+        qview # minimal image viewer
+        gthumb # viewer and simple editor
+        imagemagick # i think there is nothing it cannot do
+        pinta # simple image manipulation
+
+        # Video & Recording
+        vlc
+
+        # Audio
+        pavucontrol
+        spotify
+        audacity # audio editor
+        picard # mp3tag editor
+        feishin # jellyfin and navidrone music player (spotify alike)
+        # asunder # ripping cd's like its 2000
+
+        digest-mp3s
+      ]
+
+      # Host Specifics
+      ++ lib.optionals (config.networking.hostName == "rhodos") [
+        fladder
+      ];
+
+    services.tumbler.enable = true; # image thumbnails
+
+    ##################
+    ## HOME MANAGER ##
+    ##################
+    home-manager.users.benjamin =
+      { config, ... }:
+      lib.mkIf (lib.elem "benjamin" activeUsers) {
+        home.packages = with pkgs; [
+          # kew # terminal music player -> own module now
+          musikcube # another terminal music player
+          cliamp # music and radio terminal player
+        ];
+      };
+  };
 }

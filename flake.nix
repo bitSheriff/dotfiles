@@ -85,10 +85,6 @@
       #############  PIXEL PHONE (nix-on-droid)  #############
       # Build with `nix-on-droid switch --flake .#android` on the phone, or
       # `just android` from a machine that can reach it.
-      #
-      # Not a nixosSystem: nix-on-droid has no NixOS module system, so
-      # ./modules cannot be imported. The shared part is
-      # ./modules/hledger/scripts.nix, which is plain derivations.
       nixOnDroidConfigurations.android = nix-on-droid.lib.nixOnDroidConfiguration {
         pkgs = import nixpkgs {
           system = "aarch64-linux";
@@ -123,25 +119,17 @@
             ./cfg.nix
             {
               cfg.notes.obsidian = true;
+              cfg.development.enable = true;
+              cfg.office.enable = true;
               cfg.office.libre-office.enable = true;
               cfg.uni.enable = true;
               cfg.gaming.enable = true;
               cfg.gaming.steam.enable = true;
               cfg.gaming.heroic.enable = true;
+              cfg.multimedia.enable = true;
+              cfg.downloaders.enable = true;
+              cfg.privacy.enable = true;
             }
-            # Collections
-            ./collections/development.nix
-            ./collections/office.nix
-            ./collections/uni.nix
-            ./collections/gaming.nix
-            ./collections/multimedia.nix
-            ./collections/downloaders.nix
-            ./collections/privacy.nix
-            # Modules
-            ./modules/common.nix
-            ./modules/hyprland
-            ./modules/meshtastic.nix
-            # ./modules/forgejo.nix
             (
               {
                 activeUsers,
@@ -181,19 +169,13 @@
             ./cfg.nix
             {
               cfg.notes.obsidian = true;
+              cfg.development.enable = true;
+              cfg.office.enable = true;
               cfg.office.libre-office.enable = true;
               cfg.uni.enable = true;
+              cfg.multimedia.enable = true;
+              cfg.privacy.enable = true;
             }
-            # Collections
-            ./collections/development.nix
-            ./collections/office.nix
-            ./collections/uni.nix
-            ./collections/multimedia.nix
-            ./collections/privacy.nix
-            # Modules
-            ./modules/common.nix
-            ./modules/hyprland
-            ./modules/meshtastic.nix
             (
               {
                 activeUsers,

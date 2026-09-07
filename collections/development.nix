@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 
@@ -22,155 +23,158 @@
     ./../modules/irc.nix
   ];
 
-  # System-wide dev tools
-  environment.systemPackages = with pkgs; [
+  config = lib.mkIf config.cfg.development.enable {
+    # System-wide dev tools
+    environment.systemPackages = with pkgs; [
 
-    # General
-    git
-    git-lfs # git large file storage
-    fd # find rewritten in rust
-    fzf
-    ripgrep
-    pdfgrep # search in multiple pdfs
-    eza
-    gnumake
-    age # encryption
-    just # like makefile but better
-    rsync
-    bash # mainly for scripting
-    croc # send files to another computer
-    yq # yaml parser for the console
-    jq # json parser for the console
-    ouch # universal archiver (zip, rar, ...)
-    libqalculate # calculator CLI
+      # General
+      git
+      git-lfs # git large file storage
+      fd # find rewritten in rust
+      fzf
+      ripgrep
+      pdfgrep # search in multiple pdfs
+      eza
+      gnumake
+      age # encryption
+      just # like makefile but better
+      rsync
+      bash # mainly for scripting
+      croc # send files to another computer
+      yq # yaml parser for the console
+      jq # json parser for the console
+      ouch # universal archiver (zip, rar, ...)
+      libqalculate # calculator CLI
 
-    # Terminal Emulators
-    kitty
+      # Terminal Emulators
+      kitty
 
-    # TUIs
-    siggy # terminal-based Signal client (via overlay)
-    git-today # recap your daily git work (via overlay)
+      # TUIs
+      siggy # terminal-based Signal client (via overlay)
+      git-today # recap your daily git work (via overlay)
 
-    timr-tui
-    zellij # like tmux, but written in rust...
-    sshs # ssh viewer
+      timr-tui
+      zellij # like tmux, but written in rust...
+      sshs # ssh viewer
 
-    # Editors and Co
-    zed-editor
-    meld # diff viewer
-    smartgit # git gui for when the shit is burning
+      # Editors and Co
+      zed-editor
+      meld # diff viewer
+      smartgit # git gui for when the shit is burning
 
-    # Languages, most of these tools are in project flakes
-    rustup
-    glibc
-    gcc
-    clang
-    deno
-    python3
-    uv # because python sucks without
-    nixfmt # nix language formatter
-    jdk25_headless # Java
+      # Languages, most of these tools are in project flakes
+      rustup
+      glibc
+      gcc
+      clang
+      deno
+      python3
+      uv # because python sucks without
+      nixfmt # nix language formatter
+      jdk25_headless # Java
 
-    # Networking & Security
-    whosthere # discover local devices
-    kdePackages.kleopatra
-    gnupg
+      # Networking & Security
+      whosthere # discover local devices
+      kdePackages.kleopatra
+      gnupg
 
-    signal-cli
-  ];
-
-  # Specific Program Modules (enable deeper integration)
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true; # Critical for Nix-based development
-    settings = {
-      load_dotenv = true;
-
-    };
-  };
-
-  # Visual Studio Code
-  programs.vscode = {
-    enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      dracula-theme.theme-dracula
-      vscodevim.vim
-      yzhang.markdown-all-in-one
-      shd101wyy.markdown-preview-enhanced
-      myriad-dreamin.tinymist # Typst Language Server
-      jnoortheen.nix-ide
-      rust-lang.rust-analyzer
+      signal-cli
     ];
-  };
 
-  ##################
-  ## HOME MANAGER ##
-  ##################
-  home-manager.users.benjamin = {
-
-    # LazyGit
-    programs.lazygit = {
+    # Specific Program Modules (enable deeper integration)
+    programs.direnv = {
       enable = true;
-      enableZshIntegration = true;
+      nix-direnv.enable = true; # Critical for Nix-based development
       settings = {
-        customCommands = [
-          {
-            key = "<delete>";
-            context = "files";
-            command = "git update-index --assume-unchanged {{ .SelectedFile.Name }}";
-          }
-          {
-            key = "Q";
-            context = "global";
-            command = "exit";
-          }
-          {
-            key = "M";
-            context = "files";
-            command = "git mergetool {{ .SelectedFile.Name }}";
-            loadingText = "opening mergetool";
-            output = "terminal";
-          }
-          {
-            key = "O";
-            context = "global";
-            command = "nemo .";
-          }
-          {
-            key = "<c-p>";
-            context = "global";
-            command = "git pushall";
-          }
-        ];
+        load_dotenv = true;
+
       };
     };
 
-    # Television (fuzzy finder)
-    programs.television = {
+    # Visual Studio Code
+    programs.vscode = {
       enable = true;
-      settings = {
-        tick_rate = 50;
-        default_channel = "files";
-      };
-      channels = {
-        dotenv = {
-          metadata = {
-            name = "dotenv";
-            description = "A channel to select from .env files";
-            requirements = [ "fd" ];
-          };
-          source = {
-            command = "fd -H --type f .env";
-          };
+      extensions = with pkgs.vscode-extensions; [
+        dracula-theme.theme-dracula
+        vscodevim.vim
+        yzhang.markdown-all-in-one
+        shd101wyy.markdown-preview-enhanced
+        myriad-dreamin.tinymist # Typst Language Server
+        jnoortheen.nix-ide
+        rust-lang.rust-analyzer
+      ];
+    };
+
+    ##################
+    ## HOME MANAGER ##
+    ##################
+    home-manager.users.benjamin = {
+
+      # LazyGit
+
+      programs.lazygit = {
+        enable = true;
+        enableZshIntegration = true;
+        settings = {
+          customCommands = [
+            {
+              key = "<delete>";
+              context = "files";
+              command = "git update-index --assume-unchanged {{ .SelectedFile.Name }}";
+            }
+            {
+              key = "Q";
+              context = "global";
+              command = "exit";
+            }
+            {
+              key = "M";
+              context = "files";
+              command = "git mergetool {{ .SelectedFile.Name }}";
+              loadingText = "opening mergetool";
+              output = "terminal";
+            }
+            {
+              key = "O";
+              context = "global";
+              command = "nemo .";
+            }
+            {
+              key = "<c-p>";
+              context = "global";
+              command = "git pushall";
+            }
+          ];
         };
-        audiovideo = {
-          metadata = {
-            name = "audio-video";
-            description = "A channel to select from audio and video files";
-            requirements = [ "fd" ];
+      };
+
+      # Television (fuzzy finder)
+      programs.television = {
+        enable = true;
+        settings = {
+          tick_rate = 50;
+          default_channel = "files";
+        };
+        channels = {
+          dotenv = {
+            metadata = {
+              name = "dotenv";
+              description = "A channel to select from .env files";
+              requirements = [ "fd" ];
+            };
+            source = {
+              command = "fd -H --type f .env";
+            };
           };
-          source = {
-            command = "fd --extension mp4 --extension mp3 --extension webm --extension mov --extension mkv --extension flac --extension m4a --extension m4v --extension m3u";
+          audiovideo = {
+            metadata = {
+              name = "audio-video";
+              description = "A channel to select from audio and video files";
+              requirements = [ "fd" ];
+            };
+            source = {
+              command = "fd --extension mp4 --extension mp3 --extension webm --extension mov --extension mkv --extension flac --extension m4a --extension m4v --extension m3u";
+            };
           };
         };
       };
