@@ -183,6 +183,14 @@ in
           description = "Enable GNOME desktop (GDM + gnome-shell). Conflicts with Hyprland - don't enable both.";
         };
       };
+
+      hyprland = {
+        enable = mkOption {
+          type = types.bool;
+          default = true;
+          description = "Enable Hyprland window manager + greetd, fuzzel, wofi, kdeconnect, noctalia, etc.";
+        };
+      };
     };
 
     ############

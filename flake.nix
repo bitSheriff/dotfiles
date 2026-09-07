@@ -119,6 +119,7 @@
             ./cfg.nix
             {
               cfg.notes.obsidian = true;
+              cfg.desktop.hyprland.enable = true;
               cfg.development.enable = true;
               cfg.office.enable = true;
               cfg.office.libre-office.enable = true;
@@ -169,6 +170,7 @@
             ./cfg.nix
             {
               cfg.notes.obsidian = true;
+              cfg.desktop.hyprland.enable = true;
               cfg.development.enable = true;
               cfg.office.enable = true;
               cfg.office.libre-office.enable = true;
