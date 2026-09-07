@@ -261,6 +261,51 @@ in
       };
     };
 
+    ##########
+    ## Apps ##
+    ##########
+    # Swappable application launch commands, so the actual app can be
+    # changed in one place without touching keybindings (e.g. modules/hyprland/config/binds.lua).
+    # NOTE: terminal/browser are intentionally *not* duplicated here - they
+    # already live in cfg.env (see below) and binds.lua reuses those directly.
+    apps = {
+      emojiPicker = mkOption {
+        type = types.str;
+        default = "BEMOJI_PICKER_CMD='wofi -d --hide-scroll --width=350 --location=center' bemoji -n -e | wl-copy";
+        description = "Command run to pick + copy an emoji (Hyprland SUPER + period bind).";
+      };
+
+      menu = mkOption {
+        type = types.str;
+        default = "wofi -d --hide-scroll --width=350 --location=center";
+        description = "Fuzzy-menu/dmenu picker used by the unicode picker and clipboard-history binds.";
+      };
+
+      fileManager = mkOption {
+        type = types.str;
+        default = "nemo";
+        description = "GUI file manager (Hyprland SUPER + E and the 'files' submap).";
+      };
+
+      codeEditor = mkOption {
+        type = types.str;
+        default = "zeditor";
+        description = "GUI code editor (Hyprland SUPER + C and the 'code' submap).";
+      };
+
+      launcher = mkOption {
+        type = types.str;
+        default = "fuzzel";
+        description = "Application launcher (Hyprland SUPER + SHIFT + D).";
+      };
+
+      screenshotTool = mkOption {
+        type = types.str;
+        default = "hyprshot";
+        description = "Screenshot tool binary (Hyprland 'screen' submap and Print bind).";
+      };
+    };
+
     #########
     ## Env ##
     #########

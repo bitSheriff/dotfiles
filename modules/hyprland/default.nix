@@ -113,6 +113,10 @@ in
     ## HOME MANAGER ##
     ##################
     home-manager.users.benjamin =
+      let
+        appsCfg = config.cfg.apps;
+        envCfg = config.cfg.env;
+      in
       { config, lib, ... }:
       {
         config = lib.mkIf (lib.elem "benjamin" activeUsers) {
@@ -123,6 +127,25 @@ in
               "animations.lua" = {
                 autoLoad = true;
                 content = ./config/animations.lua;
+              };
+
+              # Generated from cfg.apps (see cfg.nix) - swappable application launch
+              # commands, referenced from binds.lua as the `apps` global table.
+              # Must sort alphabetically before "binds.lua" so it's require()'d first.
+              "apps.lua" = {
+                autoLoad = true;
+                content = pkgs.writeText "hypr-apps.lua" ''
+                  apps = {
+                    emoji_picker = ${builtins.toJSON appsCfg.emojiPicker},
+                    menu = ${builtins.toJSON appsCfg.menu},
+                    file_manager = ${builtins.toJSON appsCfg.fileManager},
+                    code_editor = ${builtins.toJSON appsCfg.codeEditor},
+                    launcher = ${builtins.toJSON appsCfg.launcher},
+                    screenshot = ${builtins.toJSON appsCfg.screenshotTool},
+                    terminal = ${builtins.toJSON envCfg.terminal},
+                    browser = ${builtins.toJSON envCfg.browser},
+                  }
+                '';
               };
 
               "binds.lua" = {
