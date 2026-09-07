@@ -124,6 +124,7 @@
             {
               cfg.notes.obsidian = true;
               cfg.office.libre-office.enable = true;
+              cfg.uni.enable = true;
             }
             # Collections
             ./collections/development.nix
@@ -178,6 +179,7 @@
             {
               cfg.notes.obsidian = true;
               cfg.office.libre-office.enable = true;
+              cfg.uni.enable = true;
             }
             # Collections
             ./collections/development.nix

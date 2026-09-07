@@ -45,6 +45,17 @@ with lib;
       };
     };
 
+    #########
+    ## Uni ##
+    #########
+    uni = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Enable everything related to university (TU VPN, Anki, Typst, etc.).";
+      };
+    };
+
     ############
     ## Gaming ##
     ############

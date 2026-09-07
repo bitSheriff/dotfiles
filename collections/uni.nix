@@ -36,38 +36,40 @@ in
     ../modules/supernote.nix
   ];
 
-  environment.systemPackages = with pkgs; [
-    anki
-    thunderbird
-    typst
-    typesetter # minimal typst editor
-    # octave # free alternative to MATLAB (but why not use python then ...)
-    gum # needed for cli inputs
-    blanket # background ambient soundscapes for concentration
-    mumble # low latency voice rooms
+  config = lib.mkIf config.cfg.uni.enable {
+    environment.systemPackages = with pkgs; [
+      anki
+      thunderbird
+      typst
+      typesetter # minimal typst editor
+      # octave # free alternative to MATLAB (but why not use python then ...)
+      gum # needed for cli inputs
+      blanket # background ambient soundscapes for concentration
+      mumble # low latency voice rooms
 
-    # Own Scripts
-    tuvpn
-  ];
+      # Own Scripts
+      tuvpn
+    ];
 
-  ##################
-  ## HOME MANAGER ##
-  ##################
-  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
-    sops.secrets = {
-      "uni/email" = {
-        key = "tiss/email";
-        sopsFile = ../encrypted/uni.yaml;
-      };
+    ##################
+    ## HOME MANAGER ##
+    ##################
+    home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers && config.cfg.uni.enable) {
+      sops.secrets = {
+        "uni/email" = {
+          key = "tiss/email";
+          sopsFile = ../encrypted/uni.yaml;
+        };
 
-      "uni/password" = {
-        key = "tiss/password";
-        sopsFile = ../encrypted/uni.yaml;
-      };
+        "uni/password" = {
+          key = "tiss/password";
+          sopsFile = ../encrypted/uni.yaml;
+        };
 
-      "uni/otp_secret" = {
-        key = "tiss/otp_secret";
-        sopsFile = ../encrypted/uni.yaml;
+        "uni/otp_secret" = {
+          key = "tiss/otp_secret";
+          sopsFile = ../encrypted/uni.yaml;
+        };
       };
     };
   };
