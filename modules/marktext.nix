@@ -104,31 +104,46 @@ let
   # A store symlink (xdg.configFile/home.file) is read-only and makes the app
   # crash with EROFS, so we seed a real, writable copy via activation instead.
   preferencesFile = pkgs.writeText "marktext-preferences.json" (builtins.toJSON preferences);
+
+  # Opens MarkText with the given arguments (mostly files) detached from the
+  # shell: the process is disowned and stdout/stderr redirected to /dev/null
+  # so the terminal is immediately usable again instead of being blocked.
+  md = pkgs.writeShellApplication {
+    name = "md";
+    runtimeInputs = [ pkgs.marktext ];
+    text = ''
+      marktext "$@" >/dev/null 2>&1 &
+      disown
+    '';
+  };
 in
 {
   imports = [
   ];
 
-  environment.systemPackages = with pkgs; [
-    marktext
-  ];
+  config = lib.mkIf config.cfg.office.marktext.enable {
+    environment.systemPackages = with pkgs; [
+      marktext
+      md
+    ];
 
-  ##################
-  ## HOME MANAGER ##
-  ##################
-  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
-    # Overwrite preferences.json on every rebuild with the declarative copy.
-    # Trade-off: changes made in MarkText's own settings UI are reset on the
-    # next `nixos-rebuild`.
-    home.activation.marktextPreferences = {
-      after = [ "writeBoundary" ];
-      before = [ ];
-      data = ''
-        $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "$HOME/.config/marktext"
-        $DRY_RUN_CMD rm -f $VERBOSE_ARG "$HOME/.config/marktext/preferences.json"
-        $DRY_RUN_CMD install -m600 $VERBOSE_ARG \
-            ${preferencesFile} "$HOME/.config/marktext/preferences.json"
-      '';
+    ##################
+    ## HOME MANAGER ##
+    ##################
+    home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+      # Overwrite preferences.json on every rebuild with the declarative copy.
+      # Trade-off: changes made in MarkText's own settings UI are reset on the
+      # next `nixos-rebuild`.
+      home.activation.marktextPreferences = {
+        after = [ "writeBoundary" ];
+        before = [ ];
+        data = ''
+          $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "$HOME/.config/marktext"
+          $DRY_RUN_CMD rm -f $VERBOSE_ARG "$HOME/.config/marktext/preferences.json"
+          $DRY_RUN_CMD install -m600 $VERBOSE_ARG \
+              ${preferencesFile} "$HOME/.config/marktext/preferences.json"
+        '';
+      };
     };
   };
 }

@@ -129,6 +129,7 @@
               cfg.development.enable = true;
               cfg.office.enable = true;
               cfg.office.libre-office.enable = true;
+              cfg.office.marktext.enable = true;
               cfg.uni.enable = true;
               cfg.gaming.enable = true;
               cfg.gaming.steam.enable = true;
@@ -186,6 +187,7 @@
               cfg.development.enable = true;
               cfg.office.enable = true;
               cfg.office.libre-office.enable = true;
+              cfg.office.marktext.enable = true;
               cfg.uni.enable = true;
               cfg.multimedia.enable = true;
               cfg.privacy.enable = true;

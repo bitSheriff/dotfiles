@@ -132,6 +132,14 @@ in
           description = "Install LibreOffice.";
         };
       };
+
+      marktext = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install and configure MarkText";
+        };
+      };
     };
 
     ############
