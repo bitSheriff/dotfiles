@@ -112,19 +112,21 @@ in
   imports = [
   ];
 
-  environment.systemPackages = with pkgs; [
-    herdr
-  ];
+  config = lib.mkIf config.cfg.development.agentic.enable {
+    environment.systemPackages = with pkgs; [
+      herdr
+    ];
 
-  ##################
-  ## HOME MANAGER ##
-  ##################
-  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
-    programs.antigravity-cli = {
-      enable = true;
+    ##################
+    ## HOME MANAGER ##
+    ##################
+    home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+      programs.antigravity-cli = {
+        enable = true;
+      };
+
+      # Generate ~/.config/herdr/config.toml from the nix attrset above.
+      xdg.configFile."herdr/config.toml".source = tomlFormat.generate "herdr-config.toml" herdrConfig;
     };
-
-    # Generate ~/.config/herdr/config.toml from the nix attrset above.
-    xdg.configFile."herdr/config.toml".source = tomlFormat.generate "herdr-config.toml" herdrConfig;
   };
 }

@@ -10,40 +10,42 @@
   imports = [
   ];
 
-  environment.systemPackages = with pkgs; [
-    # antigravity-ide # the GUI
-  ];
+  config = lib.mkIf config.cfg.development.agentic.antigravity.enable {
+    environment.systemPackages = with pkgs; [
+      # antigravity-ide # the GUI
+    ];
 
-  ##################
-  ## HOME MANAGER ##
-  ##################
-  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
-    programs.antigravity-cli = {
-      enable = true;
+    ##################
+    ## HOME MANAGER ##
+    ##################
+    home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+      programs.antigravity-cli = {
+        enable = true;
 
-      # pull in the shared MCP servers from `programs.mcp.servers` (./mcp.nix)
-      enableMcpIntegration = true;
+        # pull in the shared MCP servers from `programs.mcp.servers` (./mcp.nix)
+        enableMcpIntegration = true;
 
-      # BUG IN ANTIGRAVITY
-      # fails to start if config is read-only
-      #
-      # permissions = {
-      #   # allow without asking for permission
-      #   allow = [
-      #     "command(ls*)"
-      #     "command(grep*)"
-      #     "command(tail*)"
-      #     "command(head*)"
-      #   ];
-      #
-      #   ask = [ "command(git pull*)" ];
-      #   deny = [ "command(git commit*)" ];
-      # };
-      #
-      # settings = {
-      #   colorScheme = "tokyo night";
-      # };
+        # BUG IN ANTIGRAVITY
+        # fails to start if config is read-only
+        #
+        # permissions = {
+        #   # allow without asking for permission
+        #   allow = [
+        #     "command(ls*)"
+        #     "command(grep*)"
+        #     "command(tail*)"
+        #     "command(head*)"
+        #   ];
+        #
+        #   ask = [ "command(git pull*)" ];
+        #   deny = [ "command(git commit*)" ];
+        # };
+        #
+        # settings = {
+        #   colorScheme = "tokyo night";
+        # };
+      };
+
     };
-
   };
 }

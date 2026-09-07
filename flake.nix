@@ -120,6 +120,9 @@
             {
               cfg.notes.obsidian = true;
               cfg.development.zed.enable = true;
+              cfg.development.agentic.enable = true;
+              cfg.development.agentic.pi-coding-agent.enable = true;
+              cfg.development.agentic.claude-code.enable = true;
               cfg.browser.qutebrowser.enable = true;
               cfg.desktop.hyprland.enable = true;
               cfg.development.enable = true;
@@ -173,6 +176,9 @@
             {
               cfg.notes.obsidian = true;
               cfg.development.zed.enable = true;
+              cfg.development.agentic.enable = true;
+              cfg.development.agentic.pi-coding-agent.enable = true;
+              cfg.development.agentic.claude-code.enable = true;
               cfg.browser.qutebrowser.enable = true;
               cfg.desktop.hyprland.enable = true;
               cfg.development.enable = true;

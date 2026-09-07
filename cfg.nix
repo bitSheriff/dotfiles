@@ -75,6 +75,38 @@ in
           description = "Install and configure the Zed editor (modules/zed).";
         };
       };
+
+      agentic = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "General agentic-coding tooling: shared MCP server registry (nixos-mcp, hledger-mcp), opencode, herdr. Individual agent CLIs have their own enable flags.";
+        };
+
+        pi-coding-agent = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Install and configure pi-coding-agent (modules/agentic/pi-agent).";
+          };
+        };
+
+        claude-code = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Install and configure Claude Code (modules/agentic/claude-code).";
+          };
+        };
+
+        antigravity = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Install and configure the Antigravity CLI (modules/agentic/antigravity.nix).";
+          };
+        };
+      };
     };
 
     ################
