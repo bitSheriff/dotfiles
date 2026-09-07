@@ -125,6 +125,9 @@
               cfg.notes.obsidian = true;
               cfg.office.libre-office.enable = true;
               cfg.uni.enable = true;
+              cfg.gaming.enable = true;
+              cfg.gaming.steam.enable = true;
+              cfg.gaming.heroic.enable = true;
             }
             # Collections
             ./collections/development.nix

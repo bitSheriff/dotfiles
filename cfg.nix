@@ -60,6 +60,12 @@ with lib;
     ## Gaming ##
     ############
     gaming = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Enable general gaming setup (graphics, gamemode, ntsync kernel tweaks). Individual gaming apps have their own enable flags.";
+      };
+
       steam = {
         enable = mkOption {
           type = types.bool;
@@ -68,7 +74,7 @@ with lib;
         };
       };
 
-      heroic-launcher = {
+      heroic = {
         enable = mkOption {
           type = types.bool;
           default = false;
