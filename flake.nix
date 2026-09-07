@@ -119,6 +119,7 @@
             ./cfg.nix
             {
               cfg.notes.obsidian = true;
+              cfg.browser.qutebrowser.enable = true;
               cfg.desktop.hyprland.enable = true;
               cfg.development.enable = true;
               cfg.office.enable = true;
@@ -170,6 +171,7 @@
             ./cfg.nix
             {
               cfg.notes.obsidian = true;
+              cfg.browser.qutebrowser.enable = true;
               cfg.desktop.hyprland.enable = true;
               cfg.development.enable = true;
               cfg.office.enable = true;

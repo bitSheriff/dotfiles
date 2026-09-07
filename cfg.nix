@@ -78,6 +78,14 @@ in
         default = false;
         description = "Audio/video/image apps: pipewire, mpv, mpd, image viewers, music players, etc.";
       };
+
+      mpd = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable MPD (Music Player Daemon) + mpc/rmpc clients.";
+        };
+      };
     };
 
     #################
@@ -168,6 +176,27 @@ in
           type = types.bool;
           default = true;
           description = "Home-manager zsh setup (programs.zsh, aliases, history, atuin/direnv/starship/fzf/ripgrep integrations) plus the bundled home-made shell scripts (modules/shell/scripts.nix).";
+        };
+      };
+    };
+
+    #############
+    ## Browser ##
+    #############
+    browser = {
+      firefox = {
+        enable = mkOption {
+          type = types.bool;
+          default = true;
+          description = "Install and configure Firefox (home-manager programs.firefox, policies, profile, containers).";
+        };
+      };
+
+      qutebrowser = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install and configure qutebrowser.";
         };
       };
     };

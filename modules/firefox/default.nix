@@ -7,36 +7,38 @@
 }:
 
 {
-  environment.systemPackages = with pkgs; [
-  ];
+  config = lib.mkIf config.cfg.browser.firefox.enable {
+    environment.systemPackages = with pkgs; [
+    ];
 
-  ##################
-  ## HOME MANAGER ##
-  ##################
-  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
-    programs.firefox = {
-      enable = true;
-      package = pkgs.firefox;
-      configPath = ".mozilla/firefox";
-      policies = lib.mkMerge [
-        (import ./policies.nix { inherit config pkgs lib; })
-        (import ./extensions.nix { inherit config pkgs lib; })
-        { }
-      ];
-      profiles.default = {
-        id = 0;
-        isDefault = true;
-        userContent = import ./userContent.nix;
-        userChrome = import ./userChrome.nix;
-        settings = import ./settings.nix;
-        containers = import ./containers.nix;
-        # firefox replaces the symlink with a real file on every launch, so without
-        # this every activation tries to back it up and trips over the last backup
-        containersForce = true;
-        search = import ./search.nix;
+    ##################
+    ## HOME MANAGER ##
+    ##################
+    home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+      programs.firefox = {
+        enable = true;
+        package = pkgs.firefox;
+        configPath = ".mozilla/firefox";
+        policies = lib.mkMerge [
+          (import ./policies.nix { inherit config pkgs lib; })
+          (import ./extensions.nix { inherit config pkgs lib; })
+          { }
+        ];
+        profiles.default = {
+          id = 0;
+          isDefault = true;
+          userContent = import ./userContent.nix;
+          userChrome = import ./userChrome.nix;
+          settings = import ./settings.nix;
+          containers = import ./containers.nix;
+          # firefox replaces the symlink with a real file on every launch, so without
+          # this every activation tries to back it up and trips over the last backup
+          containersForce = true;
+          search = import ./search.nix;
+        };
       };
+      home.file.".mozilla/firefox/default/search.json.mozlz4".force = lib.mkForce true;
     };
-    home.file.".mozilla/firefox/default/search.json.mozlz4".force = lib.mkForce true;
   };
 
 }
