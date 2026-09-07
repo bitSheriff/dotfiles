@@ -137,6 +137,7 @@
               cfg.multimedia.enable = true;
               cfg.downloaders.enable = true;
               cfg.privacy.enable = true;
+              cfg.multimedia.eilmeldung.enable = true;
             }
             (
               {
@@ -191,6 +192,7 @@
               cfg.uni.enable = true;
               cfg.multimedia.enable = true;
               cfg.privacy.enable = true;
+              cfg.multimedia.eilmeldung.enable = true;
             }
             (
               {

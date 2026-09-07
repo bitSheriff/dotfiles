@@ -91,6 +91,14 @@ in
           description = "Enable MPD (Music Player Daemon) + mpc/rmpc clients.";
         };
       };
+
+      eilmeldung = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable the TUI news reader";
+        };
+      };
     };
 
     #################
