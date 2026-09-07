@@ -140,6 +140,7 @@ in
                     menu = ${builtins.toJSON appsCfg.menu},
                     file_manager = ${builtins.toJSON appsCfg.fileManager},
                     code_editor = ${builtins.toJSON appsCfg.codeEditor},
+                    markdown_editor = ${builtins.toJSON appsCfg.markdownEditor},
                     launcher = ${builtins.toJSON appsCfg.launcher},
                     screenshot = ${builtins.toJSON appsCfg.screenshotTool},
                     terminal = ${builtins.toJSON envCfg.terminal},

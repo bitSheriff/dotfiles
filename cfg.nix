@@ -293,6 +293,12 @@ in
         description = "GUI code editor (Hyprland SUPER + C and the 'code' submap).";
       };
 
+      markdownEditor = mkOption {
+        type = types.str;
+        default = "marktext";
+        description = "GUI text editor";
+      };
+
       launcher = mkOption {
         type = types.str;
         default = "fuzzel";
