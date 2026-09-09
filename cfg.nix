@@ -50,6 +50,14 @@ in
         };
       };
 
+      freecad = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install FreeCAD";
+        };
+      };
+
       agentic = {
         enable = mkOption {
           type = types.bool;
@@ -105,21 +113,29 @@ in
             description = "Install Typst";
           };
         };
-      };
 
-      rust = {
-        enable = mkOption {
-          type = types.bool;
-          default = false;
-          description = "Install Rust";
+        rust = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Install Rust";
+          };
         };
-      };
 
-      python = {
-        enable = mkOption {
-          type = types.bool;
-          default = false;
-          description = "Install Python";
+        python = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Install Python";
+          };
+        };
+
+        ccpp = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Install C/C++";
+          };
         };
       };
     };
@@ -147,6 +163,22 @@ in
           type = types.bool;
           default = false;
           description = "Enable the TUI news reader";
+        };
+      };
+
+      ebooks = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable ebook reading";
+        };
+      };
+
+      comics = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable comic books reading";
         };
       };
     };
@@ -283,7 +315,7 @@ in
         enable = mkOption {
           type = types.bool;
           default = true;
-          description = "Home-manager zsh setup (programs.zsh, aliases, history, atuin/direnv/starship/fzf/ripgrep integrations) plus the bundled home-made shell scripts (modules/shell/scripts.nix).";
+          description = "Home-manager zsh setup";
         };
       };
     };
@@ -354,6 +386,14 @@ in
           description = "IRC Messaging";
         };
       };
+
+      mastodon = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable Mastodon Clients";
+        };
+      };
     };
 
     communication = {
@@ -370,6 +410,32 @@ in
           type = types.bool;
           default = false;
           description = "Enable Matrix Clients";
+        };
+      };
+
+      mumble = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable Mumble Voice Chats";
+        };
+      };
+
+      mail = {
+        thunderbird = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Enable Thunderbird";
+          };
+        };
+
+        tuta = {
+          enable = mkOption {
+            type = types.bool;
+            default = true;
+            description = "Enable Tuta Mail and Calendar";
+          };
         };
       };
     };

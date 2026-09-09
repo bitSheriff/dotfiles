@@ -32,16 +32,10 @@
         # typora # most beautiful markdown editor
         rnote # PDF annotation and note-taking
         kdePackages.okular
-        foliate # ebook reader
         stirling-pdf-desktop # pdf editor
-        # yacreader # comic reader
 
         # Notes & Organization
         # gromit-mpx # draw on desktop
-
-        # Communication
-        tutanota-desktop # secure encrypted email
-        thunderbird # email
 
         kdePackages.korganizer # Calendar and more
         kdePackages.akonadi # needed for korganizer
@@ -61,11 +55,6 @@
         # Misc
         blanket # background ambient soundscapes for concentration
 
-      ]
-      # Host Specifics
-      ++ lib.optionals (config.networking.hostName == "rhodos") [
-        # Building Stuff
-        freecad
       ]
       ++ lib.optionals config.cfg.office.libre-office.enable [ pkgs.libreoffice-stable ];
 

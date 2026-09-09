@@ -112,49 +112,12 @@
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
             disko.nixosModules.disko
+            # Feature flags (cfg.*)
+            ./cfg.nix
+            # Host Configuration
             ./hosts/rhodos
             # Overlays
             { nixpkgs.overlays = [ (import ./overlays inputs) ]; }
-            # Feature flags (cfg.*)
-            ./cfg.nix
-            {
-              cfg.notes.obsidian.enable = true;
-              cfg.notes.supernote.enable = true;
-
-              cfg.development.zed.enable = true;
-              cfg.development.agentic.enable = true;
-              cfg.development.agentic.pi-coding-agent.enable = true;
-              cfg.development.agentic.claude-code.enable = true;
-
-              cfg.browser.qutebrowser.enable = true;
-
-              cfg.desktop.hyprland.enable = true;
-              cfg.development.enable = true;
-              cfg.development.languages.typst.enable = true;
-
-              cfg.office.enable = true;
-              cfg.office.libre-office.enable = true;
-              cfg.office.marktext.enable = true;
-
-              cfg.uni.enable = true;
-
-              cfg.communication.signal.enable = true;
-              cfg.communication.matrix.enable = true;
-              cfg.socials.irc.enable = true;
-
-              cfg.gaming.enable = true;
-              cfg.gaming.steam.enable = true;
-              cfg.gaming.heroic.enable = true;
-
-              cfg.multimedia.enable = true;
-
-              cfg.downloaders.enable = true;
-              cfg.downloaders.qbittorrent.enable = true;
-              cfg.downloaders.jdownloader.enable = true;
-
-              cfg.privacy.enable = true;
-              cfg.multimedia.eilmeldung.enable = true;
-            }
             (
               {
                 activeUsers,
@@ -187,34 +150,12 @@
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
             disko.nixosModules.disko
+            # Feature flags (cfg.*)
+            ./cfg.nix
+            # Host Configuration
             ./hosts/delos
             # Overlays
             { nixpkgs.overlays = [ (import ./overlays inputs) ]; }
-            # Feature flags (cfg.*)
-            ./cfg.nix
-            {
-              cfg.notes.obsidian.enable = true;
-              cfg.notes.supernote.enable = true;
-              cfg.development.zed.enable = true;
-              cfg.development.agentic.enable = true;
-              cfg.development.agentic.pi-coding-agent.enable = true;
-              cfg.development.agentic.claude-code.enable = true;
-              cfg.development.languages.typst.enable = true;
-              cfg.browser.qutebrowser.enable = true;
-              cfg.desktop.hyprland.enable = true;
-              cfg.development.enable = true;
-              cfg.office.enable = true;
-              cfg.office.libre-office.enable = true;
-              cfg.office.marktext.enable = true;
-              cfg.uni.enable = true;
-              cfg.multimedia.enable = true;
-              cfg.privacy.enable = true;
-              cfg.multimedia.eilmeldung.enable = true;
-
-              cfg.communication.signal.enable = true;
-              cfg.communication.matrix.enable = true;
-              cfg.socials.irc.enable = true;
-            }
             (
               {
                 activeUsers,

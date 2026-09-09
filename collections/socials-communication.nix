@@ -23,6 +23,19 @@ in
     ]
     ++ lib.optionals config.cfg.communication.matrix.enable [
       cinny-desktop # beautiful matrix chat client
+    ]
+    ++ lib.optionals config.cfg.communication.mumble.enable [
+      mumble # low latency voice rooms
+    ]
+    ++ lib.optionals config.cfg.socials.mastodon.enable [
+      toot # TUI for mastodon
+      # kdePackages.tokodon # KDE GUI
+    ]
+    ++ lib.optionals config.cfg.communication.mail.tuta.enable [
+      tutanota-desktop # secure encrypted email
+    ]
+    ++ lib.optionals config.cfg.communication.mail.thunderbird.enable [
+      thunderbird
     ];
 
   ##################

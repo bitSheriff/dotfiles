@@ -39,13 +39,9 @@ in
   config = lib.mkIf config.cfg.uni.enable {
     environment.systemPackages = with pkgs; [
       anki
-      thunderbird
-      typst
-      typesetter # minimal typst editor
       # octave # free alternative to MATLAB (but why not use python then ...)
       gum # needed for cli inputs
       blanket # background ambient soundscapes for concentration
-      mumble # low latency voice rooms
 
       # Own Scripts
       tuvpn

@@ -149,6 +149,12 @@ in
 
         digest-mp3s
       ]
+      ++ lib.optionals config.cfg.multimedia.ebooks.enable [
+        foliate # ebook reader
+      ]
+      ++ lib.optionals config.cfg.multimedia.comics.enable [
+        yacreader # comic reader
+      ]
 
       # Host Specifics
       ++ lib.optionals (config.networking.hostName == "rhodos") [

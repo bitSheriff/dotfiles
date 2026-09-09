@@ -58,18 +58,11 @@
         sshs # ssh viewer
 
         # Editors and Co
-        zed-editor
         meld # diff viewer
-        smartgit # git gui for when the shit is burning
+        gitte # git gui for when the shit is burning
 
         # Languages, most of these tools are in project flakes
-        rustup
-        glibc
-        gcc
-        clang
         deno
-        python3
-        uv # because python sucks without
         nixfmt # nix language formatter
         jdk25_headless # Java
 
@@ -79,12 +72,33 @@
         gnupg
 
       ]
+      ++ lib.optionals config.cfg.development.zed.enable [
+        zed-editor
+      ]
+      ++ lib.optionals config.cfg.development.freecad.enable [
+        freecad
+      ]
       ++ lib.optionals config.cfg.development.languages.latex.enable [
         config.cfg.development.languages.latex.package
       ]
       ++ lib.optionals config.cfg.development.languages.typst.enable [
         typst # sooo much better than LaTeX
         typesetter # minimal typst editor
+      ]
+      ++ lib.optionals config.cfg.development.languages.rust.enable [
+        rustup
+        glibc
+        gcc
+        clang
+      ]
+      ++ lib.optionals config.cfg.development.languages.ccpp.enable [
+        glibc
+        gcc
+        clang
+      ]
+      ++ lib.optionals config.cfg.development.languages.python.enable [
+        python3
+        uv # because python sucks without
       ];
 
     # Specific Program Modules (enable deeper integration)
