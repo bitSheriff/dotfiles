@@ -96,6 +96,9 @@
         gcc
         clang
       ]
+      ++ lib.optionals config.cfg.development.languages.markdown.enable [
+        glow # render markdown in the console
+      ]
       ++ lib.optionals config.cfg.development.languages.python.enable [
         python3
         uv # because python sucks without

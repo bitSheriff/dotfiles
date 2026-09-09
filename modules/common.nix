@@ -61,63 +61,58 @@
   services.gnome.gnome-keyring.enable = true;
 
   # System-wide packages and services - user-specific config is in users/ modules
-  environment.systemPackages = with pkgs; [
-    # terminal tools
-    bash # needed only for scripting
-    zsh # actual shell
-    zsh-autosuggestions # suggest commands
-    zsh-completions # complete commands
-    zsh-syntax-highlighting
-    kitty
-    vim # just as a backup if everythin burns
-    gum # bash library to build cli tools
-    wget
-    curl
-    git
-    htop
-    btop # better htop
-    zip
-    unzip # for .zip
-    rar
-    unrar # for .rar
-    gnupg
-    eza # better `ls`
-    zoxide # smarter `cd` command
-    television # like fzf but more fancy
-    tree # view direvtory structure
-    atuin # better shell history
-    rsync # nobody uses scp anymore
-    tldr # better help/man pages for cli programs
-    findutils # sometimes you need the old find...
-    fd # better find
-    _1password-cli
-    glow # render markdown in the console
-    speedtest-cli # download speed meter
+  environment.systemPackages =
+    with pkgs;
+    [
+      # terminal tools
+      bash # needed only for scripting
+      kitty
+      vim # just as a backup if everythin burns
+      gum # bash library to build cli tools
+      wget
+      curl
+      git
+      htop
+      btop # better htop
+      zip
+      unzip # for .zip
+      rar
+      unrar # for .rar
+      gnupg
+      eza # better `ls`
+      zoxide # smarter `cd` command
+      television # like fzf but more fancy
+      tree # view direvtory structure
+      atuin # better shell history
+      rsync # nobody uses scp anymore
+      tldr # better help/man pages for cli programs
+      findutils # sometimes you need the old find...
+      fd # better find
 
-    # Services and Co
-    pciutils
-    usbutils
-    xdg-utils
-    networkmanagerapplet # contains nm-connection-editor for advanced wifi configuration
-    xauth # needed to forward SSH and more
+      # Services and Co
+      pciutils
+      usbutils
+      xdg-utils
+      networkmanagerapplet # contains nm-connection-editor for advanced wifi configuration
+      xauth # needed to forward SSH and more
 
-    # GUIs
-    _1password-gui
-    firefox
-    ente-auth
-    killall
-    kdePackages.kate # simple text editor
-    nemo # Cinnamon File Explorer
-    nemo-preview
-    nemo-fileroller
-    libqalculate # calculator CLI
-    qalculate-gtk # calculator GUI
-    mission-center # gnome task manager
-  ];
-
-  programs.zsh = {
-    enable = true;
-  };
+      # GUIs
+      killall
+      kdePackages.kate # simple text editor
+      nemo # Cinnamon File Explorer
+      nemo-preview
+      nemo-fileroller
+      libqalculate # calculator CLI
+      qalculate-gtk # calculator GUI
+      mission-center # gnome task manager
+    ]
+    ++ lib.optionals config.cfg.privacy._1password.enable [
+      _1password-gui
+      _1password-cli
+    ]
+    ++ lib.optionals config.cfg.privacy.enteauth.enable [
+      ente-auth
+    ];
 
   programs.gnupg.agent = {
     enable = true;

@@ -137,6 +137,14 @@ in
             description = "Install C/C++";
           };
         };
+
+        markdown = {
+          enable = mkOption {
+            type = types.bool;
+            default = true;
+            description = "Install Markdown tools";
+          };
+        };
       };
     };
 
@@ -218,6 +226,22 @@ in
         type = types.bool;
         default = false;
         description = "Privacy/anonymity tools: tor, tor-browser, mullvad-vpn, apparmor, mat2.";
+      };
+
+      _1password = {
+        enable = mkOption {
+          type = types.bool;
+          default = true;
+          description = "Enable 1Password";
+        };
+      };
+
+      enteauth = {
+        enable = mkOption {
+          type = types.bool;
+          default = true;
+          description = "Enable Ente Auth";
+        };
       };
     };
 

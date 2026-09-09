@@ -21,6 +21,7 @@ in
   environment.systemPackages = with pkgs; [
     ethtool
     linux-wifi-hotspot # create wifi hotspots
+    speedtest-cli # download speed meter
   ];
 
   # Networking

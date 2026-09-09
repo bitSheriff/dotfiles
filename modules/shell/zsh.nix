@@ -15,6 +15,16 @@ in
     ../starship.nix
     ../zellij.nix
   ];
+  environment.systemPackages =
+    with pkgs;
+    [
+    ]
+    ++ lib.optionals cfg.shell.zsh.enable [
+      zsh # actual shell
+      zsh-autosuggestions # suggest commands
+      zsh-completions # complete commands
+      zsh-syntax-highlighting
+    ];
 
   config = lib.mkIf cfg.shell.zsh.enable {
     home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) (
