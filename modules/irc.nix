@@ -69,8 +69,8 @@ in
   ## HOME MANAGER ##
   ##################
   home-manager.users.benjamin =
-    { config, ... }:
-    lib.mkIf (lib.elem "benjamin" activeUsers) {
+    lib.mkIf (lib.elem "benjamin" activeUsers && config.cfg.socials.irc.enable)
+      ({ config, ... }: {
 
       programs.halloy = {
         enable = true;
@@ -200,5 +200,5 @@ in
           key = "irc/soju/password";
         };
       };
-    };
+      });
 }

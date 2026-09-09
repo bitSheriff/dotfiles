@@ -19,6 +19,7 @@ in
     ./collections/office.nix
     ./collections/privacy.nix
     ./collections/uni.nix
+    ./collections/socials-communication.nix
   ];
 
   options.cfg = {
@@ -38,6 +39,14 @@ in
           type = types.bool;
           default = false;
           description = "Install and configure the Zed editor (modules/zed).";
+        };
+      };
+
+      vscode = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install vscode";
         };
       };
 
@@ -70,6 +79,47 @@ in
             default = false;
             description = "Install and configure the Antigravity CLI (modules/agentic/antigravity.nix).";
           };
+        };
+      };
+
+      languages = {
+        latex = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Install LaTeX";
+          };
+
+          package = mkOption {
+            type = types.package;
+            default = pkgs.texliveMedium;
+            defaultText = literalExpression "pkgs.texliveMedium";
+            description = "The LaTeX package/scheme to install.";
+          };
+        };
+
+        typst = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Install Typst";
+          };
+        };
+      };
+
+      rust = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install Rust";
+        };
+      };
+
+      python = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install Python";
         };
       };
     };
@@ -109,6 +159,22 @@ in
         type = types.bool;
         default = false;
         description = "Download tools: qbittorrent, jdownloader2, yt-dlp, varia, mullvad-vpn.";
+      };
+
+      qbittorrent = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable qBittorrent";
+        };
+      };
+
+      jdownloader = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable jDownloader";
+        };
       };
     };
 
@@ -273,6 +339,37 @@ in
           type = types.bool;
           default = false;
           description = "Forgejo/Codeberg Actions runner. WIP, not fully working yet.";
+        };
+      };
+    };
+
+    #############
+    ## Socials and Communication ##
+    #############
+    socials = {
+      irc = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "IRC Messaging";
+        };
+      };
+    };
+
+    communication = {
+      signal = {
+        enable = mkOption {
+          type = types.bool;
+          default = true;
+          description = "Enable Signal Messenger";
+        };
+      };
+
+      matrix = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable Matrix Clients";
         };
       };
     };

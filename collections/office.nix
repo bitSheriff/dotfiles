@@ -20,8 +20,6 @@
     environment.systemPackages =
       with pkgs;
       [
-        typst # sooo much better than LaTeX
-        typesetter # minimal typst editor
 
         # Files & Co
         zathura # Minimalist, keyboard-centric PDF viewer (very Arch-like)
@@ -44,8 +42,6 @@
         # Communication
         tutanota-desktop # secure encrypted email
         thunderbird # email
-        signal-desktop # chat without Mark Zuckerberg
-        cinny-desktop # beautiful matrix chat client
 
         kdePackages.korganizer # Calendar and more
         kdePackages.akonadi # needed for korganizer

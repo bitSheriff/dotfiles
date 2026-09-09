@@ -20,66 +20,72 @@
     ./../modules/tmux.nix
     ./../modules/news.nix
     ./../modules/matrix.nix
-    ./../modules/irc.nix
   ];
 
   config = lib.mkIf config.cfg.development.enable {
     # System-wide dev tools
-    environment.systemPackages = with pkgs; [
+    environment.systemPackages =
+      with pkgs;
+      [
 
-      # General
-      git
-      git-lfs # git large file storage
-      fd # find rewritten in rust
-      fzf
-      ripgrep
-      pdfgrep # search in multiple pdfs
-      eza
-      gnumake
-      age # encryption
-      just # like makefile but better
-      rsync
-      bash # mainly for scripting
-      croc # send files to another computer
-      yq # yaml parser for the console
-      jq # json parser for the console
-      ouch # universal archiver (zip, rar, ...)
-      libqalculate # calculator CLI
+        # General
+        git
+        git-lfs # git large file storage
+        fd # find rewritten in rust
+        fzf
+        ripgrep
+        pdfgrep # search in multiple pdfs
+        eza
+        gnumake
+        age # encryption
+        just # like makefile but better
+        rsync
+        bash # mainly for scripting
+        croc # send files to another computer
+        yq # yaml parser for the console
+        jq # json parser for the console
+        ouch # universal archiver (zip, rar, ...)
+        libqalculate # calculator CLI
 
-      # Terminal Emulators
-      kitty
+        # Terminal Emulators
+        kitty
 
-      # TUIs
-      siggy # terminal-based Signal client (via overlay)
-      git-today # recap your daily git work (via overlay)
+        # TUIs
+        git-today # recap your daily git work (via overlay)
 
-      timr-tui
-      zellij # like tmux, but written in rust...
-      sshs # ssh viewer
+        timr-tui
+        zellij # like tmux, but written in rust...
+        sshs # ssh viewer
 
-      # Editors and Co
-      zed-editor
-      meld # diff viewer
-      smartgit # git gui for when the shit is burning
+        # Editors and Co
+        zed-editor
+        meld # diff viewer
+        smartgit # git gui for when the shit is burning
 
-      # Languages, most of these tools are in project flakes
-      rustup
-      glibc
-      gcc
-      clang
-      deno
-      python3
-      uv # because python sucks without
-      nixfmt # nix language formatter
-      jdk25_headless # Java
+        # Languages, most of these tools are in project flakes
+        rustup
+        glibc
+        gcc
+        clang
+        deno
+        python3
+        uv # because python sucks without
+        nixfmt # nix language formatter
+        jdk25_headless # Java
 
-      # Networking & Security
-      whosthere # discover local devices
-      kdePackages.kleopatra
-      gnupg
+        # Networking & Security
+        whosthere # discover local devices
+        kdePackages.kleopatra
+        gnupg
 
-      signal-cli
-    ];
+      ]
+      ++ lib.optionals config.cfg.development.languages.latex.enable [
+        config.cfg.development.languages.latex.package
+      ]
+      ++ lib.optionals config.cfg.development.languages.typst.enable [
+        typst # sooo much better than LaTeX
+        typesetter # minimal typst editor
+      ];
 
     # Specific Program Modules (enable deeper integration)
     programs.direnv = {
@@ -92,7 +98,7 @@
     };
 
     # Visual Studio Code
-    programs.vscode = {
+    programs.vscode = lib.mkIf config.cfg.development.vscode.enable {
       enable = true;
       extensions = with pkgs.vscode-extensions; [
         dracula-theme.theme-dracula
