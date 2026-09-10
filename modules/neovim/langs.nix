@@ -82,5 +82,25 @@
       };
     };
 
+    # marksman publishes diagnostics for the *entire* workspace, not just open
+    # files. Neovim's handler calls bufadd() for every file it reports
+    # (see vim/lsp/diagnostic.lua:244), so a vault with thousands of notes
+    # creates thousands of buffers on the main thread and freezes the UI.
+    # Only accept marksman diagnostics for files that are already loaded.
+    luaConfigRC.marksman-workspace-diagnostics = ''
+      do
+        local orig = vim.lsp.handlers["textDocument/publishDiagnostics"]
+        vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, params, ctx, cfg)
+          local client = ctx and ctx.client_id and vim.lsp.get_client_by_id(ctx.client_id)
+          if client and client.name == "marksman" and params and params.uri then
+            if vim.fn.bufexists(vim.uri_to_fname(params.uri)) == 0 then
+              return
+            end
+          end
+          return orig(err, params, ctx, cfg)
+        end
+      end
+    '';
+
   };
 }
