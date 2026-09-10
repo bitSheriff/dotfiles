@@ -12,6 +12,30 @@ let
     DEFAULT_EDITOR = "nvim"
 
 
+    def parse_date(value):
+        """Parse a date, filling in the parts that were left out.
+
+        Accepts YYYY-MM-DD, MM-DD (current year) and DD (current
+        year and month). Raises ValueError on anything else.
+        """
+        today = datetime.now()
+        parts = value.split("-")
+        if len(parts) == 3:
+            year, month, day = parts
+            if len(year) != 4:
+                raise ValueError("year must be four digits")
+        elif len(parts) == 2:
+            year = str(today.year)
+            month, day = parts
+        elif len(parts) == 1:
+            year = str(today.year)
+            month = str(today.month)
+            day = parts[0]
+        else:
+            raise ValueError("too many components")
+        return datetime.strptime(f"{year}-{month}-{day}", "%Y-%m-%d")
+
+
     def main():
         parser = argparse.ArgumentParser(description="Open journal file.")
         parser.add_argument(
@@ -32,8 +56,9 @@ let
         parser.add_argument(
             "-d", "--date", type=str, default=None,
             help=(
-                "Date in ISO format (YYYY-MM-DD) to open the journal for. "
-                "Overrides --offset."
+                "Date to open the journal for. Accepts YYYY-MM-DD, "
+                "MM-DD (current year), or DD (current year and "
+                "month). Overrides --offset."
             )
         )
         args = parser.parse_args()
@@ -41,11 +66,12 @@ let
         base_date = datetime.now()
         if args.date:
             try:
-                base_date = datetime.strptime(args.date, "%Y-%m-%d")
+                base_date = parse_date(args.date)
             except ValueError:
                 print(
-                    f"Error: Invalid date '{args.date}'. "
-                    "Expected ISO format YYYY-MM-DD.",
+                    f"Error: Invalid date '{args.date}'. Expected "
+                    "YYYY-MM-DD, MM-DD (current year) or DD "
+                    "(current year and month).",
                     file=sys.stderr
                 )
                 sys.exit(1)
