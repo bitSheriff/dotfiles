@@ -146,6 +146,7 @@ in
         picard # mp3tag editor
         feishin # jellyfin and navidrone music player (spotify alike)
         # asunder # ripping cd's like its 2000
+        id3v2 # cli-tool to work with mp3v2tags
 
         digest-mp3s
       ]
