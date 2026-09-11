@@ -116,8 +116,8 @@
 
     privacy.enable = true;
 
-    downloaders.enable = {
-      enable = true; # only the basic stuff is needed
+    downloaders = {
+      enable = true;
     };
   };
 
