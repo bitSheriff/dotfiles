@@ -535,7 +535,11 @@ in
 
       browser = mkOption {
         type = types.str;
-        default = "${pkgs.firefox}/bin/firefox";
+        # Bare name on purpose: PATH resolves to the home-manager-wrapped firefox,
+        # which carries the generated policies.json (and therefore the extensions).
+        # A "${pkgs.firefox}/bin/firefox" store path is the unwrapped build with
+        # {"policies":{}} — it installs none of the extensions defined below.
+        default = "firefox";
         description = "Default $BROWSER.";
       };
 
