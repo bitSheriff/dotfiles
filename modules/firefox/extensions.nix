@@ -13,7 +13,6 @@
       };
     in
     listToAttrs [
-      (extension "*" "" "menupanel")
       (extension "sponsorblock" "sponsorBlocker@ajay.app" "menupanel")
       (extension "darkreader" "addon@darkreader.org" "menupanel")
       (extension "ublock-origin" "uBlock0@raymondhill.net" "menupanel")
