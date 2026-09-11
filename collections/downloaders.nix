@@ -12,10 +12,10 @@
       with pkgs;
       [
         mullvad-vpn # avoid suprise visits
-        varia # simple download manager
+        aria2 # best cli to download everything
+        varia # simple download manager (uses aria2 under the hoop)
         croc # send files to another computer
         yt-dlp # youtube downloader
-
       ]
       ++ lib.optionals config.cfg.downloaders.qbittorrent.enable [
         mullvad-vpn # avoid suprise visits
