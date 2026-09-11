@@ -18,4 +18,9 @@ inputs: final: prev: {
   # LSP server for hledger journal files, not (yet) in nixpkgs
   hledger-lsp = final.callPackage ./hledger-lsp.nix { };
 
+  # Fix missing dbus-next dependency for varia's tray icon
+  varia = prev.varia.overridePythonAttrs (old: {
+    dependencies = (old.dependencies or [ ]) ++ [ final.python3Packages.dbus-next ];
+  });
+
 }

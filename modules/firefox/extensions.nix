@@ -21,7 +21,7 @@
       (extension "new-window-without-toolbar" "new-window-without-toolbar@tkrkt.com" "menupanel")
       (extension "alpenglow-dark" "{9b615f11-c3a3-46bd-97a8-1721bb8122b9}" "menupanel")
       (extension "1password-x-password-manager" "{d634138d-c276-4fc8-924b-40a0ea21d284}" "navbar")
-      (extension "varia-integrator" "{giantpinkrobots@protonmail.com}" "menupanel")
+      (extension "varia-integrator" "giantpinkrobots@protonmail.com" "menupanel")
     ];
   "3rdparty".Extensions = {
     "uBlock0@raymondhill.net".adminSettings = {
