@@ -12,26 +12,15 @@
     ./opencode
     ./claude-code
     ./pi-agent
+    ./localAI
     ./herdr.nix
     ./antigravity.nix
   ];
 
   config = lib.mkIf config.cfg.development.agentic.enable {
-    environment.systemPackages =
-      with pkgs;
-      [
-        # mistral-vibe # needs a build!!!
-      ]
-      # Host Specifics (strong gaming PC with dedicated GPU)
-      ++ lib.optionals (config.networking.hostName == "rhodos") [
-        # (alpaca.override { ollama = ollama-cuda; }) # GUI chat app for ollama
-        lmstudio # Lm Studio for local AI
-      ];
-
-    # services.ollama = lib.mkIf (config.networking.hostName == "rhodos") {
-    #   enable = true;
-    #   package = pkgs.ollama-cuda;
-    # };
+    environment.systemPackages = with pkgs; [
+      # mistral-vibe # needs a build!!!
+    ];
 
     ##################
     ## HOME MANAGER ##

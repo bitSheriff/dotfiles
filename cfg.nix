@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 # Central place to declare toggleable "features" for this flake.
 #
@@ -86,6 +91,132 @@ in
             type = types.bool;
             default = false;
             description = "Install and configure the Antigravity CLI (modules/agentic/antigravity.nix).";
+          };
+        };
+
+        # Locally hosted models (modules/agentic/localAI). When disabled, no
+        # local backend is installed and no local provider is configured in
+        # any agent (pi, opencode, ...).
+        localAI = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Run large language models locally and expose them to the agentic tooling.";
+          };
+
+          backend = mkOption {
+            type = types.enum [
+              "ollama"
+              "lmstudio"
+            ];
+            default = "ollama";
+            description = ''
+              Which local inference server to use.
+
+              `ollama` is a declarative systemd service: models come from
+              `localAI.models` and are pulled on activation.
+
+              `lmstudio` is an unfree GUI application. It is only installed
+              here; the server, the loaded model and its context length are
+              managed inside the app and cannot be declared.
+            '';
+          };
+
+          host = mkOption {
+            type = types.str;
+            default = "localhost";
+            description = ''
+              Host serving the OpenAI-compatible API. Point this at another
+              machine to use its GPU (that host needs to listen on more than
+              loopback, see `localAI.openFirewall`).
+            '';
+          };
+
+          port = mkOption {
+            type = types.port;
+            default = if config.cfg.development.agentic.localAI.backend == "ollama" then 11434 else 1234;
+            defaultText = literalExpression "11434 for ollama, 1234 for lmstudio";
+            description = "Port of the OpenAI-compatible API.";
+          };
+
+          openFirewall = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Serve the API on the local network instead of loopback only. Only honoured by the ollama backend.";
+          };
+
+          models = mkOption {
+            default = [ ];
+            description = ''
+              Models to make available on this host. Empty means none.
+
+              With the ollama backend these are pulled on activation
+              (`services.ollama.loadModels`). With lmstudio you still have to
+              download them in the GUI; the entries here only tell the agents
+              which models to offer.
+            '';
+            example = literalExpression ''
+              [
+                {
+                  id = "qwen3:27b";
+                  name = "Qwen3 27B (local)";
+                  reasoning = true;
+                  contextWindow = 32768;
+                }
+              ]
+            '';
+            type = types.listOf (
+              types.submodule {
+                options = {
+                  id = mkOption {
+                    type = types.str;
+                    description = ''
+                      Model id exactly as the backend serves it. Verify with
+                      `ollama list` or `curl http://localhost:1234/v1/models`.
+                    '';
+                  };
+
+                  name = mkOption {
+                    type = types.nullOr types.str;
+                    default = null;
+                    description = "Human readable label. Defaults to `id`.";
+                  };
+
+                  contextWindow = mkOption {
+                    type = types.int;
+                    default = 32768;
+                    description = ''
+                      Context window in tokens. Must match what the model is
+                      actually LOADED with, not what it could theoretically do -
+                      the agent will happily send more and the request fails.
+                    '';
+                  };
+
+                  maxTokens = mkOption {
+                    type = types.int;
+                    default = 8192;
+                    description = "Maximum output tokens per response.";
+                  };
+
+                  reasoning = mkOption {
+                    type = types.bool;
+                    default = false;
+                    description = "Whether the model emits thinking/reasoning content.";
+                  };
+
+                  extraConfig = mkOption {
+                    type = types.attrs;
+                    default = { };
+                    description = ''
+                      Merged verbatim into the model definition handed to the
+                      agent, for per-model knobs that have no option here
+                      (`thinkingLevelMap`, `compat`, `samplingParams`, ...).
+                    '';
+                    example = literalExpression "{ thinkingLevelMap.off = null; }";
+                  };
+                };
+              }
+            );
           };
         };
       };

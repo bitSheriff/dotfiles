@@ -54,6 +54,31 @@
         pi-coding-agent.enable = true;
         claude-code.enable = true;
 
+        # RTX 4080 (16 GB). Keep models that fit in VRAM - anything larger
+        # spills into system RAM and drops to single-digit tokens/s.
+        localAI = {
+          enable = true;
+          backend = "lmstudio";
+          models = [
+            {
+              id = "qwen/qwen3.8-27b";
+              name = "Qwen3.8 27B (local)";
+              reasoning = true;
+              # thinking cannot be switched off on this model
+              extraConfig.thinkingLevelMap.off = null;
+              # 17.74 GB on a 16 GB card: load it with `--parallel 1`, otherwise
+              # the KV cache is allocated 4x and the 32k context OOMs
+              contextWindow = 32768;
+              maxTokens = 8192;
+            }
+            {
+              id = "google/gemma-4-e4b";
+              name = "Gemma 4 E4B (local)";
+              contextWindow = 32768;
+              maxTokens = 8192;
+            }
+          ];
+        };
       };
 
       languages = {

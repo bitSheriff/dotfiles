@@ -7,36 +7,26 @@
   ...
 }:
 let
-  # Where the local OpenAI-compatible server lives.
-  # rhodos runs LM Studio itself; other hosts talk to rhodos over the LAN
-  # (LM Studio: Developer tab -> "Serve on local network").
-  localAiHost = if config.networking.hostName == "rhodos" then "localhost" else "rhodos";
+  localAI = config.cfg.development.agentic.localAI;
 
-  # Single source of truth for the local LM Studio models: registered as a
-  # provider below AND expanded into `enabledModels`, so adding one here is
-  # enough to make it selectable in pi.
-  # NOTE: `id` must match what the server reports:
-  #   curl http://localhost:1234/v1/models | jq -r '.data[].id'
-  # Embedding models (nomic-embed-text) are deliberately left out, they cannot chat.
-  lmstudioModels = [
+  # pi speaks the OpenAI API to whichever backend is configured; the provider is
+  # named after the backend so model ids can be qualified with it below.
+  localProvider = localAI.backend;
+
+  # Translate cfg.localAI.models into pi model definitions.
+  localModels = map (
+    m:
     {
-      id = "qwen/qwen3.8-27b";
-      name = "Qwen3.8 27B (local)";
-      reasoning = true;
-      # thinking cannot be switched off on this model
-      thinkingLevelMap.off = null;
-      # must match the context the model is LOADED with in LM Studio,
-      # not the 262144 the model could do -- check with `lms ps`
-      contextWindow = 32768;
-      maxTokens = 8192;
+      inherit (m)
+        id
+        contextWindow
+        maxTokens
+        reasoning
+        ;
+      name = if m.name != null then m.name else m.id;
     }
-    {
-      id = "google/gemma-4-e4b";
-      name = "Gemma 4 E4B (local)";
-      contextWindow = 32768;
-      maxTokens = 8192;
-    }
-  ];
+    // m.extraConfig
+  ) localAI.models;
 in
 {
   imports = [
@@ -95,40 +85,30 @@ in
             "deepseek/deepseek-v4-flash"
             "deepseek/deepseek-v4-pro"
 
-            # Local Models -- every model from `lmstudioModels` above.
-            # Qualified with the "lmstudio/" prefix on purpose: bare ids like
-            # "qwen/qwen3.8-27b" also exist on openrouter and huggingface, and pi
-            # hides an entry that is ambiguous across authenticated providers.
-            # Wildcards such as "lmstudio/*" are NOT supported here.
+            # Local Models -- every model from cfg.development.agentic.localAI.
+            # Qualified with the provider prefix on purpose: a bare id like
+            # "qwen/qwen3.8-27b" also exists on openrouter and huggingface, and
+            # pi hides an entry that is ambiguous across authenticated
+            # providers. Wildcards ("lmstudio/*") are NOT supported here.
           ]
-          ++ (map (m: "lmstudio/${m.id}") lmstudioModels);
+          ++ lib.optionals localAI.enable (map (m: "${localProvider}/${m.id}") localModels);
         };
 
-        # written to ~/.pi/agent/models.json
-        models = {
-          providers = {
-            lmstudio = {
-              baseUrl = "http://${localAiHost}:1234/v1";
-              api = "openai-completions";
-              apiKey = "lmstudio"; # dummy, the server ignores it, but pi wants auth to be present
-              compat = {
-                supportsDeveloperRole = false; # llama.cpp/LM Studio want a `system` role
-                supportsReasoningEffort = false;
-                maxTokensField = "max_tokens";
-              };
-              models = lmstudioModels;
+        # written to ~/.pi/agent/models.json.
+        # Only configured when a local backend is enabled for this host.
+        models = lib.mkIf localAI.enable {
+          providers.${localProvider} = {
+            baseUrl = "http://${localAI.host}:${toString localAI.port}/v1";
+            api = "openai-completions";
+            # Local servers ignore the key, but pi hides models whose provider
+            # has no auth configured at all, so a dummy value is required.
+            apiKey = localProvider;
+            compat = {
+              supportsDeveloperRole = false; # llama.cpp/ollama want a `system` role
+              supportsReasoningEffort = false;
+              maxTokensField = "max_tokens";
             };
-
-            # ollama = {
-            #   baseUrl = "http://${localAiHost}:11434/v1";
-            #   api = "openai-completions";
-            #   apiKey = "ollama";
-            #   compat = {
-            #     supportsDeveloperRole = false;
-            #     supportsReasoningEffort = false;
-            #   };
-            #   models = [ { id = "qwen2.5-coder:7b"; } ];
-            # };
+            models = localModels;
           };
         };
       };
