@@ -26,6 +26,7 @@ hl.window_rule({ match = { class = "org.freecad.FreeCAD" }, opacity = "1.0 overr
 
 -- Media
 hl.window_rule({ match = { class = "mpv" }, opacity = "1.0 override" })
+hl.window_rule({ match = { class = "^(kodi)$" }, opacity = "1.0 override", fullscreen = true })
 
 -- Opaque Window Titles in the Browser
 local opaque_titles = {

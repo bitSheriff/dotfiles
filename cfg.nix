@@ -325,7 +325,23 @@ in
         enable = mkOption {
           type = types.bool;
           default = false;
-          description = "Install Kodi media center (modules/kodi.nix) with the jellyfin and youtube plugins.";
+          description = "Install Kodi media center (modules/kodi.nix) with the jellyfin and youtube plugins, and add ~/Videos as a local video source.";
+        };
+
+        inputstreamAdaptive = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Install the inputstream-adaptive addon for Kodi (adaptive/DRM streaming, recommended for smooth Jellyfin and YouTube playback).";
+          };
+        };
+
+        osmcSkin = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Install the OSMC skin for Kodi (skin.osmc), selectable from Kodi's skin settings.";
+          };
         };
       };
     };

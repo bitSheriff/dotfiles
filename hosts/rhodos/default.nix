@@ -134,6 +134,7 @@
       enable = true;
       ebooks.enable = true;
       eilmeldung.enable = true;
+      kodi.enable = true;
     };
 
     downloaders = {
