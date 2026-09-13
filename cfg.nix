@@ -320,6 +320,14 @@ in
           description = "Enable comic books reading";
         };
       };
+
+      kodi = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install Kodi media center (modules/kodi.nix) with the jellyfin and youtube plugins.";
+        };
+      };
     };
 
     #################

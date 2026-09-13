@@ -112,6 +112,7 @@ in
     ../modules/mpv
     ../modules/mpd.nix
     ../modules/kew.nix
+    ../modules/kodi.nix
   ];
 
   config = lib.mkIf config.cfg.multimedia.enable {
