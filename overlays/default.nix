@@ -18,6 +18,22 @@ inputs: final: prev: {
   # LSP server for hledger journal files, not (yet) in nixpkgs
   hledger-lsp = final.callPackage ./hledger-lsp.nix { };
 
+  # Extra Kodi addons not (yet) packaged in nixpkgs' kodiPackages: Tubed, a
+  # replacement YouTube client (see modules/kodi.nix) that avoids the
+  # freezing bug in the official plugin.video.youtube addon, plus its two
+  # addon dependencies.
+  kodiPackages = prev.kodiPackages // {
+    pyxbmct = prev.kodiPackages.callPackage ./kodi-addons/pyxbmct.nix { };
+    tubed-api = prev.kodiPackages.callPackage ./kodi-addons/tubed-api.nix { };
+    # arrow, infotagger, inputstream-adaptive, and requests resolve
+    # automatically from kodiPackages' own callPackage scope; only the two
+    # addons above (not in nixpkgs) need to be passed in explicitly.
+    tubed = prev.kodiPackages.callPackage ./kodi-addons/tubed.nix {
+      pyxbmct = prev.kodiPackages.callPackage ./kodi-addons/pyxbmct.nix { };
+      tubed-api = prev.kodiPackages.callPackage ./kodi-addons/tubed-api.nix { };
+    };
+  };
+
   varia = prev.varia.overridePythonAttrs (old: {
     # Fix missing dbus-next dependency for varia's tray icon
     dependencies = (old.dependencies or [ ]) ++ [ final.python3Packages.dbus-next ];

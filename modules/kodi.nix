@@ -19,7 +19,12 @@
           with kodiPkgs;
           [
             jellyfin
-            youtube
+            # youtube (plugin.video.youtube) is dropped in favor of Tubed:
+            # it suffers from a long-standing freezing bug (video image
+            # freezes, audio keeps playing) tied to inputstream.adaptive/
+            # MPEG-DASH playback. Tubed is packaged in ../overlays/kodi-addons
+            # since it's not (yet) in nixpkgs' kodiPackages.
+            pkgs.kodiPackages.tubed
             joystick # peripheral.joystick: raw joystick/gamepad input (bluetooth controllers)
             bluetooth-manager # manage bluetooth devices from within Kodi
           ]
