@@ -20,6 +20,8 @@
           [
             jellyfin
             youtube
+            joystick # peripheral.joystick: raw joystick/gamepad input (bluetooth controllers)
+            bluetooth-manager # manage bluetooth devices from within Kodi
           ]
           ++ lib.optional config.cfg.multimedia.kodi.inputstreamAdaptive.enable inputstream-adaptive
           ++ lib.optional config.cfg.multimedia.kodi.osmcSkin.enable osmc-skin
