@@ -298,19 +298,29 @@ let
             input_text = " ".join(args.task)
         else:
             if sys.stdin.isatty():
-                print("Enter todo (Ctrl+D to finish, Ctrl+C to cancel):")
+                print(
+                    "Enter todo (blank line, or Ctrl+D, to finish; "
+                    "Ctrl+C to cancel):"
+                )
                 lines = []
                 while True:
                     try:
                         prompt = "Todo: " if not lines else "      "
                         line = input(prompt)
-                        lines.append(line)
                     except EOFError:
                         print()
                         break
                     except KeyboardInterrupt:
                         print("\nCancelled.")
                         sys.exit(0)
+                    if not line.strip():
+                        # A blank line finishes input, same as Ctrl+D - but
+                        # only once something has actually been entered, so
+                        # an accidental first Enter doesn't exit early.
+                        if lines:
+                            break
+                        continue
+                    lines.append(line)
                 input_text = "\n".join(lines).strip()
             else:
                 input_text = sys.stdin.read().strip()
