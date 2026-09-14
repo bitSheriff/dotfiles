@@ -218,12 +218,14 @@
           };
 
           ssh_key_general = {
-            key = "ssh/general/priv";
+            sopsFile = ../encrypted/ssh_keys.yaml;
+            key = "general/priv";
             path = "${config.home.homeDirectory}/.ssh/id_ed25519";
           };
 
           ssh_key_general_pub = {
-            key = "ssh/general/pub";
+            sopsFile = ../encrypted/ssh_keys.yaml;
+            key = "general/pub";
             path = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
           };
 
