@@ -10,9 +10,9 @@
   # a single window. Toggled by SUPER + CTRL + W (see config/binds.lua).
   #
   # On:
-  #   - fullscreens the focused window (hyprctl dispatch fullscreen 1)
-  #   - zeroes gaps & borders (restored to their real values on exit, not
-  #     hardcoded, so this keeps working if options.lua changes them)
+  #   - zeroes gaps, borders & corner rounding (restored to their real
+  #     values on exit, not hardcoded, so this keeps working if
+  #     options.lua changes them)
   #   - forces full opacity (1.0) on all windows
   #   - hides the noctalia bar
   #   - enables the idle inhibitor, so the session doesn't lock/sleep mid-zen
@@ -51,8 +51,7 @@
         # shellcheck source=/dev/null
         source "$STATE_FILE"
 
-        hypr_eval "hl.config({ general = { gaps_in = $ZEN_GAPS_IN, gaps_out = $ZEN_GAPS_OUT, border_size = $ZEN_BORDER_SIZE }, decoration = { active_opacity = $ZEN_ACTIVE_OPACITY, inactive_opacity = $ZEN_INACTIVE_OPACITY } })"
-        hypr_eval "hl.dispatch(hl.dsp.window.fullscreen({action = 'toggle'}))"
+        hypr_eval "hl.config({ general = { gaps_in = $ZEN_GAPS_IN, gaps_out = $ZEN_GAPS_OUT, border_size = $ZEN_BORDER_SIZE }, decoration = { rounding = $ZEN_ROUNDING, active_opacity = $ZEN_ACTIVE_OPACITY, inactive_opacity = $ZEN_INACTIVE_OPACITY } })"
 
         noctalia-shell ipc call bar showBar >/dev/null 2>&1 || true
         noctalia-shell ipc call idleInhibitor disable >/dev/null 2>&1 || true
@@ -64,12 +63,12 @@
           echo "ZEN_GAPS_IN=$(hypr_num general:gaps_in)"
           echo "ZEN_GAPS_OUT=$(hypr_num general:gaps_out)"
           echo "ZEN_BORDER_SIZE=$(hypr_num general:border_size)"
+          echo "ZEN_ROUNDING=$(hypr_num decoration:rounding)"
           echo "ZEN_ACTIVE_OPACITY=$(hypr_num decoration:active_opacity)"
           echo "ZEN_INACTIVE_OPACITY=$(hypr_num decoration:inactive_opacity)"
         } > "$STATE_FILE"
 
-        hypr_eval "hl.config({ general = { gaps_in = 0, gaps_out = 0, border_size = 0 }, decoration = { active_opacity = 1.0, inactive_opacity = 1.0 } })"
-        hypr_eval "hl.dispatch(hl.dsp.window.fullscreen({action = 'toggle'}))"
+        hypr_eval "hl.config({ general = { gaps_in = 0, gaps_out = 0, border_size = 0 }, decoration = { rounding = 0, active_opacity = 1.0, inactive_opacity = 1.0 } })"
 
         noctalia-shell ipc call bar hideBar >/dev/null 2>&1 || true
         noctalia-shell ipc call idleInhibitor enable >/dev/null 2>&1 || true
