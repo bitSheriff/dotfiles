@@ -164,7 +164,7 @@ hl.bind("SUPER + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + SHIFT + F", hl.dsp.window.pin())
 hl.bind("SUPER + CTRL + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind("SUPER + ALT + F", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
-hl.bind("SUPER + CTRL + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/zen-mode.sh"))
+hl.bind("SUPER + Z", hl.dsp.exec_cmd("zen-mode"))
 hl.bind("SUPER + W", hl.dsp.layout("togglesplit"))
 
 hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("magic"))

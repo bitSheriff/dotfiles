@@ -10,6 +10,9 @@
 
 let
   module_path = "${dotfiles_path}/modules/hyprland";
+
+  # The scripts themselves live in ./scripts.nix, mirroring ../hledger/scripts.nix.
+  scripts = import ./scripts.nix { inherit pkgs; };
 in
 {
 
@@ -120,6 +123,8 @@ in
       { config, lib, ... }:
       {
         config = lib.mkIf (lib.elem "benjamin" activeUsers) {
+          home.packages = [ scripts.zen-mode ];
+
           wayland.windowManager.hyprland = {
             enable = true;
             configType = "lua";
