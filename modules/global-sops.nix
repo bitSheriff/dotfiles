@@ -141,7 +141,8 @@ in
 
       # root needs this ssh key to update the nix store from known devices (like a private nix cache)
       root_ssh_key = {
-        key = "ssh/root/priv";
+        sopsFile = ../encrypted/ssh_keys.yaml;
+        key = "root/priv";
         path = "/root/.ssh/id_ed25519";
         owner = "root";
         group = "root";

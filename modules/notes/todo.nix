@@ -1,163 +1,6 @@
 { pkgs, ... }:
 
 let
-  inbox = pkgs.writeShellApplication {
-    name = "inbox";
-    runtimeInputs = [
-      pkgs.coreutils
-      pkgs.gum
-      pkgs.wl-clipboard
-    ];
-    text = ''
-      # Journal File where the memo gets added
-      if [[ -z "''${INBOX:-}" ]]; then
-          echo "Error: INBOX environment variable not set"
-          exit 1
-      fi
-      INBOX_FILE="$INBOX"
-      INBOX_DIR="$(dirname -- "$INBOX_FILE")"
-      LINKS_FILE="$INBOX_DIR/Save 4 Later.md"
-      TODO_FILE="$INBOX_DIR/Task Inbox.md"
-
-      create_inbox_file() {
-          # line conter
-          count=0
-          filename=""
-
-          while IFS= read -r line; do
-              # just print the preamble on the first line
-              if [ $count -eq 0 ]; then
-                  # the first line is the name of the file
-                  filename="$INBOX_DIR/$line.md"
-
-                  # write the name of the file as first Heading
-                  echo "# $line" >>"$filename"
-              else
-                  # Process the remaining lines
-                  echo "$line" >>"$filename"
-              fi
-
-              # Increment the counter
-              count=$((count + 1))
-          done
-      }
-
-      save_link() {
-          # check if file exists, if not create it
-          if [[ ! -f "$LINKS_FILE" ]]; then
-              touch "$LINKS_FILE"
-          fi
-          # check if file has new line at the end, if not add one
-          if [[ -s "$LINKS_FILE" ]]; then
-              test "$(tail -c 1 "$LINKS_FILE" | wc -l)" -eq 0 && echo "" >>"$LINKS_FILE"
-          fi
-
-          local title
-          title=$(gum input --placeholder "Title")
-          local url
-          url=$(gum input --placeholder "URL")
-          local notes
-          notes=$(gum input --placeholder "Notes")
-
-          echo "- [ ] [$title]($url)" >>"$LINKS_FILE"
-
-          # add notes if provided
-          if [[ -n "$notes" ]]; then
-              echo "    - $notes" >>"$LINKS_FILE"
-          fi
-      }
-
-      save_todo(){
-          # check if file exists, if not create it
-          if [[ ! -f "$TODO_FILE" ]]; then
-              touch "$TODO_FILE"
-          fi
-          # check if file has new line at the end, if not add one
-          if [[ -s "$TODO_FILE" ]]; then
-              test "$(tail -c 1 "$TODO_FILE" | wc -l)" -eq 0 && echo "" >>"$TODO_FILE"
-          fi
-
-          local title
-          title=$(gum input --placeholder "Title")
-          local notes
-          notes=$(gum input --placeholder "Notes")
-
-          echo "- [ ] $title" >>"$TODO_FILE"
-
-          # add notes if provided
-          if [[ -n "$notes" ]]; then
-              echo "    - $notes" >>"$TODO_FILE"
-          fi
-      }
-
-      OPTSTRING="cnlht"
-      while getopts "''${OPTSTRING}" opt; do
-          case "''${opt}" in
-          h) # help/usage
-              echo "inbox [opt] [text]"
-              echo "Little script to save text in the inbox file. If no text is provided at stdin, it will provide promt(s) to fill in some text. Collecting text with stdin makes it possible to parse output of other programs to the inbox file."
-              echo "Usage:"
-              echo "  -h ... Print this help/usage message"
-              echo "  -c ... Puts the clipboard contents to the inbox file"
-              echo "  -n ... Create a new file in the inbox for this item"
-              echo "  -t ... Create a new todo"
-              echo "  -l ... Save a link, promts you to enter the name, url and some optional notes for this link"
-              echo "         Links will get formated as a Todo"
-              exit 0
-              ;;
-          c) # clipboard option
-              printf "\n%s\n" "$(wl-paste)" >>"$INBOX_FILE"
-              exit 0
-              ;;
-          n) # create new file
-              create_inbox_file
-              exit 0
-              ;;
-          l) # save link
-              save_link
-              exit 0
-              ;;
-          t) # save todo
-              save_todo
-              exit 0
-              ;;
-          *)
-              exit 1
-              ;;
-          esac
-      done
-
-      # decide if the input was given as a positional argument or parsed into (stdin)
-      if [ $# -gt 0 ]; then
-          # If there are arguments, join them into a single string and process
-          input="$*"
-          printf "\n%s\n\n" "$input" >>"$INBOX_FILE"
-      else
-          # Otherwise, use gum write to get the input (stdin)
-          input=$(gum write --header "Inbox" --show-line-numbers --char-limit 0)
-
-          # line conter
-          count=0
-
-          while IFS= read -r line; do
-              # just print the preamble on the first line
-              if [ $count -eq 0 ]; then
-                  # Process the first line differently
-                  printf "\n%s\n" "$line" >>"$INBOX_FILE"
-              else
-                  # Process the remaining lines
-                  echo "$line" >>"$INBOX_FILE"
-              fi
-
-              # Increment the counter
-              count=$((count + 1))
-          done <<<"$input"
-
-          printf "\n\n" >>"$INBOX_FILE"
-      fi
-    '';
-  };
-
   todo = pkgs.writers.writePython3Bin "todo" { } ''
     import os
     import sys
@@ -176,6 +19,111 @@ let
 
     # Target marker in the file (if found, insert after this line)
     TODO_MARKER = "%%insert_todo%%"
+
+
+    def gum_input(placeholder):
+        result = subprocess.run(
+            ["gum", "input", "--placeholder", placeholder],
+            capture_output=True, text=True
+        )
+        return result.stdout.strip()
+
+
+    def gum_write(header):
+        result = subprocess.run(
+            ["gum", "write", "--header", header,
+             "--show-line-numbers", "--char-limit", "0"],
+            capture_output=True, text=True
+        )
+        return result.stdout
+
+
+    def read_clipboard():
+        result = subprocess.run(
+            ["wl-paste"], capture_output=True, text=True
+        )
+        return result.stdout
+
+
+    def ensure_trailing_newline(path):
+        # Make sure the file exists and, if non-empty, ends with a newline
+        # so new entries don't get glued onto the previous line.
+        if not os.path.exists(path):
+            os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+            open(path, "a").close()
+            return
+        if os.path.getsize(path) > 0:
+            with open(path, "rb") as f:
+                f.seek(-1, os.SEEK_END)
+                last_byte = f.read(1)
+            if last_byte != b"\n":
+                with open(path, "a") as f:
+                    f.write("\n")
+
+
+    def get_inbox_dir():
+        inbox_dir = os.getenv("INBOX_DIR")
+        if inbox_dir:
+            return inbox_dir
+        inbox_file = os.getenv("INBOX")
+        if inbox_file:
+            return os.path.dirname(inbox_file)
+        print("Error: INBOX_DIR (or INBOX) environment variable not set.",
+              file=sys.stderr)
+        sys.exit(1)
+
+
+    def handle_link(args):
+        """Save a link to the "Save 4 Later.md" file in the inbox dir.
+
+        args.task may supply the url (and optionally the title) as
+        positional arguments; anything missing is prompted for.
+        """
+        links_file = os.path.join(get_inbox_dir(), "Save 4 Later.md")
+        ensure_trailing_newline(links_file)
+
+        url = args.task[0] if len(args.task) >= 1 else gum_input("URL")
+        title = args.task[1] if len(args.task) >= 2 else gum_input("Title")
+        notes = gum_input("Notes")
+
+        with open(links_file, "a") as f:
+            f.write(f"- [ ] [{title}]({url})\n")
+            if notes:
+                f.write(f"    - {notes}\n")
+
+        print(f"Saved link to {links_file}")
+
+
+    def handle_inbox(args):
+        """Append free-form text to the Inbox file.
+
+        Text comes from (in order of precedence): the clipboard
+        (-c), positional task arguments, or an interactive
+        `gum write` prompt.
+        """
+        inbox_file = os.getenv("INBOX")
+        if not inbox_file:
+            print("Error: INBOX environment variable not set", file=sys.stderr)
+            sys.exit(1)
+
+        os.makedirs(
+            os.path.dirname(os.path.abspath(inbox_file)), exist_ok=True
+        )
+
+        if args.clipboard:
+            content = read_clipboard()
+            text = f"\n{content}\n"
+        elif args.task:
+            input_text = " ".join(args.task)
+            text = f"\n{input_text}\n\n"
+        else:
+            input_text = gum_write("Inbox")
+            text = f"\n{input_text.rstrip(chr(10))}\n\n"
+
+        with open(inbox_file, "a") as f:
+            f.write(text)
+
+        print(f"Added to {inbox_file}")
 
 
     def select_file_with_fzf():
@@ -271,10 +219,38 @@ let
             help="Target markdown file."
         )
         parser.add_argument(
+            "-i", "--inbox", action="store_true",
+            help=(
+                "Append text to the Inbox file instead of adding a todo. "
+                "Combine with -c to use the clipboard, or provide task "
+                "text/pipe stdin; otherwise falls back to `gum write`."
+            )
+        )
+        parser.add_argument(
+            "-c", "--clipboard", action="store_true",
+            help="With -i, use clipboard contents instead of task text."
+        )
+        parser.add_argument(
+            "-l", "--link", action="store_true",
+            help=(
+                "Save a link to \"Save 4 Later.md\" in the inbox dir. "
+                "Optionally pass the url and title as positional "
+                "arguments; anything missing (and notes) is prompted for."
+            )
+        )
+        parser.add_argument(
             "task", nargs="*", help="The task content."
         )
 
         args = parser.parse_args()
+
+        if args.link:
+            handle_link(args)
+            return
+
+        if args.inbox:
+            handle_inbox(args)
+            return
 
         # Determine date (precedence: -d > -n > -T > -t)
         target_date = datetime.date.today()
@@ -412,6 +388,5 @@ in
 {
   environment.systemPackages = [
     todo
-    inbox
   ];
 }
