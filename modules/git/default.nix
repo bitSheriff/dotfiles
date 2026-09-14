@@ -6,17 +6,25 @@
   ...
 }:
 
+let
+  # The scripts themselves live in ./scripts.nix, mirroring ../hledger/scripts.nix.
+  scripts = import ./scripts.nix { inherit pkgs; };
+in
 {
-  environment.systemPackages = with pkgs; [
-    git
-    gh
-    gh-dash # manage github issues in the terminal
-    forgejo-cli # same for codeberg and forgejo
-    lazygit # the best git tui
-    gitte # Gtk4 Git Client
-    delta # git viewer
-    serie # git graph viewer in the terminal
-  ];
+  environment.systemPackages =
+    (with pkgs; [
+      git
+      gh
+      gh-dash # manage github issues in the terminal
+      forgejo-cli # same for codeberg and forgejo
+      lazygit # the best git tui
+      gitte # Gtk4 Git Client
+      delta # git viewer
+      serie # git graph viewer in the terminal
+    ])
+    ++ (with scripts; [
+      worktree-init
+    ]);
 
   ##################
   ## HOME MANAGER ##

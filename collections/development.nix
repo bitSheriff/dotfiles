@@ -11,7 +11,7 @@
     ./../modules/yazi
     ./../modules/zed
     ./../modules/notes
-    ./../modules/git.nix
+    ./../modules/git
     ./../modules/zellij.nix
     ./../modules/starship.nix
     ./../modules/agentic

@@ -90,7 +90,7 @@ in
 
   programs.git = {
     enable = true;
-    # No commit signing: op-ssh-sign from ../../modules/git.nix needs the
+    # No commit signing: op-ssh-sign from ../../modules/git/default.nix needs the
     # 1Password desktop app, which does not exist here.
     settings = {
       user = {
