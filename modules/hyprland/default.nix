@@ -10,9 +10,6 @@
 
 let
   module_path = "${dotfiles_path}/modules/hyprland";
-
-  # The scripts themselves live in ./scripts.nix, mirroring ../hledger/scripts.nix.
-  scripts = import ./scripts.nix { inherit pkgs; };
 in
 {
 
@@ -26,6 +23,7 @@ in
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
+    ./scripts # zen-mode etc., installed via environment.systemPackages
   ];
 
   config = lib.mkIf config.cfg.desktop.hyprland.enable {
@@ -123,8 +121,6 @@ in
       { config, lib, ... }:
       {
         config = lib.mkIf (lib.elem "benjamin" activeUsers) {
-          home.packages = [ scripts.zen-mode ];
-
           wayland.windowManager.hyprland = {
             enable = true;
             configType = "lua";
