@@ -1,7 +1,6 @@
-{ pkgs, ... }:
+{ pkgs }:
 
-let
-  todo = pkgs.writers.writePython3Bin "todo" { } ''
+pkgs.writers.writePython3Bin "todo" { } ''
     import os
     import sys
     import datetime
@@ -209,7 +208,11 @@ let
             "-T", "--tomorrow", action="store_true", help="Set to tomorrow."
         )
         parser.add_argument(
-            "-n", "--next", type=int, help="Set to N days from today."
+            "-o", "--offset", type=int, default=0,
+            help=(
+                "Offset in days from today. Positive for future, "
+                "negative for past."
+            )
         )
         parser.add_argument(
             "-d", "--date", type=str, help="Set to a specific date."
@@ -252,7 +255,7 @@ let
             handle_inbox(args)
             return
 
-        # Determine date (precedence: -d > -n > -T > -t)
+        # Determine date (precedence: -d > -o > -T > -t)
         target_date = datetime.date.today()
         date_flag_used = False
 
@@ -263,8 +266,8 @@ let
             except ValueError:
                 print(f"Error: Invalid date '{args.date}'.", file=sys.stderr)
                 sys.exit(1)
-        elif args.next is not None:
-            target_date += datetime.timedelta(days=args.next)
+        elif args.offset:
+            target_date += datetime.timedelta(days=args.offset)
             date_flag_used = True
         elif args.tomorrow:
             target_date += datetime.timedelta(days=1)
@@ -393,10 +396,4 @@ let
 
     if __name__ == "__main__":
         main()
-  '';
-in
-{
-  environment.systemPackages = [
-    todo
-  ];
-}
+  ''

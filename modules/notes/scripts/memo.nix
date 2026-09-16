@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs }:
 
 let
   memo = pkgs.writeShellApplication {
@@ -72,9 +72,7 @@ let
     '';
   };
 in
-{
-  environment.systemPackages = [
-    memo
-    memo-gui
-  ];
-}
+[
+  memo
+  memo-gui
+]

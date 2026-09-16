@@ -5,15 +5,9 @@
   ...
 }:
 
-let
-  notes_script = import ./notes.nix { inherit pkgs; };
-
-in
 {
   imports = [
-    ./jour.nix # for handling journal entries
-    ./todo.nix # for handling todo and inbox items (todo -i / todo -l)
-    ./memo.nix # for handling memos
+    ./scripts # notes/todo/journal/memo scripts
     ./obsidian.nix # obsidian stuff
   ];
 
@@ -31,8 +25,6 @@ in
       gum # for cli inputs
       fd # find files
       fzf # to select files
-
-      notes_script
     ]
     ++ lib.optionals config.cfg.notes.obsidian.enable [ obsidian ]; # the best note system
 

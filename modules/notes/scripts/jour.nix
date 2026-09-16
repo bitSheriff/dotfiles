@@ -1,7 +1,6 @@
-{ pkgs, ... }:
+{ pkgs }:
 
-let
-  jour = pkgs.writers.writePython3Bin "jour" { } ''
+pkgs.writers.writePython3Bin "jour" { } ''
     import os
     import sys
     from datetime import datetime, timedelta
@@ -119,10 +118,4 @@ let
 
     if __name__ == "__main__":
         main()
-  '';
-in
-{
-  environment.systemPackages = [
-    jour
-  ];
-}
+  ''
