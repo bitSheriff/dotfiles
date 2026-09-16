@@ -10,6 +10,7 @@ in
 {
   imports = [
     ./../modules/irc.nix
+    ./../modules/meshtastic.nix
   ];
 
   environment.systemPackages =

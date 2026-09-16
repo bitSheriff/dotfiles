@@ -600,6 +600,14 @@ in
         };
       };
 
+      meshtastic = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable Meshtastic";
+        };
+      };
+
       mail = {
         thunderbird = {
           enable = mkOption {
