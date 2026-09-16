@@ -195,8 +195,26 @@ pkgs.writers.writePython3Bin "todo" { } ''
                 days_ahead += 7
             return today + datetime.timedelta(days=days_ahead)
 
-        # Fallback to standard format
-        return datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+        # Fallback to a (possibly partial) YYYY-MM-DD date. Missing
+        # leading components are filled in with the current year
+        # and/or month, e.g. "DD" or "MM-DD".
+        parts = date_str.split("-")
+        if len(parts) == 3:
+            year, month, day = parts
+            if len(year) != 4:
+                raise ValueError("year must be four digits")
+        elif len(parts) == 2:
+            year = str(today.year)
+            month, day = parts
+        elif len(parts) == 1:
+            year = str(today.year)
+            month = str(today.month)
+            day = parts[0]
+        else:
+            raise ValueError("too many components")
+        return datetime.datetime.strptime(
+            f"{year}-{month}-{day}", "%Y-%m-%d"
+        ).date()
 
 
     def main():
@@ -215,7 +233,15 @@ pkgs.writers.writePython3Bin "todo" { } ''
             )
         )
         parser.add_argument(
-            "-d", "--date", type=str, help="Set to a specific date."
+            "-d", "--date", type=str,
+            help=(
+                "Set to a specific date. Accepts a weekday name "
+                "(e.g. 'friday', 'fri', optionally prefixed with "
+                "'next'), 'today', 'tomorrow', 'yesterday', or a "
+                "YYYY-MM-DD date. The date may be partial - "
+                "MM-DD (current year) or DD (current year and "
+                "month) - and the missing parts are filled in."
+            )
         )
         parser.add_argument(
             "-f", "--file", nargs="?", const="SELECT_WITH_FZF",
@@ -264,7 +290,12 @@ pkgs.writers.writePython3Bin "todo" { } ''
                 target_date = parse_date(args.date)
                 date_flag_used = True
             except ValueError:
-                print(f"Error: Invalid date '{args.date}'.", file=sys.stderr)
+                print(
+                    f"Error: Invalid date '{args.date}'. Expected a "
+                    "weekday, 'today'/'tomorrow'/'yesterday', or "
+                    "YYYY-MM-DD (partial: MM-DD or DD).",
+                    file=sys.stderr
+                )
                 sys.exit(1)
         elif args.offset:
             target_date += datetime.timedelta(days=args.offset)
