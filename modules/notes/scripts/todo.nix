@@ -2,19 +2,46 @@
 
 pkgs.writers.writePython3Bin "todo" { } ''
     import os
+    import re
     import sys
     import datetime
     import argparse
     import subprocess
 
-    # Configuration for input parsing
-    INPUT_DESC_PREFIX = "--"
-    INPUT_SUB_PREFIX = "-"
-
     # Configuration for output formatting
-    OUT_TODO = "- [ ] "
-    OUT_NOTE = "    - "
-    OUT_SUBTODO = "    - [ ] "
+    INDENT_UNIT = "    "
+
+
+    def parse_prefixed_line(stripped):
+        """Parse leading nesting/description markers off an input line.
+
+        Each level of nesting is marked by a "-" character, e.g.
+        "- foo" is a sub-todo and "- - foo" (equivalently "--foo" or
+        any mix of spacing, like "- -foo") is a sub-sub-todo. A "."
+        right after the nesting markers turns the line into a
+        description/note attached to the item at that depth instead
+        of a new item, e.g. ". note" is a note on the last
+        top-level item and "- . note" (or "-. note", "-.note", ...)
+        is a note on the last sub-todo. Whitespace around the
+        markers is optional and ignored; the returned content is
+        always trimmed of surrounding whitespace.
+
+        Returns (depth, is_desc, content).
+        """
+        match = re.match(r"^((?:-\s*)*)(\.)?\s*(.*)$", stripped)
+        markers, dot, content = match.groups()
+        depth = markers.count("-")
+        is_desc = dot is not None
+        return depth, is_desc, content.strip()
+
+
+    def format_output_line(depth, is_desc, content):
+        if is_desc:
+            indent = INDENT_UNIT * (depth + 1)
+            return f"{indent}- {content}"
+        indent = INDENT_UNIT * depth
+        return f"{indent}- [ ] {content}"
+
 
     # Target marker in the file (if found, insert after this line)
     TODO_MARKER = "%%insert_todo%%"
@@ -384,23 +411,17 @@ pkgs.writers.writePython3Bin "todo" { } ''
             if not stripped:
                 continue
 
-            is_desc = stripped.startswith(INPUT_DESC_PREFIX)
-            is_sub = stripped.startswith(INPUT_SUB_PREFIX) and not is_desc
-
             if not output_lines:
-                is_desc = is_sub = False
-
-            if is_desc:
-                content = stripped[len(INPUT_DESC_PREFIX):].strip()
-                output_lines.append(f"{OUT_NOTE}{content}")
-            elif is_sub:
-                content = stripped[len(INPUT_SUB_PREFIX):].strip()
-                output_lines.append(f"{OUT_SUBTODO}{content}")
+                # The very first line is always a new top-level todo,
+                # regardless of any leading "-"/"." markers.
+                depth, is_desc, content = 0, False, stripped
             else:
-                task_line = f"{OUT_TODO}{stripped}"
-                if due_suffix and "📅" not in task_line:
-                    task_line += due_suffix
-                output_lines.append(task_line)
+                depth, is_desc, content = parse_prefixed_line(stripped)
+
+            out_line = format_output_line(depth, is_desc, content)
+            if not is_desc and depth == 0 and due_suffix and "📅" not in out_line:
+                out_line += due_suffix
+            output_lines.append(out_line)
 
         # Write to file
         try:
