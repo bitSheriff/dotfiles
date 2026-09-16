@@ -298,17 +298,24 @@ pkgs.writers.writePython3Bin "todo" { } ''
 
         # Get task input
         if args.task:
-            input_text = " ".join(args.task)
+            # POSIX-style argument handling: each positional argument is
+            # its own task/line (so `todo a b c` makes three todos, while
+            # `todo "a b c"` - a single shell-quoted argument - makes one).
+            lines = [
+                sub_line
+                for arg in args.task
+                for sub_line in (arg.splitlines() or [arg])
+            ]
         else:
             if sys.stdin.isatty():
                 print(
                     "Enter todo (blank line, or Ctrl+D, to finish; "
                     "Ctrl+C to cancel):"
                 )
-                lines = []
+                input_lines = []
                 while True:
                     try:
-                        prompt = "Todo: " if not lines else "      "
+                        prompt = "Todo: " if not input_lines else "      "
                         line = input(prompt)
                     except EOFError:
                         print()
@@ -320,20 +327,25 @@ pkgs.writers.writePython3Bin "todo" { } ''
                         # A blank line finishes input, same as Ctrl+D - but
                         # only once something has actually been entered, so
                         # an accidental first Enter doesn't exit early.
-                        if lines:
+                        if input_lines:
                             break
                         continue
-                    lines.append(line)
-                input_text = "\n".join(lines).strip()
+                    input_lines.append(line)
+                input_text = "\n".join(input_lines).strip()
             else:
                 input_text = sys.stdin.read().strip()
 
-        if not input_text:
+            if not input_text:
+                print("Error: No task content provided.", file=sys.stderr)
+                sys.exit(1)
+
+            lines = input_text.splitlines()
+
+        if not any(line.strip() for line in lines):
             print("Error: No task content provided.", file=sys.stderr)
             sys.exit(1)
 
         # Prepare output lines
-        lines = input_text.splitlines()
         output_lines = []
 
         for line in lines:
