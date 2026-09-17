@@ -100,8 +100,20 @@
 
     };
 
-    browser.qutebrowser.enable = true;
-    browser.chromium.enable = true;
+    browser = {
+      qutebrowser.enable = true;
+      chromium.enable = true;
+
+      webapps = [
+        {
+          name = "Home Assistant";
+          url = "https://home.mandl-meyer.me";
+          icon = "homeassistant";
+        }
+      ];
+
+    };
+
     desktop.hyprland.enable = true;
 
     office = {

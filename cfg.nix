@@ -526,6 +526,80 @@ in
           description = "Install and configure Chromium (modules/chromium.nix).";
         };
       };
+
+      webapps = mkOption {
+        default = [ ];
+        description = ''
+          Websites to expose as if they were native apps in the launcher
+          (modules/chromium.nix). Each entry gets its own chromeless
+          `chromium --app=<url>` window, its own isolated profile dir
+          (cookies/sessions not shared with normal browsing or other
+          webapps), and its own `.desktop` entry + taskbar window class,
+          so it shows up in fuzzel/wofi/rofi like a real application.
+
+          Requires `cfg.browser.chromium.enable`.
+        '';
+        example = literalExpression ''
+          [
+            {
+              name = "WhatsApp";
+              url = "https://web.whatsapp.com";
+              icon = "whatsapp";
+            }
+          ]
+        '';
+        type = types.listOf (
+          types.submodule (
+            { config, ... }:
+            {
+              options = {
+                name = mkOption {
+                  type = types.str;
+                  description = "Display name shown in the launcher.";
+                };
+
+                url = mkOption {
+                  type = types.str;
+                  description = "URL opened in the chromeless app window.";
+                };
+
+                id = mkOption {
+                  type = types.str;
+                  default = lib.strings.toLower (
+                    builtins.replaceStrings [ " " ] [ "-" ] config.name
+                  );
+                  defaultText = literalExpression "slug of `name`";
+                  description = ''
+                    Identifier used for the `.desktop` file name, the
+                    window class (`--class`/`StartupWMClass`) and the
+                    isolated profile directory
+                    (`~/.local/share/webapps/<id>`). Override if the
+                    auto-generated slug collides or looks wrong.
+                  '';
+                };
+
+                icon = mkOption {
+                  type = types.nullOr (types.either types.str types.path);
+                  default = null;
+                  description = ''
+                    Icon theme name, or a path to an icon file. Falls back
+                    to a generic web-browser icon when unset.
+                  '';
+                };
+
+                categories = mkOption {
+                  type = types.listOf types.str;
+                  default = [
+                    "Network"
+                    "WebBrowser"
+                  ];
+                  description = "Desktop entry categories.";
+                };
+              };
+            }
+          )
+        );
+      };
     };
 
     #############
