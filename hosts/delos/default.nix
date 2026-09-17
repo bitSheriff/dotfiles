@@ -86,6 +86,7 @@
     };
 
     browser.qutebrowser.enable = true;
+    browser.chromium.enable = true;
     desktop.hyprland.enable = true;
 
     office = {

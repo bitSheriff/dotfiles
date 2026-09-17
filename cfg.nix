@@ -518,6 +518,14 @@ in
           description = "Install and configure qutebrowser.";
         };
       };
+
+      chromium = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install and configure Chromium (modules/chromium.nix).";
+        };
+      };
     };
 
     #############

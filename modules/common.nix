@@ -20,6 +20,7 @@
     ./global-sops.nix
     ./keyboards.nix
     ./firefox
+    ./chromium.nix
   ];
 
   # Bootloader
