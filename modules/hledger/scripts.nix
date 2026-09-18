@@ -185,8 +185,12 @@ rec {
 
     # Check if file argument is provided
     if [ $# -eq 0 ]; then
-        echo "Usage: $0 <file> [date]"
-        echo "  date: optional, ISO format (YYYY-MM-DD), defaults to today"
+        echo "Usage: $0 <file> [date] [account] [amount] [comment]"
+        echo "  date:    optional, ISO format (YYYY-MM-DD), defaults to today"
+        echo "  account, amount, comment: optional; when account AND amount are"
+        echo "           both given, the entry is added non-interactively"
+        echo "           (comment stays optional even then). Otherwise any"
+        echo "           missing value is prompted for via gum/fzf."
         exit 1
     fi
 
@@ -209,50 +213,72 @@ rec {
         DATE=$(date +%Y-%m-%d)
     fi
 
-    # Get inputs using gum if available, otherwise fallback to fzf/read
-    if command -v gum >/dev/null 2>&1; then
-        # Select account using hledger (this file + siblings) and gum
-        ACCOUNT=$(hl-accounts "$FILE" | gum filter --no-strict --placeholder "Select account")
+    # Optional non-interactive arguments: account, amount, comment. Used by
+    # callers (e.g. timedot-timer) that already know what to log and don't
+    # want an interactive prompt.
+    ACCOUNT="''${3:-}"
+    AMOUNT="''${4:-}"
+    COMMENT="''${5:-}"
 
-        # Exit if no account selected (e.g., user pressed Esc)
-        if [ -z "$ACCOUNT" ]; then
-            exit 0
-        fi
+    # Get inputs using gum if available, otherwise fallback to fzf/read -
+    # but only for whichever of account/amount was not already supplied.
+    if [ -z "$ACCOUNT" ] || [ -z "$AMOUNT" ]; then
+        if command -v gum >/dev/null 2>&1; then
+            # Select account using hledger (this file + siblings) and gum
+            if [ -z "$ACCOUNT" ]; then
+                ACCOUNT=$(hl-accounts "$FILE" | gum filter --no-strict --placeholder "Select account")
 
-        # Ask for amount using gum
-        AMOUNT=$(gum input --placeholder "Amount")
+                # Exit if no account selected (e.g., user pressed Esc)
+                if [ -z "$ACCOUNT" ]; then
+                    exit 0
+                fi
+            fi
 
-        # Exit if no amount entered
-        if [ -z "$AMOUNT" ]; then
-            exit 0
-        fi
+            # Ask for amount using gum
+            if [ -z "$AMOUNT" ]; then
+                AMOUNT=$(gum input --placeholder "Amount")
 
-        # Ask for optional comment using gum
-        COMMENT=$(gum input --placeholder "Comment (optional)")
-    else
-        # Fallback to fzf for account selection
-        if command -v fzf >/dev/null 2>&1; then
-            ACCOUNT=$(hl-accounts "$FILE" | fzf --header "Select account")
+                # Exit if no amount entered
+                if [ -z "$AMOUNT" ]; then
+                    exit 0
+                fi
+            fi
+
+            # Ask for optional comment using gum (only if not already supplied)
+            if [ -z "$COMMENT" ]; then
+                COMMENT=$(gum input --placeholder "Comment (optional)")
+            fi
         else
-            echo "Error: Neither gum nor fzf found for account selection"
-            exit 1
+            # Fallback to fzf for account selection
+            if [ -z "$ACCOUNT" ]; then
+                if command -v fzf >/dev/null 2>&1; then
+                    ACCOUNT=$(hl-accounts "$FILE" | fzf --header "Select account")
+                else
+                    echo "Error: Neither gum nor fzf found for account selection"
+                    exit 1
+                fi
+
+                # Exit if no account selected
+                if [ -z "$ACCOUNT" ]; then
+                    exit 0
+                fi
+            fi
+
+            # Ask for amount using normal input
+            if [ -z "$AMOUNT" ]; then
+                read -p "Amount: " AMOUNT
+
+                # Exit if no amount entered
+                if [ -z "$AMOUNT" ]; then
+                    exit 0
+                fi
+            fi
+
+            # Ask for optional comment using normal input (only if not already supplied)
+            if [ -z "$COMMENT" ]; then
+                read -p "Comment (optional): " COMMENT
+            fi
         fi
-
-        # Exit if no account selected
-        if [ -z "$ACCOUNT" ]; then
-            exit 0
-        fi
-
-        # Ask for amount using normal input
-        read -p "Amount: " AMOUNT
-
-        # Exit if no amount entered
-        if [ -z "$AMOUNT" ]; then
-            exit 0
-        fi
-
-        # Ask for optional comment using normal input
-        read -p "Comment (optional): " COMMENT
     fi
 
     # hledger's timedot amounts only understand plain hours (5.4) or
@@ -408,6 +434,117 @@ rec {
 
         # Clock out the same project/file
         timeclock-add "$FILE" o "$ACCOUNT"
+      '';
+    };
+
+  # Like timeclock-timer, but logs to a timedot FILE instead of a timeclock
+  # FILE. Unlike timeclock-timer (which just records wall-clock in/out
+  # timestamps), this reads termdown's own elapsed-time summary, which
+  # excludes any time spent paused (SPACE to pause/resume). That's the main
+  # advantage over clktimer: you can pause the stopwatch (e.g. for a break)
+  # without inflating the logged duration.
+  timedot-timer =
+    let
+      # The TUI timer command. Change this to swap out the timer. termdown
+      # with no time argument runs as a stopwatch counting forward (press
+      # SPACE to pause/resume, Q to quit).
+      timerCmd = "termdown";
+    in
+    pkgs.writeShellApplication {
+      name = "timedot-timer";
+      runtimeInputs = with pkgs; [
+        hledger
+        gum
+        fzf
+        termdown
+        gawk
+        coreutils
+        gnugrep
+        timedot-add
+        hl-accounts
+      ];
+      text = ''
+        # The timer command is kept in a variable so it can be changed easily.
+        TIMER_CMD="${timerCmd}"
+
+        # Check if file argument is provided
+        if [ $# -eq 0 ]; then
+            echo "Usage: $0 <file>"
+            echo "  Runs a pausable stopwatch (SPACE to pause/resume, Q to quit)."
+            echo "  On quit, the elapsed time (excluding any paused time),"
+            echo "  rounded to whole minutes, is logged to the timedot FILE."
+            exit 1
+        fi
+
+        FILE="$1"
+
+        # Check if file exists
+        if [ ! -f "$FILE" ]; then
+            echo "File not found: $FILE"
+            exit 1
+        fi
+
+        # Select the account/project (same selection as timeclock-timer)
+        EXISTING_ACCOUNTS=$(hl-accounts "$FILE" 2>/dev/null || true)
+
+        ACCOUNT=""
+        if command -v gum >/dev/null 2>&1; then
+            if [ -z "$EXISTING_ACCOUNTS" ]; then
+                ACCOUNT=$(gum input --placeholder "New file. Enter account name:")
+            else
+                ACCOUNT=$(echo "$EXISTING_ACCOUNTS" | gum filter --no-strict --placeholder "Select or type account")
+            fi
+        elif command -v fzf >/dev/null 2>&1; then
+            if [ -z "$EXISTING_ACCOUNTS" ]; then
+                printf "New file. Enter account name: "
+                read -r ACCOUNT
+            else
+                # --print-query allows typing a new account not in the list. tail -1 grabs either the selection or the typed query.
+                ACCOUNT=$(echo "$EXISTING_ACCOUNTS" | fzf --header "Select account (or type new & press Enter)" --print-query | tail -1)
+            fi
+        else
+            echo "Error: neither gum nor fzf found for selection"
+            exit 1
+        fi
+
+        # Exit if no account selected (e.g. user pressed Esc)
+        if [ -z "$ACCOUNT" ]; then
+            exit 0
+        fi
+
+        # Run the stopwatch. termdown's curses UI talks to the controlling
+        # terminal directly, so redirecting only stderr here does not
+        # disturb the display. On quit (Q), termdown writes a single
+        # tab-separated summary line to stderr:
+        #   "<seconds.millis>\t<H:MM:SS>\ttotal"
+        # Pausing (SPACE) freezes that elapsed count, so time spent paused
+        # is never included - unlike timeclock-timer, which only records
+        # wall-clock in/out timestamps.
+        STDERR_FILE=$(mktemp)
+        trap 'rm -f "$STDERR_FILE"' EXIT
+
+        "$TIMER_CMD" 2>"$STDERR_FILE" || true
+
+        SUMMARY_LINE=$(grep -F "$(printf '\ttotal')" "$STDERR_FILE" | tail -n 1)
+
+        if [ -z "$SUMMARY_LINE" ]; then
+            echo "Could not determine elapsed time from termdown output; nothing logged." >&2
+            exit 1
+        fi
+
+        SECONDS_ELAPSED=$(printf '%s' "$SUMMARY_LINE" | cut -f1)
+
+        # Round to the nearest whole minute.
+        MINUTES=$(awk -v s="$SECONDS_ELAPSED" 'BEGIN { printf "%d", (s / 60) + 0.5 }')
+
+        if [ "$MINUTES" -le 0 ]; then
+            echo "Elapsed time (''${SECONDS_ELAPSED}s) rounds to 0 minutes; nothing logged."
+            exit 0
+        fi
+
+        # Empty date arg means "today"; timedot-add skips prompting once
+        # both account and amount are supplied.
+        timedot-add "$FILE" "" "$ACCOUNT" "''${MINUTES}m"
       '';
     };
 

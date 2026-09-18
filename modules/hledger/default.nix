@@ -26,6 +26,7 @@ in
       timeclock-add
       timeclock-timer
       timedot-add
+      timedot-timer
       hl-update-prices
     ]);
 
@@ -64,6 +65,7 @@ in
     clkin = "FILE=$(fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-add \"\$FILE\" i";
     clkout = "FILE=$(fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-add \"\$FILE\" o";
     clktimer = "FILE=$(fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-timer \"\$FILE\"";
+    tdatimer = "FILE=$(fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=timedot --type f | fzf) && [ -n \"\$FILE\" ] && timedot-timer \"\$FILE\"";
 
     # Uni
     tdauni = "timedot-add \${TIMEDOT_SEMESTER_FILE}";
