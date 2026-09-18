@@ -10,6 +10,16 @@ let
   # The scripts themselves live in ./scripts.nix so the nix-on-droid host
   # (../../hosts/android) can reuse them without the NixOS module system.
   scripts = import ./scripts.nix { inherit pkgs; };
+
+  # Shell snippet that picks a timedot/timeclock file via fd + fzf, scoped to
+  # the current year (or the "uni" subfolder) under $TIMEDOT_PATH. Defined
+  # once here (pure Nix string substitution, not a shell variable) so every
+  # alias below stays in sync when the picker logic changes.
+  pickFile =
+    extension:
+    "fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=${extension} --type f | fzf";
+  pickTimedotFile = pickFile "timedot";
+  pickTimeclockFile = pickFile "timeclock";
 in
 {
   environment.systemPackages =
@@ -61,11 +71,11 @@ in
     td = "hledger -f \${TIMEDOT_ALL_FILE}";
     tde = "(cd $TIMEDOT_PATH && nvim $(fd -t f -e timedot -e timeclock -E .stversions | fzf))";
     tda = "timedot-add \${TIMEDOT_FILE}";
-    tdaa = "FILE=$(fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=timedot --type f | fzf) && [ -n \"\$FILE\" ] && timedot-add \"\$FILE\"";
-    clkin = "FILE=$(fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-add \"\$FILE\" i";
-    clkout = "FILE=$(fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-add \"\$FILE\" o";
-    clktimer = "FILE=$(fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=timeclock --type f | fzf) && [ -n \"\$FILE\" ] && timeclock-timer \"\$FILE\"";
-    tdatimer = "FILE=$(fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=timedot --type f | fzf) && [ -n \"\$FILE\" ] && timedot-timer \"\$FILE\"";
+    tdaa = "FILE=$(${pickTimedotFile}) && [ -n \"\$FILE\" ] && timedot-add \"\$FILE\"";
+    clkin = "FILE=$(${pickTimeclockFile}) && [ -n \"\$FILE\" ] && timeclock-add \"\$FILE\" i";
+    clkout = "FILE=$(${pickTimeclockFile}) && [ -n \"\$FILE\" ] && timeclock-add \"\$FILE\" o";
+    clktimer = "FILE=$(${pickTimeclockFile}) && [ -n \"\$FILE\" ] && timeclock-timer \"\$FILE\"";
+    tdatimer = "FILE=$(${pickTimedotFile}) && [ -n \"\$FILE\" ] && timedot-timer \"\$FILE\"";
 
     # Uni
     tdauni = "timedot-add \${TIMEDOT_SEMESTER_FILE}";
