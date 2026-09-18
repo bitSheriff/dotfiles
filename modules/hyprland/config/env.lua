@@ -16,8 +16,13 @@ hl.env("WEBKIT_DISABLE_DMABUF_RENDERER", "1")
 -- home-manager's `useUserPackages = true` writes xdg.desktopEntries
 -- (e.g. modules/chromium.nix webapps), so without it launchers like
 -- noctalia/fuzzel silently can't see any home-manager-generated .desktop file.
+-- NOTE: hl.env values are NOT shell-expanded (Hyprland just passes the
+-- literal string through), so $HOME/$USER must be resolved here in Lua
+-- via os.getenv(), not embedded as shell syntax.
+local home = os.getenv("HOME")
+local user = os.getenv("USER")
 hl.env(
   "XDG_DATA_DIRS",
-  "$HOME/.nix-profile/share:$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/etc/profiles/per-user/$USER/share:/run/current-system/sw/share:/usr/local/share:/usr/share"
+  home .. "/.nix-profile/share:" .. home .. "/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/etc/profiles/per-user/" .. user .. "/share:/run/current-system/sw/share:/usr/local/share:/usr/share"
 )
 hl.env("PATH", "/home/benjamin/.local/share/bin:/home/benjamin/.local/bin:" .. (os.getenv("PATH") or ""))
