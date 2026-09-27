@@ -100,7 +100,7 @@ hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 5%+"), { repea
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { repeating = true, locked = true })
 hl.bind("SHIFT + XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 10%+"), { repeating = true, locked = true })
 hl.bind("SHIFT + XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 10%-"), { repeating = true, locked = true })
-hl.bind("SUPER + R", hl.dsp.exec_cmd("~/.local/bin/wm-reload"))
+hl.bind("SUPER + R", hl.dsp.exec_cmd("koreader"))
 hl.bind("SUPER + SHIFT + Q", hl.dsp.window.close())
 hl.bind("XF86AudioMedia", hl.dsp.exec_cmd("noctalia-shell ipc call controlCenter toggle"))
 hl.bind("SHIFT + XF86AudioMedia", hl.dsp.exec_cmd("noctalia-shell ipc call sessionMenu toggle"))
