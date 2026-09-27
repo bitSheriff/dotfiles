@@ -128,6 +128,7 @@ in
     environment.systemPackages =
       with pkgs;
       [
+        exiftool # read and write metadata
         # Image & Graphics
         # gimp # like photoshop but without selling your soul
         # inkscape
@@ -152,6 +153,7 @@ in
         digest-mp3s
       ]
       ++ lib.optionals config.cfg.multimedia.ebooks.enable [
+        exiftool # read and write metadata
         foliate # ebook reader
       ]
       ++ lib.optionals config.cfg.multimedia.comics.enable [
