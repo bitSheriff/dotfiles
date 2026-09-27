@@ -111,7 +111,10 @@
 
     multimedia = {
       enable = true;
-      ebooks.enable = true;
+      ebooks = {
+        enable = true;
+        koreader.enable = true;
+      };
       eilmeldung.enable = true;
     };
 

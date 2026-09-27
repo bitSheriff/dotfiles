@@ -156,6 +156,9 @@ in
         exiftool # read and write metadata
         foliate # ebook reader
       ]
+      ++ lib.optionals config.cfg.multimedia.ebooks.koreader.enable [
+        koreader
+      ]
       ++ lib.optionals config.cfg.multimedia.comics.enable [
         yacreader # comic reader
       ]

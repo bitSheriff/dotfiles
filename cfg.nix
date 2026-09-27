@@ -311,6 +311,14 @@ in
           default = false;
           description = "Enable ebook reading";
         };
+
+        koreader = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Enable KOReader";
+          };
+        };
       };
 
       comics = {
@@ -565,9 +573,7 @@ in
 
                 id = mkOption {
                   type = types.str;
-                  default = lib.strings.toLower (
-                    builtins.replaceStrings [ " " ] [ "-" ] config.name
-                  );
+                  default = lib.strings.toLower (builtins.replaceStrings [ " " ] [ "-" ] config.name);
                   defaultText = literalExpression "slug of `name`";
                   description = ''
                     Identifier used for the `.desktop` file name, the
