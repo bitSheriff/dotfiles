@@ -70,135 +70,119 @@ in
   ##################
   home-manager.users.benjamin =
     lib.mkIf (lib.elem "benjamin" activeUsers && config.cfg.socials.irc.enable)
-      ({ config, ... }: {
+      (
+        { config, ... }: {
 
-      programs.halloy = {
-        enable = true;
-        settings = {
-          theme = "booberry";
-          font = {
-            family = "Comic Mono";
-            size = 15;
-          };
-          runtime.backend.hardware = "best";
-          servers = {
-            # liberachat = {
-            #   server = "irc.libera.chat";
-            #   channels = [
-            #     "#halloy"
-            #     "#nixos"
-            #     "#technicalrenaissance" # Joshua Blais Community
-            #   ];
-            #   nickname = "bitSheriff";
-            #   alt_nicks = [
-            #     "bitSheriff_"
-            #     "bitSheriff__"
-            #   ];
-            #
-            #   # Authentication with SSL
-            #   sasl.external = {
-            #     cert = "${config.sops.secrets.irc_libera_cert.path}";
-            #     key = "${config.sops.secrets.irc_libera_key.path}";
-            #   };
-            #   # send messages on sever connect event
-            #   on_connect = [
-            #     "/mode bitSheriff +x" # hide your IP
-            #   ];
-            # };
-
-            soju = {
-              server = "irc.lowlevelkings.xyz";
-              nickname = "bitSheriff";
-              port = 6697;
-              use_tls = true;
-              use_websocket = false;
-              websocket_path = "/socket";
-              sasl.plain = {
-                username = "bitSheriff";
-                password_file = "${config.sops.secrets.irc_soju_password.path}";
+          programs.halloy = {
+            enable = true;
+            settings = {
+              theme = "booberry";
+              font = {
+                family = "Comic Mono";
+                size = 15;
               };
-              channels = [
-                "#halloy"
-                "#nixos"
-                "#technicalrenaissance" # Joshua Blais Community
-              ];
-            };
+              runtime.backend.hardware = "best";
+              servers = {
+                # liberachat = {
+                #   server = "irc.libera.chat";
+                #   channels = [
+                #     "#halloy"
+                #     "#nixos"
+                #     "#technicalrenaissance" # Joshua Blais Community
+                #   ];
+                #   nickname = "bitSheriff";
+                #   alt_nicks = [
+                #     "bitSheriff_"
+                #     "bitSheriff__"
+                #   ];
+                #
+                #   # Authentication with SSL
+                #   sasl.external = {
+                #     cert = "${config.sops.secrets.irc_libera_cert.path}";
+                #     key = "${config.sops.secrets.irc_libera_key.path}";
+                #   };
+                #   # send messages on sever connect event
+                #   on_connect = [
+                #     "/mode bitSheriff +x" # hide your IP
+                #   ];
+                # };
 
-            twitch = {
-              name = "Twitch";
-              server = "irc.chat.twitch.tv";
-              port = 6697;
-              nickname = "banschomin";
-              password_file = "${config.sops.secrets.irc_twitch_banschomin.path}";
-              tls = true;
+                soju = {
+                  server = "irc.lowlevelkings.xyz";
+                  nickname = "bitSheriff";
+                  port = 6697;
+                  use_tls = true;
+                  use_websocket = false;
+                  websocket_path = "/socket";
+                  sasl.plain = {
+                    username = "bitSheriff";
+                    password_file = "${config.sops.secrets.irc_soju_password.path}";
+                  };
+                  channels = [
+                    "#halloy"
+                    "#nixos"
+                    "#technicalrenaissance" # Joshua Blais Community
+                  ];
+                };
 
+                twitch = {
+                  name = "Twitch";
+                  server = "irc.chat.twitch.tv";
+                  port = 6697;
+                  nickname = "banschomin";
+                  password_file = "${config.sops.secrets.irc_twitch_banschomin.path}";
+                  tls = true;
+
+                };
+              };
+              buffer = {
+                nickname = {
+                  # hide the nickname if the user writes (consecutive) within 2m
+                  hide_consecutive.enabled = {
+                    smart = 2 * 60;
+                  };
+                  brackets = {
+                    left = "<";
+                    right = ">";
+                  };
+                };
+              };
             };
           };
-          buffer = {
-            nickname = {
-              # hide the nickname if the user writes (consecutive) within 2m
-              hide_consecutive.enabled = {
-                smart = 2 * 60;
-              };
-              brackets = {
-                left = "<";
-                right = ">";
-              };
+
+          xdg.mimeApps = {
+            enable = true;
+            defaultApplications = {
+              "x-scheme-handler/irc" = [ "halloy.desktop" ];
+              "x-scheme-handler/ircs" = [ "halloy.desktop" ];
             };
           };
-        };
-      };
 
-      xdg.desktopEntries.halloy = {
-        name = "Halloy";
-        genericName = "IRC Client";
-        comment = "IRC client written in Rust";
-        exec = "halloy";
-        icon = "org.squidowl.halloy";
-        terminal = false;
-        categories = [
-          "Network"
-          "Chat"
-          "InstantMessaging"
-        ];
-        mimeType = [
-          "x-scheme-handler/irc"
-          "x-scheme-handler/ircs"
-        ];
-      };
+          xdg.configFile = {
+            "halloy/themes/booberry.toml".source =
+              (pkgs.formats.toml { }).generate "booberry.toml"
+                theme_booberry;
+          };
 
-      xdg.mimeApps = {
-        enable = true;
-        defaultApplications = {
-          "x-scheme-handler/irc" = [ "halloy.desktop" ];
-          "x-scheme-handler/ircs" = [ "halloy.desktop" ];
-        };
-      };
-
-      xdg.configFile = {
-        "halloy/themes/booberry.toml".source =
-          (pkgs.formats.toml { }).generate "booberry.toml"
-            theme_booberry;
-      };
-
-      # Secret defined inside Home Manager
-      sops.secrets = {
-        irc_libera_cert = {
-          sopsFile = ../encrypted/secrets.yaml;
-          key = "irc/liberachat/cert";
-        };
-        irc_libera_key = {
-          sopsFile = ../encrypted/secrets.yaml;
-          key = "irc/liberachat/key";
-        };
-        irc_twitch_banschomin = {
-          sopsFile = ../encrypted/secrets.yaml;
-          key = "irc/twitch/banschomin";
-        };
-        irc_soju_password = {
-          sopsFile = ../encrypted/secrets.yaml;
-          key = "irc/soju/password";
-        };
-      };
-      });
+          # Secret defined inside Home Manager
+          sops.secrets = {
+            irc_libera_cert = {
+              sopsFile = ../encrypted/secrets.yaml;
+              key = "irc/liberachat/cert";
+            };
+            irc_libera_key = {
+              sopsFile = ../encrypted/secrets.yaml;
+              key = "irc/liberachat/key";
+            };
+            irc_twitch_banschomin = {
+              sopsFile = ../encrypted/secrets.yaml;
+              key = "irc/twitch/banschomin";
+            };
+            irc_soju_password = {
+              sopsFile = ../encrypted/secrets.yaml;
+              key = "irc/soju/password";
+            };
+          };
+        }
+      );
 }
