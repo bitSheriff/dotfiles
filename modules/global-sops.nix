@@ -21,20 +21,24 @@ let
 
     text = ''
       if [ "''${1:-}" = "-h" ] || [ "''${1:-}" = "--help" ]; then
-        echo "Usage: sops-pass [path/to/secrets.yaml]"
-        echo "Flattens a SOPS encrypted YAML file, prompts you via fzf,"
+        echo "Usage: sops-pass [path/to/secrets.txt]"
+        echo "Decrypts a SOPS opaque-binary secrets file, prompts you via fzf,"
         echo "and copies the decrypted value directly to your clipboard."
         exit 0
       fi
 
-      SECRETS_FILE="''${1:-${../encrypted/logins.yaml}}"
+      SECRETS_FILE="''${1:-${../encrypted/logins.txt}}"
 
       if [ ! -f "$SECRETS_FILE" ]; then
         echo "Error: Secrets file '$SECRETS_FILE' not found." >&2
         exit 1
       fi
 
-      DECRYPTED_JSON=$(sops --decrypt --input-type yaml --output-type json "$SECRETS_FILE")
+      # The file is stored as an opaque binary blob (not structured sops
+      # yaml/json) so that key names - which services/logins even exist -
+      # aren't leaked in cleartext alongside the encrypted values. Decrypting
+      # it just returns the original JSON content, which we then parse with jq.
+      DECRYPTED_JSON=$(sops --decrypt --input-type binary --output-type binary "$SECRETS_FILE")
 
       SELECTED_KEY=$(echo "$DECRYPTED_JSON" | jq -r '
         paths(scalars) 
@@ -69,20 +73,22 @@ let
 
     text = ''
       if [ "''${1:-}" = "-h" ] || [ "''${1:-}" = "--help" ]; then
-        echo "Usage: sops-otp [path/to/secrets.yaml]"
+        echo "Usage: sops-otp [path/to/secrets.txt]"
         echo "Filters for OTP secrets, generates a TOTP 2FA code via fzf,"
         echo "and copies the token directly to your clipboard."
         exit 0
       fi
 
-      SECRETS_FILE="''${1:-${../encrypted/logins.yaml}}"
+      SECRETS_FILE="''${1:-${../encrypted/logins.txt}}"
 
       if [ ! -f "$SECRETS_FILE" ]; then
         echo "Error: Secrets file '$SECRETS_FILE' not found." >&2
         exit 1
       fi
 
-      DECRYPTED_JSON=$(sops --decrypt --input-type yaml --output-type json "$SECRETS_FILE")
+      # See sops-pass above: the file is an opaque binary blob so no login
+      # names leak in cleartext; decrypting returns the original JSON.
+      DECRYPTED_JSON=$(sops --decrypt --input-type binary --output-type binary "$SECRETS_FILE")
       SELECTED_KEY=$(echo "$DECRYPTED_JSON" | jq -r '
         paths(scalars) 
         | select(.[0] != "sops") 
