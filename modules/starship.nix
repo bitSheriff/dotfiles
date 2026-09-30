@@ -2,14 +2,23 @@
   config,
   pkgs,
   lib,
+  activeUsers,
   ...
 }:
 
 {
-  programs.starship = {
-    enable = true;
+  # Lives under home-manager (not NixOS-level programs.starship) so it
+  # merges with Stylix's starship target (modules/stylix, which only sets
+  # the home-manager-level programs.starship.settings.palette/palettes).
+  # A NixOS-level config here would be shadowed by home-manager's own
+  # generated starship.toml as soon as anything (Stylix included) makes
+  # home-manager's settings non-empty.
+  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+    programs.starship = {
+      enable = true;
+      enableZshIntegration = true;
 
-    settings = {
+      settings = {
       format = lib.concatStrings [
         "[](#CC16C3)"
         "$status"
@@ -254,6 +263,7 @@
         format = "[\\[$symbol$common_meaning$signal_name$maybe_int\\]]($style) ";
         map_symbol = true;
         disabled = true;
+      };
       };
     };
   };

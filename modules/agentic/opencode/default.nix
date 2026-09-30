@@ -51,11 +51,12 @@
         };
 
         # settings in `tui.json`
+        # theme is owned by Stylix (modules/stylix) - do not set tui.theme
+        # here, it conflicts.
         tui = {
           keybinds = {
             leader = "alt+b";
           };
-          theme = "kanagawa";
           diff_style = "auto";
           mouse = true;
           icons = true;

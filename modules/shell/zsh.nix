@@ -210,10 +210,8 @@ in
           silent = true;
         };
 
-        programs.starship = {
-          enable = true;
-          enableZshIntegration = true;
-        };
+        # Full config (settings, enable, enableZshIntegration) lives in
+        # ../starship.nix, imported above.
 
         programs.fzf = {
           enable = true;

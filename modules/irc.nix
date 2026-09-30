@@ -6,60 +6,6 @@
   activeUsers,
   ...
 }:
-let
-  theme_booberry = {
-    general = {
-      background = "#452859";
-      border = "#DBBFEF";
-      horizontal_rule = "#54326F";
-      unread_indicator = "#36BF86";
-    };
-
-    text = {
-      primary = "#D8C8F3";
-      secondary = "#AD96BE";
-      tertiary = "#ECCDBA";
-      success = "#A0F28F";
-      error = "#F47868";
-    };
-
-    buffer = {
-      action = "#E8DCA0";
-      background = "#3A224C";
-      background_text_input = "#311D41";
-      background_title_bar = "#362047";
-      border = "#00000000";
-      border_selected = "#A4A0E8";
-      code = "#CCCCCC";
-      highlight = "#64546F";
-      nickname = "#A0F28F";
-      selection = "#50496D";
-      timestamp = "#806D8D";
-      topic = "#DBBFEF";
-      url = "#82CECF";
-
-      server_messages = {
-        default = "#FFCD1D";
-      };
-    };
-
-    buttons = {
-      primary = {
-        background = "#00000000";
-        background_hover = "#4F2E65";
-        background_selected = "#54316C";
-        background_selected_hover = "#56326E";
-      };
-
-      secondary = {
-        background = "#3F2653";
-        background_hover = "#44295A";
-        background_selected = "#857293";
-        background_selected_hover = "#C1A8D3";
-      };
-    };
-  };
-in
 {
   imports = [ ];
 
@@ -71,17 +17,19 @@ in
   home-manager.users.benjamin =
     lib.mkIf (lib.elem "benjamin" activeUsers && config.cfg.socials.irc.enable)
       (
-        { config, ... }: {
+        { config, osConfig, ... }: {
 
+          # Theme is owned by Stylix (modules/stylix) - do not set
+          # settings.theme here, it conflicts. Font family is Stylix's too;
+          # only the size is overridden below - halloy reads a bit small at
+          # the shared cfg.stylix.fontsize, so bump it here rather than in
+          # modules/stylix (which would affect every app using
+          # fonts.sizes.applications, not just halloy).
           programs.halloy = {
             enable = true;
             settings = {
-              theme = "booberry";
-              font = {
-                family = "Comic Mono";
-                size = 15;
-              };
               runtime.backend.hardware = "best";
+              font.size = lib.mkForce (osConfig.cfg.stylix.fontsize + 2);
               servers = {
                 # liberachat = {
                 #   server = "irc.libera.chat";
@@ -156,12 +104,6 @@ in
               "x-scheme-handler/irc" = [ "halloy.desktop" ];
               "x-scheme-handler/ircs" = [ "halloy.desktop" ];
             };
-          };
-
-          xdg.configFile = {
-            "halloy/themes/booberry.toml".source =
-              (pkgs.formats.toml { }).generate "booberry.toml"
-                theme_booberry;
           };
 
           # Secret defined inside Home Manager

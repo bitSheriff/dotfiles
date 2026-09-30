@@ -10,7 +10,13 @@
   # it conflicts.
   programs.nvf.settings.vim = {
     # UI plugins
-    statusline.lualine.enable = true; # statusline at the bottom
+    statusline.lualine = {
+      enable = true; # statusline at the bottom
+      # Stylix uses the "mini-base16" nvf plugin (modules/stylix) to avoid
+      # a deprecated option, which means it no longer sets lualine's theme
+      # itself - restore it here at the current (non-deprecated) path.
+      setupOpts.options.theme = "base16";
+    };
 
     # highlight comments with TODO
     notes.todo-comments = {

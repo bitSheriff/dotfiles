@@ -660,9 +660,21 @@ in
           "dracula"
           "gruvbox-dark"
           "nord"
+          "booberry"
+          "kanagawa"
         ];
         default = "catppuccin-mocha";
         description = "Curated system-wide theme name (modules/stylix/themes/<name>.nix). Applies everywhere Stylix theming reaches - GNOME, KDE Plasma, Hyprland, GTK/Qt, and theme-aware home-manager apps.";
+      };
+
+      fontsize = mkOption {
+        type = types.ints.positive;
+        default = 12;
+        description = ''
+          Base application font size in points (stylix.fonts.sizes.applications).
+          Not every host has the same screen/DPI, so this is set per-host
+          rather than hardcoded in modules/stylix.
+        '';
       };
     };
 

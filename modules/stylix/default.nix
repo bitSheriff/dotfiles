@@ -15,6 +15,8 @@ let
     dracula = import ./themes/dracula.nix { inherit pkgs; };
     gruvbox-dark = import ./themes/gruvbox-dark.nix { inherit pkgs; };
     nord = import ./themes/nord.nix { inherit pkgs; };
+    booberry = import ./themes/booberry.nix { inherit pkgs; };
+    kanagawa = import ./themes/kanagawa.nix { inherit pkgs; };
   };
 
   selected = themes.${config.cfg.stylix.theme};
@@ -55,6 +57,11 @@ in
     };
   };
 
+  # Per-host base size (cfg.stylix.fontsize, see cfg.nix) - not every host
+  # has the same screen/DPI. Feeds every app themed via
+  # fonts.sizes.applications (halloy, zed, firefox, ...).
+  stylix.fonts.sizes.applications = config.cfg.stylix.fontsize;
+
   stylix.cursor = {
     package = pkgs.bibata-cursors;
     name = "Bibata-Modern-Classic";
@@ -67,6 +74,17 @@ in
     desktop = 1.0;
     popups = 1.0;
   };
+
+  # programs.nvf is configured at the NixOS level in this repo
+  # (modules/neovim, via nvf.nixosModules.default - not home-manager), so
+  # its Stylix target override belongs here, not in the home-manager.
+  # sharedModules block below. Stylix's nvf target only sets the
+  # (now-deprecated) vim.statusline.lualine.theme option for the "base16"
+  # plugin variant. "mini-base16" renders the same base16-colors through
+  # nvf's mini.nvim-based implementation instead, without the deprecated
+  # assignment; modules/neovim/looks.nix restores the lualine statusline
+  # coloring at the current option path.
+  stylix.targets.nvf.plugin = "mini-base16";
 
   # Home-manager-level target overrides. Stylix's NixOS module
   # auto-imports its home-manager module for every `home-manager.users.*`
@@ -94,14 +112,17 @@ in
         # conflicting with that explicit `services.hyprpaper.enable = false;`.
         stylix.targets.hyprland.hyprpaper.enable = false;
         stylix.targets.hyprpaper.enable = false;
+        stylix.targets.noctalia.enable = true;
 
-        # Apps with their own deliberate, hand-tuned theme that are outside
-        # this change's explicit coverage (proposal.md: kitty, neovim,
-        # fuzzel, wofi, GTK, Qt, Zed, Firefox) keep their existing look
-        # instead of being silently re-themed by `stylix.autoEnable`.
-        stylix.targets.opencode.enable = false;
-        stylix.targets.zathura.enable = false;
-        stylix.targets.halloy.enable = false;
+        # rofi isn't used anywhere in this repo (fuzzel/wofi are the actual
+        # launchers) - disable its target so Stylix doesn't touch the
+        # (deprecated) programs.rofi.font option and warn on every eval.
+        stylix.targets.rofi.enable = false;
+
+        # starship keeps its own deliberate, hand-tuned format/colors
+        # (modules/starship.nix) - deliberately out of scope for Stylix.
+        stylix.targets.starship.enable = false;
+
       }
     )
   ];
