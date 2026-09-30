@@ -1,6 +1,16 @@
 {
   "browser.translations.automaticallyPopup" = false;
   "browser.aboutConfig.showWarning" = false; # disable about:config warning
+
+  # ------------------------------ #
+  # -- Resolve internal TLDs ----- #
+  # ------------------------------ #
+  # Without this, hostnames like "nas.local" or "router.home" aren't on the
+  # public suffix list, so the address bar treats them as search terms
+  # instead of navigating to them. Whitelisting the suffix makes Firefox
+  # load them as URLs directly.
+  "browser.fixup.domainsuffixwhitelist.local" = true;
+  "browser.fixup.domainsuffixwhitelist.home" = true;
   "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
   "extensions.activeThemeID" = "{9b615f11-c3a3-46bd-97a8-1721bb8122b9}";
   "browser.startup.page" = 1; # 0=blank, 1=home, 2=last visited page, 3=resume previous session
