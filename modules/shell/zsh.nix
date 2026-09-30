@@ -49,6 +49,7 @@ in
             # Tool initializations that don't have HM modules or need custom flags
             eval "$(tv init zsh)"
             eval "$(zoxide init zsh --cmd cd)"
+            eval "$(sops completion zsh)"
 
             # Ghostty integration
             if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
