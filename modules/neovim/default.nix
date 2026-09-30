@@ -85,7 +85,25 @@
       };
 
       telescope.enable = true;
-      autocomplete.nvim-cmp.enable = true;
+      autocomplete.nvim-cmp = {
+        enable = true;
+        mappings = {
+          next = "<Down>";
+          previous = "<Up>";
+        };
+        setupOpts.mapping."<Tab>" = lib.generators.mkLuaInline ''
+          cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.confirm({ select = true })
+            elseif luasnip.expand_or_locally_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              fallback()
+            end
+          end)
+        '';
+      };
+
       git.gitsigns.enable = true;
 
       # handle commenting lines
