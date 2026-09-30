@@ -17,7 +17,7 @@
     ./kitty.nix
     ./ssh.nix
     ./appimage.nix
-    ./global-sops.nix
+    ./sops
     ./keyboards.nix
     ./firefox
     ./chromium.nix
