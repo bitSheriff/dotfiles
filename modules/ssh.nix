@@ -31,6 +31,9 @@
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
     # link the ssh config
     home.file.".ssh/config".text = ''
+      Host *
+        IdentityAgent SSH_AUTH_SOCK
+
       Include ~/.ssh/hosts
     '';
 
