@@ -162,6 +162,9 @@ in
       ++ lib.optionals config.cfg.multimedia.comics.enable [
         yacreader # comic reader
       ]
+      ++ lib.optionals config.cfg.multimedia.podcasts.kasts.enable [
+        kdePackages.kasts
+      ]
 
       # Host Specifics
       ++ lib.optionals (config.networking.hostName == "rhodos") [

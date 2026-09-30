@@ -329,6 +329,16 @@ in
         };
       };
 
+      podcasts = {
+        kasts = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Install KDE Kasts";
+          };
+        };
+      };
+
       kodi = {
         enable = mkOption {
           type = types.bool;
