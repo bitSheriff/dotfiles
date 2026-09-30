@@ -27,7 +27,7 @@ pkgs.writeShellApplication {
       exit 0
     fi
 
-    SECRETS_FILE="${../../../encrypted/logins.txt}"
+    SECRETS_FILE="${../../../encrypted/pass.txt}"
     QUERY="''${1:-}"
 
     # The file is stored as an opaque binary blob (not structured sops
