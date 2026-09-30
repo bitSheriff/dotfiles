@@ -41,6 +41,9 @@
       nix = {
         enable = true;
         treesitter.enable = true;
+        # Only use nixd (not nil) - nvf's "nil" preset triggers an
+        # interactive "fetch flake inputs?" prompt on every open.
+        lsp.servers = [ "nixd" ];
         format = {
           enable = true;
           type = [ "nixfmt" ];
