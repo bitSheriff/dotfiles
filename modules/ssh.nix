@@ -28,33 +28,53 @@
     ];
   };
 
-  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
-    # link the ssh config
-    home.file.".ssh/config".text = ''
-      Host *
-        IdentityAgent SSH_AUTH_SOCK
+  home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) (
+    { config, ... }:
+    let
+      # Private keys decrypted by sops-nix (see users/benjamin.nix, ssh_key_*
+      # secrets) that should be loaded into the agent. Only the private half
+      # is stored in sops - the public half is derived on activation below,
+      # since it's trivially reproducible from the private key and isn't
+      # secret. Add new key basenames here as more sops ssh_key_* secrets
+      # are added.
+      keys = [
+        "private"
+        "uni"
+        "work"
+      ];
+      keysList = lib.concatStringsSep " " keys;
+    in
+    {
+      # link the ssh config
+      home.file.".ssh/config".text = ''
+        Host *
+          IdentityAgent SSH_AUTH_SOCK
 
-      Include ~/.ssh/hosts
-    '';
+        Include ~/.ssh/hosts
+      '';
 
-    # Native ssh-agent (replaces the 1Password SSH agent). Keys live in
-    # ~/.ssh, decrypted by sops-nix. git commit signing (ssh-keygen -Y sign)
-    # requires the private key to be loaded into a running agent, so we
-    # auto-load it once the agent and the sops secret are both available.
-    services.ssh-agent.enable = true;
+      # Derive each key's public half from its sops-decrypted private half,
+      # instead of storing a redundant *_pub secret in sops. Runs after the
+      # sops secrets are written so the private keys already exist.
+      home.activation.deriveSshPubkeys = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+        for k in ${keysList}; do
+          priv="$HOME/.ssh/$k"
+          pub="$HOME/.ssh/$k.pub"
+          if [ -e "$priv" ]; then
+            $DRY_RUN_CMD ${pkgs.openssh}/bin/ssh-keygen -y -f "$priv" > "$pub.tmp"
+            $DRY_RUN_CMD chmod 644 "$pub.tmp"
+            $DRY_RUN_CMD mv -f "$pub.tmp" "$pub"
+          fi
+        done
+      '';
 
-    systemd.user.services.ssh-add-keys =
-      let
-        # Private keys decrypted by sops-nix (see users/benjamin.nix) that
-        # should be loaded into the agent. Add new key basenames here as
-        # more sops ssh_key_* secrets are added.
-        keys = [
-          "private"
-          "uni"
-          "work"
-        ];
-      in
-      {
+      # Native ssh-agent (replaces the 1Password SSH agent). Keys live in
+      # ~/.ssh, decrypted by sops-nix. git commit signing (ssh-keygen -Y sign)
+      # requires the private key to be loaded into a running agent, so we
+      # auto-load it once the agent and the sops secret are both available.
+      services.ssh-agent.enable = true;
+
+      systemd.user.services.ssh-add-keys = {
         Unit = {
           Description = "Load SSH keys into ssh-agent";
           After = [
@@ -72,6 +92,7 @@
         };
         Install.WantedBy = [ "default.target" ];
       };
-  };
+    }
+  );
 
 }

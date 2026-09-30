@@ -188,16 +188,14 @@
             path = "${config.home.homeDirectory}/.ssh/hosts";
           };
 
+          # Only the private half of each key is stored in sops - the
+          # public half is derived on home-manager activation from the
+          # private key (see modules/ssh.nix, home.activation.deriveSshPubkeys),
+          # since it's trivially reproducible and isn't secret.
           ssh_key_private = {
             sopsFile = ../encrypted/ssh_keys.yaml;
             key = "private/priv";
             path = "${config.home.homeDirectory}/.ssh/private";
-          };
-
-          ssh_key_private_pub = {
-            sopsFile = ../encrypted/ssh_keys.yaml;
-            key = "private/pub";
-            path = "${config.home.homeDirectory}/.ssh/private.pub";
           };
 
           ssh_key_uni = {
@@ -206,22 +204,10 @@
             path = "${config.home.homeDirectory}/.ssh/uni";
           };
 
-          ssh_key_uni_pub = {
-            sopsFile = ../encrypted/ssh_keys.yaml;
-            key = "uni/pub";
-            path = "${config.home.homeDirectory}/.ssh/uni.pub";
-          };
-
           ssh_key_work = {
             sopsFile = ../encrypted/ssh_keys.yaml;
             key = "work/priv";
             path = "${config.home.homeDirectory}/.ssh/work";
-          };
-
-          ssh_key_work_pub = {
-            sopsFile = ../encrypted/ssh_keys.yaml;
-            key = "work/pub";
-            path = "${config.home.homeDirectory}/.ssh/work.pub";
           };
 
           # API Keys and Access Tokens
