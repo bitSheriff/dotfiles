@@ -15,8 +15,15 @@
     ## HOME MANAGER ##
     ##################
     home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
-      # Tell Stylix which profile to theme (fonts via its firefox target).
-      stylix.targets.firefox.profileNames = [ "default" ];
+      # Tell Stylix which profile to theme. profileNames alone only themes
+      # fonts - colorTheme.enable actually recolors the chrome (toolbar,
+      # tabs, address bar, ...) via the "Firefox Color" webextension, using
+      # the selected base16 palette. Works regardless of desktop (unlike
+      # Stylix's GNOME-specific firefoxGnomeTheme option).
+      stylix.targets.firefox = {
+        profileNames = [ "default" ];
+        colorTheme.enable = true;
+      };
 
       programs.firefox = {
         enable = true;
@@ -38,6 +45,10 @@
           # this every activation tries to back it up and trips over the last backup
           containersForce = true;
           search = import ./search.nix;
+          # Stylix's colorTheme target (modules/stylix) writes
+          # extensions.settings for the Firefox Color extension it installs -
+          # acknowledge that it fully manages extension settings.
+          extensions.force = true;
         };
       };
       home.file.".mozilla/firefox/default/search.json.mozlz4".force = lib.mkForce true;
