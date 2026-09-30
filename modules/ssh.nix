@@ -40,24 +40,35 @@
     # auto-load it once the agent and the sops secret are both available.
     services.ssh-agent.enable = true;
 
-    systemd.user.services.ssh-add-keys = {
-      Unit = {
-        Description = "Load SSH keys into ssh-agent";
-        After = [
-          "ssh-agent.service"
-          "sops-nix.service"
+    systemd.user.services.ssh-add-keys =
+      let
+        # Private keys decrypted by sops-nix (see users/benjamin.nix) that
+        # should be loaded into the agent. Add new key basenames here as
+        # more sops ssh_key_* secrets are added.
+        keys = [
+          "private"
+          "uni"
+          "work"
         ];
-        Requires = [ "ssh-agent.service" ];
-        PartOf = [ "ssh-agent.service" ];
+      in
+      {
+        Unit = {
+          Description = "Load SSH keys into ssh-agent";
+          After = [
+            "ssh-agent.service"
+            "sops-nix.service"
+          ];
+          Requires = [ "ssh-agent.service" ];
+          PartOf = [ "ssh-agent.service" ];
+        };
+        Service = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          Environment = "SSH_AUTH_SOCK=%t/ssh-agent";
+          ExecStart = "${pkgs.openssh}/bin/ssh-add ${lib.concatMapStringsSep " " (k: "%h/.ssh/${k}") keys}";
+        };
+        Install.WantedBy = [ "default.target" ];
       };
-      Service = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        Environment = "SSH_AUTH_SOCK=%t/ssh-agent";
-        ExecStart = "${pkgs.openssh}/bin/ssh-add %h/.ssh/id_ed25519";
-      };
-      Install.WantedBy = [ "default.target" ];
-    };
   };
 
 }

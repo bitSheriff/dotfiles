@@ -188,16 +188,40 @@
             path = "${config.home.homeDirectory}/.ssh/hosts";
           };
 
-          ssh_key_general = {
+          ssh_key_private = {
             sopsFile = ../encrypted/ssh_keys.yaml;
-            key = "general/priv";
-            path = "${config.home.homeDirectory}/.ssh/id_ed25519";
+            key = "private/priv";
+            path = "${config.home.homeDirectory}/.ssh/private";
           };
 
-          ssh_key_general_pub = {
+          ssh_key_private_pub = {
             sopsFile = ../encrypted/ssh_keys.yaml;
-            key = "general/pub";
-            path = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
+            key = "private/pub";
+            path = "${config.home.homeDirectory}/.ssh/private.pub";
+          };
+
+          ssh_key_uni = {
+            sopsFile = ../encrypted/ssh_keys.yaml;
+            key = "uni/priv";
+            path = "${config.home.homeDirectory}/.ssh/uni";
+          };
+
+          ssh_key_uni_pub = {
+            sopsFile = ../encrypted/ssh_keys.yaml;
+            key = "uni/pub";
+            path = "${config.home.homeDirectory}/.ssh/uni.pub";
+          };
+
+          ssh_key_work = {
+            sopsFile = ../encrypted/ssh_keys.yaml;
+            key = "work/priv";
+            path = "${config.home.homeDirectory}/.ssh/work";
+          };
+
+          ssh_key_work_pub = {
+            sopsFile = ../encrypted/ssh_keys.yaml;
+            key = "work/pub";
+            path = "${config.home.homeDirectory}/.ssh/work.pub";
           };
 
           # API Keys and Access Tokens
