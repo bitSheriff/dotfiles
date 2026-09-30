@@ -79,9 +79,6 @@
           CODE_DIR = "$HOME/code";
           WALLPAPER_DIR = "$HOME/Pictures/wallpapers";
 
-          # use 1Password as the SSH Agent
-          SSH_AUTH_SOCK = "$HOME/.1password/agent.sock";
-
           # path where different age keys are stored
           AGE_KEY_DIR = "$HOME/.age";
 

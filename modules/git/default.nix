@@ -79,9 +79,6 @@ in
         gpg = {
           format = "ssh";
         };
-        "gpg \"ssh\"" = {
-          program = "op-ssh-sign";
-        };
         init = {
           defaultBranch = "main";
         };

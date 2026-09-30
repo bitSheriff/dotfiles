@@ -29,19 +29,35 @@
   };
 
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
-    home.file.".config/1Password/ssh/agent.toml".text = ''
-      [[ssh-keys]]
-      vault = "bitSheriff"
-    '';
-
     # link the ssh config
     home.file.".ssh/config".text = ''
       Include ~/.ssh/hosts
-
-      Host *
-        IdentityAgent ~/.1password/agent.sock
-
     '';
+
+    # Native ssh-agent (replaces the 1Password SSH agent). Keys live in
+    # ~/.ssh, decrypted by sops-nix. git commit signing (ssh-keygen -Y sign)
+    # requires the private key to be loaded into a running agent, so we
+    # auto-load it once the agent and the sops secret are both available.
+    services.ssh-agent.enable = true;
+
+    systemd.user.services.ssh-add-keys = {
+      Unit = {
+        Description = "Load SSH keys into ssh-agent";
+        After = [
+          "ssh-agent.service"
+          "sops-nix.service"
+        ];
+        Requires = [ "ssh-agent.service" ];
+        PartOf = [ "ssh-agent.service" ];
+      };
+      Service = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        Environment = "SSH_AUTH_SOCK=%t/ssh-agent";
+        ExecStart = "${pkgs.openssh}/bin/ssh-add %h/.ssh/id_ed25519";
+      };
+      Install.WantedBy = [ "default.target" ];
+    };
   };
 
 }

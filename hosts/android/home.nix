@@ -90,8 +90,8 @@ in
 
   programs.git = {
     enable = true;
-    # No commit signing: op-ssh-sign from ../../modules/git/default.nix needs the
-    # 1Password desktop app, which does not exist here.
+    # No commit signing: the SSH signing key from ../../modules/git/default.nix
+    # is managed via sops-nix on NixOS hosts and isn't available here.
     settings = {
       user = {
         name = "bitSheriff";
