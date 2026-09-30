@@ -53,24 +53,21 @@ pkgs.writeShellApplication {
     # so the rest of the script can keep using jq.
     DECRYPTED_JSON=$(sops --decrypt --input-type binary --output-type binary "$SECRETS_FILE" | yq -p toml -o json .)
 
-    # Each service may have a `tags = ["..."]` array for categorization.
-    # It's metadata, not a credential, so it's excluded (via `del(.tags)`)
-    # from the flattened field list below - it never shows up as a
-    # selectable entry itself.
-    #
-    # If the query exactly matches a known tag, pre-filter the list to only
-    # that tag's services (fzf's --with-nth can't be used to search hidden
-    # fields, so this is done in jq instead); otherwise fall through to a
-    # normal fuzzy path search over every field, as before.
     TAG_MATCH=$(echo "$DECRYPTED_JSON" | jq -r --arg q "$QUERY" '
       [ to_entries[] | select(.key != "sops") | (.value.tags // [])[] ] | index($q) != null
     ')
 
-    # --no-sort: keep the TOML document's own order (section, then each
-    # field/sub-table in the order it's written) instead of fzf's default
-    # relevance/length-based scoring, which would otherwise reorder
-    # same-prefix matches (e.g. put "github.otp" before "github.user" just
-    # because it's shorter).
+    FZF_OPTS=(
+      --no-sort
+      --no-multi
+      --preview=
+      --cycle
+      --margin=5%
+      --border=double
+      --layout=reverse
+      --height=40%
+    )
+
     if [ -n "$QUERY" ] && [ "$TAG_MATCH" = "true" ]; then
       SELECTED_KEY=$(echo "$DECRYPTED_JSON" | jq -r --arg tag "$QUERY" '
         to_entries[]
@@ -81,7 +78,7 @@ pkgs.writeShellApplication {
         | $data
         | paths(scalars) as $p
         | ([$svc] + ($p | map(tostring)) | join("."))
-      ' | fzf --no-sort --header="Select a secret (tag: $QUERY):" --height=40% --layout=reverse)
+      ' | fzf "''${FZF_OPTS[@]}" --header="Select a secret (tag: $QUERY):")
     else
       SELECTED_KEY=$(echo "$DECRYPTED_JSON" | jq -r '
         to_entries[]
@@ -91,7 +88,7 @@ pkgs.writeShellApplication {
         | $data
         | paths(scalars) as $p
         | ([$svc] + ($p | map(tostring)) | join("."))
-      ' | fzf --no-sort --query="$QUERY" --header="Select a secret to copy:" --height=40% --layout=reverse)
+      ' | fzf "''${FZF_OPTS[@]}" --query="$QUERY" --header="Select a secret to copy:")
     fi
 
     if [ -z "$SELECTED_KEY" ]; then

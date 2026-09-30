@@ -86,6 +86,7 @@
         [timer]="timr"
         [todo]="todo"
         [wifi]="sudo impala"
+        [pass]="pass"
     )
 
     choice=$1
