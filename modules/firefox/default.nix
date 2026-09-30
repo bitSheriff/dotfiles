@@ -15,6 +15,9 @@
     ## HOME MANAGER ##
     ##################
     home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
+      # Tell Stylix which profile to theme (fonts via its firefox target).
+      stylix.targets.firefox.profileNames = [ "default" ];
+
       programs.firefox = {
         enable = true;
         package = pkgs.firefox;

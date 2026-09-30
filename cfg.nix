@@ -637,6 +637,33 @@ in
           description = "Enable Hyprland window manager + greetd, fuzzel, wofi, kdeconnect, noctalia, etc.";
         };
       };
+
+      plasma = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable KDE Plasma 6 desktop (SDDM + plasma6). Independent of GNOME/Hyprland - don't enable more than one unless you mean to.";
+        };
+      };
+    };
+
+    ############
+    ## Stylix ##
+    ############
+    # System-wide theming (modules/stylix). Always on - pick a curated theme
+    # by name, not by color. See modules/stylix/themes for the available
+    # themes and modules/stylix/default.nix for what gets themed.
+    stylix = {
+      theme = mkOption {
+        type = types.enum [
+          "catppuccin-mocha"
+          "dracula"
+          "gruvbox-dark"
+          "nord"
+        ];
+        default = "catppuccin-mocha";
+        description = "Curated system-wide theme name (modules/stylix/themes/<name>.nix). Applies everywhere Stylix theming reaches - GNOME, KDE Plasma, Hyprland, GTK/Qt, and theme-aware home-manager apps.";
+      };
     };
 
     ############

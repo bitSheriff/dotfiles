@@ -45,12 +45,10 @@ in
           "nix"
         ];
 
+        # Fonts and theme are owned by Stylix (modules/stylix) - do not set
+        # userSettings.ui_font_*/buffer_font_*/theme here, they conflict.
         userSettings = {
           # General UI & Editor
-          ui_font_size = 16;
-          ui_font_family = "Comic Mono";
-          buffer_font_size = 16;
-          buffer_font_family = "Comic Mono";
           colorize_brackets = true;
           icon_theme = "Catppuccin Mocha";
           show_edit_predictions = true;
@@ -188,13 +186,6 @@ in
           #     ];
           #   }
           # ];
-
-          # Theming
-          theme = {
-            mode = "dark";
-            # light = "One Light";
-            dark = "Noctalia Dark";
-          };
 
           # Telemetry
           telemetry = {

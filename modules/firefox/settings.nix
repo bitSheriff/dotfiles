@@ -94,14 +94,10 @@
     newElementCount = 3;
   };
 
-  "reader.color_scheme" = "custom";
+  # reader.color_scheme / reader.custom_colors.* are owned by Stylix's
+  # firefox target (modules/stylix) - do not set them here, they conflict.
   "reader.colors_menu.enabled" = true; # what does this do ?
   "reader.content_width" = 4;
-  "reader.custom_colors.background" = "#11111b";
-  "reader.custom_colors.foreground" = "#cdd6f4";
-  "reader.custom_colors.selection-highlight" = "#f9e2af";
-  "reader.custom_colors.unvisited-links" = "#b4befe";
-  "reader.custom_colors.visited-links" = "#f38ba8";
   "reader.errors.includeURLs" = true;
 
   "geo.provider.network.url" =

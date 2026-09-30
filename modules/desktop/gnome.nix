@@ -31,9 +31,6 @@
       {
         lockAll = true; # prevents overriding
         settings = {
-          "org/gnome/desktop/interface" = {
-            accent-color = "blue";
-          };
           "org/gnome/desktop/input-sources" = {
             xkb-options = [ "ctrl:nocaps" ];
           };
@@ -41,11 +38,9 @@
       }
     ];
 
-    qt = {
-      enable = true;
-      platformTheme = "gnome";
-      style = "adwaita-dark";
-    };
+    # accent-color and qt (platform/style) are owned by Stylix
+    # (modules/stylix, stylix.targets.gnome / stylix.targets.qt) - do not
+    # set them here, they conflict.
 
     environment.shells = with pkgs; [ zsh ];
   };

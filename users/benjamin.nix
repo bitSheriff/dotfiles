@@ -45,6 +45,10 @@
       imports = [
         inputs.agenix.homeManagerModules.default
         inputs.sops-nix.homeManagerModules.sops
+        # Stylix's home-manager module is auto-imported by its NixOS module
+        # (stylix.homeManagerIntegration.autoImport, default true) via
+        # home-manager.sharedModules - importing it again here duplicates it
+        # and breaks on stylix's read-only options (e.g. stylix.base16).
       ];
 
       programs.home-manager.enable = true;
@@ -82,7 +86,6 @@
           AGE_KEY_DIR = "$HOME/.age";
 
           ADW_DISABLE_PORTAL = "1";
-          GTK_THEME = "Adwaita:dark";
 
         };
 
@@ -95,14 +98,8 @@
           "/usr/bin"
         ];
 
-        pointerCursor = {
-          enable = true;
-          gtk.enable = true;
-          x11.enable = true;
-          package = pkgs.bibata-cursors;
-          name = "Bibata-Modern-Classic";
-          size = 24;
-        };
+        # Cursor is owned by Stylix (modules/stylix, stylix.cursor) - do not
+        # set home.pointerCursor here, it conflicts.
 
         activation.report-changes = config.lib.dag.entryAnywhere ''
           ${pkgs.nvd}/bin/nvd --nix-bin-dir=${pkgs.nix}/bin diff $oldGenPath $newGenPath
@@ -147,28 +144,8 @@
         };
       };
 
-      qt = {
-        enable = true;
-        platformTheme.name = "kde";
-        style.name = "adwaita-dark";
-      };
-
-      gtk = {
-        gtk4.theme = null;
-        enable = true;
-        theme = {
-          name = "Adwaita-dark";
-          package = pkgs.gnome-themes-extra;
-        };
-        iconTheme = {
-          name = "Papirus-Dark";
-          package = pkgs.papirus-icon-theme;
-        };
-        cursorTheme = {
-          name = "Bibata-Modern-Classic";
-          package = pkgs.bibata-cursors;
-        };
-      };
+      # qt and gtk (theme/icon/cursor) are owned by Stylix (modules/stylix) -
+      # do not set them here, they conflict.
 
       systemd.user.startServices = "sd-switch";
 
@@ -183,11 +160,8 @@
         ];
       };
 
-      dconf.settings = {
-        "org/gnome/desktop/interface" = {
-          color-scheme = "prefer-dark";
-        };
-      };
+      # Light/dark preference is owned by Stylix (stylix.polarity, per
+      # theme) - do not set dconf's color-scheme here, it'd disagree.
 
       ##### SOPS #####
       home.packages = [ pkgs.sops ];

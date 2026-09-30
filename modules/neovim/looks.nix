@@ -4,11 +4,10 @@
   lib,
   ...
 }:
-let
-  # leave empty for builtin theme
-  colorscheme = "kanagawa";
-in
 {
+  # Colorscheme is owned by Stylix (modules/stylix, nvf target) - do not
+  # set programs.nvf.settings.vim.theme or load a colorscheme plugin here,
+  # it conflicts.
   programs.nvf.settings.vim = {
     # UI plugins
     statusline.lualine.enable = true; # statusline at the bottom
@@ -96,22 +95,9 @@ in
     mini.indentscope.enable = true; # show indentation with colored lines
     mini.hipatterns.enable = true; # show color constants in their real color
 
-    # Theme (only taken if no colorscheme plugin is selected)
-    theme = lib.mkIf (colorscheme == "") {
-      enable = true;
-      name = "tokyonight";
-      style = "night";
-    };
-
     extraPlugins = {
       lazygit = {
         package = pkgs.vimPlugins.lazygit-nvim;
-      };
-
-      ## COLORSCHEME Plugins
-      kanagawa = lib.mkIf (colorscheme == "kanagawa") {
-        package = pkgs.vimPlugins.kanagawa-nvim;
-        setup = "require('kanagawa').load('wave')";
       };
     };
   };

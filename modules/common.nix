@@ -21,6 +21,9 @@
     ./keyboards.nix
     ./firefox
     ./chromium.nix
+    ./stylix
+    ./desktop/gnome.nix
+    ./desktop/plasma.nix
   ];
 
   # Bootloader

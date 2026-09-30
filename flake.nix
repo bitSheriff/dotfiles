@@ -25,6 +25,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Nix on the phone. Termux-the-terminal-emulator, none of Termux-the-distro.
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid";
@@ -112,6 +117,7 @@
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
             disko.nixosModules.disko
+            inputs.stylix.nixosModules.stylix
             # Feature flags (cfg.*)
             ./cfg.nix
             # Host Configuration
@@ -150,6 +156,7 @@
             home-manager.nixosModules.home-manager
             nvf.nixosModules.default
             disko.nixosModules.disko
+            inputs.stylix.nixosModules.stylix
             # Feature flags (cfg.*)
             ./cfg.nix
             # Host Configuration

@@ -11,11 +11,8 @@
     programs.kitty = {
       enable = true;
 
-      # Font configuration
-      font = {
-        name = "Comic Mono";
-        size = 11;
-      };
+      # Font is owned by Stylix (modules/stylix) - do not set
+      # programs.kitty.font here, it conflicts.
 
       settings = {
         # Font Variants
