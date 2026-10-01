@@ -12,7 +12,7 @@
   "browser.fixup.domainsuffixwhitelist.local" = true;
   "browser.fixup.domainsuffixwhitelist.home" = true;
   "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-  "extensions.activeThemeID" = "{9b615f11-c3a3-46bd-97a8-1721bb8122b9}";
+  "extensions.activeThemeID" = "FirefoxColor@mozilla.com"; # stylix theme
   "browser.startup.page" = 1; # 0=blank, 1=home, 2=last visited page, 3=resume previous session
   "browser.startup.homepage" = "about:home";
 
