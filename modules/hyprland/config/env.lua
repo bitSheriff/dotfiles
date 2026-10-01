@@ -10,7 +10,6 @@ hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
 hl.env("GDK_BACKEND", "wayland,x11,*")
-hl.env("GTK_THEME", "Adwaita:dark")
 hl.env("WEBKIT_DISABLE_DMABUF_RENDERER", "1")
 -- Must include /etc/profiles/per-user/$USER/share: that's where
 -- home-manager's `useUserPackages = true` writes xdg.desktopEntries
