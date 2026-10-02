@@ -37,13 +37,38 @@ pkgs.writeShellApplication {
       echo "entries instead of doing a normal fuzzy path search."
       echo "What happens next depends on the selected field's name:"
       echo "  otp  - generate a TOTP 2FA code and copy it to the clipboard"
-      echo "  url  - open it with the default browser"
+      echo "  url  - open it with the default browser (http/https only)"
       echo "  *    - copy the raw value to the clipboard"
+      echo "Copied secrets are hidden from the clipboard history and removed"
+      echo "from the clipboard again after 45 seconds."
       exit 0
     fi
 
     SECRETS_FILE="${../../../encrypted/pass.txt}"
     QUERY="''${1:-}"
+
+    # Seconds until a copied secret is removed from the clipboard again.
+    CLEAR_AFTER=45
+
+    # Copies $1 to the clipboard, marked as sensitive so clipboard managers
+    # (cliphist, via wl-paste --watch's CLIPBOARD_STATE) don't persist it,
+    # and clears the clipboard after CLEAR_AFTER seconds - but only if it
+    # still holds this secret, so anything copied in the meantime survives.
+    # The secret only ever travels through builtins and pipes, never through
+    # another process' argv (which would be world-readable in /proc).
+    copy_secret() {
+      local secret="$1"
+      printf '%s' "$secret" | wl-copy --sensitive
+      (
+        # floatui closes the terminal as soon as this script exits; ignore
+        # the resulting SIGHUP so the timer below still fires.
+        trap "" HUP
+        sleep "$CLEAR_AFTER"
+        if [ "$(wl-paste --no-newline 2>/dev/null)" = "$secret" ]; then
+          wl-copy --clear
+        fi
+      ) </dev/null >/dev/null 2>&1 &
+    }
 
     # The file is stored as an opaque binary blob (not structured sops
     # yaml/json) so that key names - which services/logins even exist -
@@ -108,17 +133,29 @@ pkgs.writeShellApplication {
     # or as any earlier segment (nested sub-table, e.g. "service.url.shop").
     case ".$SELECTED_KEY." in
       *.otp.*)
-        oathtool --totp -b "$VALUE" | tr -d '\n' | wl-copy
-        echo "Generated 2FA token for '$SELECTED_KEY' and copied to clipboard!" >&2
+        # The seed is fed via stdin ("-"), not as an argument, to keep it
+        # out of oathtool's argv.
+        TOKEN=$(printf '%s' "$VALUE" | oathtool --totp -b - | tr -d '\n')
+        copy_secret "$TOKEN"
+        echo "Generated 2FA token for '$SELECTED_KEY' and copied to clipboard (cleared in ''${CLEAR_AFTER}s)!" >&2
         ;;
       *.url.*)
+        # Only ever hand web URLs to xdg-open - never options, local files
+        # or other scheme handlers.
+        case "$VALUE" in
+          http://* | https://*) ;;
+          *)
+            echo "Error: '$SELECTED_KEY' is not an http(s) URL, refusing to open it." >&2
+            exit 1
+            ;;
+        esac
         xdg-open "$VALUE" >/dev/null 2>&1 &
         disown
         echo "Opened '$VALUE' in your browser." >&2
         ;;
       *)
-        echo -n "$VALUE" | wl-copy
-        echo "'$SELECTED_KEY' copied to clipboard!" >&2
+        copy_secret "$VALUE"
+        echo "'$SELECTED_KEY' copied to clipboard (cleared in ''${CLEAR_AFTER}s)!" >&2
         ;;
     esac
   '';
