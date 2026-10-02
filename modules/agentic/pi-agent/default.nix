@@ -27,6 +27,11 @@ let
     }
     // m.extraConfig
   ) localAI.models;
+
+  withSecrets = import ../../../nix-lib/with-secrets.nix { inherit pkgs lib; };
+
+  # declared in users/benjamin.nix
+  sopsSecrets = config.home-manager.users.benjamin.sops.secrets;
 in
 {
   imports = [
@@ -42,6 +47,14 @@ in
     home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
       programs.pi-coding-agent = {
         enable = true;
+
+        # The key is handed to pi only (see nix-lib/with-secrets.nix) rather than
+        # exported in the shell.
+        package = withSecrets {
+          pkg = pkgs.pi-coding-agent;
+          secrets.OPENROUTER_API_KEY = sopsSecrets."api/openrouter".path;
+        };
+
         extraPackages = with pkgs; [ nodejs ];
         settings = {
           theme = "synthwave-84";

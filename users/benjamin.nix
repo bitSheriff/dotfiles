@@ -230,11 +230,10 @@
       };
 
       # load the data from the files into environment variables
+      # (the opencode and pi keys are handed to those programs only, see
+      # ../nix-lib/with-secrets.nix)
       programs.zsh.initContent = ''
         export GITHUB_TOKEN="$(cat ${config.sops.secrets."access/github".path})"
-        export OPENROUTER_API_KEY="$(cat ${config.sops.secrets."api/openrouter".path})"
-        export OPENCODE_SERVER_USERNAME="benjamin"
-        export OPENCODE_SERVER_PASSWORD="$(cat ${config.sops.secrets."access/opencode".path})"
       '';
 
     }
