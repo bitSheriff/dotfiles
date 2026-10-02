@@ -16,6 +16,7 @@
     enable = true;
     settings = {
       PasswordAuthentication = false; # Disable password login (only SSH keys are allowed)
+      KbdInteractiveAuthentication = false; # otherwise PAM still accepts the password via keyboard-interactive
       PermitRootLogin = "no";
     };
   };
