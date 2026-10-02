@@ -192,6 +192,7 @@ in
           encrypted_memo
           floatui
           gopen
+          nixos-anywhere
           randomselect
           search_man
           templates

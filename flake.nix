@@ -87,6 +87,18 @@
       formatter = forAllSystems (system: treefmtEval.${system}.config.build.wrapper);
       templates = import ./templates;
 
+      # The bootstrap script, runnable without an installed system:
+      # `nix run github:bitSheriff/dotfiles#nixos-anywhere` (e.g. from the
+      # NixOS installer). See ./modules/shell/scripts.nix. Linux only, its
+      # install tools don't exist on darwin.
+      packages =
+        nixpkgs.lib.genAttrs (builtins.filter (nixpkgs.lib.hasSuffix "-linux") supportedSystems)
+          (system: {
+            inherit (import ./modules/shell/scripts.nix { pkgs = nixpkgs.legacyPackages.${system}; })
+              nixos-anywhere
+              ;
+          });
+
       #############  PIXEL PHONE (nix-on-droid)  #############
       # Build with `nix-on-droid switch --flake .#android` on the phone, or
       # `just android` from a machine that can reach it.
