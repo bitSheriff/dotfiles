@@ -107,6 +107,12 @@ nixos-anywhere
 It wraps [nixos-anywhere][6]: the target only has to be reachable over SSH,
 whether it runs the NixOS installer or some other Linux.
 
+A target that is only on wifi needs a cable for this, or has to be booted
+into the NixOS installer and joined to the wifi there first: a running system
+is switched into an installer in RAM, and that switch drops the wifi
+connection (nothing is erased in that case, a reboot brings the old system
+back).
+
 ### 2. On the device itself, from the NixOS installer
 
 Boot the installer and run the same script straight from the flake. Leave
