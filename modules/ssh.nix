@@ -31,12 +31,7 @@
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) (
     { config, ... }:
     let
-      # Private keys decrypted by sops-nix (see users/benjamin.nix, ssh_key_*
-      # secrets) that should be loaded into the agent. Only the private half
-      # is stored in sops - the public half is derived on activation below,
-      # since it's trivially reproducible from the private key and isn't
-      # secret. Add new key basenames here as more sops ssh_key_* secrets
-      # are added.
+      # Private keys decrypted by sops-nix
       keys = [
         "private"
         "uni"
@@ -53,9 +48,7 @@
         Include ~/.ssh/hosts
       '';
 
-      # Derive each key's public half from its sops-decrypted private half,
-      # instead of storing a redundant *_pub secret in sops. Runs after the
-      # sops secrets are written so the private keys already exist.
+      # Derive each key's public half from its sops-decrypted private half
       home.activation.deriveSshPubkeys = config.lib.dag.entryAfter [ "writeBoundary" ] ''
         for k in ${keysList}; do
           priv="$HOME/.ssh/$k"
