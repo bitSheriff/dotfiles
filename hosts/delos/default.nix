@@ -9,9 +9,6 @@
   networking.hostName = "delos";
   system.stateVersion = "25.11";
 
-  # Smaller/higher-DPI laptop screen than rhodos - bump the base app font size.
-  cfg.stylix.fontsize = 14;
-
   ## Trim SSD
   services.fstrim.enable = true;
 
@@ -62,6 +59,13 @@
   ###      Host Configuration       ###
   #####################################
   cfg = {
+
+    stylix = {
+      theme = "booberry";
+      # Smaller/higher-DPI laptop screen than rhodos - bump the base app font size.
+      fontsize = 14;
+    };
+
     notes = {
       obsidian.enable = true;
       supernote.enable = true;
