@@ -124,6 +124,12 @@ in
                 polkit_agent = true;
                 screen_time_enabled = true;
               };
+
+              wallpaper = {
+                # path where the Selector searches for images
+                directory = "/home/benjamin/Pictures/wallpapers/desktop";
+              };
+
             }
 
             (lib.mkIf (monitor != null) {
