@@ -31,6 +31,8 @@
   programs.zsh.shellAliases = {
     daily = "jour";
     weekly = "jour --weekly";
+    t = "todo";
+    tl = "todo-list";
   };
 
   systemd.user.services.note-backup = {
