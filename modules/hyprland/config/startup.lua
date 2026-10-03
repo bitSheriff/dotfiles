@@ -16,7 +16,7 @@ local startup = {
     "wl-clipboard &",
     "blueman-applet &",
     "nm-applet --indicator &",
-    "noctalia-shell &",
+    "noctalia &", -- noctalia v5 binary (was noctalia-shell in v4)
     "systemctl --user start hyprpolkitagent",
     "udiskie &",
     "wl-clipboard-history -t &",

@@ -124,12 +124,12 @@
         "kitty_mod+a>d" = "set_background_opacity default";
       };
 
-      # Theme integration
-      # Since you had 'include wallust.conf' and 'include current-theme.conf',
-      # you can append extra raw config here.
-      extraConfig = ''
-        include themes/noctalia.conf
-      '';
+      # Colors are owned by Stylix (modules/stylix, base16Scheme) via its
+      # kitty target - do not add a manual theme include here. (Previously
+      # pointed at a static ~/.config/kitty/themes/noctalia.conf written
+      # once by old noctalia-shell v4's terminal-theme-sync feature; that
+      # file was never regenerated and silently overrode Stylix's colors
+      # since kitty applies config top-to-bottom.)
     };
   };
 }

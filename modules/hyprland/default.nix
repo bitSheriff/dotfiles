@@ -65,8 +65,9 @@ in
       nwg-displays # handle multi-monitor setup
 
       # Look-and-Feel
-      noctalia-shell
-      quickshell
+      # noctalia itself is installed by the home-manager module in
+      # ../noctalia (programs.noctalia); v5 is a standalone binary and no
+      # longer needs quickshell.
       papirus-icon-theme
       adwaita-icon-theme
       adwaita-qt

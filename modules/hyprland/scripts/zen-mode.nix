@@ -18,7 +18,7 @@ pkgs.writeShellApplication {
   runtimeInputs = with pkgs; [
     hyprland # hyprctl
     jq
-    noctalia-shell
+    noctalia # v5 binary (was noctalia-shell in v4); provides `noctalia msg ...`
     coreutils
   ];
   text = ''
@@ -47,8 +47,8 @@ pkgs.writeShellApplication {
 
       hypr_eval "hl.config({ general = { gaps_in = $ZEN_GAPS_IN, gaps_out = $ZEN_GAPS_OUT, border_size = $ZEN_BORDER_SIZE }, decoration = { rounding = $ZEN_ROUNDING, active_opacity = $ZEN_ACTIVE_OPACITY, inactive_opacity = $ZEN_INACTIVE_OPACITY } })"
 
-      noctalia-shell ipc call bar showBar >/dev/null 2>&1 || true
-      noctalia-shell ipc call idleInhibitor disable >/dev/null 2>&1 || true
+      noctalia msg bar-show >/dev/null 2>&1 || true
+      noctalia msg caffeine-disable >/dev/null 2>&1 || true
 
       rm -f "$STATE_FILE"
     else
@@ -64,8 +64,8 @@ pkgs.writeShellApplication {
 
       hypr_eval "hl.config({ general = { gaps_in = 0, gaps_out = 0, border_size = 0 }, decoration = { rounding = 0, active_opacity = 1.0, inactive_opacity = 1.0 } })"
 
-      noctalia-shell ipc call bar hideBar >/dev/null 2>&1 || true
-      noctalia-shell ipc call idleInhibitor enable >/dev/null 2>&1 || true
+      noctalia msg bar-hide >/dev/null 2>&1 || true
+      noctalia msg caffeine-enable >/dev/null 2>&1 || true
     fi
   '';
 }

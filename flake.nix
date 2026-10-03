@@ -30,6 +30,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Noctalia desktop shell (v5) - home-manager module (programs.noctalia)
+    # needed so Stylix's `stylix.targets.noctalia` has an option to theme.
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Nix on the phone. Termux-the-terminal-emulator, none of Termux-the-distro.
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid";

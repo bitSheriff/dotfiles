@@ -319,10 +319,10 @@
         "manualSunrise": "06:30",
         "manualSunset": "18:30",
         "monitorForColors": "",
-        "predefinedScheme": "Noctalia (default)",
+        "predefinedScheme": "Ayu",
         "schedulingMode": "off",
         "syncGsettings": true,
-        "useWallpaperColors": true
+        "useWallpaperColors": false
     },
     "controlCenter": {
         "cards": [
@@ -698,50 +698,6 @@
     },
     "templates": {
         "activeTemplates": [
-            {
-                "enabled": true,
-                "id": "kcolorscheme"
-            },
-            {
-                "enabled": true,
-                "id": "gtk"
-            },
-            {
-                "enabled": true,
-                "id": "hyprland"
-            },
-            {
-                "enabled": true,
-                "id": "qt"
-            },
-            {
-                "enabled": true,
-                "id": "code"
-            },
-            {
-                "enabled": true,
-                "id": "yazi"
-            },
-            {
-                "enabled": true,
-                "id": "zed"
-            },
-            {
-                "enabled": true,
-                "id": "zathura"
-            },
-            {
-                "enabled": true,
-                "id": "spicetify"
-            },
-            {
-                "enabled": true,
-                "id": "kitty"
-            },
-            {
-                "enabled": true,
-                "id": "hyprtoolkit"
-            }
         ],
         "enableUserTheming": true
     },
