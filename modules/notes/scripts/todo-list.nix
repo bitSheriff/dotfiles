@@ -17,6 +17,125 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         return f"\033[{code}m{s}\033[0m" if USE_COLOR else s
 
 
+    # Obsidian Tasks plugin emoji signifiers (default "Tasks Emoji
+    # Format"). See the "Tasks Emoji Format" page in the Tasks plugin
+    # docs (publish.obsidian.md/tasks). There is no mature Python
+    # library that implements this format, so it is parsed here
+    # directly - it's a small, well-documented spec.
+    TASK_DATE_FIELDS = [
+        ("due", "\U0001F4C5"),         # 📅
+        ("scheduled", "\u23F3"),       # ⏳
+        ("start", "\U0001F6EB"),       # 🛫
+        ("created", "\u2795"),         # ➕
+        ("done", "\u2705"),            # ✅
+        ("cancelled", "\u274C"),       # ❌
+    ]
+
+    TASK_PRIORITY_SYMBOLS = [
+        ("\U0001F53A", "highest"),  # 🔺
+        ("\u23EB", "high"),         # ⏫
+        ("\U0001F53C", "medium"),   # 🔼
+        ("\U0001F53D", "low"),      # 🔽
+        ("\u23EC", "lowest"),       # ⏬
+    ]
+
+    TASK_RECURRENCE_SYMBOL = "\U0001F501"  # 🔁
+
+    TASK_FIELD_DISPLAY_ORDER = [
+        "due", "scheduled", "start", "created", "done", "cancelled",
+        "priority", "recurrence",
+    ]
+
+
+    def extract_task_metadata(text):
+        """Strip Obsidian Tasks plugin emoji signifiers off a todo line.
+
+        Recognizes due/scheduled/start/created/done/cancelled dates
+        (\U0001F4C5 \u23F3 \U0001F6EB \u2795 \u2705 \u274C, each followed
+        by a YYYY-MM-DD date), priority
+        (\U0001F53A \u23EB \U0001F53C \U0001F53D \u23EC), and recurrence
+        (\U0001F501 followed by a free-text rule, e.g. "every week").
+
+        Returns (clean_text, metadata) where metadata maps field name
+        ("due", "priority", "recurrence", ...) to its string value.
+        """
+        remaining = text
+        meta = {}
+
+        for name, emoji in TASK_DATE_FIELDS:
+            m = re.search(
+                re.escape(emoji) + r"\s*(\d{4}-\d{2}-\d{2})", remaining
+            )
+            if m:
+                meta[name] = m.group(1)
+                remaining = remaining[:m.start()] + remaining[m.end():]
+
+        for emoji, name in TASK_PRIORITY_SYMBOLS:
+            if emoji in remaining:
+                meta["priority"] = name
+                remaining = remaining.replace(emoji, "")
+                break
+
+        m = re.search(re.escape(TASK_RECURRENCE_SYMBOL) + r"\s*(.+)$", remaining)
+        if m:
+            meta["recurrence"] = m.group(1).strip()
+            remaining = remaining[:m.start()]
+
+        return remaining.strip(), meta
+
+
+    def format_task_metadata(meta):
+        if not meta:
+            return ""
+        parts = []
+        for field in TASK_FIELD_DISPLAY_ORDER:
+            if field not in meta:
+                continue
+            if field == "due" and meta.get("due_implied"):
+                parts.append(f"due {meta[field]} (implied)")
+            else:
+                parts.append(f"{field} {meta[field]}")
+        return " (" + ", ".join(parts) + ")" if parts else ""
+
+
+    DAILY_FILENAME_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})\.md$")
+
+
+    def infer_journal_date(path):
+        """Return the date encoded in a daily journal filename.
+
+        Daily journal files are named "YYYY-MM-DD.md" (see `jour`/
+        `todo`). Returns a date object, or None if the filename
+        doesn't match that pattern (e.g. weekly journals, regular
+        notes).
+        """
+        m = DAILY_FILENAME_RE.match(os.path.basename(path))
+        if not m:
+            return None
+        try:
+            return datetime.datetime.strptime(
+                m.group(1), "%Y-%m-%d"
+            ).date()
+        except ValueError:
+            return None
+
+
+    def apply_implicit_due_dates(nodes, date_str):
+        """Default every todo without an explicit due date to date_str.
+
+        In a daily journal, a todo with no \U0001F4C5 due date is
+        implicitly due on that journal's own day. Mutates nodes
+        in place (recursing into sub-todos) and marks defaulted
+        entries with meta["due_implied"] = True so display/filtering
+        can tell them apart from an explicit due date.
+        """
+        for n in nodes:
+            if "due" not in n["meta"]:
+                n["meta"]["due"] = date_str
+                n["meta"]["due_implied"] = True
+            apply_implicit_due_dates(n["children"], date_str)
+
+
     def parse_date(date_str):
         date_str = date_str.lower().strip()
         today = datetime.date.today()
@@ -82,10 +201,12 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         deeper treated as notes attached to the nearest enclosing
         todo at that depth. Unrelated markdown (headings, prose,
         bullets with no enclosing todo at the right depth) is
-        ignored.
+        ignored. Obsidian Tasks plugin emoji metadata (dates,
+        priority, recurrence) embedded in a todo's text is parsed
+        out via extract_task_metadata() and stored separately.
 
         Returns a list of top-level nodes, each
-        {"text", "done", "notes": [...], "children": [...]}.
+        {"text", "done", "meta": {...}, "notes": [...], "children": [...]}.
         """
         if not os.path.exists(path):
             return []
@@ -109,9 +230,11 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             m = checklist_re.match(line)
             if m:
                 depth = len(m.group("indent")) // len(INDENT_UNIT)
+                text, meta = extract_task_metadata(m.group("text").strip())
                 node = {
-                    "text": m.group("text").strip(),
+                    "text": text,
                     "done": m.group("mark").lower() == "x",
+                    "meta": meta,
                     "notes": [],
                     "children": [],
                 }
@@ -149,15 +272,74 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         return result
 
 
+    def filter_due_today(nodes, today_str):
+        """Keep not-done todos due today or overdue, plus their ancestors.
+
+        A todo matches if it isn't done and its due date is today or
+        earlier (ISO YYYY-MM-DD strings sort chronologically, so a
+        plain string comparison is enough - overdue todos are
+        meant to get done today too). Ancestors of a matching todo
+        are kept (without being considered matches themselves)
+        purely to preserve context; todos/branches with no matching
+        descendant are dropped.
+        """
+        result = []
+        for n in nodes:
+            due = n.get("meta", {}).get("due")
+            matches = not n["done"] and due is not None and due <= today_str
+            kept_children = filter_due_today(n["children"], today_str)
+            if matches or kept_children:
+                n = dict(n)
+                n["children"] = kept_children
+                result.append(n)
+        return result
+
+
+    def find_vault_markdown_files(notes_dir):
+        """Recursively find every .md file under notes_dir, sorted.
+
+        Hidden directories (e.g. ".obsidian", ".git", ".trash") are
+        skipped.
+        """
+        files = []
+        for root, dirs, filenames in os.walk(notes_dir):
+            dirs[:] = [d for d in dirs if not d.startswith(".")]
+            for name in filenames:
+                if name.endswith(".md"):
+                    files.append(os.path.join(root, name))
+        return sorted(files)
+
+
+    def get_filtered_todos(path, args):
+        todos = parse_journal_todos(path)
+        journal_date = infer_journal_date(path)
+        if journal_date is not None:
+            apply_implicit_due_dates(todos, journal_date.strftime("%Y-%m-%d"))
+        todos = filter_tree(todos, args.done)
+        if args.today:
+            today_str = datetime.date.today().strftime("%Y-%m-%d")
+            todos = filter_due_today(todos, today_str)
+        return todos
+
+
+    def scope_message(args):
+        if args.today:
+            return "todos due today or overdue"
+        if args.done:
+            return "todos"
+        return "open todos"
+
+
     def print_todo_tree(nodes, depth=0):
         for n in nodes:
             indent = INDENT_UNIT * depth
+            suffix = format_task_metadata(n.get("meta", {}))
             if n["done"]:
                 box = c("32", "[x]")
-                text = c("2;9", n["text"])
+                text = c("2;9", n["text"]) + c("2", suffix)
             else:
                 box = "[ ]"
-                text = n["text"]
+                text = n["text"] + c("2", suffix)
             print(f"{indent}- {box} {text}")
             for note in n["notes"]:
                 note_indent = INDENT_UNIT * (depth + 1)
@@ -190,13 +372,54 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         )
         parser.add_argument(
             "-f", "--file", type=str,
-            help="Read this file directly instead of resolving a journal file."
+            help=(
+                "Read this file directly instead of resolving a journal "
+                "file. Ignored with --all."
+            )
+        )
+        parser.add_argument(
+            "-D", "--done", action="store_true",
+            help="Also show completed todos (default: open todos only)."
         )
         parser.add_argument(
             "-a", "--all", action="store_true",
-            help="Also show completed todos (default: open todos only)."
+            help=(
+                "Scan the whole vault - every .md file under NOTES_DIR - "
+                "instead of a single journal file. Ignores "
+                "-w/-o/-d/-f."
+            )
+        )
+        parser.add_argument(
+            "-t", "--today", action="store_true",
+            help=(
+                "Only show not-done todos due today or overdue "
+                "(Obsidian Tasks \U0001F4C5 due date <= today). In a "
+                "daily journal file, a todo with no explicit due date "
+                "is implicitly due that day. Overrides --done."
+            )
         )
         args = parser.parse_args()
+
+        if args.all:
+            notes_dir = os.getenv("NOTES_DIR")
+            if not notes_dir:
+                print("Error: NOTES_DIR not set.", file=sys.stderr)
+                sys.exit(1)
+
+            any_found = False
+            for path in find_vault_markdown_files(notes_dir):
+                todos = get_filtered_todos(path, args)
+                if not todos:
+                    continue
+                if any_found:
+                    print()
+                any_found = True
+                print(path)
+                print_todo_tree(todos)
+
+            if not any_found:
+                print(f"No {scope_message(args)} found in vault ({notes_dir})")
+            return
 
         if args.file:
             target_file = args.file
@@ -239,11 +462,10 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             print(f"No journal file found at {target_file}", file=sys.stderr)
             sys.exit(1)
 
-        todos = filter_tree(parse_journal_todos(target_file), args.all)
+        todos = get_filtered_todos(target_file, args)
 
         if not todos:
-            scope = "todos" if args.all else "open todos"
-            print(f"No {scope} found in {target_file}")
+            print(f"No {scope_message(args)} found in {target_file}")
             return
 
         print(target_file)
