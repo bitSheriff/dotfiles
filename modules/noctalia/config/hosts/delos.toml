@@ -1,0 +1,52 @@
+# delos (Framework 13 laptop, internal panel = eDP-1) - host-specific
+# noctalia overrides. Shared/host-agnostic settings live in ../common.toml
+# and are pulled in below. This file is symlinked live into
+# ~/.config/noctalia/user.toml (see modules/noctalia/default.nix) - edit
+# directly, no rebuild needed.
+
+# Noctalia resolves [include] relative paths against the symlink hop it
+# opened the file from (inside the nix store), not this file's real
+# on-disk directory - so "../common.toml" silently fails to resolve.
+# Use an absolute (or ~-based) path instead.
+[include]
+files = ["~/code/dotfiles/modules/noctalia/config/common.toml"]
+
+[wallpaper.default]
+path = "/home/benjamin/Pictures/wallpapers/desktop/classics/Claude.Monet-Cliff.Walk.at.Purville(1882).jpg"
+
+[wallpaper.last]
+path = "/home/benjamin/Pictures/wallpapers/desktop/classics/Claude.Monet-Cliff.Walk.at.Purville(1882).jpg"
+
+[wallpaper.monitors.eDP-1]
+path = "/home/benjamin/Pictures/wallpapers/desktop/classics/Claude.Monet-Cliff.Walk.at.Purville(1882).jpg"
+
+[lockscreen_widgets]
+enabled = false
+widget_order = [ "lockscreen-login-box@eDP-1" ]
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 1128.0
+    cy = 1322.0
+    output = "eDP-1"
+    placement_height = 1504.0
+    placement_width = 2256.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true

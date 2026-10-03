@@ -10,6 +10,18 @@
 
 let
   module_path = "${dotfiles_path}/modules/noctalia";
+
+  # Per-host noctalia overrides (monitor/output-pinned settings like
+  # wallpaper.monitors.* or lockscreen widget placement can't be shared
+  # across hosts). Each file pulls in config/common.toml itself via
+  # [include] - see modules/noctalia/config/hosts/. Nix dispatches by
+  # hostname directly (same pattern as modules/stylix's `themes` attrset),
+  # so a missing host fails loudly with a normal Nix "attribute missing"
+  # error instead of a filesystem check at eval time.
+  hostConfigFiles = {
+    delos = "${module_path}/config/hosts/delos.toml";
+    rhodos = "${module_path}/config/hosts/rhodos.toml";
+  };
 in
 {
 
@@ -38,7 +50,12 @@ in
   ];
 
   home-manager.users.benjamin =
-    { config, lib, ... }:
+    { config, lib, osConfig, ... }:
+    let
+      hostConfigFile =
+        hostConfigFiles.${osConfig.networking.hostName}
+          or (throw "modules/noctalia: no entry in hostConfigFiles for host '${osConfig.networking.hostName}' - add modules/noctalia/config/hosts/${osConfig.networking.hostName}.toml and list it there");
+    in
     {
       imports = [
         inputs.noctalia.homeModules.default
@@ -55,7 +72,8 @@ in
           # opacity are injected by Stylix (stylix.targets.noctalia, see
           # modules/stylix) through this option, which the module renders
           # into a single immutable ~/.config/noctalia/config.toml. Keep
-          # this Stylix-only - hand-edited settings go in user.toml below.
+          # this Stylix-only - hand-edited settings go in config/common.toml
+          # and config/hosts/<host>.toml below.
           settings = { };
         };
 
@@ -63,10 +81,11 @@ in
         # workflow as the old v4 settings.json symlink): noctalia merges
         # every *.toml file under ~/.config/noctalia/ alphabetically, so
         # this loads alongside (after) the Stylix-generated config.toml
-        # above. Edit modules/noctalia/noctalia/user.toml directly - it's
-        # hot-reloaded, no rebuild needed.
+        # above. The symlink target is picked by hostname - edit
+        # modules/noctalia/config/hosts/<host>.toml (or common.toml, which
+        # it includes) directly, it's hot-reloaded, no rebuild needed.
         xdg.configFile."noctalia/user.toml".source =
-          config.lib.file.mkOutOfStoreSymlink "${module_path}/config/user.toml";
+          config.lib.file.mkOutOfStoreSymlink hostConfigFile;
       };
     };
 
