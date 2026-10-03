@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix # The generated hardware file
-    # ./disko.nix
+    ./disko.nix
   ];
 
   networking.hostName = "delos";
