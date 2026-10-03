@@ -8,6 +8,9 @@
   ...
 }:
 
+let
+  module_path = "${dotfiles_path}/modules/noctalia";
+in
 {
 
   imports = [
@@ -50,13 +53,20 @@
 
           # Theme (mode/source/custom_palette), wallpaper path, fonts and
           # opacity are injected by Stylix (stylix.targets.noctalia, see
-          # modules/stylix). Keep this minimal - it's the v5 TOML schema,
-          # not the old v4 settings.json, so prior customization (bar
-          # widgets, plugins, launcher tweaks) was NOT ported and needs to
-          # be redone through the in-app Settings UI, which writes to
-          # ~/.local/state/noctalia/settings.toml.
+          # modules/stylix) through this option, which the module renders
+          # into a single immutable ~/.config/noctalia/config.toml. Keep
+          # this Stylix-only - hand-edited settings go in user.toml below.
           settings = { };
         };
+
+        # Hand-curated settings, live-symlinked into the dotfiles repo (same
+        # workflow as the old v4 settings.json symlink): noctalia merges
+        # every *.toml file under ~/.config/noctalia/ alphabetically, so
+        # this loads alongside (after) the Stylix-generated config.toml
+        # above. Edit modules/noctalia/noctalia/user.toml directly - it's
+        # hot-reloaded, no rebuild needed.
+        xdg.configFile."noctalia/user.toml".source =
+          config.lib.file.mkOutOfStoreSymlink "${module_path}/config/user.toml";
       };
     };
 
