@@ -37,6 +37,11 @@
   ###      Host Configuration       ###
   #####################################
   cfg = {
+
+    stylix = {
+      theme = "booberry";
+    };
+
     notes = {
       obsidian.enable = true;
       supernote.enable = true;
