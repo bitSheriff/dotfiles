@@ -74,7 +74,7 @@ in
                 font_family = "Comic Neue";
                 font_scale = 1.2;
                 font_weight = 700;
-                padding = 12;
+                padding = 14;
                 thickness = 32;
                 background_opacity = 0.1;
 
