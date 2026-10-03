@@ -76,6 +76,7 @@ in
                 font_weight = 700;
                 padding = 12;
                 thickness = 32;
+                background_opacity = 0.1;
 
                 # Widgets
                 start = [
