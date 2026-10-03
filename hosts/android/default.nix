@@ -73,12 +73,15 @@ in
       just
 
       hledger
+      fzf # used by `todo -f` to pick a target file
     ])
     ++ (with commands; [
       # Shared with the desktop.
       hl-accounts
       timedot-add
       timeclock-add
+      todo
+      todo-list
       # Android-specific wrappers, real executables rather than shell aliases
       # so they also work from a shortcut. See ./commands.nix.
       tda

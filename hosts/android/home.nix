@@ -19,6 +19,11 @@ let
   envVars = ''
     export NOTES_DIR="${paths.notesDir}"
 
+    export INBOX="$NOTES_DIR/Inbox/Inbox.md"
+    export INBOX_DIR="$NOTES_DIR/Inbox"
+    export JOURNAL_DAILY_PATH="$NOTES_DIR/Journal/Daily"
+    export JOURNAL_WEEKLY_PATH="$NOTES_DIR/Journal/Weekly"
+
     export FINANCE_PATH="$NOTES_DIR/Journal/_finance"
     export LEDGER_FILE="$FINANCE_PATH/private/$(date +%Y).hledger"
     export LEDGER_ALL_FILE="$FINANCE_PATH/all.hledger"
@@ -80,6 +85,9 @@ in
 
       nv = "nvim";
       pulldots = "(cd \"$DOTFILES_PATH\" && git pull)";
+
+      t = "todo";
+      tl = "todo-list";
     };
   };
 
