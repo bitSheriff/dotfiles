@@ -14,7 +14,7 @@
         desc = "Save file and quit";
       }
       {
-        key = "<leader>n";
+        key = "<leader>v";
         mode = [ "n" ];
         action = ":NvimTreeToggle<CR>";
         silent = true;
