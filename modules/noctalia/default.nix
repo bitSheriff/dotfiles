@@ -72,9 +72,34 @@ in
 
               bar.default = {
                 font_family = "Comic Neue";
+                font_scale = 1.2;
                 font_weight = 700;
                 padding = 12;
                 thickness = 32;
+
+                # Widgets
+                start = [
+                  "launcher"
+                  "wallpaper"
+                  "media"
+                ];
+                center = [
+                  "workspaces"
+                  "clock"
+                  "clipboard"
+                ];
+                end = [
+                  "tray"
+                  "notifications"
+                  "network"
+                  "bluetooth"
+                  "volume"
+                  "brightness"
+                  "battery"
+                  "control-center"
+                  "session"
+                ];
+
               };
 
               dock = {
@@ -101,12 +126,12 @@ in
             }
 
             (lib.mkIf (monitor != null) {
-              wallpaper = {
-                default.path = lib.mkForce "/home/benjamin/Pictures/wallpapers/desktop/classics/Claude.Monet-Cliff.Walk.at.Purville(1882).jpg";
-                last.path = "/home/benjamin/Pictures/wallpapers/desktop/classics/Claude.Monet-Cliff.Walk.at.Purville(1882).jpg";
-                monitors.${monitor}.path =
-                  "/home/benjamin/Pictures/wallpapers/desktop/classics/Claude.Monet-Cliff.Walk.at.Purville(1882).jpg";
-              };
+              # wallpaper = {
+              #   default.path = lib.mkForce "/home/benjamin/Pictures/wallpapers/desktop/classics/Claude.Monet-Cliff.Walk.at.Purville(1882).jpg";
+              #   last.path = "/home/benjamin/Pictures/wallpapers/desktop/classics/Claude.Monet-Cliff.Walk.at.Purville(1882).jpg";
+              #   monitors.${monitor}.path =
+              #     "/home/benjamin/Pictures/wallpapers/desktop/classics/Claude.Monet-Cliff.Walk.at.Purville(1882).jpg";
+              # };
 
               lockscreen_widgets = {
                 widget_order = [ "lockscreen-login-box@${monitor}" ];
