@@ -11,7 +11,7 @@
     ./hledger.nix
     ./looks.nix
     ./keymaps.nix
-    ./snippets.nix
+    ./snippets
     ./notes.nix
   ];
 
