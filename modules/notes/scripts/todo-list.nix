@@ -6,9 +6,16 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
     import sys
     import datetime
     import argparse
+    import subprocess
 
     # Configuration for output formatting (matches the `todo` script)
     INDENT_UNIT = "    "
+
+    # Marker the `todo` command inserts new todos after (see todo.nix).
+    # Used by -O/--open to jump straight to the todo section.
+    TODO_MARKER = "%%insert_todo%%"
+
+    DEFAULT_EDITOR = "nvim"
 
     USE_COLOR = sys.stdout.isatty()
 
@@ -295,6 +302,43 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         return result
 
 
+    def find_marker_line(path, marker):
+        """Return the 1-indexed line number of the first line
+        containing marker, or None if the file doesn't exist or
+        doesn't contain it.
+        """
+        if not os.path.exists(path):
+            return None
+        with open(path) as f:
+            for i, line in enumerate(f, start=1):
+                if marker in line:
+                    return i
+        return None
+
+
+    def open_in_editor(path, editor=DEFAULT_EDITOR):
+        """Open path in editor, jumping to the todo marker line if
+        present (falling back to the end of the file, or line 1 for
+        a new/empty file).
+        """
+        os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+
+        marker_line = find_marker_line(path, TODO_MARKER)
+        if marker_line is not None:
+            line = marker_line
+        elif os.path.exists(path):
+            with open(path) as f:
+                line = sum(1 for _ in f) or 1
+        else:
+            line = 1
+
+        try:
+            subprocess.run([editor, f"+{line}", path])
+        except FileNotFoundError:
+            print(f"Error: Editor '{editor}' not found.", file=sys.stderr)
+            sys.exit(1)
+
+
     def find_vault_markdown_files(notes_dir):
         """Recursively find every .md file under notes_dir, sorted.
 
@@ -398,7 +442,23 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 "is implicitly due that day. Overrides --done."
             )
         )
+        parser.add_argument(
+            "-O", "--open", action="store_true",
+            help=(
+                "Open the journal file in an editor at the todo marker "
+                "(%%%%insert_todo%%%%), i.e. where todos start, instead "
+                "of listing them. Not supported with --all."
+            )
+        )
+        parser.add_argument(
+            "-e", "--editor", type=str, default=DEFAULT_EDITOR,
+            help=f"Editor to use with --open (default: {DEFAULT_EDITOR})."
+        )
         args = parser.parse_args()
+
+        if args.open and args.all:
+            print("Error: --open is not supported with --all.", file=sys.stderr)
+            sys.exit(1)
 
         if args.all:
             notes_dir = os.getenv("NOTES_DIR")
@@ -457,6 +517,10 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             target_file = os.path.join(
                 daily_dir, f"{target_date.strftime('%Y-%m-%d')}.md"
             )
+
+        if args.open:
+            open_in_editor(target_file, args.editor)
+            return
 
         if not os.path.exists(target_file):
             print(f"No journal file found at {target_file}", file=sys.stderr)
