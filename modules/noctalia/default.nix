@@ -9,18 +9,13 @@
 }:
 
 let
-  module_path = "${dotfiles_path}/modules/noctalia";
-
-  # Per-host noctalia overrides (monitor/output-pinned settings like
-  # wallpaper.monitors.* or lockscreen widget placement can't be shared
-  # across hosts). Each file pulls in config/common.toml itself via
-  # [include] - see modules/noctalia/config/hosts/. Nix dispatches by
-  # hostname directly (same pattern as modules/stylix's `themes` attrset),
-  # so a missing host fails loudly with a normal Nix "attribute missing"
-  # error instead of a filesystem check at eval time.
-  hostConfigFiles = {
-    delos = "${module_path}/config/hosts/delos.toml";
-    rhodos = "${module_path}/config/hosts/rhodos.toml";
+  # Primary/internal monitor connector per host, used below for
+  # wallpaper.monitors.* and lockscreen widget placement
+  # (defaultMonitor.${hostname}). Add an entry whenever a new host needs a
+  # monitor-pinned noctalia setting; find connector names with
+  # `hyprctl monitors | grep Monitor`.
+  defaultMonitor = {
+    delos = "eDP-1"; # Framework 13 internal panel
   };
 in
 {
@@ -50,11 +45,14 @@ in
   ];
 
   home-manager.users.benjamin =
-    { config, lib, osConfig, ... }:
+    {
+      config,
+      lib,
+      osConfig,
+      ...
+    }:
     let
-      hostConfigFile =
-        hostConfigFiles.${osConfig.networking.hostName}
-          or (throw "modules/noctalia: no entry in hostConfigFiles for host '${osConfig.networking.hostName}' - add modules/noctalia/config/hosts/${osConfig.networking.hostName}.toml and list it there");
+      monitor = defaultMonitor.${osConfig.networking.hostName} or null;
     in
     {
       imports = [
@@ -64,28 +62,85 @@ in
       config = lib.mkIf (lib.elem "benjamin" activeUsers) {
         programs.noctalia = {
           enable = true;
-          # Reuse the already-cached nixpkgs build instead of compiling from
-          # the noctalia flake (same version is in nixpkgs unstable).
           package = pkgs.noctalia;
 
-          # Theme (mode/source/custom_palette), wallpaper path, fonts and
-          # opacity are injected by Stylix (stylix.targets.noctalia, see
-          # modules/stylix) through this option, which the module renders
-          # into a single immutable ~/.config/noctalia/config.toml. Keep
-          # this Stylix-only - hand-edited settings go in config/common.toml
-          # and config/hosts/<host>.toml below.
-          settings = { };
-        };
+          settings = lib.mkMerge [
+            # Shared, host-agnostic settings.
+            {
+              calendar.enabled = true;
+              control_center.calendar.show_week_numbers = true;
 
-        # Hand-curated settings, live-symlinked into the dotfiles repo (same
-        # workflow as the old v4 settings.json symlink): noctalia merges
-        # every *.toml file under ~/.config/noctalia/ alphabetically, so
-        # this loads alongside (after) the Stylix-generated config.toml
-        # above. The symlink target is picked by hostname - edit
-        # modules/noctalia/config/hosts/<host>.toml (or common.toml, which
-        # it includes) directly, it's hot-reloaded, no rebuild needed.
-        xdg.configFile."noctalia/user.toml".source =
-          config.lib.file.mkOutOfStoreSymlink hostConfigFile;
+              bar.default = {
+                font_family = "Comic Neue";
+                font_weight = 700;
+                padding = 12;
+                thickness = 32;
+              };
+
+              dock = {
+                enabled = true;
+                icon_size = 32;
+                reserve_space = false;
+                smart_auto_hide = true;
+              };
+
+              lockscreen_widgets = {
+                enabled = false;
+                schema_version = 2;
+                grid = {
+                  cell_size = 16;
+                  major_interval = 4;
+                  visible = true;
+                };
+              };
+
+              shell = {
+                polkit_agent = true;
+                screen_time_enabled = true;
+              };
+            }
+
+            (lib.mkIf (monitor != null) {
+              wallpaper = {
+                default.path = lib.mkForce "/home/benjamin/Pictures/wallpapers/desktop/classics/Claude.Monet-Cliff.Walk.at.Purville(1882).jpg";
+                last.path = "/home/benjamin/Pictures/wallpapers/desktop/classics/Claude.Monet-Cliff.Walk.at.Purville(1882).jpg";
+                monitors.${monitor}.path =
+                  "/home/benjamin/Pictures/wallpapers/desktop/classics/Claude.Monet-Cliff.Walk.at.Purville(1882).jpg";
+              };
+
+              lockscreen_widgets = {
+                widget_order = [ "lockscreen-login-box@${monitor}" ];
+                widget."lockscreen-login-box@${monitor}" = {
+                  box_height = 196.0;
+                  box_width = 810.0;
+                  cx = 1128.0;
+                  cy = 1322.0;
+                  output = monitor;
+                  placement_height = 1504.0;
+                  placement_width = 2256.0;
+                  rotation = 0.0;
+                  type = "login_box";
+                  settings = {
+                    background_color = "surface_variant";
+                    background_opacity = 0.88;
+                    background_radius = 12.0;
+                    center_password_text = false;
+                    input_opacity = 1.0;
+                    input_radius = 6.0;
+                    layout = "regular";
+                    show_caps_lock = true;
+                    show_keyboard_layout = true;
+                    show_login_button = true;
+                    show_media = true;
+                    show_session_buttons = true;
+                    show_unlock_hint = true;
+                    show_weather = true;
+                  };
+                };
+              };
+            })
+          ];
+        };
       };
     };
 
