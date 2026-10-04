@@ -1,6 +1,8 @@
 { pkgs }:
 
 pkgs.writers.writePython3Bin "jour" { } ''
+    import calendar
+    import curses
     import os
     import sys
     from datetime import datetime, timedelta
@@ -9,6 +11,93 @@ pkgs.writers.writePython3Bin "jour" { } ''
 
     # Define the default editor
     DEFAULT_EDITOR = "nvim"
+
+    # Calendar weekday abbreviations, Monday first (like `cal --monday`)
+    WEEKDAY_HEADER = "Mo Tu We Th Fr Sa Su"
+
+
+    def add_months(date, delta):
+        """Return date shifted by delta months, clamping the day."""
+        month_index = date.month - 1 + delta
+        year = date.year + month_index // 12
+        month = month_index % 12 + 1
+        day = min(date.day, calendar.monthrange(year, month)[1])
+        return date.replace(year=year, month=month, day=day)
+
+
+    def draw_calendar(stdscr, cursor_date):
+        stdscr.erase()
+        cal = calendar.Calendar(firstweekday=0)  # Monday first
+        weeks = cal.monthdayscalendar(
+            cursor_date.year, cursor_date.month
+        )
+        today = datetime.now().date()
+
+        header = cursor_date.strftime("%B %Y")
+        stdscr.addstr(0, 0, header.center(len(WEEKDAY_HEADER)),
+                      curses.A_BOLD)
+        stdscr.addstr(1, 0, WEEKDAY_HEADER, curses.A_UNDERLINE)
+
+        row = 2
+        for week in weeks:
+            col = 0
+            for day in week:
+                text = f"{day:2d}" if day else "  "
+                attr = curses.A_NORMAL
+                if day:
+                    day_date = cursor_date.replace(day=day).date()
+                    if day_date == cursor_date.date():
+                        attr = curses.A_REVERSE
+                    elif day_date == today:
+                        attr |= curses.A_BOLD
+                stdscr.addstr(row, col, text, attr)
+                col += 3
+            row += 1
+
+        help_text = (
+            "hjkl/arrows: move  n/p: month  t: today  "
+            "enter: select  q: cancel"
+        )
+        stdscr.addstr(row + 1, 0, help_text)
+        stdscr.refresh()
+
+
+    def run_calendar(initial_date=None):
+        """Show an interactive calendar and return the selected date.
+
+        Returns a ``datetime`` for the selected day, or ``None`` if the
+        user cancelled.
+        """
+
+        def _inner(stdscr):
+            curses.curs_set(0)
+            stdscr.keypad(True)
+            cursor_date = initial_date or datetime.now()
+
+            while True:
+                draw_calendar(stdscr, cursor_date)
+                key = stdscr.getch()
+
+                if key in (curses.KEY_LEFT, ord("h")):
+                    cursor_date -= timedelta(days=1)
+                elif key in (curses.KEY_RIGHT, ord("l")):
+                    cursor_date += timedelta(days=1)
+                elif key in (curses.KEY_UP, ord("k")):
+                    cursor_date -= timedelta(days=7)
+                elif key in (curses.KEY_DOWN, ord("j")):
+                    cursor_date += timedelta(days=7)
+                elif key in (ord("p"), curses.KEY_PPAGE):
+                    cursor_date = add_months(cursor_date, -1)
+                elif key in (ord("n"), curses.KEY_NPAGE):
+                    cursor_date = add_months(cursor_date, 1)
+                elif key == ord("t"):
+                    cursor_date = datetime.now()
+                elif key in (ord("\n"), curses.KEY_ENTER, ord(" ")):
+                    return cursor_date
+                elif key in (27, ord("q")):
+                    return None
+
+        return curses.wrapper(_inner)
 
 
     def parse_date(value):
@@ -60,10 +149,24 @@ pkgs.writers.writePython3Bin "jour" { } ''
                 "month). Overrides --offset."
             )
         )
+        parser.add_argument(
+            "-c", "--calendar", action="store_true",
+            help=(
+                "Interactively pick the date from a calendar "
+                "(weeks start on Monday). Overrides --date and "
+                "--offset."
+            )
+        )
         args = parser.parse_args()
 
         base_date = datetime.now()
-        if args.date:
+        if args.calendar:
+            selected = run_calendar(base_date)
+            if selected is None:
+                print("No date selected.", file=sys.stderr)
+                sys.exit(1)
+            base_date = selected
+        elif args.date:
             try:
                 base_date = parse_date(args.date)
             except ValueError:
