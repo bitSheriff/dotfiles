@@ -35,35 +35,40 @@ let
     ${pkgs.distrobox}/bin/distrobox-assemble create --file ${distroboxIni}
   '';
 
+  cfgDocker = config.cfg.development.virtualization.docker;
+  cfgVm = config.cfg.development.virtualization.vm;
 in
 {
 
-  environment.systemPackages = with pkgs; [
-    # Container
-    docker
-    docker-compose
-    lazydocker # makes docker less pain in the ass
+  environment.systemPackages =
+    with pkgs;
+    lib.optionals cfgDocker.enable [
+      # Container
+      docker
+      docker-compose
+      lazydocker # makes docker less pain in the ass
 
-    # Distro Box
-    distrobox
-    distroshelf # gui for distrobox
-    dbx-setup # own script to create and update distros from templates
+      # Distro Box
+      distrobox
+      distroshelf # gui for distrobox
+      dbx-setup # own script to create and update distros from templates
+    ]
+    ++ lib.optionals cfgVm.enable [
+      # Virtual Machines
+      qemu
+      gnome-boxes
+    ];
 
-    # Virtual Machines
-    qemu
-    gnome-boxes
-
-  ];
+  users.users.benjamin.extraGroups =
+    lib.optionals (lib.elem "benjamin" activeUsers) (
+      lib.optional cfgDocker.enable "docker" ++ lib.optional cfgVm.enable "libvirtd"
+    );
 
   ## Docker
-  virtualisation.docker.enable = true;
-  users.users.benjamin.extraGroups = lib.mkIf (lib.elem "benjamin" activeUsers) [
-    "docker"
-    "libvirtd"
-  ];
+  virtualisation.docker.enable = lib.mkIf cfgDocker.enable true;
 
   # mainly used for distrobox
-  virtualisation.podman = {
+  virtualisation.podman = lib.mkIf cfgDocker.enable {
     enable = true;
     dockerCompat = false; # Set to false to avoid conflict with actual Docker
     defaultNetwork.settings.dns_enabled = true;
@@ -77,18 +82,18 @@ in
   };
 
   # Force Distrobox to use Podman
-  environment.sessionVariables = {
+  environment.sessionVariables = lib.mkIf cfgDocker.enable {
     DISTROBOX_ENGINE = "podman";
   };
 
   ## Libvirt
-  virtualisation.libvirtd.enable = true;
-  # Enable TPM emulation (optional)
-  virtualisation.libvirtd.qemu = {
-    swtpm.enable = true;
+  virtualisation.libvirtd = lib.mkIf cfgVm.enable {
+    enable = true;
+    # Enable TPM emulation (optional)
+    qemu.swtpm.enable = true;
   };
 
   # Enable USB redirection (optional)
-  virtualisation.spiceUSBRedirection.enable = true;
+  virtualisation.spiceUSBRedirection.enable = lib.mkIf cfgVm.enable true;
 
 }
