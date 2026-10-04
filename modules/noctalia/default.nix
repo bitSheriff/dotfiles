@@ -70,6 +70,16 @@ in
               calendar.enabled = true;
               control_center.calendar.show_week_numbers = true;
 
+              plugins = {
+                enabled = [ "noctalia/timer" ];
+              };
+
+              widget = {
+                timer = {
+                  type = "noctalia/timer:bar";
+                };
+              };
+
               bar.default = {
                 font_family = "Comic Neue";
                 font_scale = 1.2;
@@ -84,6 +94,7 @@ in
                   "launcher"
                   "wallpaper"
                   "media"
+                  "timer"
                 ];
                 center = [
                   "workspaces"
