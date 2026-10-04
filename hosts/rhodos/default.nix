@@ -133,7 +133,7 @@
       enable = true;
       libre-office.enable = true;
       marktext.enable = true;
-
+      apostrophe.enable = true;
     };
 
     uni.enable = true;
