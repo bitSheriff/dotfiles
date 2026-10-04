@@ -29,13 +29,8 @@
         pdfgrep # search in multiple pdfs
 
         # Editors & Viewers
-        # typora # most beautiful markdown editor
-        rnote # PDF annotation and note-taking
         kdePackages.okular
         stirling-pdf-desktop # pdf editor
-
-        # Notes & Organization
-        # gromit-mpx # draw on desktop
 
         kdePackages.korganizer # Calendar and more
         kdePackages.akonadi # needed for korganizer
@@ -49,14 +44,15 @@
         ocrmypdf # ocr pdfs in command line
         system-config-printer # GUI to configure CUPS devices
 
-        # Finance
-        ledger-live-desktop
-
         # Misc
         blanket # background ambient soundscapes for concentration
-
       ]
       ++ lib.optionals config.cfg.office.libre-office.enable [ pkgs.libreoffice-stable ]
+      ++ lib.optionals config.cfg.office.drawing.enable [
+        rnote # annotate PDFs and handwritten notes
+        # gromit-mpx # draw on desktop
+      ]
+      ++ lib.optionals config.cfg.office.typora.enable [ typora ]
       ++ lib.optionals config.cfg.office.apostrophe.enable [ apostrophe ];
 
     # Crucial for office work to ensure documents look the same everywhere.

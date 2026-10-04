@@ -39,6 +39,39 @@ in
         description = "Development tooling: editors, terminals, languages, vscode, direnv, git, etc.";
       };
 
+      git = {
+
+        tuis = {
+          lazygit = {
+            enable = mkOption {
+              type = types.bool;
+              default = true;
+              description = "Enable Lazygit";
+            };
+          };
+        };
+
+        guis = {
+          gitte = {
+            enable = mkOption {
+              type = types.bool;
+              default = false;
+              description = "Enable Gitte";
+            };
+          };
+
+          smartgit = {
+            enable = mkOption {
+              type = types.bool;
+              default = false;
+              description = "Enable SmartGit";
+            };
+          };
+
+        };
+
+      };
+
       # Virtual Machines & Co
       virtualization = {
         vm = {
@@ -354,7 +387,7 @@ in
           enable = mkOption {
             type = types.bool;
             default = false;
-            description = "Install KDE Kasts";
+            description = "Install KDE Kasts (supports gpodder sync)";
           };
         };
       };
@@ -436,6 +469,22 @@ in
           description = "Enable Ente Auth";
         };
       };
+
+      tor = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable TOR services";
+        };
+      };
+
+      cryptocurrency = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable Cryptocurrency";
+        };
+      };
     };
 
     ############
@@ -464,11 +513,28 @@ in
         };
       };
 
+      typora = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install Typora";
+        };
+      };
+
       apostrophe = {
         enable = mkOption {
           type = types.bool;
           default = false;
           description = "Install Gnomes Apostrophe";
+        };
+      };
+
+      # well, more like handwritten notes, not artsy, mostly
+      drawing = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable handwritten notes/drawing";
         };
       };
     };

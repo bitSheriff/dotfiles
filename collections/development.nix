@@ -27,7 +27,6 @@
     environment.systemPackages =
       with pkgs;
       [
-
         # General
         git
         git-lfs # git large file storage
@@ -59,7 +58,6 @@
 
         # Editors and Co
         meld # diff viewer
-        gitte # git gui for when the shit is burning
 
         # Languages, most of these tools are in project flakes
         deno
@@ -72,12 +70,10 @@
         gnupg
 
       ]
-      ++ lib.optionals config.cfg.development.zed.enable [
-        zed-editor
-      ]
-      ++ lib.optionals config.cfg.development.freecad.enable [
-        freecad
-      ]
+      ++ lib.optionals config.cfg.development.git.guis.gitte.enable [ gitte ]
+      ++ lib.optionals config.cfg.development.git.guis.smartgit.enable [ smartgit ]
+      ++ lib.optionals config.cfg.development.zed.enable [ zed-editor ]
+      ++ lib.optionals config.cfg.development.freecad.enable [ freecad ]
       ++ lib.optionals config.cfg.development.languages.latex.enable [
         config.cfg.development.languages.latex.package
       ]
@@ -134,8 +130,7 @@
     home-manager.users.benjamin = {
 
       # LazyGit
-
-      programs.lazygit = {
+      programs.lazygit = lib.mkIf config.cfg.development.git.tuis.lazygit.enable {
         enable = true;
         enableZshIntegration = true;
         settings = {

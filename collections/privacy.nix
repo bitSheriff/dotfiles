@@ -7,13 +7,21 @@
 
 {
   config = lib.mkIf config.cfg.privacy.enable {
-    environment.systemPackages = with pkgs; [
-      tor
-      tor-browser
-      mullvad-vpn
-      onionshare # share files over tor
-      mat2 # remove metadata from files
-    ];
+    environment.systemPackages =
+      with pkgs;
+      [
+        mullvad-vpn
+        mat2 # remove metadata from files
+      ]
+      ++ lib.optionals config.cfg.privacy.tor.enable [
+        tor
+        tor-browser
+        onionshare # share files over tor
+      ]
+      ++ lib.optionals config.cfg.privacy.cryptocurrency.enable [
+        ledger-live-desktop
+
+      ];
 
     security.apparmor = {
       enable = true;

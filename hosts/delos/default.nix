@@ -78,6 +78,9 @@
       zed.enable = true;
       freecad.enable = true;
 
+      git.tuis.lazygit.enable = true;
+      git.guis.gitte.enable = true;
+
       virtualization = {
         docker.enable = true;
         vm.enable = true;
@@ -132,6 +135,7 @@
     };
 
     privacy.enable = true;
+    privacy.tor.enable = true;
 
     downloaders = {
       enable = true;
