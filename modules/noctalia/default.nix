@@ -16,6 +16,7 @@ let
   # `hyprctl monitors | grep Monitor`.
   defaultMonitor = {
     delos = "eDP-1"; # Framework 13 internal panel
+    rhodos = "HDMI-A-2";
   };
 in
 {
