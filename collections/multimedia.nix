@@ -136,7 +136,8 @@ in
         qview # minimal image viewer
         gthumb # viewer and simple editor
         imagemagick # i think there is nothing it cannot do
-        pinta # simple image manipulation
+        # pinta # simple image manipulation
+        gradia # image manipulation
 
         # Video & Recording
         vlc

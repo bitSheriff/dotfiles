@@ -108,7 +108,7 @@ hl.bind("SUPER + D", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
 hl.bind("SUPER + SHIFT + W", hl.dsp.exec_cmd("noctalia msg panel-toggle wallpaper"))
 hl.bind("SUPER + SHIFT + D", hl.dsp.exec_cmd(apps.launcher))
 hl.bind("Print", hl.dsp.exec_cmd(apps.screenshot .. " -m region --clipboard-only --freeze"))
-hl.bind("SUPER + Print", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | swappy -f -"))
+hl.bind("SUPER + Print", hl.dsp.exec_cmd("gradia --screenshot"))
 
 hl.bind("SUPER + period", hl.dsp.exec_cmd(apps.emoji_picker)) -- command centralized in cfg.apps.emojiPicker (cfg.nix)
 hl.bind("SUPER + CTRL + period", hl.dsp.exec_cmd("(FZF_DEFAULT_OPTS='' unipicker --copy-command wl-copy --command '" .. apps.menu .. "') | wl-copy"))
