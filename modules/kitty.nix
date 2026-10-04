@@ -59,6 +59,8 @@
         placement_strategy = "center";
         inactive_text_alpha = "1.0";
         confirm_os_window_close = 0;
+        # Close the window as soon as the directly-launched child exits
+        close_on_child_death = "yes";
 
         # Tab Bar
         tab_bar_edge = "bottom";
