@@ -145,7 +145,8 @@ in
         pavucontrol
         spotify
         audacity # audio editor
-        picard # mp3tag editor
+        picard # mp3tag editor very useful for auto-detection with MusicBrainz Library
+        eartag # very simple mp3tagv2 editor
         feishin # jellyfin and navidrone music player (spotify alike)
         # asunder # ripping cd's like its 2000
         id3v2 # cli-tool to work with mp3v2tags
@@ -160,7 +161,7 @@ in
         koreader
       ]
       ++ lib.optionals config.cfg.multimedia.comics.enable [
-        yacreader # comic reader
+        komikku # comic reader
       ]
       ++ lib.optionals config.cfg.multimedia.podcasts.kasts.enable [
         kdePackages.kasts

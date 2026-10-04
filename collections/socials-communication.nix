@@ -31,6 +31,7 @@ in
     ++ lib.optionals config.cfg.socials.mastodon.enable [
       toot # TUI for mastodon
       # kdePackages.tokodon # KDE GUI
+      tuba # Gnomes Mastodon client
     ]
     ++ lib.optionals config.cfg.communication.mail.tuta.enable [
       tutanota-desktop # secure encrypted email

@@ -54,6 +54,11 @@
       zed.enable = true;
       freecad.enable = true;
 
+      virtualization = {
+        docker.enable = true;
+        vm.enable = true;
+      };
+
       agentic = {
         enable = true;
         pi-coding-agent.enable = true;

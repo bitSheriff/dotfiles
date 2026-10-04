@@ -39,6 +39,25 @@ in
         description = "Development tooling: editors, terminals, languages, vscode, direnv, git, etc.";
       };
 
+      # Virtual Machines & Co
+      virtualization = {
+        vm = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Enable virtual machines";
+          };
+        };
+
+        docker = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Enable Docker";
+          };
+        };
+      };
+
       zed = {
         enable = mkOption {
           type = types.bool;
@@ -275,6 +294,7 @@ in
             default = true;
             description = "Install Markdown tools";
           };
+
         };
       };
     };
@@ -441,6 +461,14 @@ in
           type = types.bool;
           default = false;
           description = "Install and configure MarkText";
+        };
+      };
+
+      apostrophe = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install Gnomes Apostrophe";
         };
       };
     };

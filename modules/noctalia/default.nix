@@ -80,18 +80,18 @@ in
 
                 # Widgets
                 start = [
+                  "clock"
                   "launcher"
                   "wallpaper"
                   "media"
                 ];
                 center = [
                   "workspaces"
-                  "clock"
-                  "clipboard"
                 ];
                 end = [
                   "tray"
                   "notifications"
+                  "clipboard"
                   "network"
                   "bluetooth"
                   "volume"

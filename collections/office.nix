@@ -56,7 +56,8 @@
         blanket # background ambient soundscapes for concentration
 
       ]
-      ++ lib.optionals config.cfg.office.libre-office.enable [ pkgs.libreoffice-stable ];
+      ++ lib.optionals config.cfg.office.libre-office.enable [ pkgs.libreoffice-stable ]
+      ++ lib.optionals config.cfg.office.apostrophe.enable [ apostrophe ];
 
     # Crucial for office work to ensure documents look the same everywhere.
     fonts.packages = with pkgs; [
