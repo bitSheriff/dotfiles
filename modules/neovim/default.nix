@@ -41,6 +41,7 @@
         expandtab = true;
         linebreak = true; # break at whitespaces, typical "word wrapping"
         breakindent = true; # wrapped lines keep the original line's indent
+        smarttab = true;
 
         # Folding
         foldmethod = "expr";
