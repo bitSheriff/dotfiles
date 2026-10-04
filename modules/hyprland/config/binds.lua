@@ -197,12 +197,12 @@ hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 for i = 1, 9 do
     hl.bind("SUPER + " .. i, hl.dsp.focus({ workspace = i }))
-    hl.bind("SUPER + SHIFT + " .. i, hl.dsp.window.move({ workspace = i, silent = true }))
+    hl.bind("SUPER + SHIFT + " .. i, hl.dsp.window.move({ workspace = i, follow = false }))
 end
 hl.bind("SUPER + 0", hl.dsp.focus({ workspace = 10 }))
-hl.bind("SUPER + SHIFT + 0", hl.dsp.window.move({ workspace = 10, silent = true }))
+hl.bind("SUPER + SHIFT + 0", hl.dsp.window.move({ workspace = 10, follow = false }))
 
 for i = 11, 19 do
     hl.bind("SUPER + F" .. (i - 10), hl.dsp.focus({ workspace = i }))
-    hl.bind("SUPER + SHIFT + F" .. (i - 10), hl.dsp.window.move({ workspace = i, silent = true }))
+    hl.bind("SUPER + SHIFT + F" .. (i - 10), hl.dsp.window.move({ workspace = i, follow = false }))
 end
