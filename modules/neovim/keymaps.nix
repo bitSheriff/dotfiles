@@ -35,6 +35,13 @@
         desc = "Save current file";
       }
       {
+        key = "<c-s>";
+        mode = [ "i" ];
+        action = "<C-o>:w<CR>";
+        silent = true;
+        desc = "Save current file (insert mode)";
+      }
+      {
         key = "<c-a>";
         mode = [ "n" ];
         action = "ggVG";
