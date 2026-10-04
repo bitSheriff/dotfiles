@@ -39,6 +39,9 @@
         tabstop = 4;
         shiftwidth = 4;
         expandtab = true;
+        linebreak = true; # break at whitespaces, typical "word wrapping"
+        breakindent = true; # wrapped lines keep the original line's indent
+
         # Folding
         foldmethod = "expr";
         foldexpr = "v:lua.vim.treesitter.foldexpr()";
