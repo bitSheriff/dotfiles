@@ -319,12 +319,16 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         are in-progress todos - neither is ever considered "done",
         and both are always kept regardless of --done/--today
         filtering (see filter_tree/filter_due_today). "- [-] ..."
-        lines are cancelled todos - they count as "done" (hidden
-        unless --done is passed) but are rendered distinctly.
+        lines are cancelled todos and "- [<] ..." lines are
+        delegated todos - both count as "done" (hidden unless
+        --done is passed) but are rendered distinctly. "- [>] ..."
+        lines are forwarded todos - they count as not done, same as
+        "- [ ] ...", but are rendered distinctly.
 
         Returns a list of top-level nodes, each
         {"text", "done", "is_event", "in_progress", "cancelled",
-        "meta": {...}, "notes": [...], "children": [...]}.
+        "delegated", "forwarded", "meta": {...}, "notes": [...],
+        "children": [...]}.
         """
         if not os.path.exists(path):
             return []
@@ -333,7 +337,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             lines = f.readlines()
 
         checklist_re = re.compile(
-            r"^(?P<indent>\s*)-\s*\[(?P<mark>[ xXiI/-])\]\s*(?P<text>.*)$"
+            r"^(?P<indent>\s*)-\s*\[(?P<mark>[ xXiI/<>-])\]\s*(?P<text>.*)$"
         )
         note_re = re.compile(r"^(?P<indent>\s*)-\s+(?P<text>.*)$")
 
@@ -357,10 +361,12 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 mark = m.group("mark").lower()
                 node = {
                     "text": text,
-                    "done": mark in ("x", "-"),
+                    "done": mark in ("x", "-", "<"),
                     "is_event": mark == "i",
                     "in_progress": mark == "/",
                     "cancelled": mark == "-",
+                    "delegated": mark == "<",
+                    "forwarded": mark == ">",
                     "meta": meta,
                     "notes": [],
                     "children": [],
@@ -525,6 +531,12 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             elif n.get("cancelled"):
                 box = c("31", "[-]")
                 text = c("31;9", n["text"]) + c("2", suffix)
+            elif n.get("delegated"):
+                box = c("35", "[<]")
+                text = c("35;9", n["text"]) + c("2", suffix)
+            elif n.get("forwarded"):
+                box = c("34", "[>]")
+                text = n["text"] + c("2", suffix)
             elif n["done"]:
                 box = c("32", "[x]")
                 text = c("2;9", n["text"]) + c("2", suffix)
