@@ -341,6 +341,11 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         for raw in lines:
             line = raw.rstrip("\n")
             if not line.strip():
+                # A blank line ends the current contiguous todo block - a
+                # note/sub-todo only belongs to a todo if it's on a line
+                # directly below it (same scope, no gaps), so any open
+                # parents are no longer eligible to receive children/notes.
+                stack = {}
                 continue
 
             m = checklist_re.match(line)
@@ -375,6 +380,11 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 if parent is not None:
                     parent["notes"].append(m.group("text").strip())
                 continue
+
+            # Any other non-blank line (heading, prose, unrelated bullet
+            # list, ...) also ends the current contiguous todo block, for
+            # the same reason as a blank line above.
+            stack = {}
 
         return roots
 
