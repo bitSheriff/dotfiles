@@ -20,6 +20,7 @@ hl.window_rule({ match = { class = "^(dev.noctalia.Noctalia)$" }, float = true, 
 hl.window_rule({ match = { title = "^(floating)$" }, float = true, size = "1000 700", center = true })
 hl.window_rule({ match = { class = "^(floatui-).*$" }, float = true, size = "1000 700", center = true })
 hl.window_rule({ match = { class = "^(floatui-pass)$" }, float = true, size = "1000 300", center = true })
+hl.window_rule({ match = { class = "^(floatui-memo)$" }, float = true, size = "800 200", center = true })
 hl.workspace_rule({ workspace = "special:term-scratchpad", on_created_empty = "kitty --class term-scratchpad" })
 
 -- Producitivity Tools
