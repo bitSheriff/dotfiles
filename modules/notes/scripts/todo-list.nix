@@ -4,6 +4,8 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
     import os
     import re
     import sys
+    import calendar
+    import curses
     import datetime
     import argparse
     import subprocess
@@ -141,6 +143,104 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 n["meta"]["due"] = date_str
                 n["meta"]["due_implied"] = True
             apply_implicit_due_dates(n["children"], date_str)
+
+
+    # Calendar weekday abbreviations, Monday first (like `cal --monday`)
+    WEEKDAY_HEADER = "Mo Tu We Th Fr Sa Su"
+
+
+    def add_months(date, delta):
+        """Return date shifted by delta months, clamping the day."""
+        month_index = date.month - 1 + delta
+        year = date.year + month_index // 12
+        month = month_index % 12 + 1
+        day = min(date.day, calendar.monthrange(year, month)[1])
+        return date.replace(year=year, month=month, day=day)
+
+
+    def draw_calendar(stdscr, cursor_date):
+        stdscr.erase()
+        cal = calendar.Calendar(firstweekday=0)  # Monday first
+        weeks = cal.monthdayscalendar(cursor_date.year, cursor_date.month)
+        today = datetime.date.today()
+
+        header = cursor_date.strftime("%B %Y")
+        stdscr.addstr(0, 0, header.center(len(WEEKDAY_HEADER)),
+                      curses.A_BOLD)
+        stdscr.addstr(1, 0, WEEKDAY_HEADER, curses.A_UNDERLINE)
+
+        row = 2
+        for week in weeks:
+            col = 0
+            for day in week:
+                text = f"{day:2d}" if day else "  "
+                attr = curses.A_NORMAL
+                if day:
+                    day_date = cursor_date.replace(day=day)
+                    if day_date == cursor_date:
+                        attr = curses.A_REVERSE
+                    elif day_date == today:
+                        attr |= curses.A_BOLD
+                stdscr.addstr(row, col, text, attr)
+                col += 3
+            row += 1
+
+        help_text = (
+            "hjkl/arrows: move  n/p: month  t: today  "
+            "enter: select  q: cancel"
+        )
+        stdscr.addstr(row + 1, 0, help_text)
+        stdscr.refresh()
+
+
+    def run_calendar(initial_date=None):
+        """Show an interactive calendar and return the selected date.
+
+        Returns a ``datetime.date`` for the selected day, or ``None``
+        if the user cancelled.
+        """
+
+        def _inner(stdscr):
+            curses.curs_set(0)
+            stdscr.keypad(True)
+            cursor_date = initial_date or datetime.date.today()
+
+            while True:
+                draw_calendar(stdscr, cursor_date)
+                key = stdscr.getch()
+
+                if key in (curses.KEY_LEFT, ord("h")):
+                    cursor_date -= datetime.timedelta(days=1)
+                elif key in (curses.KEY_RIGHT, ord("l")):
+                    cursor_date += datetime.timedelta(days=1)
+                elif key in (curses.KEY_UP, ord("k")):
+                    cursor_date -= datetime.timedelta(days=7)
+                elif key in (curses.KEY_DOWN, ord("j")):
+                    cursor_date += datetime.timedelta(days=7)
+                elif key in (ord("p"), curses.KEY_PPAGE):
+                    cursor_date = add_months(cursor_date, -1)
+                elif key in (ord("n"), curses.KEY_NPAGE):
+                    cursor_date = add_months(cursor_date, 1)
+                elif key == ord("t"):
+                    cursor_date = datetime.date.today()
+                elif key in (ord("\n"), curses.KEY_ENTER, ord(" ")):
+                    return cursor_date
+                elif key in (27, ord("q")):
+                    return None
+
+        return curses.wrapper(_inner)
+
+
+    def pick_calendar_date():
+        """Run the interactive calendar and return the picked date.
+
+        Exits the program if the user cancels.
+        """
+        selected = run_calendar(datetime.date.today())
+        if selected is None:
+            print("No date selected.", file=sys.stderr)
+            sys.exit(1)
+        return selected
 
 
     def parse_date(date_str):
@@ -415,6 +515,14 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             )
         )
         parser.add_argument(
+            "-c", "--calendar", action="store_true",
+            help=(
+                "Interactively pick the date from a calendar (weeks "
+                "start on Monday), instead of -d/--date. --offset "
+                "still applies relative to the picked date."
+            )
+        )
+        parser.add_argument(
             "-f", "--file", type=str,
             help=(
                 "Read this file directly instead of resolving a journal "
@@ -488,9 +596,11 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             if not weekly_dir:
                 print("Error: JOURNAL_WEEKLY_PATH not set.", file=sys.stderr)
                 sys.exit(1)
-            target_date = (
-                datetime.date.today() + datetime.timedelta(weeks=args.offset)
+            base_date = (
+                pick_calendar_date() if args.calendar
+                else datetime.date.today()
             )
+            target_date = base_date + datetime.timedelta(weeks=args.offset)
             iso_year, iso_week, _ = target_date.isocalendar()
             target_file = os.path.join(
                 weekly_dir, f"{iso_year}-W{iso_week:02d}.md"
@@ -500,9 +610,11 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             if not daily_dir:
                 print("Error: JOURNAL_DAILY_PATH not set.", file=sys.stderr)
                 sys.exit(1)
-            if args.date:
+            if args.calendar:
+                base_date = pick_calendar_date()
+            elif args.date:
                 try:
-                    target_date = parse_date(args.date)
+                    base_date = parse_date(args.date)
                 except ValueError:
                     print(
                         f"Error: Invalid date '{args.date}'.",
@@ -510,10 +622,8 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                     )
                     sys.exit(1)
             else:
-                target_date = (
-                    datetime.date.today()
-                    + datetime.timedelta(days=args.offset)
-                )
+                base_date = datetime.date.today()
+            target_date = base_date + datetime.timedelta(days=args.offset)
             target_file = os.path.join(
                 daily_dir, f"{target_date.strftime('%Y-%m-%d')}.md"
             )

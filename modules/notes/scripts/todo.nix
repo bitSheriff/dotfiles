@@ -4,9 +4,12 @@ pkgs.writers.writePython3Bin "todo" { } ''
     import os
     import re
     import sys
+    import calendar
+    import curses
     import datetime
     import argparse
     import subprocess
+    import readline  # noqa: F401  (enables arrow-key/line editing for input())
 
     # Configuration for output formatting
     INDENT_UNIT = "    "
@@ -62,6 +65,104 @@ pkgs.writers.writePython3Bin "todo" { } ''
             capture_output=True, text=True
         )
         return result.stdout
+
+
+    # Calendar weekday abbreviations, Monday first (like `cal --monday`)
+    WEEKDAY_HEADER = "Mo Tu We Th Fr Sa Su"
+
+
+    def add_months(date, delta):
+        """Return date shifted by delta months, clamping the day."""
+        month_index = date.month - 1 + delta
+        year = date.year + month_index // 12
+        month = month_index % 12 + 1
+        day = min(date.day, calendar.monthrange(year, month)[1])
+        return date.replace(year=year, month=month, day=day)
+
+
+    def draw_calendar(stdscr, cursor_date):
+        stdscr.erase()
+        cal = calendar.Calendar(firstweekday=0)  # Monday first
+        weeks = cal.monthdayscalendar(cursor_date.year, cursor_date.month)
+        today = datetime.date.today()
+
+        header = cursor_date.strftime("%B %Y")
+        stdscr.addstr(0, 0, header.center(len(WEEKDAY_HEADER)),
+                      curses.A_BOLD)
+        stdscr.addstr(1, 0, WEEKDAY_HEADER, curses.A_UNDERLINE)
+
+        row = 2
+        for week in weeks:
+            col = 0
+            for day in week:
+                text = f"{day:2d}" if day else "  "
+                attr = curses.A_NORMAL
+                if day:
+                    day_date = cursor_date.replace(day=day)
+                    if day_date == cursor_date:
+                        attr = curses.A_REVERSE
+                    elif day_date == today:
+                        attr |= curses.A_BOLD
+                stdscr.addstr(row, col, text, attr)
+                col += 3
+            row += 1
+
+        help_text = (
+            "hjkl/arrows: move  n/p: month  t: today  "
+            "enter: select  q: cancel"
+        )
+        stdscr.addstr(row + 1, 0, help_text)
+        stdscr.refresh()
+
+
+    def run_calendar(initial_date=None):
+        """Show an interactive calendar and return the selected date.
+
+        Returns a ``datetime.date`` for the selected day, or ``None``
+        if the user cancelled.
+        """
+
+        def _inner(stdscr):
+            curses.curs_set(0)
+            stdscr.keypad(True)
+            cursor_date = initial_date or datetime.date.today()
+
+            while True:
+                draw_calendar(stdscr, cursor_date)
+                key = stdscr.getch()
+
+                if key in (curses.KEY_LEFT, ord("h")):
+                    cursor_date -= datetime.timedelta(days=1)
+                elif key in (curses.KEY_RIGHT, ord("l")):
+                    cursor_date += datetime.timedelta(days=1)
+                elif key in (curses.KEY_UP, ord("k")):
+                    cursor_date -= datetime.timedelta(days=7)
+                elif key in (curses.KEY_DOWN, ord("j")):
+                    cursor_date += datetime.timedelta(days=7)
+                elif key in (ord("p"), curses.KEY_PPAGE):
+                    cursor_date = add_months(cursor_date, -1)
+                elif key in (ord("n"), curses.KEY_NPAGE):
+                    cursor_date = add_months(cursor_date, 1)
+                elif key == ord("t"):
+                    cursor_date = datetime.date.today()
+                elif key in (ord("\n"), curses.KEY_ENTER, ord(" ")):
+                    return cursor_date
+                elif key in (27, ord("q")):
+                    return None
+
+        return curses.wrapper(_inner)
+
+
+    def pick_calendar_date():
+        """Run the interactive calendar and return the picked date.
+
+        Exits the program if the user cancels.
+        """
+        selected = run_calendar(datetime.date.today())
+        if selected is None:
+            print("No date selected.", file=sys.stderr)
+            sys.exit(1)
+        return selected
 
 
     def read_clipboard():
@@ -124,7 +225,7 @@ pkgs.writers.writePython3Bin "todo" { } ''
         """Append free-form text to the Inbox file.
 
         Text comes from (in order of precedence): the clipboard
-        (-c), positional task arguments, or an interactive
+        (-C), positional task arguments, or an interactive
         `gum write` prompt.
         """
         inbox_file = os.getenv("INBOX")
@@ -278,13 +379,21 @@ pkgs.writers.writePython3Bin "todo" { } ''
             "-i", "--inbox", action="store_true",
             help=(
                 "Append text to the Inbox file instead of adding a todo. "
-                "Combine with -c to use the clipboard, or provide task "
+                "Combine with -C to use the clipboard, or provide task "
                 "text/pipe stdin; otherwise falls back to `gum write`."
             )
         )
         parser.add_argument(
-            "-c", "--clipboard", action="store_true",
+            "-C", "--clipboard", action="store_true",
             help="With -i, use clipboard contents instead of task text."
+        )
+        parser.add_argument(
+            "-c", "--calendar", action="store_true",
+            help=(
+                "Interactively pick the date from a calendar (weeks "
+                "start on Monday). Overrides -d/--date, -o/--offset, "
+                "-T/--tomorrow and -t/--today."
+            )
         )
         parser.add_argument(
             "-l", "--link", action="store_true",
@@ -312,7 +421,10 @@ pkgs.writers.writePython3Bin "todo" { } ''
         target_date = datetime.date.today()
         date_flag_used = False
 
-        if args.date:
+        if args.calendar:
+            target_date = pick_calendar_date()
+            date_flag_used = True
+        elif args.date:
             try:
                 target_date = parse_date(args.date)
                 date_flag_used = True

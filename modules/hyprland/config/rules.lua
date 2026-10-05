@@ -13,9 +13,6 @@ hl.window_rule({ match = { title = "^(Pop-up Terminal)$" }, float = true, size =
 hl.window_rule({ match = { class = ".*" }, suppress_event = "maximize" })
 hl.window_rule({ match = { class = "^(term-scratchpad)$" }, workspace = "special:term-scratchpad", size = "1200 800", center = true })
 hl.window_rule({ match = { class = "^(quick-settings)$" }, float = true, size = "500 700", move = "100%-520 50", pin = true })
--- v5 panels (launcher, control-center, clipboard, etc.) are layer-shell
--- surfaces, not regular toplevel windows, so they no longer need a
--- float/pin/size window_rule like v4's launcher did.
 hl.window_rule({ match = { class = "^(dev.noctalia.Noctalia)$" }, float = true, size = "1080 920" }) -- Settings window
 hl.window_rule({ match = { title = "^(floating)$" }, float = true, size = "1000 700", center = true })
 hl.window_rule({ match = { class = "^(floatui-).*$" }, float = true, size = "1000 700", center = true })
