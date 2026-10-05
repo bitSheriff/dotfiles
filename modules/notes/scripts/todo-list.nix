@@ -101,9 +101,11 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             if field not in meta:
                 continue
             if field == "due" and meta.get("due_implied"):
-                parts.append(f"due {meta[field]} (implied)")
-            else:
-                parts.append(f"{field} {meta[field]}")
+                # Implicit due dates (every open todo in a daily journal
+                # defaults to that day) aren't worth displaying - they're
+                # true for virtually every todo and add no information.
+                continue
+            parts.append(f"{field} {meta[field]}")
         return " (" + ", ".join(parts) + ")" if parts else ""
 
 
@@ -501,6 +503,15 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         return "open todos"
 
 
+    def print_file_header(path):
+        """Print path as a short, bold header: basename, no extension.
+
+        E.g. ".../Daily/2026-10-09.md" is printed as just "2026-10-09".
+        """
+        label = os.path.splitext(os.path.basename(path))[0]
+        print(c("1", label))
+
+
     def print_todo_tree(nodes, depth=0):
         for n in nodes:
             indent = INDENT_UNIT * depth
@@ -566,6 +577,17 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             )
         )
         parser.add_argument(
+            "-r", "--range", nargs="+", metavar="DATE",
+            help=(
+                "Show todos across a range of daily journal files, from "
+                "FROM through UNTIL (both inclusive, in either order). "
+                "Dates use the same formats as -d/--date. If only one "
+                "date is given, it's taken as UNTIL and FROM defaults "
+                "to today. Not supported with --weekly, --all, --file, "
+                "or --open."
+            )
+        )
+        parser.add_argument(
             "-D", "--done", action="store_true",
             help="Also show completed todos (default: open todos only)."
         )
@@ -603,6 +625,72 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         if args.open and args.all:
             print("Error: --open is not supported with --all.", file=sys.stderr)
             sys.exit(1)
+
+        if args.range:
+            for flag, value in (
+                ("--weekly", args.weekly), ("--all", args.all),
+                ("--file", args.file), ("--open", args.open),
+            ):
+                if value:
+                    print(
+                        f"Error: --range is not supported with {flag}.",
+                        file=sys.stderr
+                    )
+                    sys.exit(1)
+
+            if len(args.range) not in (1, 2):
+                print(
+                    "Error: --range takes one or two dates (FROM and "
+                    "UNTIL, or just UNTIL).",
+                    file=sys.stderr
+                )
+                sys.exit(1)
+
+            daily_dir = os.getenv("JOURNAL_DAILY_PATH")
+            if not daily_dir:
+                print("Error: JOURNAL_DAILY_PATH not set.", file=sys.stderr)
+                sys.exit(1)
+
+            try:
+                if len(args.range) == 1:
+                    start_date = datetime.date.today()
+                    end_date = parse_date(args.range[0])
+                else:
+                    start_date = parse_date(args.range[0])
+                    end_date = parse_date(args.range[1])
+            except ValueError:
+                print(
+                    f"Error: Invalid date in --range: "
+                    f"{'/'.join(repr(d) for d in args.range)}.",
+                    file=sys.stderr
+                )
+                sys.exit(1)
+
+            if start_date > end_date:
+                start_date, end_date = end_date, start_date
+
+            any_found = False
+            current = start_date
+            while current <= end_date:
+                path = os.path.join(
+                    daily_dir, f"{current.strftime('%Y-%m-%d')}.md"
+                )
+                todos = get_filtered_todos(path, args)
+                if todos:
+                    if any_found:
+                        print()
+                    any_found = True
+                    print_file_header(path)
+                    print_todo_tree(todos)
+                current += datetime.timedelta(days=1)
+
+            if not any_found:
+                print(
+                    f"No {scope_message(args)} found between "
+                    f"{start_date.strftime('%Y-%m-%d')} and "
+                    f"{end_date.strftime('%Y-%m-%d')}"
+                )
+            return
 
         if args.all:
             notes_dir = os.getenv("NOTES_DIR")
@@ -678,7 +766,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             print(f"No {scope_message(args)} found in {target_file}")
             return
 
-        print(target_file)
+        print_file_header(target_file)
         print_todo_tree(todos)
 
 
