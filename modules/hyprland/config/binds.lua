@@ -116,7 +116,8 @@ hl.bind("SUPER + CTRL + E", hl.dsp.exec_cmd("hyprpicker -a"))
 hl.bind("SUPER + V", hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard")) -- clipboard is built into v5, no plugin needed
 hl.bind("SUPER + SHIFT + V", hl.dsp.exec_cmd("cliphist list | " .. apps.menu .. " | cliphist decode | wl-copy"))
 hl.bind("SUPER + ALT + W", hl.dsp.exec_cmd("waypaper"))
-hl.bind("SUPER + SHIFT + A", hl.dsp.exec_cmd("floatui memo"))
+hl.bind("SUPER + A", hl.dsp.exec_cmd("floatui memo"))
+hl.bind("SUPER + SHIFT+ A", hl.dsp.exec_cmd("floatui todo"))
 hl.bind("SUPER + XF86AudioMedia", hl.dsp.exec_cmd("floatui memo"))
 hl.bind("SUPER + B", hl.dsp.exec_cmd(apps.browser))
 hl.bind("SUPER + CTRL + B", hl.dsp.exec_cmd("firefox --private-window")) -- deliberately firefox-specific, not tied to apps.browser
