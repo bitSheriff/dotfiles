@@ -361,6 +361,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 mark = m.group("mark").lower()
                 node = {
                     "text": text,
+                    "state": mark,
                     "done": mark in ("x", "-", "<"),
                     "is_event": mark == "i",
                     "in_progress": mark == "/",
@@ -397,6 +398,19 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         return roots
 
 
+    # Checklist state characters (the content of "[ ]") and their names,
+    # used by --state and in its help/error text.
+    VALID_STATES = {
+        " ": "open",
+        "x": "done",
+        "i": "event",
+        "/": "in-progress",
+        "-": "cancelled",
+        "<": "delegated",
+        ">": "forwarded",
+    }
+
+
     def filter_tree(nodes, show_done):
         if show_done:
             return nodes
@@ -430,6 +444,25 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 not n["done"] and due is not None and due <= today_str
             )
             kept_children = filter_due_today(n["children"], today_str)
+            if matches or kept_children:
+                n = dict(n)
+                n["children"] = kept_children
+                result.append(n)
+        return result
+
+
+    def filter_by_state(nodes, state):
+        """Keep only todos with the given checklist state, plus ancestors.
+
+        A todo matches if its own state character equals state.
+        Ancestors of a matching todo are kept (without being
+        considered matches themselves) purely to preserve context;
+        todos/branches with no matching descendant are dropped.
+        """
+        result = []
+        for n in nodes:
+            matches = n.get("state") == state
+            kept_children = filter_by_state(n["children"], state)
             if matches or kept_children:
                 n = dict(n)
                 n["children"] = kept_children
@@ -494,6 +527,8 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         journal_date = infer_journal_date(path)
         if journal_date is not None:
             apply_implicit_due_dates(todos, journal_date.strftime("%Y-%m-%d"))
+        if args.state is not None:
+            return filter_by_state(todos, args.state)
         todos = filter_tree(todos, args.done)
         if args.today:
             today_str = datetime.date.today().strftime("%Y-%m-%d")
@@ -502,6 +537,8 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
 
 
     def scope_message(args):
+        if args.state is not None:
+            return f"{VALID_STATES[args.state]} todos"
         if args.today:
             return "todos due today or overdue"
         if args.done:
@@ -621,6 +658,15 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             )
         )
         parser.add_argument(
+            "--state", type=str, default=None,
+            help=(
+                "Only show todos with this checklist state - the "
+                "character inside \"[ ]\": " + ", ".join(
+                    f"{s!r} ({name})" for s, name in VALID_STATES.items()
+                ) + ". Overrides --done/--today."
+            )
+        )
+        parser.add_argument(
             "-O", "--open", action="store_true",
             help=(
                 "Open the journal file in an editor at the todo marker "
@@ -633,6 +679,18 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             help=f"Editor to use with --open (default: {DEFAULT_EDITOR})."
         )
         args = parser.parse_args()
+
+        if args.state is not None:
+            state = args.state.lower()
+            if len(state) != 1 or state not in VALID_STATES:
+                valid = ", ".join(f"{s!r}" for s in VALID_STATES)
+                print(
+                    f"Error: Invalid --state {args.state!r}. Expected "
+                    f"one of: {valid}.",
+                    file=sys.stderr
+                )
+                sys.exit(1)
+            args.state = state
 
         if args.open and args.all:
             print("Error: --open is not supported with --all.", file=sys.stderr)
