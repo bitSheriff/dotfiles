@@ -136,10 +136,12 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         implicitly due on that journal's own day. Mutates nodes
         in place (recursing into sub-todos) and marks defaulted
         entries with meta["due_implied"] = True so display/filtering
-        can tell them apart from an explicit due date.
+        can tell them apart from an explicit due date. Calendar
+        events ("- [i] ...") are skipped - they aren't "due" on any
+        particular day, they're always shown.
         """
         for n in nodes:
-            if "due" not in n["meta"]:
+            if not n.get("is_event") and "due" not in n["meta"]:
                 n["meta"]["due"] = date_str
                 n["meta"]["due_implied"] = True
             apply_implicit_due_dates(n["children"], date_str)
@@ -311,9 +313,16 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         ignored. Obsidian Tasks plugin emoji metadata (dates,
         priority, recurrence) embedded in a todo's text is parsed
         out via extract_task_metadata() and stored separately.
+        "- [i] ..." lines are calendar events and "- [/] ..." lines
+        are in-progress todos - neither is ever considered "done",
+        and both are always kept regardless of --done/--today
+        filtering (see filter_tree/filter_due_today). "- [-] ..."
+        lines are cancelled todos - they count as "done" (hidden
+        unless --done is passed) but are rendered distinctly.
 
         Returns a list of top-level nodes, each
-        {"text", "done", "meta": {...}, "notes": [...], "children": [...]}.
+        {"text", "done", "is_event", "in_progress", "cancelled",
+        "meta": {...}, "notes": [...], "children": [...]}.
         """
         if not os.path.exists(path):
             return []
@@ -322,7 +331,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             lines = f.readlines()
 
         checklist_re = re.compile(
-            r"^(?P<indent>\s*)-\s*\[(?P<mark>[ xX])\]\s*(?P<text>.*)$"
+            r"^(?P<indent>\s*)-\s*\[(?P<mark>[ xXiI/-])\]\s*(?P<text>.*)$"
         )
         note_re = re.compile(r"^(?P<indent>\s*)-\s+(?P<text>.*)$")
 
@@ -338,9 +347,13 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             if m:
                 depth = len(m.group("indent")) // len(INDENT_UNIT)
                 text, meta = extract_task_metadata(m.group("text").strip())
+                mark = m.group("mark").lower()
                 node = {
                     "text": text,
-                    "done": m.group("mark").lower() == "x",
+                    "done": mark in ("x", "-"),
+                    "is_event": mark == "i",
+                    "in_progress": mark == "/",
+                    "cancelled": mark == "-",
                     "meta": meta,
                     "notes": [],
                     "children": [],
@@ -371,7 +384,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             return nodes
         result = []
         for n in nodes:
-            if n["done"]:
+            if n["done"] and not n.get("is_event"):
                 continue
             n = dict(n)
             n["children"] = filter_tree(n["children"], show_done)
@@ -388,12 +401,16 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         meant to get done today too). Ancestors of a matching todo
         are kept (without being considered matches themselves)
         purely to preserve context; todos/branches with no matching
-        descendant are dropped.
+        descendant are dropped. Calendar events ("- [i] ...") and
+        in-progress todos ("- [/] ...") always match, regardless of
+        their due date.
         """
         result = []
         for n in nodes:
             due = n.get("meta", {}).get("due")
-            matches = not n["done"] and due is not None and due <= today_str
+            matches = n.get("is_event") or n.get("in_progress") or (
+                not n["done"] and due is not None and due <= today_str
+            )
             kept_children = filter_due_today(n["children"], today_str)
             if matches or kept_children:
                 n = dict(n)
@@ -478,7 +495,16 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         for n in nodes:
             indent = INDENT_UNIT * depth
             suffix = format_task_metadata(n.get("meta", {}))
-            if n["done"]:
+            if n.get("is_event"):
+                box = c("36", "[i]")
+                text = n["text"] + c("2", suffix)
+            elif n.get("in_progress"):
+                box = c("33", "[/]")
+                text = n["text"] + c("2", suffix)
+            elif n.get("cancelled"):
+                box = c("31", "[-]")
+                text = c("31;9", n["text"]) + c("2", suffix)
+            elif n["done"]:
                 box = c("32", "[x]")
                 text = c("2;9", n["text"]) + c("2", suffix)
             else:
