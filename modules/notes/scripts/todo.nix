@@ -38,12 +38,26 @@ pkgs.writers.writePython3Bin "todo" { } ''
         return depth, is_desc, content.strip()
 
 
-    def format_output_line(depth, is_desc, content):
+    def format_output_line(depth, is_desc, content, mark=" "):
         if is_desc:
             indent = INDENT_UNIT * (depth + 1)
             return f"{indent}- {content}"
         indent = INDENT_UNIT * depth
-        return f"{indent}- [ ] {content}"
+        return f"{indent}- [{mark}] {content}"
+
+
+    # Checklist state characters (the content of "[ ]"), matching
+    # todo-list's VALID_STATES - kept in sync so both scripts agree on
+    # what a checklist mark can mean.
+    VALID_STATES = {
+        " ": "open",
+        "x": "done",
+        "i": "event",
+        "/": "in-progress",
+        "-": "cancelled",
+        "<": "delegated",
+        ">": "forwarded",
+    }
 
 
     # Target marker in the file (if found, insert after this line)
@@ -348,6 +362,14 @@ pkgs.writers.writePython3Bin "todo" { } ''
     def main():
         parser = argparse.ArgumentParser(description="Add a todo task.")
         parser.add_argument(
+            "-w", "--weekly", action="store_true",
+            help=(
+                "Add to the weekly journal (JOURNAL_WEEKLY_PATH) instead "
+                "of the daily one. -o/--offset is interpreted in weeks "
+                "rather than days. Ignored with -f/--file."
+            )
+        )
+        parser.add_argument(
             "-t", "--today", action="store_true", help="Set to today."
         )
         parser.add_argument(
@@ -356,8 +378,8 @@ pkgs.writers.writePython3Bin "todo" { } ''
         parser.add_argument(
             "-o", "--offset", type=int, default=0,
             help=(
-                "Offset in days from today. Positive for future, "
-                "negative for past."
+                "Offset in days from today (or weeks, with -w/--weekly). "
+                "Positive for future, negative for past."
             )
         )
         parser.add_argument(
@@ -404,6 +426,17 @@ pkgs.writers.writePython3Bin "todo" { } ''
             )
         )
         parser.add_argument(
+            "-s", "--state", type=str, default=None,
+            help=(
+                "Checklist state for the new todo(s) - the character "
+                "to put inside \"[ ]\", same meaning as todo-list's "
+                "--state: " + ", ".join(
+                    f"{s!r} ({name})" for s, name in VALID_STATES.items()
+                ) + ". Default: ' ' (open). Only applies to new "
+                "top-level todos, not sub-todos/notes."
+            )
+        )
+        parser.add_argument(
             "task", nargs="*", help="The task content."
         )
 
@@ -416,6 +449,18 @@ pkgs.writers.writePython3Bin "todo" { } ''
         if args.inbox:
             handle_inbox(args)
             return
+
+        if args.state is not None:
+            state = args.state.lower()
+            if len(state) != 1 or state not in VALID_STATES:
+                valid = ", ".join(f"{s!r}" for s in VALID_STATES)
+                print(
+                    f"Error: Invalid --state {args.state!r}. Expected "
+                    f"one of: {valid}.",
+                    file=sys.stderr
+                )
+                sys.exit(1)
+            args.state = state
 
         # Determine date (precedence: -d > -o > -T > -t)
         target_date = datetime.date.today()
@@ -437,7 +482,10 @@ pkgs.writers.writePython3Bin "todo" { } ''
                 )
                 sys.exit(1)
         elif args.offset:
-            target_date += datetime.timedelta(days=args.offset)
+            if args.weekly:
+                target_date += datetime.timedelta(weeks=args.offset)
+            else:
+                target_date += datetime.timedelta(days=args.offset)
             date_flag_used = True
         elif args.tomorrow:
             target_date += datetime.timedelta(days=1)
@@ -454,12 +502,44 @@ pkgs.writers.writePython3Bin "todo" { } ''
             journal_file = select_file_with_fzf()
         elif args.file:
             journal_file = args.file
+        elif args.weekly:
+            weekly_path = os.getenv("JOURNAL_WEEKLY_PATH")
+            if not weekly_path:
+                print(
+                    "Error: JOURNAL_WEEKLY_PATH not set.", file=sys.stderr
+                )
+                sys.exit(1)
+            iso_year, iso_week, _ = target_date.isocalendar()
+            journal_file = os.path.join(
+                weekly_path, f"{iso_year}-W{iso_week:02d}.md"
+            )
         else:
             journal_path = os.getenv("JOURNAL_DAILY_PATH")
             if not journal_path:
                 print("Error: JOURNAL_DAILY_PATH not set.", file=sys.stderr)
                 sys.exit(1)
-            journal_file = os.path.join(journal_path, f"{date_str}.md")
+
+            assigned_file = os.path.join(journal_path, f"{date_str}.md")
+            today_str = datetime.date.today().strftime("%Y-%m-%d")
+
+            if date_str == today_str or os.path.exists(assigned_file):
+                journal_file = assigned_file
+                # The todo is landing in the file matching its own
+                # assigned date, so a due-date tag would just repeat
+                # what the file itself already says (and what
+                # todo-list's implicit-due-date logic infers anyway) -
+                # skip it regardless of state.
+                due_suffix = ""
+            else:
+                # Daily notes are usually pre-created a month or two in
+                # advance, but the assigned date's note doesn't exist
+                # yet (e.g. it's further out, or pre-creation hasn't
+                # run). Rather than silently creating a new,
+                # out-of-sequence daily note, fall back to today's file
+                # and make sure the intended date isn't lost by always
+                # tagging the todo with its due date.
+                journal_file = os.path.join(journal_path, f"{today_str}.md")
+                due_suffix = f" 📅 {date_str}"
 
         # Ensure the target file's directory exists
         os.makedirs(
@@ -530,7 +610,9 @@ pkgs.writers.writePython3Bin "todo" { } ''
             else:
                 depth, is_desc, content = parse_prefixed_line(stripped)
 
-            out_line = format_output_line(depth, is_desc, content)
+            is_new_top_level = not is_desc and depth == 0
+            mark = args.state if (is_new_top_level and args.state) else " "
+            out_line = format_output_line(depth, is_desc, content, mark)
             if not is_desc and depth == 0 and due_suffix and "📅" not in out_line:
                 out_line += due_suffix
             output_lines.append(out_line)

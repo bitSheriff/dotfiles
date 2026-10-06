@@ -1005,7 +1005,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             )
         )
         parser.add_argument(
-            "--state", type=str, default=None,
+            "-s", "--state", type=str, default=None,
             help=(
                 "Only show todos with this checklist state - the "
                 "character inside \"[ ]\": " + ", ".join(
