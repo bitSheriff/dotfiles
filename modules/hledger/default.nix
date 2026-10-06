@@ -17,7 +17,7 @@ let
   # alias below stays in sync when the picker logic changes.
   pickFile =
     extension:
-    "fd \"($(date +%Y)|uni)\" \"\${TIMEDOT_PATH}\" --extension=${extension} --type f | fzf";
+    "fd --full-path \"((^|/)$(date +%Y)\.${extension}$|2026WS|diplThesis)\" \"\${TIMEDOT_PATH}\" --extension=${extension} --type f | fzf";
   pickTimedotFile = pickFile "timedot";
   pickTimeclockFile = pickFile "timeclock";
 in
