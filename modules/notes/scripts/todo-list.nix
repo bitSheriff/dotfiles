@@ -434,28 +434,32 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
     # calendar event ("i") is deliberately excluded - it's a point-in-
     # time appointment, not an actionable todo, so it should never be
     # flagged as overdue just for sitting in an old daily journal.
-    NOT_DONE_DUE_STATES = (" ", ">")
+    NOT_DONE_DUE_STATES = (" ", ">", "/")
 
 
     def filter_due_today(nodes, today_str):
         """Keep not-done todos due today or overdue, plus their ancestors.
 
-        A todo matches if its state is open (" ") or forwarded (">")
-        and its due date is today or earlier (ISO YYYY-MM-DD strings
-        sort chronologically, so a plain string comparison is enough -
-        overdue todos are meant to get done today too). In-progress
-        todos ("- [/] ...") always match, regardless of their due
-        date, since they're still actively being worked on. Calendar
-        events ("- [i] ...") never match here - they aren't "not
-        done"/overdue, they're just appointments. Ancestors of a
-        matching todo are kept (without being considered matches
-        themselves) purely to preserve context; todos/branches with no
-        matching descendant are dropped.
+        A todo matches if its state is open (" "), forwarded (">") or
+        in-progress ("/") and its due date is today or earlier (ISO
+        YYYY-MM-DD strings sort chronologically, so a plain string
+        comparison is enough - overdue todos are meant to get done
+        today too). A daily journal todo with no explicit due date
+        gets one implicitly (see apply_implicit_due_dates), so this
+        still "just works" there; outside a daily journal (e.g. --all
+        scanning the vault) a todo - in-progress or otherwise - needs
+        an explicit \U0001F4C5 due date to ever show up here, since
+        there's nothing to imply it from. Calendar events ("- [i] "
+        "...") never match here - they aren't "not done"/overdue,
+        they're just appointments. Ancestors of a matching todo are
+        kept (without being considered matches themselves) purely to
+        preserve context; todos/branches with no matching descendant
+        are dropped.
         """
         result = []
         for n in nodes:
             due = n.get("meta", {}).get("due")
-            matches = n.get("in_progress") or (
+            matches = (
                 n.get("state") in NOT_DONE_DUE_STATES
                 and due is not None and due <= today_str
             )
@@ -987,8 +991,13 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             "-a", "--all", action="store_true",
             help=(
                 "Scan the whole vault - every .md file under NOTES_DIR - "
-                "instead of a single journal file. Ignores "
-                "-w/-o/-d/-f."
+                "instead of a single journal file. Ignores -w/-o/-d/-f. "
+                "Defaults to the same overdue/due-today filtering as "
+                "--overdue (otherwise overwhelming); todos outside a "
+                "daily journal file need an explicit \U0001F4C5 due date "
+                "to show up, since there's no implicit due date for "
+                "them. Pass --done or --state to see everything/a "
+                "specific state instead."
             )
         )
         parser.add_argument(
@@ -1036,8 +1045,9 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 "file from disk (picking up todos added elsewhere, and "
                 "newly created journal files), q quits. With no other "
                 "file-selection flag, defaults to the same overdue/"
-                "due-today scan as a bare --overdue. Not supported with "
-                "--open."
+                "due-today scan as a bare --overdue. Works with --all "
+                "too, browsing the (also overdue-filtered by default) "
+                "vault-wide scan. Not supported with --open."
             )
         )
         args = parser.parse_args()
@@ -1070,6 +1080,16 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         if args.open and args.all:
             print("Error: --open is not supported with --all.", file=sys.stderr)
             sys.exit(1)
+
+        if args.all and not args.overdue and not args.done and args.state is None:
+            # --all scans the whole vault, which is overwhelming without
+            # a filter - default to the same overdue/due-today criteria
+            # as --overdue: daily-journal todos use their implicit due
+            # date, every other file's todos need an explicit due date
+            # to be considered (no implicit due makes sense outside a
+            # daily journal). Explicit --done/--state/--overdue override
+            # this default.
+            args.overdue = True
 
         if args.range:
             for flag, value in (
