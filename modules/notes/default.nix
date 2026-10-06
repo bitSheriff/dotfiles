@@ -29,8 +29,10 @@
     ++ lib.optionals config.cfg.notes.obsidian.enable [ obsidian ]; # the best note system
 
   programs.zsh.shellAliases = {
-    daily = "jour";
     weekly = "jour --weekly";
+    daily = "jour";
+    yesterday = "jour -o -1";
+    tomorrow = "jour -o 1";
     t = "todo";
     tl = "todo-list";
   };
