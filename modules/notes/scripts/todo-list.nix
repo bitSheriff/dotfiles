@@ -135,16 +135,21 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         """Default every todo without an explicit due date to date_str.
 
         In a daily journal, a todo with no \U0001F4C5 due date is
-        implicitly due on that journal's own day. Mutates nodes
-        in place (recursing into sub-todos) and marks defaulted
-        entries with meta["due_implied"] = True so display/filtering
-        can tell them apart from an explicit due date. Calendar
-        events ("- [i] ...") are skipped - they aren't "due" on any
-        particular day, they're always shown.
+        implicitly due on that journal's own day - or, if it has a
+        \u23F3 scheduled date and/or a \U0001F6EB start date later than
+        that day, on whichever of those is later instead (a due date
+        can never be implied earlier than when the todo is scheduled/
+        allowed to start; between the two, scheduled wins if both are
+        set). Mutates nodes in place (recursing into sub-todos) and
+        marks defaulted entries with meta["due_implied"] = True so
+        display/filtering can tell them apart from an explicit due
+        date. Calendar events ("- [i] ...") are skipped - they aren't
+        "due" on any particular day, they're always shown.
         """
         for n in nodes:
             if not n.get("is_event") and "due" not in n["meta"]:
-                n["meta"]["due"] = date_str
+                activation = n["meta"].get("scheduled") or n["meta"].get("start")
+                n["meta"]["due"] = max(date_str, activation or date_str)
                 n["meta"]["due_implied"] = True
             apply_implicit_due_dates(n["children"], date_str)
 
@@ -437,31 +442,49 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
     NOT_DONE_DUE_STATES = (" ", ">", "/")
 
 
+    def effective_activation_date(meta):
+        """The date from which a todo should be considered relevant
+        for --overdue/--all purposes: its \U0001F4C5 due date if set
+        (daily journal todos always have one by this point - see
+        apply_implicit_due_dates), otherwise its \u23F3 scheduled date,
+        otherwise its \U0001F6EB start date, otherwise None (never
+        shown). Scheduled takes priority over start when both are set
+        but there's no due date - this only matters outside a daily
+        journal, where apply_implicit_due_dates never runs so due can
+        genuinely be absent.
+        """
+        return meta.get("due") or meta.get("scheduled") or meta.get("start")
+
+
     def filter_due_today(nodes, today_str):
-        """Keep not-done todos due today or overdue, plus their ancestors.
+        """Keep not-done todos relevant today or overdue, plus ancestors.
 
         A todo matches if its state is open (" "), forwarded (">") or
-        in-progress ("/") and its due date is today or earlier (ISO
-        YYYY-MM-DD strings sort chronologically, so a plain string
-        comparison is enough - overdue todos are meant to get done
-        today too). A daily journal todo with no explicit due date
-        gets one implicitly (see apply_implicit_due_dates), so this
-        still "just works" there; outside a daily journal (e.g. --all
-        scanning the vault) a todo - in-progress or otherwise - needs
-        an explicit \U0001F4C5 due date to ever show up here, since
-        there's nothing to imply it from. Calendar events ("- [i] "
-        "...") never match here - they aren't "not done"/overdue,
-        they're just appointments. Ancestors of a matching todo are
-        kept (without being considered matches themselves) purely to
-        preserve context; todos/branches with no matching descendant
-        are dropped.
+        in-progress ("/") and its effective activation date (due, else
+        scheduled, else start - see effective_activation_date) is
+        today or earlier (ISO YYYY-MM-DD strings sort chronologically,
+        so a plain string comparison is enough). A daily journal todo
+        with no explicit due date gets one implicitly (see
+        apply_implicit_due_dates), so this still "just works" there;
+        outside a daily journal (e.g. --all scanning the vault) a todo
+        needs an explicit due/scheduled/start date to ever show up
+        here, since there's nothing to imply one from. Note that
+        becoming visible via scheduled/start rather than due doesn't
+        mean "overdue" in the urgent sense - just "now relevant, no
+        longer hidden"; only an actual due date in the past carries
+        that connotation, and that distinction is left to the reader.
+        Calendar events ("- [i] ...") never match here - they aren't
+        "not done"/overdue, they're just appointments. Ancestors of a
+        matching todo are kept (without being considered matches
+        themselves) purely to preserve context; todos/branches with no
+        matching descendant are dropped.
         """
         result = []
         for n in nodes:
-            due = n.get("meta", {}).get("due")
+            activation = effective_activation_date(n.get("meta", {}))
             matches = (
                 n.get("state") in NOT_DONE_DUE_STATES
-                and due is not None and due <= today_str
+                and activation is not None and activation <= today_str
             )
             kept_children = filter_due_today(n["children"], today_str)
             if matches or kept_children:
