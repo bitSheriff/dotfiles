@@ -36,6 +36,10 @@
 
       treesitter.enable = true;
       options = {
+        # Persist undo history across sessions and keep swapfiles so unsaved changes can be recovered after a crash.
+        undofile = true;
+        swapfile = true;
+
         tabstop = 4;
         shiftwidth = 4;
         expandtab = true;
