@@ -317,7 +317,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         out via extract_task_metadata() and stored separately.
         "- [i] ..." lines are calendar events and "- [/] ..." lines
         are in-progress todos - neither is ever considered "done",
-        and both are always kept regardless of --done/--today
+        and both are always kept regardless of --done/--overdue
         filtering (see filter_tree/filter_due_today). "- [-] ..."
         lines are cancelled todos and "- [<] ..." lines are
         delegated todos - both count as "done" (hidden unless
@@ -424,24 +424,34 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         return result
 
 
+    # States treated as "not done" for overdue/due-today purposes. A
+    # calendar event ("i") is deliberately excluded - it's a point-in-
+    # time appointment, not an actionable todo, so it should never be
+    # flagged as overdue just for sitting in an old daily journal.
+    NOT_DONE_DUE_STATES = (" ", ">")
+
+
     def filter_due_today(nodes, today_str):
         """Keep not-done todos due today or overdue, plus their ancestors.
 
-        A todo matches if it isn't done and its due date is today or
-        earlier (ISO YYYY-MM-DD strings sort chronologically, so a
-        plain string comparison is enough - overdue todos are
-        meant to get done today too). Ancestors of a matching todo
-        are kept (without being considered matches themselves)
-        purely to preserve context; todos/branches with no matching
-        descendant are dropped. Calendar events ("- [i] ...") and
-        in-progress todos ("- [/] ...") always match, regardless of
-        their due date.
+        A todo matches if its state is open (" ") or forwarded (">")
+        and its due date is today or earlier (ISO YYYY-MM-DD strings
+        sort chronologically, so a plain string comparison is enough -
+        overdue todos are meant to get done today too). In-progress
+        todos ("- [/] ...") always match, regardless of their due
+        date, since they're still actively being worked on. Calendar
+        events ("- [i] ...") never match here - they aren't "not
+        done"/overdue, they're just appointments. Ancestors of a
+        matching todo are kept (without being considered matches
+        themselves) purely to preserve context; todos/branches with no
+        matching descendant are dropped.
         """
         result = []
         for n in nodes:
             due = n.get("meta", {}).get("due")
-            matches = n.get("is_event") or n.get("in_progress") or (
-                not n["done"] and due is not None and due <= today_str
+            matches = n.get("in_progress") or (
+                n.get("state") in NOT_DONE_DUE_STATES
+                and due is not None and due <= today_str
             )
             kept_children = filter_due_today(n["children"], today_str)
             if matches or kept_children:
@@ -522,6 +532,19 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         return sorted(files)
 
 
+    def find_daily_journal_files(daily_dir):
+        """Return every daily journal file ("YYYY-MM-DD.md") directly
+        under daily_dir, sorted chronologically.
+        """
+        if not os.path.isdir(daily_dir):
+            return []
+        return sorted(
+            os.path.join(daily_dir, name)
+            for name in os.listdir(daily_dir)
+            if DAILY_FILENAME_RE.match(name)
+        )
+
+
     def get_filtered_todos(path, args):
         todos = parse_journal_todos(path)
         journal_date = infer_journal_date(path)
@@ -530,7 +553,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         if args.state is not None:
             return filter_by_state(todos, args.state)
         todos = filter_tree(todos, args.done)
-        if args.today:
+        if args.overdue:
             today_str = datetime.date.today().strftime("%Y-%m-%d")
             todos = filter_due_today(todos, today_str)
         return todos
@@ -539,7 +562,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
     def scope_message(args):
         if args.state is not None:
             return f"{VALID_STATES[args.state]} todos"
-        if args.today:
+        if args.overdue:
             return "todos due today or overdue"
         if args.done:
             return "todos"
@@ -649,12 +672,16 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             )
         )
         parser.add_argument(
-            "-t", "--today", action="store_true",
+            "--overdue", action="store_true",
             help=(
                 "Only show not-done todos due today or overdue "
                 "(Obsidian Tasks \U0001F4C5 due date <= today). In a "
                 "daily journal file, a todo with no explicit due date "
-                "is implicitly due that day. Overrides --done."
+                "is implicitly due that day - so a not-done todo left "
+                "behind in an old daily journal counts as overdue. "
+                "Overrides --done. On its own (no -d/-o/-c/-w/-f/-a/-r), "
+                "scans every daily journal file for overdue/due-today "
+                "todos instead of just today's."
             )
         )
         parser.add_argument(
@@ -663,7 +690,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 "Only show todos with this checklist state - the "
                 "character inside \"[ ]\": " + ", ".join(
                     f"{s!r} ({name})" for s, name in VALID_STATES.items()
-                ) + ". Overrides --done/--today."
+                ) + ". Overrides --done/--overdue."
             )
         )
         parser.add_argument(
@@ -760,6 +787,34 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                     f"{start_date.strftime('%Y-%m-%d')} and "
                     f"{end_date.strftime('%Y-%m-%d')}"
                 )
+            return
+
+        # A bare --overdue (no other file-selection flag) means "what's
+        # overdue or due today" - that can only be answered by scanning
+        # every daily journal file, not just today's, since a not-done
+        # todo left behind in an old journal is implicitly overdue.
+        if args.overdue and not (
+            args.file or args.weekly or args.all
+            or args.date or args.offset or args.calendar
+        ):
+            daily_dir = os.getenv("JOURNAL_DAILY_PATH")
+            if not daily_dir:
+                print("Error: JOURNAL_DAILY_PATH not set.", file=sys.stderr)
+                sys.exit(1)
+
+            any_found = False
+            for path in find_daily_journal_files(daily_dir):
+                todos = get_filtered_todos(path, args)
+                if not todos:
+                    continue
+                if any_found:
+                    print()
+                any_found = True
+                print_file_header(path)
+                print_todo_tree(todos)
+
+            if not any_found:
+                print(f"No {scope_message(args)} found in {daily_dir}")
             return
 
         if args.all:
