@@ -303,6 +303,14 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         ).date()
 
 
+    # Matches a checklist line ("- [ ] ...", "- [x] ...", ...). Shared by
+    # parse_journal_todos (reading) and set_todo_mark (writing back a
+    # single toggled state character from --tui).
+    CHECKLIST_RE = re.compile(
+        r"^(?P<indent>\s*)-\s*\[(?P<mark>[ xXiI/<>-])\]\s*(?P<text>.*)$"
+    )
+
+
     def parse_journal_todos(path):
         """Parse a journal file into a tree of todo nodes.
 
@@ -336,15 +344,12 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         with open(path) as f:
             lines = f.readlines()
 
-        checklist_re = re.compile(
-            r"^(?P<indent>\s*)-\s*\[(?P<mark>[ xXiI/<>-])\]\s*(?P<text>.*)$"
-        )
         note_re = re.compile(r"^(?P<indent>\s*)-\s+(?P<text>.*)$")
 
         roots = []
         stack = {}  # depth -> node, for the todos currently "open" above us
 
-        for raw in lines:
+        for lineno, raw in enumerate(lines, start=1):
             line = raw.rstrip("\n")
             if not line.strip():
                 # A blank line ends the current contiguous todo block - a
@@ -354,7 +359,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 stack = {}
                 continue
 
-            m = checklist_re.match(line)
+            m = CHECKLIST_RE.match(line)
             if m:
                 depth = len(m.group("indent")) // len(INDENT_UNIT)
                 text, meta = extract_task_metadata(m.group("text").strip())
@@ -362,6 +367,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 node = {
                     "text": text,
                     "state": mark,
+                    "line": lineno,
                     "done": mark in ("x", "-", "<"),
                     "is_event": mark == "i",
                     "in_progress": mark == "/",
@@ -478,6 +484,39 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 n["children"] = kept_children
                 result.append(n)
         return result
+
+
+    def set_todo_mark(path, line_no, new_mark):
+        """Overwrite the checklist mark on one line of a journal file.
+
+        Rewrites only the single character inside "[ ]" on the given
+        1-indexed line - everything else on that line (text, emoji
+        metadata, indentation) and every other line in the file is
+        left untouched. Used by --tui to toggle a todo's state in
+        place. Returns True on success, False if the line doesn't
+        exist or isn't a checklist line anymore (e.g. file changed
+        concurrently).
+        """
+        with open(path) as f:
+            lines = f.readlines()
+
+        idx = line_no - 1
+        if not (0 <= idx < len(lines)):
+            return False
+
+        raw = lines[idx]
+        line = raw.rstrip("\n")
+        eol = raw[len(line):]
+        m = CHECKLIST_RE.match(line)
+        if not m:
+            return False
+
+        start, end = m.span("mark")
+        lines[idx] = line[:start] + new_mark + line[end:] + eol
+
+        with open(path, "w") as f:
+            f.writelines(lines)
+        return True
 
 
     def find_marker_line(path, marker):
@@ -610,6 +649,287 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             print_todo_tree(n["children"], depth + 1)
 
 
+    def output_sections(
+        sections, empty_message, args, header_fn=None, refresh_paths=None,
+    ):
+        """Print sections, or hand them to the interactive --tui browser.
+
+        sections is a list of (path, todos) pairs (todos possibly
+        empty - those are skipped). header_fn defaults to
+        print_file_header (short, bold basename); pass print instead
+        for a full-path header (e.g. --all). refresh_paths, if given,
+        is a callable returning a fresh path list - used by --tui's
+        "r" key to pick up brand new journal files that didn't exist
+        (or had no matching todos) when the browser was launched.
+        """
+        header_fn = header_fn or print_file_header
+        non_empty = [(path, todos) for path, todos in sections if todos]
+
+        if args.tui:
+            if not non_empty:
+                print(empty_message)
+                return
+            run_tui([path for path, _ in non_empty], args, refresh_paths)
+            return
+
+        if not non_empty:
+            print(empty_message)
+            return
+
+        for i, (path, todos) in enumerate(non_empty):
+            if i:
+                print()
+            header_fn(path)
+            print_todo_tree(todos)
+
+
+    # Curses colors for --tui, matching the ANSI codes used by c()/
+    # print_todo_tree as closely as curses allows.
+    TUI_STATE_COLOR_PAIR = {
+        "x": 1,   # done - green
+        "i": 2,   # event - cyan
+        "/": 3,   # in-progress - yellow
+        "-": 4,   # cancelled - red
+        "<": 5,   # delegated - magenta
+        ">": 6,   # forwarded - blue
+    }
+
+
+    def run_tui(paths, args, refresh_paths=None):
+        """Launch an interactive browser over the given journal files.
+
+        Lets you move through the todo tree(s) (one section per path),
+        expand/collapse branches, jump between day sections, and
+        toggle a todo's checklist state in place - this rewrites only
+        the single mark character on that todo's exact source line,
+        nothing else is touched. Pressing "r" reloads every file from
+        disk (picking up todos added elsewhere, e.g. via `todo`, while
+        the browser is open) and, if refresh_paths is given, also
+        re-discovers brand new journal files that weren't part of the
+        original path list.
+        """
+        collapsed = {}  # (path, line) -> True if collapsed
+
+        def build_rows():
+            rows = []
+            for path in paths:
+                todos = get_filtered_todos(path, args)
+                if not todos:
+                    continue
+                rows.append({"type": "header", "path": path})
+                _add_rows(rows, path, todos, 0)
+            return rows
+
+        def _add_rows(rows, path, nodes, depth):
+            for n in nodes:
+                key = (path, n["line"])
+                rows.append({
+                    "type": "todo", "path": path, "node": n,
+                    "depth": depth, "key": key,
+                })
+                if not collapsed.get(key):
+                    for note in n["notes"]:
+                        rows.append({
+                            "type": "note", "text": note, "depth": depth + 1,
+                        })
+                    _add_rows(rows, path, n["children"], depth + 1)
+
+        def first_selectable(rows):
+            for i, r in enumerate(rows):
+                if r["type"] == "todo":
+                    return i
+            return 0
+
+        def last_selectable(rows):
+            for i in range(len(rows) - 1, -1, -1):
+                if rows[i]["type"] == "todo":
+                    return i
+            return 0
+
+        def move(rows, pos, delta):
+            i = pos
+            while True:
+                i += delta
+                if i < 0 or i >= len(rows):
+                    return pos
+                if rows[i]["type"] == "todo":
+                    return i
+
+        def jump_section(rows, pos, delta):
+            headers = [i for i, r in enumerate(rows) if r["type"] == "header"]
+            if not headers:
+                return pos
+            if delta > 0:
+                later = [i for i in headers if i > pos]
+                target = later[0] if later else headers[-1]
+            else:
+                earlier = [i for i in headers if i < pos]
+                target = earlier[-1] if earlier else headers[0]
+            i = target
+            while i < len(rows) and rows[i]["type"] != "todo":
+                i += 1
+            return i if i < len(rows) else pos
+
+        def parent_row(rows, pos):
+            depth = rows[pos].get("depth", 0)
+            for i in range(pos - 1, -1, -1):
+                r = rows[i]
+                if r["type"] == "todo" and r["depth"] < depth:
+                    return i
+            return pos
+
+        def find_key(rows, key, fallback):
+            for i, r in enumerate(rows):
+                if r.get("key") == key:
+                    return i
+            return min(fallback, len(rows) - 1) if rows else 0
+
+        def nearest_selectable(rows, pos):
+            if not rows:
+                return 0
+            pos = max(0, min(pos, len(rows) - 1))
+            if rows[pos]["type"] == "todo":
+                return pos
+            for i in range(pos, len(rows)):
+                if rows[i]["type"] == "todo":
+                    return i
+            for i in range(pos, -1, -1):
+                if rows[i]["type"] == "todo":
+                    return i
+            return 0
+
+        def render(stdscr, rows, sel, top):
+            stdscr.erase()
+            max_y, max_x = stdscr.getmaxyx()
+            body_h = max(1, max_y - 2)
+            if sel < top:
+                top = sel
+            elif sel >= top + body_h:
+                top = sel - body_h + 1
+
+            for i in range(body_h):
+                ridx = top + i
+                if ridx >= len(rows):
+                    break
+                row = rows[ridx]
+                reverse = curses.A_REVERSE if ridx == sel else 0
+                if row["type"] == "header":
+                    label = os.path.splitext(os.path.basename(row["path"]))[0]
+                    attr = curses.A_BOLD | reverse
+                    stdscr.addstr(i, 0, label[:max_x - 1], attr)
+                elif row["type"] == "note":
+                    indent = INDENT_UNIT * row["depth"]
+                    text = f"{indent}- {row['text']}"
+                    stdscr.addstr(i, 0, text[:max_x - 1], curses.A_DIM | reverse)
+                else:
+                    n = row["node"]
+                    indent = INDENT_UNIT * row["depth"]
+                    box = f"[{n['state']}]"
+                    suffix = format_task_metadata(n.get("meta", {}))
+                    marker = ""
+                    if n["children"] and collapsed.get(row["key"]):
+                        marker = " (...)"
+                    text = f"{indent}- {box} {n['text']}{suffix}{marker}"
+                    pair = TUI_STATE_COLOR_PAIR.get(n["state"])
+                    attr = curses.color_pair(pair) if pair else 0
+                    if n["done"]:
+                        attr |= curses.A_DIM
+                    stdscr.addstr(i, 0, text[:max_x - 1], attr | reverse)
+
+            footer = (
+                "j/k move  h/l collapse/expand  n/p next/prev day  "
+                "g/G top/bottom  space/x/i//-/</> set state  "
+                "D toggle done  r reload  q quit"
+            )
+            stdscr.addstr(max_y - 1, 0, footer[:max_x - 1], curses.A_REVERSE)
+            stdscr.refresh()
+            return top
+
+        def _inner(stdscr):
+            curses.curs_set(0)
+            stdscr.keypad(True)
+            curses.start_color()
+            curses.use_default_colors()
+            curses.init_pair(1, curses.COLOR_GREEN, -1)
+            curses.init_pair(2, curses.COLOR_CYAN, -1)
+            curses.init_pair(3, curses.COLOR_YELLOW, -1)
+            curses.init_pair(4, curses.COLOR_RED, -1)
+            curses.init_pair(5, curses.COLOR_MAGENTA, -1)
+            curses.init_pair(6, curses.COLOR_BLUE, -1)
+
+            rows = build_rows()
+            if not rows:
+                return
+            sel = first_selectable(rows)
+            top = 0
+
+            while True:
+                top = render(stdscr, rows, sel, top)
+                key = stdscr.getch()
+
+                if key in (ord("q"), 27):
+                    return
+                elif key in (ord("j"), curses.KEY_DOWN):
+                    sel = move(rows, sel, 1)
+                elif key in (ord("k"), curses.KEY_UP):
+                    sel = move(rows, sel, -1)
+                elif key == ord("g"):
+                    sel = first_selectable(rows)
+                elif key == ord("G"):
+                    sel = last_selectable(rows)
+                elif key == ord("n"):
+                    sel = jump_section(rows, sel, 1)
+                elif key == ord("p"):
+                    sel = jump_section(rows, sel, -1)
+                elif key in (ord("h"), curses.KEY_LEFT):
+                    row = rows[sel]
+                    rkey = row["key"]
+                    if row["node"]["children"] and not collapsed.get(rkey):
+                        collapsed[rkey] = True
+                        rows = build_rows()
+                        sel = find_key(rows, rkey, sel)
+                    else:
+                        sel = parent_row(rows, sel)
+                elif key in (ord("l"), curses.KEY_RIGHT):
+                    row = rows[sel]
+                    rkey = row["key"]
+                    if row["node"]["children"] and collapsed.get(rkey):
+                        collapsed[rkey] = False
+                        rows = build_rows()
+                        sel = find_key(rows, rkey, sel)
+                elif key in (
+                    ord(" "), ord("x"), ord("i"), ord("/"),
+                    ord("-"), ord("<"), ord(">"),
+                ):
+                    row = rows[sel]
+                    mark = " " if key == ord(" ") else chr(key)
+                    set_todo_mark(row["path"], row["node"]["line"], mark)
+                    rows = build_rows()
+                    if not rows:
+                        return
+                    sel = nearest_selectable(rows, sel)
+                elif key == ord("D"):
+                    args.done = not args.done
+                    rows = build_rows()
+                    if not rows:
+                        return
+                    sel = nearest_selectable(rows, sel)
+                elif key == ord("r"):
+                    rkey = rows[sel].get("key") if rows else None
+                    if refresh_paths is not None:
+                        paths[:] = refresh_paths()
+                    rows = build_rows()
+                    if not rows:
+                        return
+                    sel = find_key(rows, rkey, sel) if rkey else sel
+
+                if not rows:
+                    return
+                sel = max(0, min(sel, len(rows) - 1))
+
+        curses.wrapper(_inner)
+
+
     def main():
         parser = argparse.ArgumentParser(
             description=(
@@ -705,7 +1025,35 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             "-e", "--editor", type=str, default=DEFAULT_EDITOR,
             help=f"Editor to use with --open (default: {DEFAULT_EDITOR})."
         )
+        parser.add_argument(
+            "--tui", action="store_true",
+            help=(
+                "Browse the selected todos interactively instead of "
+                "printing them: j/k move, h/l collapse/expand, n/p jump "
+                "to the next/previous day, g/G top/bottom, space/x/i//"
+                "/-/</> set a todo's state in place (rewrites just that "
+                "line), D toggles showing done todos, r reloads every "
+                "file from disk (picking up todos added elsewhere, and "
+                "newly created journal files), q quits. With no other "
+                "file-selection flag, defaults to the same overdue/"
+                "due-today scan as a bare --overdue. Not supported with "
+                "--open."
+            )
+        )
         args = parser.parse_args()
+
+        if args.tui and args.open:
+            print("Error: --tui is not supported with --open.", file=sys.stderr)
+            sys.exit(1)
+
+        if args.tui and not args.overdue and not (
+            args.file or args.weekly or args.all or args.date
+            or args.offset or args.calendar or args.range or args.state
+        ):
+            # Bare --tui, just like bare --overdue, means "show me what
+            # needs attention" - scan every daily journal for
+            # overdue/due-today todos instead of just today's file.
+            args.overdue = True
 
         if args.state is not None:
             state = args.state.lower()
@@ -766,27 +1114,22 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             if start_date > end_date:
                 start_date, end_date = end_date, start_date
 
-            any_found = False
+            sections = []
             current = start_date
             while current <= end_date:
                 path = os.path.join(
                     daily_dir, f"{current.strftime('%Y-%m-%d')}.md"
                 )
-                todos = get_filtered_todos(path, args)
-                if todos:
-                    if any_found:
-                        print()
-                    any_found = True
-                    print_file_header(path)
-                    print_todo_tree(todos)
+                sections.append((path, get_filtered_todos(path, args)))
                 current += datetime.timedelta(days=1)
 
-            if not any_found:
-                print(
-                    f"No {scope_message(args)} found between "
-                    f"{start_date.strftime('%Y-%m-%d')} and "
-                    f"{end_date.strftime('%Y-%m-%d')}"
-                )
+            output_sections(
+                sections,
+                f"No {scope_message(args)} found between "
+                f"{start_date.strftime('%Y-%m-%d')} and "
+                f"{end_date.strftime('%Y-%m-%d')}",
+                args,
+            )
             return
 
         # A bare --overdue (no other file-selection flag) means "what's
@@ -802,19 +1145,15 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 print("Error: JOURNAL_DAILY_PATH not set.", file=sys.stderr)
                 sys.exit(1)
 
-            any_found = False
-            for path in find_daily_journal_files(daily_dir):
-                todos = get_filtered_todos(path, args)
-                if not todos:
-                    continue
-                if any_found:
-                    print()
-                any_found = True
-                print_file_header(path)
-                print_todo_tree(todos)
-
-            if not any_found:
-                print(f"No {scope_message(args)} found in {daily_dir}")
+            sections = [
+                (path, get_filtered_todos(path, args))
+                for path in find_daily_journal_files(daily_dir)
+            ]
+            output_sections(
+                sections, f"No {scope_message(args)} found in {daily_dir}",
+                args,
+                refresh_paths=lambda: find_daily_journal_files(daily_dir),
+            )
             return
 
         if args.all:
@@ -823,19 +1162,16 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 print("Error: NOTES_DIR not set.", file=sys.stderr)
                 sys.exit(1)
 
-            any_found = False
-            for path in find_vault_markdown_files(notes_dir):
-                todos = get_filtered_todos(path, args)
-                if not todos:
-                    continue
-                if any_found:
-                    print()
-                any_found = True
-                print(path)
-                print_todo_tree(todos)
-
-            if not any_found:
-                print(f"No {scope_message(args)} found in vault ({notes_dir})")
+            sections = [
+                (path, get_filtered_todos(path, args))
+                for path in find_vault_markdown_files(notes_dir)
+            ]
+            output_sections(
+                sections,
+                f"No {scope_message(args)} found in vault ({notes_dir})",
+                args, header_fn=print,
+                refresh_paths=lambda: find_vault_markdown_files(notes_dir),
+            )
             return
 
         if args.file:
@@ -886,13 +1222,11 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             sys.exit(1)
 
         todos = get_filtered_todos(target_file, args)
-
-        if not todos:
-            print(f"No {scope_message(args)} found in {target_file}")
-            return
-
-        print_file_header(target_file)
-        print_todo_tree(todos)
+        output_sections(
+            [(target_file, todos)],
+            f"No {scope_message(args)} found in {target_file}",
+            args,
+        )
 
 
     if __name__ == "__main__":
