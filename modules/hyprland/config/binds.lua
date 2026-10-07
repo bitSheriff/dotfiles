@@ -183,6 +183,7 @@ hl.bind("SUPER + ALT + H", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind("SUPER + Tab", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind("SUPER + SHIFT + Tab", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind("SUPER + ALT + Return", hl.dsp.workspace.toggle_special("term-scratchpad"))
+hl.bind("SUPER + SHIFT + Return", hl.dsp.workspace.toggle_special("term-scratchpad")) -- v4 dropdown terminal muscle memory
 
 hl.bind("SUPER + N", hl.dsp.submap("note"))
 hl.bind("SUPER + SHIFT + N", hl.dsp.workspace.toggle_special("note"))

@@ -75,4 +75,6 @@ hl.config({
 })
 
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
+-- 3-finger vertical swipe toggles the dropdown terminal scratchpad (v4 parity)
+hl.gesture({ fingers = 3, direction = "vertical", action = "special", workspace_name = "term-scratchpad" })
 hl.device({ name = "zsa-technology-labs-voyager", kb_layout = "us", kb_variant = "intl", kb_options = "compose:ralt" })

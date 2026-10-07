@@ -11,14 +11,15 @@ hl.window_rule({ match = { class = "^(org.kde.polkit-kde-authentication-agent-1)
 hl.window_rule({ match = { title = "^(Pop-up Terminal)$" }, float = true, size = "1000 650", center = true })
 
 hl.window_rule({ match = { class = ".*" }, suppress_event = "maximize" })
-hl.window_rule({ match = { class = "^(term-scratchpad)$" }, workspace = "special:term-scratchpad", size = "1200 800", center = true })
 hl.window_rule({ match = { class = "^(quick-settings)$" }, float = true, size = "500 700", move = "100%-520 50", pin = true })
 hl.window_rule({ match = { class = "^(dev.noctalia.Noctalia)$" }, float = true, size = "1080 920" }) -- Settings window
 hl.window_rule({ match = { title = "^(floating)$" }, float = true, size = "1000 700", center = true })
 hl.window_rule({ match = { class = "^(floatui-).*$" }, float = true, size = "1000 700", center = true })
 hl.window_rule({ match = { class = "^(floatui-pass)$" }, float = true, size = "1000 300", center = true })
 hl.window_rule({ match = { class = "^(floatui-memo)$" }, float = true, size = "800 200", center = true })
+
 hl.workspace_rule({ workspace = "special:term-scratchpad", on_created_empty = "kitty --class term-scratchpad" })
+hl.window_rule({ match = { class = "^(term-scratchpad)$" }, workspace = "special:term-scratchpad", float = true, size = "1024 720", center = true })
 
 -- Producitivity Tools
 hl.window_rule({ match = { class = "org.pwmt.zathura" }, opacity = "1.0 override" })
