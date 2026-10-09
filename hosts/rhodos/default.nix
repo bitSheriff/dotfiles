@@ -40,6 +40,7 @@
 
     stylix = {
       theme = "booberry";
+      fontsize = 12;
     };
 
     notes = {

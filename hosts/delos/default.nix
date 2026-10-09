@@ -62,7 +62,6 @@
 
     stylix = {
       theme = "booberry";
-      # Smaller/higher-DPI laptop screen than rhodos - bump the base app font size.
       fontsize = 14;
     };
 

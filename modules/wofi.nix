@@ -9,7 +9,6 @@
 {
 
   environment.systemPackages = with pkgs; [
-    mpv
   ];
 
   home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {

@@ -868,7 +868,7 @@ in
     apps = {
       emojiPicker = mkOption {
         type = types.str;
-        default = "BEMOJI_PICKER_CMD='wofi -d --hide-scroll --width=350 --location=center' bemoji -n -e | wl-copy";
+        default = "smile";
         description = "Command run to pick + copy an emoji (Hyprland SUPER + period bind).";
       };
 
@@ -929,10 +929,6 @@ in
 
       browser = mkOption {
         type = types.str;
-        # Bare name on purpose: PATH resolves to the home-manager-wrapped firefox,
-        # which carries the generated policies.json (and therefore the extensions).
-        # A "${pkgs.firefox}/bin/firefox" store path is the unwrapped build with
-        # {"policies":{}} — it installs none of the extensions defined below.
         default = "firefox";
         description = "Default $BROWSER.";
       };
@@ -947,10 +943,6 @@ in
     #####################################
     ## Modules (standalone / optional) ##
     #####################################
-    # Most modules/* are always-on building blocks pulled in by a
-    # collection or by modules/common.nix & friends. These few are
-    # standalone / not part of any collection, so they get their own
-    # opt-in flag (default off).
     modules = {
       latex = {
         enable = mkOption {

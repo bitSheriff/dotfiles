@@ -13,6 +13,9 @@ hl.window_rule({ match = { title = "^(Pop-up Terminal)$" }, float = true, size =
 hl.window_rule({ match = { class = ".*" }, suppress_event = "maximize" })
 hl.window_rule({ match = { class = "^(quick-settings)$" }, float = true, size = "500 700", move = "100%-520 50", pin = true })
 hl.window_rule({ match = { class = "^(dev.noctalia.Noctalia)$" }, float = true, size = "1080 920" }) -- Settings window
+hl.window_rule({ match = { class = "^(it.mijorus.smile)$" }, float = true, size = "1000 700", center = true }) -- Emoji application in Gtk Style
+
+-- Floating Tools
 hl.window_rule({ match = { title = "^(floating)$" }, float = true, size = "1000 700", center = true })
 hl.window_rule({ match = { class = "^(floatui-).*$" }, float = true, size = "1000 700", center = true })
 hl.window_rule({ match = { class = "^(floatui-pass)$" }, float = true, size = "1000 300", center = true })

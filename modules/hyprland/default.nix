@@ -78,7 +78,7 @@ in
       kitty
       fuzzel # application runner
       qutebrowser
-      bemoji # needed for emoji selection
+      smile # Gtk styled Emoji selector
     ];
 
     services.pipewire = {
