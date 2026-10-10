@@ -20,6 +20,7 @@
   config = lib.mkIf config.cfg.development.agentic.enable {
     environment.systemPackages = with pkgs; [
       # mistral-vibe # needs a build!!!
+      openspec # spec driven development
     ];
 
     ##################
