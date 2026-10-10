@@ -51,19 +51,19 @@
         opener = {
           edit = [
             {
-              run = ''nvim %s'';
+              run = "nvim %s";
               desc = "neovim";
               block = true;
               for = "unix";
             }
             {
-              run = ''zed %s'';
+              run = "zed %s";
               desc = "zed";
               block = false;
               for = "unix";
             }
             {
-              run = ''zed -n %s'';
+              run = "zed -n %s";
               desc = "zed (new workspace)";
               block = false;
               for = "unix";
@@ -71,19 +71,19 @@
           ];
           open = [
             {
-              run = ''xdg-open %s'';
+              run = "xdg-open %s";
               desc = "Open";
               for = "linux";
             }
             {
-              run = ''open %s'';
+              run = "open %s";
               desc = "Open";
               for = "macos";
             }
           ];
           reveal = [
             {
-              run = ''xdg-open %d1'';
+              run = "xdg-open %d1";
               desc = "Reveal";
               for = "linux";
             }
@@ -95,6 +95,11 @@
             }
           ];
           extract = [
+            {
+              run = ''ouch d "$1"'';
+              desc = "(ouch) Extract here";
+              for = "unix";
+            }
             {
               run = ''file-roller "$1"'';
               desc = "Open with File-Roller";
@@ -113,7 +118,7 @@
           ];
           play = [
             {
-              run = ''mpv %s'';
+              run = "mpv %s";
               orphan = true;
               for = "unix";
             }
@@ -126,32 +131,32 @@
           ];
           viewPDF = [
             {
-              run = ''zathura %s'';
+              run = "zathura %s";
               orphan = true;
               for = "unix";
             }
             {
-              run = ''okular %s'';
+              run = "okular %s";
               orphan = true;
               for = "unix";
             }
           ];
           viewImage = [
             {
-              run = ''qview %s'';
+              run = "qview %s";
               orphan = true;
               for = "unix";
             }
           ];
           viewEpub = [
             {
-              run = ''foliate %s'';
+              run = "foliate %s";
               orphan = true;
               for = "unix";
               desc = "Open with Foliate";
             }
             {
-              run = ''okular %s'';
+              run = "okular %s";
               orphan = true;
               for = "unix";
               desc = "Open with Okular";
@@ -159,19 +164,19 @@
           ];
           openMarkdown = [
             {
-              run = ''nvim %s'';
+              run = "nvim %s";
               desc = "neovim";
               block = true;
               for = "unix";
             }
             {
-              run = ''zed %s'';
+              run = "zed %s";
               desc = "Zed";
               block = false;
               for = "unix";
             }
             {
-              run = ''marktext %s'';
+              run = "marktext %s";
               desc = "Marktext";
               block = false;
               for = "unix";
@@ -179,13 +184,13 @@
           ];
           openMusic = [
             {
-              run = ''kew play %s'';
+              run = "kew play %s";
               desc = "Open with Kew";
               block = true;
               for = "unix";
             }
             {
-              run = ''picard %s'';
+              run = "picard %s";
               desc = "Open with MuiscBrainz Picard";
               block = false;
               for = "unix";
@@ -193,13 +198,13 @@
           ];
           openVideo = [
             {
-              run = ''mpv %s'';
+              run = "mpv %s";
               orphan = true;
               for = "unix";
               block = false;
             }
             {
-              run = ''haruna %s'';
+              run = "haruna %s";
               orphan = true;
               for = "unix";
               block = false;
@@ -207,7 +212,7 @@
           ];
           openDiffMerger = [
             {
-              run = ''meld %s'';
+              run = "meld %s";
               desc = "Open with Meld";
               block = false;
             }
@@ -278,14 +283,7 @@
               ];
             }
             {
-              mime = "application/*zip";
-              use = [
-                "extract"
-                "reveal"
-              ];
-            }
-            {
-              mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}";
+              mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}";
               use = [
                 "extract"
                 "reveal"
