@@ -17,6 +17,10 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
     # Used by -O/--open to jump straight to the todo section.
     TODO_MARKER = "%%insert_todo%%"
 
+    # Sentinel for -f/--file given with no argument, meaning "let me
+    # pick the file interactively with fzf" (see select_file_with_fzf).
+    FZF_SELECT = object()
+
     DEFAULT_EDITOR = "nvim"
 
     USE_COLOR = sys.stdout.isatty()
@@ -957,6 +961,42 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         curses.wrapper(_inner)
 
 
+    def select_file_with_fzf():
+        notes_dir = os.getenv("NOTES_DIR")
+        if not notes_dir:
+            print("Error: NOTES_DIR not set.", file=sys.stderr)
+            sys.exit(1)
+
+        try:
+            # Use fd to get list of files, then pipe to sort, then to fzf
+            fd_cmd = [
+                "fd", "--type", "f", "--extension", "md",
+                "--absolute-path", ".", notes_dir
+            ]
+            sort_cmd = ["sort"]
+            fzf_cmd = ["fzf", "--prompt=Select file: ", "--no-sort"]
+
+            p1 = subprocess.Popen(fd_cmd, stdout=subprocess.PIPE)
+            p2 = subprocess.Popen(
+                sort_cmd, stdin=p1.stdout, stdout=subprocess.PIPE
+            )
+            p1.stdout.close()
+            p3 = subprocess.Popen(
+                fzf_cmd, stdin=p2.stdout, stdout=subprocess.PIPE
+            )
+            p2.stdout.close()
+
+            stdout, _ = p3.communicate()
+            if p3.returncode == 0:
+                return stdout.decode().strip()
+            else:
+                print("Selection cancelled.", file=sys.stderr)
+                sys.exit(0)
+        except FileNotFoundError:
+            print("Error: fzf or fd not found in PATH.", file=sys.stderr)
+            sys.exit(1)
+
+
     def main():
         parser = argparse.ArgumentParser(
             description=(
@@ -989,10 +1029,11 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             )
         )
         parser.add_argument(
-            "-f", "--file", type=str,
+            "-f", "--file", type=str, nargs="?", const=FZF_SELECT,
             help=(
                 "Read this file directly instead of resolving a journal "
-                "file. Ignored with --all."
+                "file. Ignored with --all. If given with no argument, "
+                "pick the file interactively with fzf from $NOTES_DIR."
             )
         )
         parser.add_argument(
@@ -1074,6 +1115,9 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             )
         )
         args = parser.parse_args()
+
+        if args.file is FZF_SELECT:
+            args.file = select_file_with_fzf()
 
         if args.tui and args.open:
             print("Error: --tui is not supported with --open.", file=sys.stderr)
