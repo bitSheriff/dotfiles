@@ -74,9 +74,6 @@
           CODE_DIR = "$HOME/code";
           WALLPAPER_DIR = "$HOME/Pictures/wallpapers";
 
-          # path where different age keys are stored
-          AGE_KEY_DIR = "$HOME/.age";
-
           ADW_DISABLE_PORTAL = "1";
 
         };
@@ -174,39 +171,6 @@
             sopsFile = ../encrypted/qutebrowser_urls.txt;
             format = "binary";
             path = "${config.home.homeDirectory}/.config/qutebrowser/bookmarks/urls";
-          };
-
-          # SSH Stuff
-          ssh_hosts = {
-            sopsFile = ../encrypted/ssh_hosts.txt;
-            format = "binary";
-            path = "${config.home.homeDirectory}/.ssh/hosts";
-          };
-
-          # Only the private half of each key is stored in sops
-          ssh_key_private = {
-            sopsFile = ../encrypted/ssh_keys.yaml;
-            key = "private/priv";
-            path = "${config.home.homeDirectory}/.ssh/private";
-          };
-
-          ssh_key_uni = {
-            sopsFile = ../encrypted/ssh_keys.yaml;
-            key = "uni/priv";
-            path = "${config.home.homeDirectory}/.ssh/uni";
-          };
-
-          ssh_key_work = {
-            sopsFile = ../encrypted/ssh_keys.yaml;
-            key = "work/priv";
-            path = "${config.home.homeDirectory}/.ssh/work";
-          };
-
-          # Age Stuff
-          age_key_llk = {
-            sopsFile = ../encrypted/age_keys.yaml;
-            key = "llk";
-            path = "${config.home.homeDirectory}/.age/llk.key";
           };
 
           # API Keys and Access Tokens

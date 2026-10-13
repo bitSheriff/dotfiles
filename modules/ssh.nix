@@ -49,6 +49,33 @@
         Include ~/.ssh/hosts
       '';
 
+      sops.secrets = {
+        ssh_hosts = {
+          sopsFile = ../encrypted/ssh_hosts.txt;
+          format = "binary";
+          path = "${config.home.homeDirectory}/.ssh/hosts";
+        };
+
+        # Only the private half of each key is stored in sops
+        ssh_key_private = {
+          sopsFile = ../encrypted/ssh_keys.yaml;
+          key = "private/priv";
+          path = "${config.home.homeDirectory}/.ssh/private";
+        };
+
+        ssh_key_uni = {
+          sopsFile = ../encrypted/ssh_keys.yaml;
+          key = "uni/priv";
+          path = "${config.home.homeDirectory}/.ssh/uni";
+        };
+
+        ssh_key_work = {
+          sopsFile = ../encrypted/ssh_keys.yaml;
+          key = "work/priv";
+          path = "${config.home.homeDirectory}/.ssh/work";
+        };
+      };
+
       # Derive each key's public half from its sops-decrypted private half
       home.activation.deriveSshPubkeys = config.lib.dag.entryAfter [ "writeBoundary" ] ''
         for k in ${keysList}; do
