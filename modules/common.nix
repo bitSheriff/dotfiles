@@ -11,6 +11,7 @@
     inputs.sops-nix.nixosModules.sops
     ./nix.nix
     ./age.nix
+    ./gpg.nix
     ./shell/zsh.nix
     ./neovim
     ./networking.nix

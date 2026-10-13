@@ -66,8 +66,6 @@
 
         # Networking & Security
         whosthere # discover local devices
-        kdePackages.kleopatra
-        gnupg
 
       ]
       ++ lib.optionals config.cfg.development.git.guis.gitte.enable [ gitte ]
