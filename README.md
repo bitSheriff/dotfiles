@@ -87,9 +87,12 @@ Before any of the erasing methods:
   `hardware-configuration.nix` (the two conflict). Only do this when
   reinstalling: a running system rebuilt with a layout it doesn't have won't
   boot.
-- The age key (`~/.age/dotfiles.key`) must reach the new system, otherwise it
-  can't decrypt its secrets, login password included. The script copies it;
-  point `SOPS_AGE_KEY_FILE` at it if it lives elsewhere (e.g. a USB stick).
+- Every host has its own age key, `~/.age/<hostname>.key`, listed in
+  `.sops.yaml`. The new host's key must reach it, otherwise it can't decrypt
+  its secrets, login password included. The script copies
+  `~/.age/<hostname>.key` from the machine it runs on, falls back to the
+  general `~/.age/dotfiles.key`, and takes `SOPS_AGE_KEY_FILE` if the key
+  lives elsewhere (e.g. a USB stick).
 - On encrypted hosts disko asks for the LUKS passphrase during the install, in
   the terminal the install was started from. Later it is typed on the device
   itself at every boot, so pick one that survives a keyboard layout change.
@@ -119,7 +122,7 @@ Boot the installer and run the same script straight from the flake. Leave
 host and user empty to install onto the machine in front of you:
 
 ```sh
-SOPS_AGE_KEY_FILE=/path/to/dotfiles.key \
+SOPS_AGE_KEY_FILE=/path/to/<hostname>.key \
 DOTFILES_DIR=github:bitSheriff/dotfiles \
   nix --extra-experimental-features 'nix-command flakes' \
   run github:bitSheriff/dotfiles#nixos-anywhere
@@ -131,7 +134,7 @@ it is running from.
 ### ### 3. On top of an existing NixOS installation
 
 Keeps the disk as it is: install NixOS the usual way, clone this repository,
-put the age key at `~/.age/dotfiles.key`, then
+put the host's age key at `~/.age/<hostname>.key`, then
 
 ```sh
 just setup

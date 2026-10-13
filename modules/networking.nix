@@ -57,7 +57,6 @@ in
     };
   };
 
-  sops.age.keyFile = "/home/benjamin/.age/dotfiles.key";
   sops.secrets = lib.listToAttrs (
     lib.concatMap (id: [
       {

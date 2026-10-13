@@ -137,7 +137,7 @@
   };
 
   environment.sessionVariables = {
-    SOPS_AGE_KEY_FILE = "/home/benjamin/.age/dotfiles.key";
+    SOPS_AGE_KEY_FILE = config.sops.age.keyFile;
 
     # FZF Config options
     FZF_DEFAULT_COMMAND = "fd";

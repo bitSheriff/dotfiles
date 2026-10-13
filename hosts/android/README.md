@@ -70,11 +70,12 @@ The same `private`, `uni` and `work` keys as on the desktop, from
 sops-nix is not used because its home-manager module relies on a systemd user
 service, and nix-on-droid has none (details in the file header).
 
-The phone needs its own age key, like every host in `.sops.yaml`. Once:
+The phone needs its own age key, like every host in `.sops.yaml`, named after
+the host as everywhere else (`~/.age/<hostname>.key`). Once:
 
 ```sh
 # on the phone
-mkdir -p ~/.age && age-keygen -pq -o ~/.age/dotfiles.key
+mkdir -p ~/.age && age-keygen -pq -o ~/.age/android.key
 ```
 
 Add the printed public key to `.sops.yaml` as `&android` and list it under

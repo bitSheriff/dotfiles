@@ -15,10 +15,11 @@
 # shared hosts file, which names those IdentityFile paths, works unchanged.
 # There is no ssh-agent on the phone; ssh reads the key files directly.
 #
-# The phone gets its own age key, like every other host in ../../.sops.yaml.
+# The phone gets its own age key, like every other host in ../../.sops.yaml,
+# named after the host (~/.age/<hostname>.key, see ../../modules/common.nix).
 # One-time setup, on the phone:
 #
-#   mkdir -p ~/.age && age-keygen -pq -o ~/.age/dotfiles.key
+#   mkdir -p ~/.age && age-keygen -pq -o ~/.age/android.key
 #
 # then add the printed public key to .sops.yaml as `&android` and to the
 # creation_rules recipients, run `nix run .#update-keys` on a machine that
@@ -30,7 +31,7 @@
 let
   paths = import ./paths.nix;
 
-  ageKeyFile = "${paths.homeDir}/.age/dotfiles.key";
+  ageKeyFile = "${paths.homeDir}/.age/${paths.configName}.key";
   sshDir = "${paths.homeDir}/.ssh";
 
   # Same three keys as ../../modules/ssh.nix. Only the private half is stored

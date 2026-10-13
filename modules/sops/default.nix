@@ -24,6 +24,8 @@ in
 
   # System Wide Secrets
   sops = {
+    age.keyFile = "/home/benjamin/.age/${config.networking.hostName}.key";
+
     defaultSopsFile = ../../encrypted/secrets.yaml;
     secrets = {
       # User passwords

@@ -33,6 +33,7 @@
     in
     {
       config,
+      osConfig,
       pkgs,
       lib,
       inputs,
@@ -158,7 +159,7 @@
 
       sops = {
         defaultSopsFile = ../encrypted/secrets.yaml;
-        age.keyFile = "${config.home.homeDirectory}/.age/dotfiles.key";
+        age.keyFile = osConfig.sops.age.keyFile;
 
         secrets = {
           profile_picture = {

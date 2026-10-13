@@ -227,7 +227,14 @@
       key_source=""
       key_home=""
       if [ -n "$key_target" ]; then
-          key_source="''${SOPS_AGE_KEY_FILE:-$HOME/.age/dotfiles.key}"
+          # Keys are per host, ~/.age/<hostname>.key, so the new host's own key
+          # is looked for first under the same name here. The general key
+          # (dotfiles.key) can open everything too and serves as the fallback
+          # for a host whose key has not been generated yet.
+          key_source="''${SOPS_AGE_KEY_FILE:-$HOME/.age/$(basename "$key_target")}"
+          if [ ! -r "$key_source" ] && [ -r "$HOME/.age/dotfiles.key" ]; then
+              key_source="$HOME/.age/dotfiles.key"
+          fi
           if [ ! -r "$key_source" ]; then
               key_source=$(gum input --header "Age key to copy to $key_target" --placeholder "path, empty: don't copy")
           fi
@@ -392,7 +399,8 @@
     text = ''
       DOTFILES_DIR="''${DOTFILES_DIR:-$HOME/code/dotfiles}"
       cd "''${DOTFILES_DIR}"
-      sops updatekeys -y encrypted/*
+      # The second glob catches dotfiles such as encrypted/.face.enc.
+      sops updatekeys -y encrypted/* encrypted/.[!.]*
     '';
   };
 
@@ -410,7 +418,7 @@
       # Unlike `sops updatekeys`, `sops -r -i` only rotates one file per
       # invocation - fed several positional args it silently rotates just
       # the first and warns about the rest. Rotate each file individually.
-      for f in encrypted/*; do
+      for f in encrypted/* encrypted/.[!.]*; do
           sops -r -i "''${f}"
       done
     '';
