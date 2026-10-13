@@ -160,7 +160,7 @@
 
     socials = {
       irc.enable = true;
-
+      mastodon.enable = true;
     };
 
     gaming = {
