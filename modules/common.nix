@@ -11,7 +11,7 @@
     inputs.sops-nix.nixosModules.sops
     ./nix.nix
     ./age.nix
-    ./gpg.nix
+    ./gpg
     ./shell/zsh.nix
     ./neovim
     ./networking.nix
@@ -84,7 +84,6 @@
       unzip # for .zip
       rar
       unrar # for .rar
-      gnupg
       eza # better `ls`
       zoxide # smarter `cd` command
       television # like fzf but more fancy
@@ -119,11 +118,6 @@
     ++ lib.optionals config.cfg.privacy.enteauth.enable [
       ente-auth
     ];
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
 
   programs.bat = {
     enable = true;
