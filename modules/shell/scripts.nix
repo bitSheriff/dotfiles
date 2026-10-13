@@ -415,4 +415,14 @@
       done
     '';
   };
+
+  # display text as a QR code in the terminal
+  qr = pkgs.writeShellApplication {
+    name = "qr";
+    runtimeInputs = [ pkgs.qrencode ];
+    text = ''
+      echo "$@" | qrencode --type utf8
+    '';
+  };
+
 }

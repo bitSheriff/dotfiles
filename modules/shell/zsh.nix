@@ -198,6 +198,7 @@ in
           templates
           ytd
           z
+          qr
         ];
 
         programs.atuin = {
