@@ -134,7 +134,7 @@
       enable = true;
       libre-office.enable = true;
       marktext.enable = true;
-      apostrophe.enable = true;
+      apostrophe.enable = false; # currently has a bug
     };
 
     uni.enable = true;
