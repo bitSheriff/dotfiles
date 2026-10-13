@@ -103,8 +103,27 @@
           (system: {
             inherit (import ./modules/shell/scripts.nix { pkgs = nixpkgs.legacyPackages.${system}; })
               nixos-anywhere
+              sops-update-keys
+              sops-rotate-keys
               ;
           });
+
+      apps = forAllSystems (
+        system:
+        let
+          scripts = import ./modules/shell/scripts.nix { pkgs = nixpkgs.legacyPackages.${system}; };
+        in
+        {
+          update-keys = {
+            type = "app";
+            program = "${scripts.sops-update-keys}/bin/sops-update-keys";
+          };
+          rotate-keys = {
+            type = "app";
+            program = "${scripts.sops-rotate-keys}/bin/sops-rotate-keys";
+          };
+        }
+      );
 
       #############  PIXEL PHONE (nix-on-droid)  #############
       # Build with `nix-on-droid switch --flake .#android` on the phone, or

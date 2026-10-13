@@ -379,4 +379,35 @@
   search_man = pkgs.writeShellScriptBin "search_man" ''
     man "$1" | grep -- "$2"
   '';
+
+  # Re-encrypts every secret in ./encrypted for the current set of recipients
+  # in .sops.yaml, e.g. after adding or removing an age key. This only
+  # rewraps the existing data key for the new recipient list; it does not
+  # change the data key itself, so anyone who had access to it before being
+  # removed could still decrypt the old ciphertext. Use sops-rotate-keys instead
+  # when a key may have been compromised or a recipient was revoked.
+  sops-update-keys = pkgs.writeShellApplication {
+    name = "sops-update-keys";
+    runtimeInputs = [ pkgs.sops ];
+    text = ''
+      DOTFILES_DIR="''${DOTFILES_DIR:-$HOME/code/dotfiles}"
+      cd "''${DOTFILES_DIR}"
+      sops updatekeys -y encrypted/*
+    '';
+  };
+
+  # Generates a fresh data key for every secret in ./encrypted and
+  # re-encrypts their contents with it, then wraps that new data key for the
+  # current recipients in .sops.yaml. Use this after revoking someone's
+  # access or suspecting a key leak, since sops-update-keys alone leaves the old
+  # data key (and thus old ciphertext) decryptable by anyone who had it.
+  sops-rotate-keys = pkgs.writeShellApplication {
+    name = "sops-rotate-keys";
+    runtimeInputs = [ pkgs.sops ];
+    text = ''
+      DOTFILES_DIR="''${DOTFILES_DIR:-$HOME/code/dotfiles}"
+      cd "''${DOTFILES_DIR}"
+      sops -r -i -y encrypted/*
+    '';
+  };
 }
