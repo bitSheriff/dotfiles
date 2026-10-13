@@ -98,8 +98,10 @@ in
 
   programs.git = {
     enable = true;
-    # No commit signing: the SSH signing key from ../../modules/git/default.nix
-    # is managed via sops-nix on NixOS hosts and isn't available here.
+    # No commit signing yet. The signing key from ../../modules/git/default.nix
+    # does land in ~/.ssh/private via ./ssh.nix now, but the desktop signs
+    # through ssh-agent, which the phone does not have; pointing
+    # user.signingkey at the key file instead is a separate step.
     settings = {
       user = {
         name = "bitSheriff";
@@ -129,6 +131,14 @@ in
   '';
 
   home.file = {
+    # The shared, sops-encrypted host list is decrypted to ~/.ssh/hosts by
+    # ./ssh.nix. It names the IdentityFile for each host itself, and without
+    # an ssh-agent on the phone nothing else is needed. ssh ignores an Include
+    # that does not exist yet, so this is safe before the age key is set up.
+    ".ssh/config".text = ''
+      Include ~/.ssh/hosts
+    '';
+
     # Extra keys row, bell and margins. Read by the app itself. The old
     # setup_termux ran `termux-reload-settings` here; that command is part of
     # android-integration, which cannot be built (see ./default.nix), so a

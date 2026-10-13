@@ -29,6 +29,7 @@ git clone https://github.com/bitSheriff/dotfiles.git ~/code/dotfiles
 | `home.nix` | home-manager: `.bashrc`, git config, `termux.properties`, shortcuts |
 | `commands.nix` | `tda`, `clkin`, `bknotes`, … as real executables |
 | `paths.nix` | notes/finance/time paths and the backup remote, shared by the above |
+| `ssh.nix` | decrypts the sops-managed SSH keys and `~/.ssh/hosts` on every switch |
 | `setup.sh` | first-run bootstrap only |
 | `termux.properties` | extra-keys row, read by the app |
 
@@ -61,6 +62,33 @@ while it does so; several quiet minutes is normal, not a hang. Two things help:
   fetch/unpack; if it prints, the fetch is cached and evaluation is the slow
   part.
 
+## SSH keys from sops
+
+The same `private`, `uni` and `work` keys as on the desktop, from
+`encrypted/ssh_keys.yaml`, plus the shared host list as `~/.ssh/hosts`.
+`ssh.nix` decrypts them with plain `sops` during `nix-on-droid switch`;
+sops-nix is not used because its home-manager module relies on a systemd user
+service, and nix-on-droid has none (details in the file header).
+
+The phone needs its own age key, like every host in `.sops.yaml`. Once:
+
+```sh
+# on the phone
+mkdir -p ~/.age && age-keygen -pq -o ~/.age/dotfiles.key
+```
+
+Add the printed public key to `.sops.yaml` as `&android` and list it under
+`creation_rules`, then on a machine that already holds a key:
+
+```sh
+nix run .#update-keys   # re-encrypts encrypted/* for the new recipient
+git commit -am "[sops] android recipient" && git push
+```
+
+`dots-switch` on the phone then installs the keys. Before the age key exists,
+the switch only prints a reminder, so the bootstrap is not blocked. The
+`id_ed25519` that `setup.sh` generates stays as the bootstrap key for `bkinit`;
+the sops keys are what `~/.ssh/hosts` points at.
 
 ## Termux differences worth knowing
 

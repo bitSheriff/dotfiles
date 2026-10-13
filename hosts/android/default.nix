@@ -9,6 +9,7 @@
 # Everything the old hosts/android/setup.sh did imperatively (packages,
 # .bashrc, termux.properties, git config, shortcuts) is declared here or in
 # ./home.nix. setup.sh is now only the bootstrap that gets Nix to this point.
+# The SSH keys from sops are ./ssh.nix.
 { pkgs, ... }:
 
 let
@@ -16,6 +17,8 @@ let
   commands = import ./commands.nix { inherit pkgs paths; };
 in
 {
+  imports = [ ./ssh.nix ];
+
   # All of android-integration stays off. None of these eight are in any binary
   # cache, so they get compiled on the phone, and that fails in unpackPhase:
   #
