@@ -407,7 +407,12 @@
     text = ''
       DOTFILES_DIR="''${DOTFILES_DIR:-$HOME/code/dotfiles}"
       cd "''${DOTFILES_DIR}"
-      sops -r -i -y encrypted/*
+      # Unlike `sops updatekeys`, `sops -r -i` only rotates one file per
+      # invocation - fed several positional args it silently rotates just
+      # the first and warns about the rest. Rotate each file individually.
+      for f in encrypted/*; do
+          sops -r -i "''${f}"
+      done
     '';
   };
 }
