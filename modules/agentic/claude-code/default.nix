@@ -6,9 +6,6 @@
   activeUsers,
   ...
 }:
-let
-  context = import ../_settings/context.nix;
-in
 {
   imports = [
   ];
@@ -42,7 +39,7 @@ in
         };
 
         # set the global context
-        context = context.globalContext;
+        context = import ../_settings/context.nix;
 
         settings = {
           theme = "dark";

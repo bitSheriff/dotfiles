@@ -7,7 +7,6 @@
   ...
 }:
 let
-  context = import ../_settings/context.nix;
   localAI = config.cfg.development.agentic.localAI;
 
   # pi speaks the OpenAI API to whichever backend is configured; the provider is
@@ -59,7 +58,7 @@ in
         extraPackages = with pkgs; [ nodejs ];
 
         # set the global context
-        context = context.globalContext;
+        context = import ../_settings/context.nix;
 
         settings = {
           theme = "synthwave-84";
