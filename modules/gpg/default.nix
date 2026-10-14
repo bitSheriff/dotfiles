@@ -31,6 +31,7 @@
       keys = [
         # Private Keys
         "bitSheriff"
+        "bmtuta"
 
         # Public Keys / Contacts
       ];
