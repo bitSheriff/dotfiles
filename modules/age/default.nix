@@ -8,7 +8,6 @@
 }:
 {
   imports = [
-    ./recipients.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -34,6 +33,13 @@
           path = "${config.home.homeDirectory}/.age/llk.key";
         };
       };
+
+      # Public Keys / Recipients
+      home.file.".age/recipients/llk.pub".source = ./llk.pub;
+      home.file.".age/recipients/hosts/rhodos.pub".source = ./rhodos.pub;
+      home.file.".age/recipients/hosts/delos.pub".source = ./delos.pub;
+      home.file.".age/recipients/hosts/android.pub".source = ./android.pub;
+
     }
   );
 }
