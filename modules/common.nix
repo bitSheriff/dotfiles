@@ -10,7 +10,7 @@
     inputs.agenix.nixosModules.default
     inputs.sops-nix.nixosModules.sops
     ./nix.nix
-    ./age.nix
+    ./age
     ./gpg
     ./shell/zsh.nix
     ./neovim
