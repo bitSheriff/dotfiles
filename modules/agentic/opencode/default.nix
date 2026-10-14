@@ -8,6 +8,8 @@
 let
   withSecrets = import ../../../nix-lib/with-secrets.nix { inherit pkgs lib; };
 
+  context = import ../_settings/context.nix;
+
   # declared in users/benjamin.nix
   sopsSecrets = config.home-manager.users.benjamin.sops.secrets;
 in
@@ -39,6 +41,9 @@ in
 
         # pull in the shared MCP servers from `programs.mcp.servers` (../mcp.nix)
         enableMcpIntegration = true;
+
+        # set the global context
+        context = context.globalContext;
 
         # settings in `opencode.json`
         settings = {
