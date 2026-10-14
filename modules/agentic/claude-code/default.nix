@@ -6,6 +6,9 @@
   activeUsers,
   ...
 }:
+let
+  context = import ../_settings/context.nix;
+in
 {
   imports = [
   ];
@@ -37,6 +40,9 @@
           obsidian-markdown = ../_skills/obsidian-markdown;
           json-canvas = ../_skills/json-canvas;
         };
+
+        # set the global context
+        context = context.globalContext;
 
         settings = {
           theme = "dark";
