@@ -485,6 +485,22 @@ in
           description = "Enable Cryptocurrency";
         };
       };
+
+      gpg = {
+        enable = mkOption {
+          type = types.bool;
+          default = true;
+          description = "Enable basic GnuPG";
+        };
+
+        kleopatra = {
+          enable = mkOption {
+            type = types.bool;
+            default = true;
+            description = "Enable KDE Kleopatra";
+          };
+        };
+      };
     };
 
     ############
