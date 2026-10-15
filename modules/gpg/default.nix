@@ -42,6 +42,7 @@
             "bmmtuta"
 
             # Public Keys / Contacts
+            "recipients/phtuw"
           ];
 
           secretName = k: "gpg_key_" + lib.toLower (lib.replaceStrings [ "/" ] [ "_" ] k);
