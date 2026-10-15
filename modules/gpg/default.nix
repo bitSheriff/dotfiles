@@ -32,6 +32,7 @@
         # Private Keys
         "bitSheriff"
         "bmtuta"
+        "bmmtuta"
 
         # Public Keys / Contacts
       ];
