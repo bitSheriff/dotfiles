@@ -113,6 +113,7 @@ in
     ../modules/mpd.nix
     ../modules/kew.nix
     ../modules/kodi.nix
+    ../modules/koreader
   ];
 
   config = lib.mkIf config.cfg.multimedia.enable {
@@ -157,9 +158,6 @@ in
       ++ lib.optionals config.cfg.multimedia.ebooks.enable [
         exiftool # read and write metadata
         foliate # ebook reader
-      ]
-      ++ lib.optionals config.cfg.multimedia.ebooks.koreader.enable [
-        koreader
       ]
       ++ lib.optionals config.cfg.multimedia.comics.enable [
         komikku # comic reader
