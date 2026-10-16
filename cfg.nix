@@ -273,6 +273,14 @@ in
         };
       };
 
+      android = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable basic Android Development/Debugging";
+        };
+      };
+
       languages = {
         latex = {
           enable = mkOption {

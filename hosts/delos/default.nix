@@ -80,6 +80,8 @@
       git.tuis.lazygit.enable = true;
       git.guis.gitte.enable = true;
 
+      android.enable = true;
+
       virtualization = {
         docker.enable = true;
         vm.enable = true;

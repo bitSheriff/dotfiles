@@ -75,6 +75,10 @@
       ++ lib.optionals config.cfg.development.languages.latex.enable [
         config.cfg.development.languages.latex.package
       ]
+      ++ lib.optionals config.cfg.development.android.enable [
+        android-tools # adb
+        fdroidcl # install fdroid apps from your PC to your smartphone
+      ]
       ++ lib.optionals config.cfg.development.languages.typst.enable [
         typst # sooo much better than LaTeX
         typesetter # minimal typst editor
