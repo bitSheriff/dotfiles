@@ -5,9 +5,10 @@ HOSTNAMES := "rhodos delos"
 default:
     just --choose
 
-# build the phone config; run this on the phone itself, inside nix-on-droid
+# build the phone config (inside nix-on-droid) or install its F-Droid apps
+# over ADB (anywhere else); see setup-android in scrips.nix for the logic.
 android:
-    nix-on-droid switch --flake {{ justfile_directory() }}#android
+    DOTFILES_DIR={{ justfile_directory() }} nix run {{ justfile_directory() }}#setup-android
 
 # link the current dotfile directory to /etc/nixos
 link:

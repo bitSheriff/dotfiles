@@ -246,11 +246,19 @@ in
     '';
   };
 
-  # Installs the F-Droid apps listed in ./hosts/android/fdroid-packages.nix
-  # onto a phone connected over ADB (USB, or wireless debugging). This runs on
-  # the desktop/laptop, not on the phone itself: fdroidcl is a desktop client
-  # that drives a device over ADB, nix-on-droid has no notion of "its own"
-  # phone to install apps onto. `nix run .#setup-android`.
+  # Two unrelated jobs behind one name, picked by where this actually runs:
+  #
+  # * On the phone itself, inside nix-on-droid (see ../../justfile's `android`
+  #   recipe): rebuilds its own nix-on-droid config, same as `just android`.
+  # * Anywhere else (the desktop/laptop): installs the F-Droid apps listed in
+  #   ./hosts/android/fdroid-packages.nix onto a phone connected over ADB
+  #   (USB, or wireless debugging), via fdroidcl. nix-on-droid has no notion
+  #   of "its own" phone to install apps onto, so that direction only makes
+  #   sense from outside.
+  #
+  # `command -v nix-on-droid` is the detector: that wrapper only exists on
+  # PATH inside a nix-on-droid environment, from the first bootstrap on.
+  # `nix run .#setup-android` either way.
   setup-android = pkgs.writeShellApplication {
     name = "setup-android";
     runtimeInputs = [
@@ -258,6 +266,13 @@ in
       pkgs.android-tools # adb, started by fdroidcl itself if not already running
     ];
     text = ''
+      if command -v nix-on-droid >/dev/null 2>&1; then
+        echo "Running inside nix-on-droid: switching this phone's own config."
+        DOTFILES_DIR="''${DOTFILES_DIR:-$HOME/code/dotfiles}"
+        nix-on-droid switch --flake "''${DOTFILES_DIR}#android"
+        exit 0
+      fi
+
       apps=(
         ${pkgs.lib.concatMapStringsSep "\n        " (appid: "\"${appid}\"") fdroidPackages}
       )
