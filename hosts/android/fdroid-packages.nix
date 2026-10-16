@@ -5,6 +5,7 @@
 [
   "com.termux.nix" # Nix-on-Droid
   "app.comaps.fdroid" # CoMaps
+  "de.westnordost.streetcomplete" # StreetComplete
   "de.danoeh.antennapod" # AntennaPod
   "de.tutao.tutanota" # Tuta Mail
   "de.tutao.calendar" # Tuta Calendar
@@ -18,8 +19,11 @@
   "org.kde.kdeconnect_tp" # KDE Connect
   "net.mullvad.mullvadvpn" # Mullvad VPN
   "org.nsh07.pomodoro" # Tomate Pomodoro Timer
+  "com.flx_apps.digitaldetox" # DetoxDroid
+  "org.fairscan.app" # FiarScan
 
   # Fossify
   "org.fossify.gallery"
   "org.fossify.messages"
+  "org.fossify.documents" # view PDFs, Markdown, Words & more
 ]
