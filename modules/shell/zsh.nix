@@ -9,8 +9,13 @@
 let
   cfg = config.cfg;
 
-  # The scripts themselves live in ./scripts.nix, mirroring ../hledger/scripts.nix.
+  # The shell helper scripts themselves live in ./scripts.nix, mirroring
+  # ../hledger/scripts.nix. nixos-anywhere and templates manage this
+  # dotfiles flake rather than being everyday shell tools, so they live in
+  # ../../scrips.nix instead; still installed here since they're also handy
+  # to run by hand.
   scripts = import ./scripts.nix { inherit pkgs; };
+  dotfilesScripts = import ../../scrips.nix { inherit pkgs; };
 in
 {
   imports = [
@@ -186,20 +191,23 @@ in
         };
 
         # little scripts
-        home.packages = with scripts; [
-          decrypt_note
-          dos2unix-dir
-          encrypted_memo
-          floatui
-          gopen
-          nixos-anywhere
-          randomselect
-          search_man
-          templates
-          ytd
-          z
-          qr
-        ];
+        home.packages =
+          (with scripts; [
+            decrypt_note
+            dos2unix-dir
+            encrypted_memo
+            floatui
+            gopen
+            randomselect
+            search_man
+            ytd
+            z
+            qr
+          ])
+          ++ (with dotfilesScripts; [
+            nixos-anywhere
+            templates
+          ]);
 
         programs.atuin = {
           enable = true;

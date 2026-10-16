@@ -96,22 +96,23 @@
 
       # The bootstrap script, runnable without an installed system:
       # `nix run github:bitSheriff/dotfiles#nixos-anywhere` (e.g. from the
-      # NixOS installer). See ./modules/shell/scripts.nix. Linux only, its
-      # install tools don't exist on darwin.
+      # NixOS installer). See ./scrips.nix. Linux only, its install tools
+      # don't exist on darwin.
       packages =
         nixpkgs.lib.genAttrs (builtins.filter (nixpkgs.lib.hasSuffix "-linux") supportedSystems)
           (system: {
-            inherit (import ./modules/shell/scripts.nix { pkgs = nixpkgs.legacyPackages.${system}; })
+            inherit (import ./scrips.nix { pkgs = nixpkgs.legacyPackages.${system}; })
               nixos-anywhere
               sops-update-keys
               sops-rotate-keys
+              setup-android
               ;
           });
 
       apps = forAllSystems (
         system:
         let
-          scripts = import ./modules/shell/scripts.nix { pkgs = nixpkgs.legacyPackages.${system}; };
+          scripts = import ./scrips.nix { pkgs = nixpkgs.legacyPackages.${system}; };
         in
         {
           update-keys = {
@@ -121,6 +122,10 @@
           rotate-keys = {
             type = "app";
             program = "${scripts.sops-rotate-keys}/bin/sops-rotate-keys";
+          };
+          setup-android = {
+            type = "app";
+            program = "${scripts.setup-android}/bin/setup-android";
           };
         }
       );
