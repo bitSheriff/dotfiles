@@ -252,9 +252,11 @@ in
   #   recipe): rebuilds its own nix-on-droid config, same as `just android`.
   # * Anywhere else (the desktop/laptop): installs the F-Droid apps listed in
   #   ./hosts/android/fdroid-packages.nix onto a phone connected over ADB
-  #   (USB, or wireless debugging), via fdroidcl. nix-on-droid has no notion
-  #   of "its own" phone to install apps onto, so that direction only makes
-  #   sense from outside.
+  #   (USB, or wireless debugging), via fdroidcl, and pushes the KOReader
+  #   plugins from ./modules/koreader/plugins/ to /sdcard/koreader/plugins/
+  #   on the device. nix-on-droid has no notion of "its own" phone to
+  #   install apps or push files onto, so that direction only makes sense
+  #   from outside.
   #
   # `command -v nix-on-droid` is the detector: that wrapper only exists on
   # PATH inside a nix-on-droid environment, from the first bootstrap on.
@@ -266,9 +268,10 @@ in
       pkgs.android-tools # adb, started by fdroidcl itself if not already running
     ];
     text = ''
+      DOTFILES_DIR="''${DOTFILES_DIR:-$HOME/code/dotfiles}"
+
       if command -v nix-on-droid >/dev/null 2>&1; then
         echo "Running inside nix-on-droid: switching this phone's own config."
-        DOTFILES_DIR="''${DOTFILES_DIR:-$HOME/code/dotfiles}"
         nix-on-droid switch --flake "''${DOTFILES_DIR}#android"
         exit 0
       fi
@@ -285,6 +288,22 @@ in
 
       echo "Installing ''${#apps[@]} app(s): ''${apps[*]}"
       fdroidcl install "''${apps[@]}"
+
+      # Push each KOReader plugin onto the device. `adb push <dir> <dest>`
+      # merges into the destination directory rather than replacing it, so
+      # plugins that live on the phone but not in this dotfiles repo are
+      # left untouched; only the plugins below get (over)written.
+      plugins_dir="''${DOTFILES_DIR}/modules/koreader/plugins"
+      shopt -s nullglob
+      plugins=("''${plugins_dir}"/*.koplugin)
+      shopt -u nullglob
+      if [ "''${#plugins[@]}" -gt 0 ]; then
+        echo "Pushing ''${#plugins[@]} KOReader plugin(s) to /sdcard/koreader/plugins/..."
+        adb shell mkdir -p /sdcard/koreader/plugins
+        for plugin in "''${plugins[@]}"; do
+          adb push "''${plugin}" /sdcard/koreader/plugins/
+        done
+      fi
     '';
   };
 }
