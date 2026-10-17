@@ -88,7 +88,7 @@
               for = "linux";
             }
             {
-              run = ''exiftool "$1"u echo "Press enter to exit"; read _'';
+              run = ''exiftool "%s1"; echo "Press enter to exit"; read _'';
               block = true;
               desc = "Show EXIF";
               for = "unix";
@@ -96,23 +96,27 @@
           ];
           extract = [
             {
-              run = ''ouch d "$1"'';
+              run = "ouch d -y %s"; # -y is for yes
               desc = "(ouch) Extract here";
+              block = true; # wait for completion so no task is left
               for = "unix";
             }
             {
-              run = ''file-roller "$1"'';
+              run = ''file-roller "%s1"'';
               desc = "Open with File-Roller";
+              orphan = true;
               for = "unix";
             }
             {
-              run = ''unrar x "$1"'';
+              run = ''unrar x "%s1"'';
               desc = "(unrar) Extract here";
+              block = true;
               for = "unix";
             }
             {
-              run = ''unzip "$1"'';
+              run = ''unzip "%s1"'';
               desc = "(unzip) Extract here";
+              block = true;
               for = "unix";
             }
           ];
@@ -123,7 +127,7 @@
               for = "unix";
             }
             {
-              run = ''mediainfo "$1"; echo "Press enter to exit"; read _'';
+              run = ''mediainfo "%s1"; echo "Press enter to exit"; read _'';
               block = true;
               desc = "Show media info";
               for = "unix";
