@@ -35,6 +35,7 @@
     tomorrow = "jour -o 1";
     t = "todo";
     tl = "todo-list";
+    tlt = "todo-list --tui";
   };
 
   systemd.user.services.note-backup = {
