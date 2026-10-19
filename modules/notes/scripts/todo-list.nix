@@ -604,14 +604,89 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         return True
 
 
-    def edit_line_input(stdscr, y, initial=""):
+    def parse_prefixed_line(stripped):
+        """Parse leading nesting/description markers off an input line.
+
+        Kept in sync with todo.nix's function of the same name. Each
+        level of nesting is marked by a "-" character, e.g. "- foo"
+        is one level deeper and "- - foo" (equivalently "--foo" or
+        any mix of spacing) is two levels deeper. A "." right after
+        the nesting markers turns the line into a description/note
+        attached at that depth instead of a new todo, e.g. ". note"
+        or "-. note". Whitespace around the markers is optional and
+        ignored; the returned content is always trimmed.
+
+        Returns (depth, is_desc, content).
+        """
+        match = re.match(r"^((?:-\s*)*)(\.)?\s*(.*)$", stripped)
+        markers, dot, content = match.groups()
+        depth = markers.count("-")
+        is_desc = dot is not None
+        return depth, is_desc, content.strip()
+
+
+    def leading_indent_depth(line):
+        stripped = line.lstrip(" ")
+        return (len(line) - len(stripped)) // len(INDENT_UNIT)
+
+
+    def find_insert_index(lines, node_line, node_depth):
+        """Return the 0-indexed position right after the full subtree
+        (children and notes) of the todo on 1-indexed node_line at
+        node_depth - i.e. where a new sibling-or-deeper line should
+        be inserted so it lands below that todo's existing content.
+        Mirrors the blank-line/dedent block-termination rules used by
+        parse_journal_todos.
+        """
+        idx = node_line  # 0-indexed line right after the node's own line
+        n = len(lines)
+        while idx < n:
+            raw = lines[idx].rstrip("\n")
+            if not raw.strip():
+                break
+            if leading_indent_depth(lines[idx]) <= node_depth:
+                break
+            idx += 1
+        return idx
+
+
+    def insert_todo_line(
+        path, node_line, node_depth, new_depth, is_desc, content, mark=" ",
+    ):
+        """Insert a new checklist todo or note line into the journal
+        file, positioned right after the full subtree of the todo
+        currently on node_line (1-indexed, at node_depth) - used by
+        --tui's "a" key. new_depth is the nesting depth of the todo
+        this line is attached to (node_depth plus however many "-"
+        markers were typed - see parse_prefixed_line); for a note
+        (is_desc), the line itself is indented one level deeper than
+        that, matching todo.nix's format_output_line. Returns the
+        1-indexed line number of the newly inserted line.
+        """
+        with open(path) as f:
+            lines = f.readlines()
+
+        idx = find_insert_index(lines, node_line, node_depth)
+        if is_desc:
+            indent = INDENT_UNIT * (new_depth + 1)
+            new_line = f"{indent}- {content}\n"
+        else:
+            indent = INDENT_UNIT * new_depth
+            new_line = f"{indent}- [{mark}] {content}\n"
+
+        lines.insert(idx, new_line)
+        with open(path, "w") as f:
+            f.writelines(lines)
+        return idx + 1
+
+
+    def edit_line_input(stdscr, y, initial="", prompt="Edit: "):
         """Run a small inline text editor on screen row y, pre-filled
         with initial, supporting the usual editing keys (left/right/
         home/end/backspace/delete). Returns the edited string on
         Enter, or None if the user cancelled with Esc.
         """
         max_y, max_x = stdscr.getmaxyx()
-        prompt = "Edit: "
         buf = list(initial)
         pos = len(buf)
         curses.curs_set(1)
@@ -981,7 +1056,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             footer = (
                 "j/k move  h/l collapse/expand  n/p next/prev day  "
                 "g/G top/bottom  space/x/i//-/</> set state  e edit  "
-                "D toggle done  r reload  q quit"
+                "a add  D toggle done  r reload  q quit"
             )
             stdscr.addstr(max_y - 1, 0, footer[:max_x - 1], curses.A_REVERSE)
             stdscr.refresh()
@@ -1065,6 +1140,34 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                         if not rows:
                             return
                         sel = find_key(rows, rkey, sel)
+                elif key == ord("a"):
+                    row = rows[sel]
+                    rkey = row["key"]
+                    node = row["node"]
+                    max_y, _ = stdscr.getmaxyx()
+                    raw_input = edit_line_input(
+                        stdscr, max_y - 1, "", prompt="Add: "
+                    )
+                    stdscr.keypad(True)
+                    if raw_input is not None and raw_input.strip():
+                        markers_depth, is_desc, content = parse_prefixed_line(
+                            raw_input.strip()
+                        )
+                        if content:
+                            new_depth = row["depth"] + markers_depth
+                            new_line_no = insert_todo_line(
+                                row["path"], node["line"], row["depth"],
+                                new_depth, is_desc, content,
+                            )
+                            rows = build_rows()
+                            if not rows:
+                                return
+                            if is_desc:
+                                sel = find_key(rows, rkey, sel)
+                            else:
+                                sel = find_key(
+                                    rows, (row["path"], new_line_no), sel
+                                )
                 elif key == ord("D"):
                     args.done = not args.done
                     rows = build_rows()
@@ -1232,7 +1335,12 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 "to the next/previous day, g/G top/bottom, space/x/i//"
                 "/-/</> set a todo's state in place (rewrites just that "
                 "line), e edits a todo's text in place (Enter to save, "
-                "Esc to cancel), D toggles showing done todos, r reloads every "
+                "Esc to cancel), a adds a new todo below the selected "
+                "one - prefix the text with \"-\" per extra nesting level "
+                "(e.g. \"- foo\" for a child) and/or \".\" to add a note "
+                "instead of a todo (e.g. \"-. note\"), same syntax as "
+                "todo's multi-line input, D toggles showing done todos, "
+                "r reloads every "
                 "file from disk (picking up todos added elsewhere, and "
                 "newly created journal files), q quits. With no other "
                 "file-selection flag, defaults to the same overdue/"
