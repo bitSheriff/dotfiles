@@ -550,6 +550,117 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         return True
 
 
+    def get_raw_task_text(path, line_no):
+        """Return the raw, unparsed text of one checklist line (i.e.
+        everything after "- [mark] ", emoji metadata and all - the
+        same thing extract_task_metadata() would strip apart). Used
+        by --tui's "e" edit so editing starts from exactly what's on
+        disk rather than from the already-cleaned node["text"].
+        Returns None if the line doesn't exist or isn't a checklist
+        line (e.g. file changed concurrently).
+        """
+        with open(path) as f:
+            lines = f.readlines()
+
+        idx = line_no - 1
+        if not (0 <= idx < len(lines)):
+            return None
+
+        line = lines[idx].rstrip("\n")
+        m = CHECKLIST_RE.match(line)
+        if not m:
+            return None
+        return m.group("text")
+
+
+    def set_todo_text(path, line_no, new_text):
+        """Overwrite the text portion of one checklist line (i.e.
+        everything after "- [mark] ") on the given 1-indexed line.
+        Indentation and the mark character are left untouched, as is
+        every other line in the file. Used by --tui's "e" key to edit
+        a todo's text in place. Returns True on success, False if the
+        line doesn't exist or isn't a checklist line anymore (e.g.
+        file changed concurrently).
+        """
+        with open(path) as f:
+            lines = f.readlines()
+
+        idx = line_no - 1
+        if not (0 <= idx < len(lines)):
+            return False
+
+        raw = lines[idx]
+        line = raw.rstrip("\n")
+        eol = raw[len(line):]
+        m = CHECKLIST_RE.match(line)
+        if not m:
+            return False
+
+        start, end = m.span("text")
+        lines[idx] = line[:start] + new_text + line[end:] + eol
+
+        with open(path, "w") as f:
+            f.writelines(lines)
+        return True
+
+
+    def edit_line_input(stdscr, y, initial=""):
+        """Run a small inline text editor on screen row y, pre-filled
+        with initial, supporting the usual editing keys (left/right/
+        home/end/backspace/delete). Returns the edited string on
+        Enter, or None if the user cancelled with Esc.
+        """
+        max_y, max_x = stdscr.getmaxyx()
+        prompt = "Edit: "
+        buf = list(initial)
+        pos = len(buf)
+        curses.curs_set(1)
+        try:
+            while True:
+                stdscr.move(y, 0)
+                stdscr.clrtoeol()
+                text = "".join(buf)
+                avail = max_x - len(prompt) - 1
+                # Keep the cursor's position visible if the text is
+                # wider than the screen.
+                view_start = max(0, pos - avail) if avail > 0 else 0
+                stdscr.addstr(y, 0, prompt, curses.A_BOLD)
+                visible = text[view_start:view_start + max(avail, 0)]
+                stdscr.addstr(y, len(prompt), visible)
+                stdscr.move(y, min(len(prompt) + pos - view_start, max_x - 1))
+                stdscr.refresh()
+
+                try:
+                    ch = stdscr.get_wch()
+                except curses.error:
+                    continue
+
+                if ch in ("\n", "\r") or ch == curses.KEY_ENTER:
+                    return "".join(buf)
+                elif ch == chr(27):
+                    return None
+                elif ch in ("\x7f", "\b") or ch == curses.KEY_BACKSPACE:
+                    if pos > 0:
+                        del buf[pos - 1]
+                        pos -= 1
+                elif ch == curses.KEY_DC:
+                    if pos < len(buf):
+                        del buf[pos]
+                elif ch == curses.KEY_LEFT:
+                    pos = max(0, pos - 1)
+                elif ch == curses.KEY_RIGHT:
+                    pos = min(len(buf), pos + 1)
+                elif ch in (curses.KEY_HOME, 1):  # 1 = Ctrl-A
+                    pos = 0
+                elif ch in (curses.KEY_END, 5):  # 5 = Ctrl-E
+                    pos = len(buf)
+                elif isinstance(ch, str) and ch.isprintable():
+                    buf.insert(pos, ch)
+                    pos += 1
+        finally:
+            curses.curs_set(0)
+
+
     def find_marker_line(path, marker):
         """Return the 1-indexed line number of the first line
         containing marker, or None if the file doesn't exist or
@@ -869,7 +980,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
 
             footer = (
                 "j/k move  h/l collapse/expand  n/p next/prev day  "
-                "g/G top/bottom  space/x/i//-/</> set state  "
+                "g/G top/bottom  space/x/i//-/</> set state  e edit  "
                 "D toggle done  r reload  q quit"
             )
             stdscr.addstr(max_y - 1, 0, footer[:max_x - 1], curses.A_REVERSE)
@@ -939,6 +1050,21 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                     if not rows:
                         return
                     sel = nearest_selectable(rows, sel)
+                elif key == ord("e"):
+                    row = rows[sel]
+                    rkey = row["key"]
+                    raw_text = get_raw_task_text(row["path"], row["node"]["line"])
+                    if raw_text is None:
+                        raw_text = row["node"]["text"]
+                    max_y, _ = stdscr.getmaxyx()
+                    new_text = edit_line_input(stdscr, max_y - 1, raw_text)
+                    stdscr.keypad(True)
+                    if new_text is not None and new_text.strip() != "":
+                        set_todo_text(row["path"], row["node"]["line"], new_text)
+                        rows = build_rows()
+                        if not rows:
+                            return
+                        sel = find_key(rows, rkey, sel)
                 elif key == ord("D"):
                     args.done = not args.done
                     rows = build_rows()
@@ -1105,7 +1231,8 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 "printing them: j/k move, h/l collapse/expand, n/p jump "
                 "to the next/previous day, g/G top/bottom, space/x/i//"
                 "/-/</> set a todo's state in place (rewrites just that "
-                "line), D toggles showing done todos, r reloads every "
+                "line), e edits a todo's text in place (Enter to save, "
+                "Esc to cancel), D toggles showing done todos, r reloads every "
                 "file from disk (picking up todos added elsewhere, and "
                 "newly created journal files), q quits. With no other "
                 "file-selection flag, defaults to the same overdue/"
