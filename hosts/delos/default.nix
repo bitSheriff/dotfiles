@@ -119,6 +119,7 @@
     communication = {
       signal.enable = true;
       matrix.enable = true;
+      mumble.enable = true;
       mail.tuta.enable = true;
     };
 
