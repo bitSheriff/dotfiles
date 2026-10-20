@@ -32,6 +32,12 @@
           key = "llk";
           path = "${config.home.homeDirectory}/.age/llk.key";
         };
+
+        age_key_backup_nasimov = {
+          sopsFile = ../../encrypted/age_keys.yaml;
+          key = "backup_nasimov";
+          path = "${config.home.homeDirectory}/.age/backup_nasimov.key";
+        };
       };
 
       # Public Keys / Recipients
