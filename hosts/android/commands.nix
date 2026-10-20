@@ -16,9 +16,10 @@ let
   hledgerScripts = import ../../modules/hledger/scripts.nix { inherit pkgs; };
   inherit (hledgerScripts) timedot-add timeclock-add;
 
-  # Also plain derivations, for the same reason: no NixOS module system here.
   todo = import ../../modules/notes/scripts/todo.nix { inherit pkgs; };
   todo-list = import ../../modules/notes/scripts/todo-list.nix { inherit pkgs; };
+  jour = import ../../modules/notes/scripts/jour.nix { inherit pkgs; };
+  memo = import ../../modules/notes/scripts/memo.nix { inherit pkgs; };
 
   # Also exported by home.nix; repeated as defaults so the commands work even
   # when launched without a shell profile.
@@ -57,7 +58,12 @@ in
 {
   # The shared scripts, unchanged, so `timedot-add <file>` still works by hand.
   inherit (hledgerScripts) hl-accounts timedot-add timeclock-add;
-  inherit todo todo-list;
+  inherit
+    todo
+    todo-list
+    jour
+    memo
+    ;
 
   # Add a timedot entry to this year's file.
   tda = mkCmd "tda" [ timedot-add ] ''
