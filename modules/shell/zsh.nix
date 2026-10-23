@@ -15,7 +15,7 @@ let
   # ../../scrips.nix instead; still installed here since they're also handy
   # to run by hand.
   scripts = import ./scripts.nix { inherit pkgs; };
-  dotfilesScripts = import ../../scrips.nix { inherit pkgs; };
+  dotfilesScripts = import ../../.nix/scrips.nix { inherit pkgs; };
 in
 {
   imports = [

@@ -28,7 +28,7 @@ let
     // m.extraConfig
   ) localAI.models;
 
-  withSecrets = import ../../../nix-lib/with-secrets.nix { inherit pkgs lib; };
+  withSecrets = import ../../../.nix/with-secrets.nix { inherit pkgs lib; };
 
   # declared in users/benjamin.nix
   sopsSecrets = config.home-manager.users.benjamin.sops.secrets;

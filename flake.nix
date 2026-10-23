@@ -101,7 +101,7 @@
       packages =
         nixpkgs.lib.genAttrs (builtins.filter (nixpkgs.lib.hasSuffix "-linux") supportedSystems)
           (system: {
-            inherit (import ./scrips.nix { pkgs = nixpkgs.legacyPackages.${system}; })
+            inherit (import ./.nix/scrips.nix { pkgs = nixpkgs.legacyPackages.${system}; })
               nixos-anywhere
               sops-update-keys
               sops-rotate-keys
@@ -112,7 +112,7 @@
       apps = forAllSystems (
         system:
         let
-          scripts = import ./scrips.nix { pkgs = nixpkgs.legacyPackages.${system}; };
+          scripts = import ./.nix/scrips.nix { pkgs = nixpkgs.legacyPackages.${system}; };
         in
         {
           update-keys = {
