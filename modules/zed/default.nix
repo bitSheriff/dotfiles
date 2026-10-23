@@ -40,9 +40,11 @@ in
     home-manager.users.benjamin = lib.mkIf (lib.elem "benjamin" activeUsers) {
       programs.zed-editor = {
         enable = true;
-        # Add extensions you might need here
         extensions = [
           "nix"
+          "typst"
+          "toml"
+          "env"
         ];
 
         # Fonts and theme are owned by Stylix (modules/stylix) - do not set
