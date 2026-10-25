@@ -82,6 +82,8 @@
 
       android.enable = true;
 
+      embedded.platformio.enable = true;
+
       virtualization = {
         docker.enable = true;
         vm.enable = true;

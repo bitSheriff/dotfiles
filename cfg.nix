@@ -115,6 +115,16 @@ in
         };
       };
 
+      embedded = {
+        platformio = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Install and enable PlatformIO";
+          };
+        };
+      };
+
       agentic = {
         enable = mkOption {
           type = types.bool;

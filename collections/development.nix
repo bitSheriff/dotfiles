@@ -100,7 +100,12 @@
       ++ lib.optionals config.cfg.development.languages.python.enable [
         python3
         uv # because python sucks without
-      ];
+      ]
+      ++ lib.optionals config.cfg.development.embedded.platformio.enable [ platformio-core ];
+
+    services.udev.packages = lib.optionals config.cfg.development.embedded.platformio.enable [
+      pkgs.platformio-core.udev
+    ];
 
     # Specific Program Modules (enable deeper integration)
     programs.direnv = {
