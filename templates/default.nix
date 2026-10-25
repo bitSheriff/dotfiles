@@ -15,4 +15,8 @@
     path = ./typst/simple-typst;
     description = "A simple Typst project environment and build system";
   };
+  platformio = {
+    path = ./c/platformio;
+    description = "PlatformIO embedded development environment with build/flash/monitor apps";
+  };
 }
