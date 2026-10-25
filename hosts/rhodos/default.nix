@@ -176,6 +176,7 @@
       enable = true;
       ebooks.enable = true;
       eilmeldung.enable = true;
+      newsflash.enable = true;
       kodi.enable = true;
       podcasts.kasts.enable = true;
     };

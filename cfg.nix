@@ -376,6 +376,14 @@ in
         };
       };
 
+      newsflash = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable the GUI news reader";
+        };
+      };
+
       ebooks = {
         enable = mkOption {
           type = types.bool;

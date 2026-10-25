@@ -162,6 +162,9 @@ in
       ++ lib.optionals config.cfg.multimedia.comics.enable [
         komikku # comic reader
       ]
+      ++ lib.optionals config.cfg.multimedia.newsflash.enable [
+        newsflash # Gtk RSS Reader
+      ]
       ++ lib.optionals config.cfg.multimedia.podcasts.kasts.enable [
         kdePackages.kasts
       ]

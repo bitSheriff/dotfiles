@@ -137,6 +137,7 @@
         koreader.enable = true;
       };
       eilmeldung.enable = true;
+      newsflash.enable = true;
     };
 
     privacy.enable = true;
