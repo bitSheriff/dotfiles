@@ -680,6 +680,49 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         return idx + 1
 
 
+    def insert_root_todo_line(path, new_depth, is_desc, content, mark=" "):
+        """Insert a new top-level checklist todo or note line into
+        path, creating the file (and parent directories) if it
+        doesn't exist yet. Used by --tui's "a" key when a section
+        has no existing todos to anchor off of (e.g. an empty daily
+        journal) - mirrors how the `todo` command appends new
+        entries (after %%insert_todo%%, if present, else at the end
+        of the file). Returns the 1-indexed line number of the
+        inserted line.
+        """
+        os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+        if is_desc:
+            indent = INDENT_UNIT * (new_depth + 1)
+            new_line = f"{indent}- {content}\n"
+        else:
+            indent = INDENT_UNIT * new_depth
+            new_line = f"{indent}- [{mark}] {content}\n"
+
+        if os.path.exists(path) and os.path.getsize(path) > 0:
+            with open(path) as f:
+                lines = f.readlines()
+            marker_index = next(
+                (i for i, line in enumerate(lines) if TODO_MARKER in line),
+                None,
+            )
+            if marker_index is not None:
+                lines.insert(marker_index + 1, new_line)
+                line_no = marker_index + 2
+            else:
+                if not lines[-1].endswith("\n"):
+                    lines[-1] += "\n"
+                lines.append(new_line)
+                line_no = len(lines)
+            with open(path, "w") as f:
+                f.writelines(lines)
+        else:
+            with open(path, "w") as f:
+                f.write(new_line)
+            line_no = 1
+
+        return line_no
+
+
     def edit_line_input(stdscr, y, initial="", prompt="Edit: "):
         """Run a small inline text editor on screen row y, pre-filled
         with initial, supporting the usual editing keys (left/right/
@@ -868,6 +911,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
 
     def output_sections(
         sections, empty_message, args, header_fn=None, refresh_paths=None,
+        fallback_path=None,
     ):
         """Print sections, or hand them to the interactive --tui browser.
 
@@ -878,15 +922,25 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
         is a callable returning a fresh path list - used by --tui's
         "r" key to pick up brand new journal files that didn't exist
         (or had no matching todos) when the browser was launched.
+
+        With --tui, an empty result doesn't just print empty_message
+        and quit - there'd be no way to add a new todo. If
+        fallback_path is given, the browser opens on that file
+        instead (showing an empty, but "a"-addable, section);
+        otherwise (or if even that has nothing to show) it falls
+        back to printing empty_message.
         """
         header_fn = header_fn or print_file_header
         non_empty = [(path, todos) for path, todos in sections if todos]
 
         if args.tui:
-            if not non_empty:
-                print(empty_message)
+            if non_empty:
+                run_tui([path for path, _ in non_empty], args, refresh_paths)
                 return
-            run_tui([path for path, _ in non_empty], args, refresh_paths)
+            if fallback_path:
+                run_tui([fallback_path], args, refresh_paths)
+                return
+            print(empty_message)
             return
 
         if not non_empty:
@@ -931,11 +985,18 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             rows = []
             for path in paths:
                 todos = get_filtered_todos(path, args)
-                if not todos:
-                    continue
-                rows.append({"type": "header", "path": path})
-                _add_rows(rows, path, todos, 0)
+                # Always keep the header, even with no todos - with
+                # --tui that's the only anchor left to add a new
+                # todo to (see _is_selectable/the "a" handler below).
+                rows.append({"type": "header", "path": path, "empty": not todos})
+                if todos:
+                    _add_rows(rows, path, todos, 0)
             return rows
+
+        def _is_selectable(r):
+            return r["type"] == "todo" or (
+                r["type"] == "header" and r.get("empty")
+            )
 
         def _add_rows(rows, path, nodes, depth):
             for n in nodes:
@@ -953,13 +1014,13 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
 
         def first_selectable(rows):
             for i, r in enumerate(rows):
-                if r["type"] == "todo":
+                if _is_selectable(r):
                     return i
             return 0
 
         def last_selectable(rows):
             for i in range(len(rows) - 1, -1, -1):
-                if rows[i]["type"] == "todo":
+                if _is_selectable(rows[i]):
                     return i
             return 0
 
@@ -969,7 +1030,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 i += delta
                 if i < 0 or i >= len(rows):
                     return pos
-                if rows[i]["type"] == "todo":
+                if _is_selectable(rows[i]):
                     return i
 
         def jump_section(rows, pos, delta):
@@ -983,7 +1044,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 earlier = [i for i in headers if i < pos]
                 target = earlier[-1] if earlier else headers[0]
             i = target
-            while i < len(rows) and rows[i]["type"] != "todo":
+            while i < len(rows) and not _is_selectable(rows[i]):
                 i += 1
             return i if i < len(rows) else pos
 
@@ -1005,13 +1066,13 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             if not rows:
                 return 0
             pos = max(0, min(pos, len(rows) - 1))
-            if rows[pos]["type"] == "todo":
+            if _is_selectable(rows[pos]):
                 return pos
             for i in range(pos, len(rows)):
-                if rows[i]["type"] == "todo":
+                if _is_selectable(rows[i]):
                     return i
             for i in range(pos, -1, -1):
-                if rows[i]["type"] == "todo":
+                if _is_selectable(rows[i]):
                     return i
             return 0
 
@@ -1032,6 +1093,8 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 reverse = curses.A_REVERSE if ridx == sel else 0
                 if row["type"] == "header":
                     label = os.path.splitext(os.path.basename(row["path"]))[0]
+                    if row.get("empty"):
+                        label += " (no todos - press a to add one)"
                     attr = curses.A_BOLD | reverse
                     stdscr.addstr(i, 0, label[:max_x - 1], attr)
                 elif row["type"] == "note":
@@ -1100,50 +1163,56 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                     sel = jump_section(rows, sel, -1)
                 elif key in (ord("h"), curses.KEY_LEFT):
                     row = rows[sel]
-                    rkey = row["key"]
-                    if row["node"]["children"] and not collapsed.get(rkey):
-                        collapsed[rkey] = True
-                        rows = build_rows()
-                        sel = find_key(rows, rkey, sel)
-                    else:
-                        sel = parent_row(rows, sel)
+                    if row["type"] == "todo":
+                        rkey = row["key"]
+                        if row["node"]["children"] and not collapsed.get(rkey):
+                            collapsed[rkey] = True
+                            rows = build_rows()
+                            sel = find_key(rows, rkey, sel)
+                        else:
+                            sel = parent_row(rows, sel)
                 elif key in (ord("l"), curses.KEY_RIGHT):
                     row = rows[sel]
-                    rkey = row["key"]
-                    if row["node"]["children"] and collapsed.get(rkey):
-                        collapsed[rkey] = False
-                        rows = build_rows()
-                        sel = find_key(rows, rkey, sel)
+                    if row["type"] == "todo":
+                        rkey = row["key"]
+                        if row["node"]["children"] and collapsed.get(rkey):
+                            collapsed[rkey] = False
+                            rows = build_rows()
+                            sel = find_key(rows, rkey, sel)
                 elif key in (
                     ord(" "), ord("x"), ord("i"), ord("/"),
                     ord("-"), ord("<"), ord(">"),
                 ):
                     row = rows[sel]
-                    mark = " " if key == ord(" ") else chr(key)
-                    set_todo_mark(row["path"], row["node"]["line"], mark)
-                    rows = build_rows()
-                    if not rows:
-                        return
-                    sel = nearest_selectable(rows, sel)
-                elif key == ord("e"):
-                    row = rows[sel]
-                    rkey = row["key"]
-                    raw_text = get_raw_task_text(row["path"], row["node"]["line"])
-                    if raw_text is None:
-                        raw_text = row["node"]["text"]
-                    max_y, _ = stdscr.getmaxyx()
-                    new_text = edit_line_input(stdscr, max_y - 1, raw_text)
-                    stdscr.keypad(True)
-                    if new_text is not None and new_text.strip() != "":
-                        set_todo_text(row["path"], row["node"]["line"], new_text)
+                    if row["type"] == "todo":
+                        mark = " " if key == ord(" ") else chr(key)
+                        set_todo_mark(row["path"], row["node"]["line"], mark)
                         rows = build_rows()
                         if not rows:
                             return
-                        sel = find_key(rows, rkey, sel)
+                        sel = nearest_selectable(rows, sel)
+                elif key == ord("e"):
+                    row = rows[sel]
+                    if row["type"] == "todo":
+                        rkey = row["key"]
+                        raw_text = get_raw_task_text(
+                            row["path"], row["node"]["line"]
+                        )
+                        if raw_text is None:
+                            raw_text = row["node"]["text"]
+                        max_y, _ = stdscr.getmaxyx()
+                        new_text = edit_line_input(stdscr, max_y - 1, raw_text)
+                        stdscr.keypad(True)
+                        if new_text is not None and new_text.strip() != "":
+                            set_todo_text(
+                                row["path"], row["node"]["line"], new_text
+                            )
+                            rows = build_rows()
+                            if not rows:
+                                return
+                            sel = find_key(rows, rkey, sel)
                 elif key == ord("a"):
                     row = rows[sel]
-                    rkey = row["key"]
-                    node = row["node"]
                     max_y, _ = stdscr.getmaxyx()
                     raw_input = edit_line_input(
                         stdscr, max_y - 1, "", prompt="Add: "
@@ -1154,20 +1223,32 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                             raw_input.strip()
                         )
                         if content:
-                            new_depth = row["depth"] + markers_depth
-                            new_line_no = insert_todo_line(
-                                row["path"], node["line"], row["depth"],
-                                new_depth, is_desc, content,
-                            )
+                            if row["type"] == "header":
+                                # Empty section - nothing to anchor off
+                                # of, insert as a fresh top-level todo.
+                                path = row["path"]
+                                new_depth = markers_depth
+                                new_line_no = insert_root_todo_line(
+                                    path, new_depth, is_desc, content,
+                                )
+                            else:
+                                path = row["path"]
+                                new_depth = row["depth"] + markers_depth
+                                new_line_no = insert_todo_line(
+                                    path, row["node"]["line"], row["depth"],
+                                    new_depth, is_desc, content,
+                                )
+                            rkey = row.get("key")
                             rows = build_rows()
                             if not rows:
                                 return
                             if is_desc:
-                                sel = find_key(rows, rkey, sel)
-                            else:
-                                sel = find_key(
-                                    rows, (row["path"], new_line_no), sel
+                                sel = (
+                                    find_key(rows, rkey, sel) if rkey
+                                    else nearest_selectable(rows, sel)
                                 )
+                            else:
+                                sel = find_key(rows, (path, new_line_no), sel)
                 elif key == ord("D"):
                     args.done = not args.done
                     rows = build_rows()
@@ -1445,12 +1526,15 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 sections.append((path, get_filtered_todos(path, args)))
                 current += datetime.timedelta(days=1)
 
+            today_file = os.path.join(
+                daily_dir, f"{datetime.date.today().strftime('%Y-%m-%d')}.md"
+            )
             output_sections(
                 sections,
                 f"No {scope_message(args)} found between "
                 f"{start_date.strftime('%Y-%m-%d')} and "
                 f"{end_date.strftime('%Y-%m-%d')}",
-                args,
+                args, fallback_path=today_file,
             )
             return
 
@@ -1471,10 +1555,14 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 (path, get_filtered_todos(path, args))
                 for path in find_daily_journal_files(daily_dir)
             ]
+            today_file = os.path.join(
+                daily_dir, f"{datetime.date.today().strftime('%Y-%m-%d')}.md"
+            )
             output_sections(
                 sections, f"No {scope_message(args)} found in {daily_dir}",
                 args,
                 refresh_paths=lambda: find_daily_journal_files(daily_dir),
+                fallback_path=today_file,
             )
             return
 
@@ -1488,11 +1576,19 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                 (path, get_filtered_todos(path, args))
                 for path in find_vault_markdown_files(notes_dir)
             ]
+            daily_dir = os.getenv("JOURNAL_DAILY_PATH")
+            fallback_path = (
+                os.path.join(
+                    daily_dir,
+                    f"{datetime.date.today().strftime('%Y-%m-%d')}.md",
+                ) if daily_dir else None
+            )
             output_sections(
                 sections,
                 f"No {scope_message(args)} found in vault ({notes_dir})",
                 args, header_fn=print,
                 refresh_paths=lambda: find_vault_markdown_files(notes_dir),
+                fallback_path=fallback_path,
             )
             return
 
@@ -1540,14 +1636,20 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
             return
 
         if not os.path.exists(target_file):
-            print(f"No journal file found at {target_file}", file=sys.stderr)
-            sys.exit(1)
+            if not args.tui:
+                print(
+                    f"No journal file found at {target_file}",
+                    file=sys.stderr,
+                )
+                sys.exit(1)
+            todos = []
+        else:
+            todos = get_filtered_todos(target_file, args)
 
-        todos = get_filtered_todos(target_file, args)
         output_sections(
             [(target_file, todos)],
             f"No {scope_message(args)} found in {target_file}",
-            args,
+            args, fallback_path=target_file,
         )
 
 
