@@ -5,6 +5,55 @@
     # view keympas on the go
     settings.vim.binds.whichKey.enable = true;
 
+    # Helpers for the <leader>b (Build) group below: run a shell command
+    # in a terminal split at the bottom of the screen, so build/run
+    # output stays visible without taking over the whole window.
+    settings.vim.luaConfigRC.nix-build-run = ''
+      local function run_in_term(cmd)
+        -- Build the split/buffer explicitly via the low-level API
+        -- instead of :split/:new - those reuse or hand off buffers in
+        -- ways that ended up turning the main window into a terminal
+        -- too. This guarantees a brand-new, unlisted, scratch buffer
+        -- that only ever lives in the new bottom window.
+        vim.cmd("botright 15split")
+        local term_win = vim.api.nvim_get_current_win()
+
+        local buf = vim.api.nvim_create_buf(false, true)
+        vim.api.nvim_win_set_buf(term_win, buf)
+
+        vim.api.nvim_buf_call(buf, function()
+          vim.fn.termopen(cmd)
+        end)
+
+        vim.api.nvim_set_current_win(term_win)
+        vim.cmd("startinsert")
+      end
+
+      _G.NixBuild = function()
+        run_in_term("nix build")
+      end
+
+      _G.NixRun = function()
+        run_in_term("nix run")
+      end
+
+      _G.NixBuildInput = function()
+        vim.ui.input({ prompt = "nix build .#" }, function(input)
+          if input and input ~= "" then
+            run_in_term("nix build .#" .. input)
+          end
+        end)
+      end
+
+      _G.NixRunInput = function()
+        vim.ui.input({ prompt = "nix run .#" }, function(input)
+          if input and input ~= "" then
+            run_in_term("nix run .#" .. input)
+          end
+        end)
+      end
+    '';
+
     settings.vim.keymaps = [
       {
         key = "<leader>wq";
@@ -152,6 +201,36 @@
         key = "<leader>tl";
         action = "<cmd>TodoTelescope<CR>";
         desc = "View Todo List";
+      }
+
+      ## Build ##
+      {
+        mode = "n";
+        key = "<leader>bb";
+        action = ":lua NixBuild()<CR>";
+        silent = true;
+        desc = "nix build";
+      }
+      {
+        mode = "n";
+        key = "<leader>br";
+        action = ":lua NixRun()<CR>";
+        silent = true;
+        desc = "nix run";
+      }
+      {
+        mode = "n";
+        key = "<leader>bB";
+        action = ":lua NixBuildInput()<CR>";
+        silent = true;
+        desc = "nix build .#<input>";
+      }
+      {
+        mode = "n";
+        key = "<leader>bR";
+        action = ":lua NixRunInput()<CR>";
+        silent = true;
+        desc = "nix run .#<input>";
       }
     ];
   };
