@@ -27,6 +27,9 @@ let
     If you write extentions, scripts or derivations for a `flake.nix` and those modules get too big, move them to a seperate file located in the `.nix/` directory side-by-side to the flake.nix. Include those files later in the `flake.nix` so it does not get too big and one might lose the overview.
 
     Furher it is important, that the `flake.nix` always works. So if the build-tools, targets or something else is changed, the `flake.nix` (or other nix files) should be updated immediatly as well. They should be the single-source-of-truth.
+
+    If you write as shell-script inside nix, always use `writeShellApplication` with all its dependencies so it works even if the nix devShell is not active.
+    Always start from a _pure_ perspective, declare all dependencies if needed.
   '';
 in
 ''
