@@ -13,6 +13,47 @@ let
   nd = pkgs.writeShellScriptBin "nd" ''
     nix develop --impure
   '';
+
+  nr = pkgs.writeShellScriptBin "nr" ''
+    nix run "$@"
+  '';
+
+  # Fuzzy-pick a flake output and build/run it.
+  nbb = pkgs.writeShellApplication {
+    name = "nbb";
+    runtimeInputs = with pkgs; [
+      fzf
+      jq
+      nix-output-monitor
+    ];
+    text = ''
+      system=$(nix eval --impure --raw --expr builtins.currentSystem)
+      attr=$(nix eval ".#packages.$system" --apply builtins.attrNames --json 2>/dev/null | jq -r '.[]' | fzf --prompt="nix build .#")
+      if [[ -n "''${attr:-}" ]]; then
+        nix build ".#$attr" "$@" |& nom
+      fi
+    '';
+  };
+
+  nrr = pkgs.writeShellApplication {
+    name = "nrr";
+    runtimeInputs = with pkgs; [
+      fzf
+      jq
+    ];
+    text = ''
+      system=$(nix eval --impure --raw --expr builtins.currentSystem)
+      attr=$(
+        {
+          nix eval ".#packages.$system" --apply builtins.attrNames --json 2>/dev/null
+          nix eval ".#apps.$system" --apply builtins.attrNames --json 2>/dev/null
+        } | jq -r '.[]' | sort -u | fzf --prompt="nix run .#"
+      )
+      if [[ -n "''${attr:-}" ]]; then
+        nix run ".#$attr" -- "$@"
+      fi
+    '';
+  };
 in
 {
   environment.systemPackages = with pkgs; [
@@ -24,7 +65,10 @@ in
     comma # run packages (installed or not) with ,
     # scripts
     nb
+    nbb
     nd
+    nr
+    nrr
   ];
 
   nixpkgs.config = {
