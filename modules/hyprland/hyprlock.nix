@@ -79,7 +79,7 @@
               font_color = "rgb(200, 200, 200)";
               fade_on_empty = false;
               font_family = "JetBrainsMono NF Italic";
-              placeholder_text = "<i><span foreground=\"##cdd6f4\">Input Password...</span></i>";
+              placeholder_text = "<i><span foreground=\"${config.lib.stylix.colors.withHashtag.base05}\">Input Password...</span></i>";
               hide_input = false;
               position = "0, -40";
               halign = "center";

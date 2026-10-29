@@ -1,4 +1,4 @@
-{ lib, ... }: {
+{ config, lib, ... }: {
   ExtensionSettings =
     with builtins;
     let
@@ -27,7 +27,7 @@
       userSettings = rec {
         uiTheme = "dark";
         uiAccentCustom = true;
-        uiAccentCustom0 = "#f38ba8";
+        uiAccentCustom0 = config.lib.stylix.colors.withHashtag.base08;
         cloudStorageEnabled = lib.mkForce false; # Security liability?
         importedLists = [
           "https://raw.githubusercontent.com/abhinandh-s/nixdots/refs/heads/master/dots/uBlockOrigin/filter.txt"
