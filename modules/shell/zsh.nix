@@ -119,8 +119,8 @@ in
             lg = "lazygit";
             gb = "git branch | fzf --preview 'git show --color=always {-1}' --bind 'enter:become(git checkout {-1})'";
             gg = "serie"; # git graph
-            gd = "(cd $DOTFILES_DIR && just commit-all)"; # switch for a subshell into the dotfiles directory and open git
-            gn = "(cd $NOTES_DIR && lazygit)"; # switch to notes directory and open git TUI
+            gp = "git pull";
+            gf = "git fetch --all";
 
             # application shortcuts
             nv = "nvim";
