@@ -181,6 +181,11 @@ in
                 autoLoad = true;
                 content = ./config/startup.lua;
               };
+
+              "whichkey.lua" = {
+                autoLoad = true;
+                content = ./config/whichkey.lua;
+              };
             };
 
             extraConfig = ''
