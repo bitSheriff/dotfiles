@@ -138,6 +138,11 @@
           url = "https://home.mandl-meyer.me";
           icon = "homeassistant";
         }
+        {
+          name = "Endel";
+          url = "https://app.endel.io";
+          icon = "headphones";
+        }
       ];
 
     };

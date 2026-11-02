@@ -106,6 +106,19 @@
 
     browser.qutebrowser.enable = true;
     browser.chromium.enable = true;
+    browser.webapps = [
+      {
+        name = "Home Assistant";
+        url = "https://home.mandl-meyer.me";
+        icon = "homeassistant";
+      }
+      {
+        name = "Endel";
+        url = "https://app.endel.io";
+        icon = "headphones";
+      }
+    ];
+
     desktop.hyprland.enable = true;
 
     office = {
