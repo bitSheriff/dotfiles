@@ -70,17 +70,20 @@ in
           };
         };
 
-        # settings in `tui.json`
-        # theme is owned by Stylix (modules/stylix) - do not set tui.theme
+        # Stylix's opencode target still writes `tui.theme = "stylix"`,
+        # which OpenCode 2 ignores and warns about. Force it off here until
+        # upstream Stylix supports cli.json (nix-community/stylix).
+        tui = lib.mkForce { };
+
+        # settings in `cli.json` (OpenCode 2; was `tui.json` pre-v2)
+        # theme is owned by Stylix (modules/stylix) - do not set cli.theme
         # here, it conflicts.
-        tui = {
+        cli = {
           keybinds = {
             leader = "alt+b";
           };
-          diff_style = "auto";
+          diffs.view = "auto";
           mouse = true;
-          icons = true;
-          sidebar = "left";
         };
 
         web = {
