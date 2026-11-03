@@ -7,7 +7,7 @@
 }:
 let
   nb = pkgs.writeShellScriptBin "nb" ''
-    nix build "$@" |& nom
+    nix build .#"$@" |& nom
   '';
 
   nd = pkgs.writeShellScriptBin "nd" ''
@@ -15,7 +15,7 @@ let
   '';
 
   nr = pkgs.writeShellScriptBin "nr" ''
-    nix run "$@"
+    nix run .#"$@"
   '';
 
   # Fuzzy-pick a flake output and build/run it.
