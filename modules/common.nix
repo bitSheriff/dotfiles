@@ -23,6 +23,7 @@
     ./keyboards.nix
     ./firefox
     ./chromium.nix
+    ./webapps.nix
     ./stylix
     ./desktop/gnome.nix
     ./desktop/plasma.nix
