@@ -50,11 +50,7 @@ let
     sha256 = "f9a17b7d2b43cc1628f01a2eb443ab7f25ad8ecfb2f53985faa15d8f9a6c326e";
   };
 
-  # No stylix.targets.thunderbird yet (nix-community/stylix#2529, unmerged), and
-  # the Firefox Color extension stylix uses for Firefox doesn't run in
-  # Thunderbird. So: our own minimal static-theme WebExtension, built with the
-  # same base16 role mapping stylix's Firefox Color target uses (upstream
-  # modules/firefox/each-config.nix), just as hex strings instead of {r,g,b}.
+  # No stylix.targets.thunderbird yet (nix-community/stylix#2529, unmerged)
   stylixThemeId = "stylix-theme@thunderbird";
 
   stylixTheme =
@@ -142,12 +138,8 @@ in
                 tutaCalendar
               ];
               settings = {
-                # The ATN addons are Mozilla-signed, but our locally generated
-                # Stylix theme isn't signed at all - Thunderbird silently
-                # refuses to enable unsigned add-ons without this.
+                "mail.openpgp.alternative_gpg_path" = "${config.programs.gpg.package}/bin/gpg";
                 "xpinstall.signatures.required" = false;
-                # Extensions dropped straight into the profile dir land in the
-                # "profile" scope, which Thunderbird otherwise auto-disables.
                 "extensions.autoDisableScopes" = 0;
                 "extensions.activeThemeID" = stylixThemeId;
               };
