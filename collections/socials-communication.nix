@@ -11,6 +11,7 @@ in
   imports = [
     ./../modules/irc.nix
     ./../modules/meshtastic.nix
+    ./../modules/thunderbird.nix
   ];
 
   environment.systemPackages =
@@ -35,9 +36,6 @@ in
     ]
     ++ lib.optionals config.cfg.communication.mail.tuta.enable [
       tutanota-desktop # secure encrypted email
-    ]
-    ++ lib.optionals config.cfg.communication.mail.thunderbird.enable [
-      thunderbird
     ];
 
   ##################

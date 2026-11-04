@@ -163,6 +163,7 @@
       matrix.enable = true;
       mumble.enable = true;
       mail.tuta.enable = true;
+      mail.thunderbird.enable = true;
     };
 
     socials = {
