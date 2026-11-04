@@ -66,6 +66,13 @@ in
       popups = 1.0;
     };
 
+    icons = {
+      enable = true;
+      package = pkgs.papirus-icon-theme;
+      dark = "Papirus-Dark";
+      light = "Papirus-Light";
+    };
+
     targets.nvf.plugin = "mini-base16";
   };
 

@@ -136,12 +136,19 @@
         {
           name = "Home Assistant";
           url = "https://home.mandl-meyer.me";
-          icon = "homeassistant";
+          # "homeassistant" isn't a real icon name in any theme (incl.
+          # Papirus); webapp logos need an actual file, not a theme lookup.
+          icon = pkgs.fetchurl {
+            url = "https://www.home-assistant.io/images/favicon-192x192-full.png";
+            sha256 = "sha256-unax8LuUpOsB8Z40UH4JkkjP15DBxxPh6VY5TCxRVeQ=";
+          };
         }
         {
           name = "Endel";
           url = "https://app.endel.io";
-          icon = "headphones";
+          # Theme-name lookup for "headphones" is unreliable depending on what
+          # resolves the .desktop icon; point straight at the file instead.
+          icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark/48x48/devices/headphones.svg";
         }
       ];
 
