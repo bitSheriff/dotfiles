@@ -40,6 +40,7 @@
             "bitSheriff"
             "bmtuta"
             "bmmtuta"
+            "bmtuwien"
 
             # Public Keys / Contacts
             "recipients/phtuw"
