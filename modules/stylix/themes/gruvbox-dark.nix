@@ -8,7 +8,9 @@
   base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark.yaml";
   polarity = "dark";
 
-  image = pkgs.runCommand "gruvbox-dark-wallpaper.png" { nativeBuildInputs = [ pkgs.imagemagick ]; } ''
-    magick -size 1920x1080 xc:'#282828' "$out"
-  '';
+  image =
+    pkgs.runCommand "gruvbox-dark-wallpaper.png" { nativeBuildInputs = [ pkgs.imagemagick ]; }
+      ''
+        magick -size 1920x1080 xc:'#282828' "$out"
+      '';
 }

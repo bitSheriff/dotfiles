@@ -59,10 +59,9 @@ in
       gnome-boxes
     ];
 
-  users.users.benjamin.extraGroups =
-    lib.optionals (lib.elem "benjamin" activeUsers) (
-      lib.optional cfgDocker.enable "docker" ++ lib.optional cfgVm.enable "libvirtd"
-    );
+  users.users.benjamin.extraGroups = lib.optionals (lib.elem "benjamin" activeUsers) (
+    lib.optional cfgDocker.enable "docker" ++ lib.optional cfgVm.enable "libvirtd"
+  );
 
   ## Docker
   virtualisation.docker.enable = lib.mkIf cfgDocker.enable true;

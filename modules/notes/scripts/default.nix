@@ -13,5 +13,6 @@ in
     todo
     todo-list
     notes
-  ] ++ memo;
+  ]
+  ++ memo;
 }

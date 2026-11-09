@@ -22,21 +22,19 @@
         defaultEnv = "";
         envFlag = if defaultEnv == "" then "" else "-e ${defaultEnv}";
 
-        mkPioApp =
-          name: text:
-          {
-            type = "app";
-            program = pkgs.lib.getExe (
-              pkgs.writeShellApplication {
-                inherit name;
-                runtimeInputs = with pkgs; [
-                  platformio-core
-                  udev
-                ];
-                inherit text;
-              }
-            );
-          };
+        mkPioApp = name: text: {
+          type = "app";
+          program = pkgs.lib.getExe (
+            pkgs.writeShellApplication {
+              inherit name;
+              runtimeInputs = with pkgs; [
+                platformio-core
+                udev
+              ];
+              inherit text;
+            }
+          );
+        };
       in
       {
         devShells.default = pkgs.mkShell {

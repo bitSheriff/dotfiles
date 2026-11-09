@@ -11,7 +11,9 @@
   # Solid background matching the scheme's base00, generated on the fly so
   # every theme ships a working default wallpaper without depending on
   # artwork that may not exist for it upstream.
-  image = pkgs.runCommand "catppuccin-mocha-wallpaper.png" { nativeBuildInputs = [ pkgs.imagemagick ]; } ''
-    magick -size 1920x1080 xc:'#1e1e2e' "$out"
-  '';
+  image =
+    pkgs.runCommand "catppuccin-mocha-wallpaper.png" { nativeBuildInputs = [ pkgs.imagemagick ]; }
+      ''
+        magick -size 1920x1080 xc:'#1e1e2e' "$out"
+      '';
 }
