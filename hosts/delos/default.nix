@@ -68,6 +68,7 @@
     backup.borgmatic = {
       enable = true;
       directories = [ "/home/benjamin/Documents" ];
+      repositories.borgbase.path = "ssh://gpfd4e0o@gpfd4e0o.repo.borgbase.com/./repo";
     };
 
     notes = {

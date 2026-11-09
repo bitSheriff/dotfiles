@@ -788,10 +788,39 @@ in
           description = "Borgmatic backups to a remote Borg repository";
         };
 
-        repository = mkOption {
-          type = types.str;
-          default = "ssh://gpfd4e0o@gpfd4e0o.repo.borgbase.com/./repo";
-          description = "Borg repository URL, one archive series per host.";
+        repositories = mkOption {
+          type = types.attrsOf (
+            types.submodule {
+              options = {
+                path = mkOption {
+                  type = types.str;
+                  description = "Borg repository URL or local path.";
+                };
+
+                passphraseKey = mkOption {
+                  type = types.str;
+                  default = "borg/encryption_keys/multi_hosts";
+                  description = "Key inside encrypted/secrets.yaml holding the repository passphrase.";
+                };
+
+                sshKey = mkOption {
+                  type = types.str;
+                  default = "borg/multi_hosts";
+                  description = "Key inside encrypted/ssh_keys.yaml holding the SSH key for this repository.";
+                };
+              };
+            }
+          );
+          default = { };
+          example = {
+            borgbase.path = "ssh://gpfd4e0o@gpfd4e0o.repo.borgbase.com/./repo";
+            nasimov = {
+              path = "ssh://borg@nasimov/./rhodos";
+              passphraseKey = "borg/encryption_keys/nasimov";
+              sshKey = "borg/nasimov";
+            };
+          };
+          description = "Repositories this host backs up to. Each one gets its own borgmatic configuration, credentials and retention run.";
         };
 
         directories = mkOption {
