@@ -74,6 +74,19 @@
           key = "work/priv";
           path = "${config.home.homeDirectory}/.ssh/work";
         };
+
+        ssh_key_borg_multiHosts = {
+          sopsFile = ../encrypted/ssh_keys.yaml;
+          key = "borg/multi_hosts";
+          path = "${config.home.homeDirectory}/.ssh/borg/multi_hosts";
+        };
+
+        ssh_key_borg_nasimov = {
+          sopsFile = ../encrypted/ssh_keys.yaml;
+          key = "borg/nasimov";
+          path = "${config.home.homeDirectory}/.ssh/borg/nasimov";
+        };
+
       };
 
       # Derive each key's public half from its sops-decrypted private half
