@@ -18,6 +18,7 @@
     ./bluetooth.nix
     ./kitty.nix
     ./ssh.nix
+    ./borgbackup.nix
     ./appimage.nix
     ./sops
     ./keyboards.nix

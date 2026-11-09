@@ -62,6 +62,11 @@
 
     };
 
+    backup.borgmatic = {
+      enable = true;
+      directories = [ "/home/benjamin/Documents" ];
+    };
+
     development = {
       enable = true;
 

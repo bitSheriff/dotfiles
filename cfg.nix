@@ -777,6 +777,47 @@ in
       };
     };
 
+    ############
+    ## Backup ##
+    ############
+    backup = {
+      borgmatic = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Borgmatic backups to a remote Borg repository";
+        };
+
+        repository = mkOption {
+          type = types.str;
+          default = "ssh://gpfd4e0o@gpfd4e0o.repo.borgbase.com/./repo";
+          description = "Borg repository URL, one archive series per host.";
+        };
+
+        directories = mkOption {
+          type = types.listOf types.str;
+          default = [ "/home/benjamin/Documents" ];
+          example = [
+            "/home/benjamin/Documents"
+            "/home/benjamin/code"
+          ];
+          description = "Directories this host backs up.";
+        };
+
+        excludePatterns = mkOption {
+          type = types.listOf types.str;
+          default = [
+            "*.pyc"
+            "*/.cache"
+            "*/node_modules"
+            "*/result"
+            "*/target"
+          ];
+          description = "Borg exclude patterns applied to every source directory.";
+        };
+      };
+    };
+
     #############
     ## Socials and Communication ##
     #############

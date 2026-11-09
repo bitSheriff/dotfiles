@@ -65,6 +65,11 @@
       fontsize = 14;
     };
 
+    backup.borgmatic = {
+      enable = true;
+      directories = [ "/home/benjamin/Documents" ];
+    };
+
     notes = {
       obsidian.enable = true;
       supernote.enable = true;
