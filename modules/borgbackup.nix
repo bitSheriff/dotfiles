@@ -31,6 +31,7 @@ let
     runtimeInputs = with pkgs; [
       borgbackup
       coreutils
+      openssh
     ];
     text = ''
       if [ "$(id -u)" -ne 0 ]; then
@@ -44,6 +45,21 @@ let
       BORG_PASSPHRASE="$(cat ${passphrasePath})"
       BORG_RSH="${sshCommand}"
       export BORG_PASSPHRASE BORG_RSH
+
+      # borg reports every SSH problem as "Is borg working on the server?",
+      # which sends you hunting on the wrong side of the connection.
+      host="''${repo#ssh://}"
+      host="''${host%%/*}"
+      if ! ssh_err=$(${sshCommand} -o ConnectTimeout=15 "$host" true 2>&1); then
+        case "$ssh_err" in
+          *"Permission denied"*)
+            echo "SSH rejected the backup key. Register this public key on the repository:" >&2
+            ssh-keygen -y -f ${sshKeyPath} >&2
+            ssh-keygen -lf ${sshKeyPath} >&2
+            exit 1
+            ;;
+        esac
+      fi
 
       if borg info "$repo" >/dev/null 2>&1; then
         echo "repository already initialized: $repo"
