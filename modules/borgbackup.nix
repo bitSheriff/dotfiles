@@ -116,10 +116,8 @@ let
 
     compression = "zstd,3";
 
-    # Repositories are shared between hosts, so every action has to stay
-    # within this host's archive series.
     archive_name_format = "${hostName}-{now:%Y-%m-%dT%H:%M:%S}";
-    match_archives = "sh:${hostName}-*";
+    # match_archives = "sh:${hostName}-*"; # only show selected archives
 
     keep_daily = 7;
     keep_weekly = 4;
