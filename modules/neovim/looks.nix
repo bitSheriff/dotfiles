@@ -72,6 +72,13 @@
               "FAILED"
             ];
           };
+          COMMENT = {
+            icon = "";
+            color = "hint";
+            alt = [
+              "COMM"
+            ];
+          };
         };
       };
     };
