@@ -20,7 +20,7 @@
       ]
       ++ lib.optionals config.cfg.privacy.cryptocurrency.enable [
         ledger-live-desktop
-
+        bitbox
       ];
 
     security.apparmor = {
