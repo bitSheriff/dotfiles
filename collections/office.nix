@@ -32,6 +32,9 @@
         kdePackages.okular
         stirling-pdf-desktop # pdf editor
 
+        # Diagrams, Brainstorming and more
+        drawio
+
         kdePackages.korganizer # Calendar and more
         kdePackages.akonadi # needed for korganizer
         kdePackages.akonadi-search # needed for korganizer
