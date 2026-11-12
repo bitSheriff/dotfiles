@@ -42,6 +42,7 @@ local opaque_titles = {
     ".*Twitch.*",
     "Picture-in-Picture",
     ".*Jitsi Meet.*",
+    ".*Excalidraw Whiteboard.*",
 }
 
 for _, title_pattern in ipairs(opaque_titles) do
