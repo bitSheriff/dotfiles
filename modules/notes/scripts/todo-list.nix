@@ -4,6 +4,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
   import os
   import re
   import sys
+  import shlex
   import calendar
   import curses
   import datetime
@@ -310,6 +311,124 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
       return datetime.datetime.strptime(
           f"{year}-{month}-{day}", "%Y-%m-%d"
       ).date()
+
+
+  def parse_inline_options(content):
+      """Pull a leading "<...>" block of todo-style flags off content.
+
+      Lets --tui's a/e keys carry a date/state on the typed text
+      itself instead of it being swallowed as part of the title,
+      e.g. "<-o 1> Buy milk" or "<-s x> Already done". Recognizes
+      -d/--date, -o/--offset, -t/--today, -T/--tomorrow and
+      -s/--state, same meaning/accepted values as todo's matching
+      command-line flags. The block, if present, must be the very
+      first thing in content (callers run this after stripping any
+      "-"/"." nesting markers via parse_prefixed_line) - its
+      contents are shlex-split, so shell-style quoting works (e.g.
+      "<-d 'next friday'>").
+
+      Returns (options, remaining_content); options is {} if there
+      is no "<...>" block. Raises ValueError (with a usable
+      message) on an unterminated "<", an unknown flag, a missing
+      value, or an invalid value.
+      """
+      stripped = content.lstrip()
+      if not stripped.startswith("<"):
+          return {}, content
+
+      end = stripped.find(">")
+      if end == -1:
+          raise ValueError("unterminated '<' in inline options")
+      raw, rest = stripped[1:end], stripped[end + 1:].lstrip()
+
+      try:
+          tokens = shlex.split(raw)
+      except ValueError as e:
+          raise ValueError(f"invalid inline options {raw!r}: {e}")
+
+      options = {}
+      i = 0
+      while i < len(tokens):
+          tok = tokens[i]
+          if tok in ("-t", "--today"):
+              options["today"] = True
+              i += 1
+          elif tok in ("-T", "--tomorrow"):
+              options["tomorrow"] = True
+              i += 1
+          elif tok in ("-d", "--date"):
+              if i + 1 >= len(tokens):
+                  raise ValueError(f"{tok} needs a value")
+              options["date"] = tokens[i + 1]
+              i += 2
+          elif tok in ("-o", "--offset"):
+              if i + 1 >= len(tokens):
+                  raise ValueError(f"{tok} needs a value")
+              try:
+                  options["offset"] = int(tokens[i + 1])
+              except ValueError:
+                  raise ValueError(f"{tok} value must be an integer")
+              i += 2
+          elif tok in ("-s", "--state"):
+              if i + 1 >= len(tokens):
+                  raise ValueError(f"{tok} needs a value")
+              state = tokens[i + 1].lower()
+              if len(state) != 1 or state not in VALID_STATES:
+                  valid = ", ".join(f"{s!r}" for s in VALID_STATES)
+                  raise ValueError(
+                      f"{tok} value must be one of: {valid}"
+                  )
+              options["state"] = state
+              i += 2
+          else:
+              raise ValueError(f"unknown inline option {tok!r}")
+      return options, rest
+
+
+  def resolve_inline_due_date(options):
+      """Resolve a "YYYY-MM-DD" due date from a parsed inline-options
+      dict, using the same flag precedence as todo's own date flags
+      (-d > -o > -T > -t). Returns None if none of date/offset/
+      tomorrow/today was given.
+      """
+      today = datetime.date.today()
+      if "date" in options:
+          return parse_date(options["date"]).strftime("%Y-%m-%d")
+      if "offset" in options:
+          return (
+              today + datetime.timedelta(days=options["offset"])
+          ).strftime("%Y-%m-%d")
+      if options.get("tomorrow"):
+          return (today + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+      if options.get("today"):
+          return today.strftime("%Y-%m-%d")
+      return None
+
+
+  def apply_inline_options(content, is_desc):
+      """Fold a leading "<...>" inline-options block (see
+      parse_inline_options) out of content and into the shape
+      insert_todo_line/insert_root_todo_line/set_todo_text expect: a
+      resolved due date is appended as a \U0001F4C5 emoji tag
+      (unless content already carries one), and an explicit -s/
+      --state becomes the returned mark character.
+
+      Returns (content, mark); mark is None if no -s/--state was
+      given (callers should leave the existing/default mark alone
+      in that case, rather than stomping it with " "). Raises
+      ValueError if content carries inline options but is_desc
+      (notes have no state/due semantics), or if the options
+      themselves fail to parse (see parse_inline_options).
+      """
+      options, content = parse_inline_options(content)
+      if not options:
+          return content, None
+      if is_desc:
+          raise ValueError("inline options aren't supported on notes")
+      due = resolve_inline_due_date(options)
+      if due and "\U0001F4C5" not in content:
+          content = f"{content} \U0001F4C5 {due}"
+      return content, options.get("state")
 
 
   # Matches a checklist line ("- [ ] ...", "- [x] ...", ...). Shared by
@@ -723,6 +842,19 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
       return line_no
 
 
+  def show_message(stdscr, y, text):
+      """Flash text on screen row y (reverse video) until any key is
+      pressed. Used to surface inline-option parse errors from the
+      a/e keys without tearing down the browser.
+      """
+      _, max_x = stdscr.getmaxyx()
+      stdscr.move(y, 0)
+      stdscr.clrtoeol()
+      stdscr.addstr(y, 0, text[:max_x - 1], curses.A_BOLD | curses.A_REVERSE)
+      stdscr.refresh()
+      stdscr.getch()
+
+
   def edit_line_input(stdscr, y, initial="", prompt="Edit: "):
       """Run a small inline text editor on screen row y, pre-filled
       with initial, supporting the usual editing keys (left/right/
@@ -977,7 +1109,10 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
       disk (picking up todos added elsewhere, e.g. via `todo`, while
       the browser is open) and, if refresh_paths is given, also
       re-discovers brand new journal files that weren't part of the
-      original path list.
+      original path list - except that rediscovered files are kept
+      only if they still have matching todos, or if they're today's
+      daily journal (always kept, even empty, so there's somewhere
+      to add a new todo for today).
       """
       collapsed = {}  # (path, line) -> True if collapsed
 
@@ -1204,13 +1339,25 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                       new_text = edit_line_input(stdscr, max_y - 1, raw_text)
                       stdscr.keypad(True)
                       if new_text is not None and new_text.strip() != "":
-                          set_todo_text(
-                              row["path"], row["node"]["line"], new_text
-                          )
-                          rows = build_rows()
-                          if not rows:
-                              return
-                          sel = find_key(rows, rkey, sel)
+                          try:
+                              content, mark = apply_inline_options(
+                                  new_text.strip(), False
+                              )
+                          except ValueError as e:
+                              show_message(stdscr, max_y - 1, f"Error: {e}")
+                              content = None
+                          if content:
+                              set_todo_text(
+                                  row["path"], row["node"]["line"], content
+                              )
+                              if mark is not None:
+                                  set_todo_mark(
+                                      row["path"], row["node"]["line"], mark
+                                  )
+                              rows = build_rows()
+                              if not rows:
+                                  return
+                              sel = find_key(rows, rkey, sel)
               elif key == ord("a"):
                   row = rows[sel]
                   max_y, _ = stdscr.getmaxyx()
@@ -1222,21 +1369,29 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                       markers_depth, is_desc, content = parse_prefixed_line(
                           raw_input.strip()
                       )
+                      try:
+                          content, mark = apply_inline_options(
+                              content, is_desc
+                          )
+                      except ValueError as e:
+                          show_message(stdscr, max_y - 1, f"Error: {e}")
+                          content = None
                       if content:
+                          mark = mark if mark is not None else " "
                           if row["type"] == "header":
                               # Empty section - nothing to anchor off
                               # of, insert as a fresh top-level todo.
                               path = row["path"]
                               new_depth = markers_depth
                               new_line_no = insert_root_todo_line(
-                                  path, new_depth, is_desc, content,
+                                  path, new_depth, is_desc, content, mark,
                               )
                           else:
                               path = row["path"]
                               new_depth = row["depth"] + markers_depth
                               new_line_no = insert_todo_line(
                                   path, row["node"]["line"], row["depth"],
-                                  new_depth, is_desc, content,
+                                  new_depth, is_desc, content, mark,
                               )
                           rkey = row.get("key")
                           rows = build_rows()
@@ -1258,7 +1413,12 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
               elif key == ord("r"):
                   rkey = rows[sel].get("key") if rows else None
                   if refresh_paths is not None:
-                      paths[:] = refresh_paths()
+                      today = datetime.date.today()
+                      paths[:] = [
+                          p for p in refresh_paths()
+                          if get_filtered_todos(p, args)
+                          or infer_journal_date(p) == today
+                      ]
                   rows = build_rows()
                   if not rows:
                       return
@@ -1420,10 +1580,18 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
               "one - prefix the text with \"-\" per extra nesting level "
               "(e.g. \"- foo\" for a child) and/or \".\" to add a note "
               "instead of a todo (e.g. \"-. note\"), same syntax as "
-              "todo's multi-line input, D toggles showing done todos, "
+              "todo's multi-line input. A leading \"<...>\" on the "
+              "typed text (e.g. \"<-o 1> Buy milk\") is parsed as "
+              "inline flags instead of being added to the title - "
+              "-d/--date, -o/--offset, -t/--today, -T/--tomorrow set "
+              "a \ud83d\udcc5 due date, -s/--state sets the checklist "
+              "mark, same values as todo's/todo-list's own flags. "
+              "D toggles showing done todos, "
               "r reloads every "
               "file from disk (picking up todos added elsewhere, and "
-              "newly created journal files), q quits. With no other "
+              "newly created journal files - empty days are dropped "
+              "again except today's, which stays so you can still add "
+              "to it), q quits. With no other "
               "file-selection flag, defaults to the same overdue/"
               "due-today scan as a bare --overdue. Works with --all "
               "too, browsing the (also overdue-filtered by default) "
