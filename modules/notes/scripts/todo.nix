@@ -523,23 +523,20 @@ pkgs.writers.writePython3Bin "todo" { } ''
           today_str = datetime.date.today().strftime("%Y-%m-%d")
 
           if date_str == today_str or os.path.exists(assigned_file):
+              # The due date has its own journal file (or is today) -
+              # land the todo there. due_suffix (set above from
+              # date_flag_used) stays as-is, so it's tagged with its
+              # due date either way - same as the fallback below.
               journal_file = assigned_file
-              # The todo is landing in the file matching its own
-              # assigned date, so a due-date tag would just repeat
-              # what the file itself already says (and what
-              # todo-list's implicit-due-date logic infers anyway) -
-              # skip it regardless of state.
-              due_suffix = ""
           else:
               # Daily notes are usually pre-created a month or two in
               # advance, but the assigned date's note doesn't exist
               # yet (e.g. it's further out, or pre-creation hasn't
               # run). Rather than silently creating a new,
               # out-of-sequence daily note, fall back to today's file
-              # and make sure the intended date isn't lost by always
-              # tagging the todo with its due date.
+              # instead; due_suffix (already set above) makes sure
+              # the intended date isn't lost.
               journal_file = os.path.join(journal_path, f"{today_str}.md")
-              due_suffix = f" 📅 {date_str}"
 
       # Ensure the target file's directory exists
       os.makedirs(

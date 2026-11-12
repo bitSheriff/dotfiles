@@ -405,30 +405,53 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
       return None
 
 
+  def resolve_due_date_file(due, fallback_path):
+      """Return the daily journal file a \U0001F4C5 due date should
+      land in, mirroring todo's own -d/-o file-selection logic:
+      that date's own file if it exists (or the date is today),
+      else today's file. Returns fallback_path unchanged if
+      JOURNAL_DAILY_PATH isn't set (e.g. --file/--all contexts
+      with no daily journal to redirect into).
+      """
+      journal_dir = os.getenv("JOURNAL_DAILY_PATH")
+      if not journal_dir:
+          return fallback_path
+      today_str = datetime.date.today().strftime("%Y-%m-%d")
+      assigned_file = os.path.join(journal_dir, f"{due}.md")
+      if due == today_str or os.path.exists(assigned_file):
+          return assigned_file
+      return os.path.join(journal_dir, f"{today_str}.md")
+
+
   def apply_inline_options(content, is_desc):
       """Fold a leading "<...>" inline-options block (see
       parse_inline_options) out of content and into the shape
       insert_todo_line/insert_root_todo_line/set_todo_text expect: a
       resolved due date is appended as a \U0001F4C5 emoji tag
-      (unless content already carries one), and an explicit -s/
-      --state becomes the returned mark character.
+      (unless content already carries one, in which case it's left
+      alone - same as todo.nix), and an explicit -s/--state becomes
+      the returned mark character.
 
-      Returns (content, mark); mark is None if no -s/--state was
-      given (callers should leave the existing/default mark alone
-      in that case, rather than stomping it with " "). Raises
-      ValueError if content carries inline options but is_desc
-      (notes have no state/due semantics), or if the options
-      themselves fail to parse (see parse_inline_options).
+      Returns (content, mark, due); mark is None if no -s/--state
+      was given (callers should leave the existing/default mark
+      alone in that case, rather than stomping it with " "); due is
+      the resolved "YYYY-MM-DD" date, or None if no date/offset/
+      today/tomorrow flag was given - pass it to
+      resolve_due_date_file() to find which file the todo should
+      actually land in. Raises ValueError if content carries
+      inline options but is_desc (notes have no state/due
+      semantics), or if the options themselves fail to parse (see
+      parse_inline_options).
       """
       options, content = parse_inline_options(content)
       if not options:
-          return content, None
+          return content, None, None
       if is_desc:
           raise ValueError("inline options aren't supported on notes")
       due = resolve_inline_due_date(options)
       if due and "\U0001F4C5" not in content:
           content = f"{content} \U0001F4C5 {due}"
-      return content, options.get("state")
+      return content, options.get("state"), due
 
 
   # Matches a checklist line ("- [ ] ...", "- [x] ...", ...). Shared by
@@ -1340,7 +1363,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                       stdscr.keypad(True)
                       if new_text is not None and new_text.strip() != "":
                           try:
-                              content, mark = apply_inline_options(
+                              content, mark, _due = apply_inline_options(
                                   new_text.strip(), False
                               )
                           except ValueError as e:
@@ -1370,7 +1393,7 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                           raw_input.strip()
                       )
                       try:
-                          content, mark = apply_inline_options(
+                          content, mark, due = apply_inline_options(
                               content, is_desc
                           )
                       except ValueError as e:
@@ -1378,22 +1401,33 @@ pkgs.writers.writePython3Bin "todo-list" { } ''
                           content = None
                       if content:
                           mark = mark if mark is not None else " "
-                          if row["type"] == "header":
-                              # Empty section - nothing to anchor off
-                              # of, insert as a fresh top-level todo.
-                              path = row["path"]
+                          # A resolved due date may redirect the new
+                          # todo into a different daily journal file
+                          # than the one currently browsed (see
+                          # resolve_due_date_file) - same as todo's
+                          # own -d/-o file selection. There's then
+                          # nothing in that other file to anchor off
+                          # of, so it's always a root-level insert.
+                          path = row["path"]
+                          redirected = False
+                          if due:
+                              path = resolve_due_date_file(due, row["path"])
+                              redirected = path != row["path"]
+                              if path not in paths:
+                                  paths.append(path)
+
+                          if row["type"] == "header" or redirected:
                               new_depth = markers_depth
                               new_line_no = insert_root_todo_line(
                                   path, new_depth, is_desc, content, mark,
                               )
                           else:
-                              path = row["path"]
                               new_depth = row["depth"] + markers_depth
                               new_line_no = insert_todo_line(
                                   path, row["node"]["line"], row["depth"],
                                   new_depth, is_desc, content, mark,
                               )
-                          rkey = row.get("key")
+                          rkey = row.get("key") if not redirected else None
                           rows = build_rows()
                           if not rows:
                               return
