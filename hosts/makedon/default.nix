@@ -46,9 +46,23 @@
     };
   };
 
+  ## Legion 5 ARH05H ships with the dGPU-only BIOS mode (no AMD iGPU exposed),
+  ## so nouveau's lack of color management/gamma support shows as washed-out output.
+  hardware.nvidia = {
+    open = true; # Turing (RTX 20xx) is GSP-capable, open driver is the recommended default
+    modesetting.enable = true;
+    powerManagement.enable = true;
+    powerManagement.finegrained = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+  services.xserver.videoDrivers = [ "nvidia" ];
+
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
+      nvidia-vaapi-driver
+      libva-vdpau-driver
       libvdpau-va-gl
     ];
   };
