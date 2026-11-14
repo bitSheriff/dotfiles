@@ -75,6 +75,7 @@ in
     allowUnfree = true;
     permittedInsecurePackages = [
       "openssl-1.1.1w"
+      "qutebrowser-3.7.0" # due to https://github.com/qutebrowser/qutebrowser/issues/9032
     ];
   };
 
@@ -94,6 +95,7 @@ in
       warn-dirty = false;
       trusted-users = [
         "root"
+        "benjamin"
         "@wheel"
       ];
 
