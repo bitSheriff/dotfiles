@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -8,6 +8,17 @@
 
   networking.hostName = "makedon";
   system.stateVersion = "25.11";
+
+  ## Legacy BIOS boot: disk has no EFI System Partition, so override
+  ## the UEFI systemd-boot default from modules/common.nix with GRUB.
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/nvme0n1";
+    efiSupport = false;
+    enableCryptodisk = true;
+  };
 
   ## Trim SSD
   services.fstrim.enable = true;
