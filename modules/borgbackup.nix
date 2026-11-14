@@ -108,7 +108,10 @@ let
 
     exclude_patterns = cfg.excludePatterns;
     exclude_caches = true;
-    exclude_if_present = [ ".nobackup" ];
+    exclude_if_present = [
+      ".nobackup"
+      ".backupignore"
+    ];
     one_file_system = true;
 
     encryption_passcommand = "${pkgs.coreutils}/bin/cat ${passPath name}";
