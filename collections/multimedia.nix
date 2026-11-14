@@ -123,13 +123,14 @@ in
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      jack.enable = true;
     };
 
     environment.systemPackages =
       with pkgs;
       [
+        pipewire.jack # provides pw-jack wrapper for jack apps instead of global LD_LIBRARY_PATH
         exiftool # read and write metadata
+
         # Image & Graphics
         # gimp # like photoshop but without selling your soul
         # inkscape
@@ -137,7 +138,6 @@ in
         qview # minimal image viewer
         gthumb # viewer and simple editor
         imagemagick # i think there is nothing it cannot do
-        # pinta # simple image manipulation
         gradia # image manipulation
 
         # Video & Recording

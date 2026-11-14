@@ -21,7 +21,7 @@ in
     ++ lib.optionals config.cfg.communication.signal.enable [
       signal-desktop # chat without Mark Zuckerberg
       signal-cli
-      siggy # terminal-based Signal client (via overlay)
+      # siggy # terminal-based Signal client (via overlay)
     ]
     ++ lib.optionals config.cfg.communication.matrix.enable [
       cinny-desktop # beautiful matrix chat client
