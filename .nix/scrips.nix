@@ -12,8 +12,8 @@
 { pkgs }:
 
 let
-  # The appids to install on the phone. See ./hosts/android/fdroid-packages.nix.
-  fdroidPackages = import ./hosts/android/fdroid-packages.nix;
+  # The appids to install on the phone. See ../hosts/android/fdroid-packages.nix.
+  fdroidPackages = import ../hosts/android/fdroid-packages.nix;
 in
 {
   # Bootstraps a machine with one of the flake's NixOS configurations: wipes
