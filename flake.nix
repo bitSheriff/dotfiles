@@ -226,6 +226,44 @@
           ];
         };
 
+        #############  LENOVO LEGION  #############
+        makedon = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+            activeUsers = [ "benjamin" ];
+            dotfiles_path = "/home/benjamin/code/dotfiles";
+          };
+          modules = [
+            home-manager.nixosModules.home-manager
+            nvf.nixosModules.default
+            disko.nixosModules.disko
+            inputs.stylix.nixosModules.stylix
+            # Feature flags (cfg.*)
+            ./cfg.nix
+            # Host Configuration
+            ./hosts/makedon
+            # Overlays
+            { nixpkgs.overlays = [ (import ./overlays inputs) ]; }
+            (
+              {
+                activeUsers,
+                inputs,
+                ...
+              }:
+              {
+                imports = [
+                  (nixpkgs.lib.optionalAttrs (nixpkgs.lib.elem "benjamin" activeUsers) (import ./users/benjamin.nix))
+                  (nixpkgs.lib.optionalAttrs (nixpkgs.lib.elem "guest" activeUsers) (import ./users/guest.nix))
+                ];
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.backupFileExtension = "backup";
+                home-manager.extraSpecialArgs = { inherit inputs activeUsers; };
+              }
+            )
+          ];
+        };
+
         #############  #############  #############
       };
     };
