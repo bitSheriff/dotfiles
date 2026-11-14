@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -65,6 +70,81 @@
       libva-vdpau-driver
       libvdpau-va-gl
     ];
+  };
+
+  ## The BOE NV156FHM-NX1 panel in this chassis only covers ~51% sRGB, so
+  ## everything looks flat/washed out at the driver's neutral Digital
+  ## Vibrance (0). nvidia-settings doesn't expose this control on Wayland,
+  ## so set it directly via nvibrant on every login.
+  systemd.user.services.nvidia-vibrance = {
+    description = "Boost NVIDIA digital vibrance to compensate for the panel's narrow color gamut";
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.nvibrant}/bin/nvibrant 0 0 0 700";
+    };
+  };
+
+  ## The ALC257 codec driving this laptop's speakers has no amp/DSP boost
+  ## exposed on Linux (ALSA mixer already sits at 0dB max), so stock output
+  ## is thin and quiet compared to Windows' Dolby Atmos tuning. Compensate
+  ## in software: bass enhancer + upward compressor ("Boosting" mode, lifts
+  ## quiet passages) + a safety limiter so neither of those clip.
+  home-manager.users.benjamin = {
+    services.easyeffects = {
+      enable = true;
+      preset = "legion-speakers";
+      extraPresets.legion-speakers.output = {
+        blocklist = [ ];
+        plugins_order = [
+          "bass_enhancer#0"
+          "compressor#0"
+          "limiter#0"
+        ];
+        "bass_enhancer#0" = {
+          bypass = false;
+          amount = 9.0;
+          blend = -5.0;
+          floor = 20.0;
+          floor-active = true;
+          harmonics = 8.5;
+          scope = 120.0;
+          input-gain = 0.0;
+          output-gain = 0.0;
+        };
+        "compressor#0" = {
+          bypass = false;
+          mode = "Boosting";
+          attack = 10.0;
+          release = 100.0;
+          release-threshold = -80.0;
+          threshold = -24.0;
+          ratio = 2.0;
+          knee = -6.0;
+          makeup = 0.0;
+          boost-amount = 8.0;
+          boost-threshold = -72.0;
+          sidechain-listen = false;
+          input-gain = 0.0;
+          output-gain = 0.0;
+        };
+        "limiter#0" = {
+          bypass = false;
+          mode = "Herm Thin";
+          lookahead = 5.0;
+          attack = 5.0;
+          release = 5.0;
+          threshold = -1.0;
+          gain-boost = true;
+          sidechain-preamp = 0.0;
+          stereo-link = 100.0;
+          alr = false;
+          input-gain = 10.0;
+          output-gain = 0.0;
+        };
+      };
+    };
   };
 
   #####################################
