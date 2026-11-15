@@ -159,7 +159,7 @@
 
     backup.borgmatic = {
       enable = true;
-      directories = [ "/home/benjamin/Documents" ];
+      directories = [ "/home/benjamin/Documents/Zettelwirtschaft" ];
       repositories.borgbase.path = "ssh://u715075@u715075.your-storagebox.de:23/./repo";
     };
 
