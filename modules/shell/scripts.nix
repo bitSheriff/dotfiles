@@ -89,6 +89,8 @@
         [todo]="todo"
         [wifi]="sudo impala"
         [pass]="pass"
+        [todo]="todo"
+        [todo-list]="todo-list --tui"
     )
 
     choice=$1
