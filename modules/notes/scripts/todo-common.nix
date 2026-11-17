@@ -37,6 +37,21 @@ let
         ">": "forwarded",
     }
 
+    # Obsidian Tasks plugin priority emoji, highest to lowest.
+    PRIORITY_SYMBOLS = [
+        ("\U0001F53A", "highest"),  # 🔺
+        ("\u23EB", "high"),         # ⏫
+        ("\U0001F53C", "medium"),   # 🔼
+        ("\U0001F53D", "low"),      # 🔽
+        ("\u23EC", "lowest"),       # ⏬
+    ]
+
+    # -p/--priority and inline "<-p N>" accept 1 (highest) .. 5
+    # (lowest), mapped onto PRIORITY_SYMBOLS in that order.
+    PRIORITY_EMOJI = {
+        i + 1: emoji for i, (emoji, _name) in enumerate(PRIORITY_SYMBOLS)
+    }
+
 
     def parse_prefixed_line(stripped):
         """Parse leading nesting/description markers off an input line.
@@ -327,6 +342,20 @@ let
                     )
                 options["state"] = state
                 i += 2
+            elif tok in ("-p", "--priority"):
+                if i + 1 >= len(tokens):
+                    raise ValueError(f"{tok} needs a value")
+                try:
+                    priority = int(tokens[i + 1])
+                except ValueError:
+                    raise ValueError(f"{tok} value must be an integer")
+                if priority not in PRIORITY_EMOJI:
+                    valid = ", ".join(str(p) for p in sorted(PRIORITY_EMOJI))
+                    raise ValueError(
+                        f"{tok} value must be one of: {valid}"
+                    )
+                options["priority"] = priority
+                i += 2
             else:
                 raise ValueError(f"unknown inline option {tok!r}")
         return options, rest
@@ -372,7 +401,9 @@ let
     def apply_inline_options(content, is_desc):
         """Fold a leading "<...>" inline-options block (see
         parse_inline_options) out of content and into the shape
-        callers expect: a resolved due date is appended as a
+        callers expect: an explicit -p/--priority is appended as its
+        Obsidian Tasks priority emoji (unless content already carries
+        one), a resolved due date is appended after that as a
         \U0001F4C5 emoji tag (unless content already carries one, in
         which case it's left alone), and an explicit -s/--state
         becomes the returned mark character.
@@ -384,7 +415,7 @@ let
         today/tomorrow flag was given - pass it to
         resolve_due_date_file() to find which file the todo should
         actually land in. Raises ValueError if content carries
-        inline options but is_desc (notes have no state/due
+        inline options but is_desc (notes have no state/due/priority
         semantics), or if the options themselves fail to parse (see
         parse_inline_options).
         """
@@ -393,6 +424,10 @@ let
             return content, None, None
         if is_desc:
             raise ValueError("inline options aren't supported on notes")
+        if "priority" in options and not any(
+            e in content for e in PRIORITY_EMOJI.values()
+        ):
+            content = f"{content} {PRIORITY_EMOJI[options['priority']]}"
         due = resolve_inline_due_date(options)
         if due and "\U0001F4C5" not in content:
             content = f"{content} \U0001F4C5 {due}"

@@ -9,7 +9,7 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
   import argparse
   import subprocess
   from todo_common import (
-      INDENT_UNIT, TODO_MARKER, VALID_STATES,
+      INDENT_UNIT, TODO_MARKER, VALID_STATES, PRIORITY_SYMBOLS,
       parse_prefixed_line, format_output_line, parse_date,
       resolve_due_date_file, apply_inline_options,
       select_file_with_fzf, pick_calendar_date,
@@ -40,14 +40,6 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
       ("created", "\u2795"),         # ➕
       ("done", "\u2705"),            # ✅
       ("cancelled", "\u274C"),       # ❌
-  ]
-
-  TASK_PRIORITY_SYMBOLS = [
-      ("\U0001F53A", "highest"),  # 🔺
-      ("\u23EB", "high"),         # ⏫
-      ("\U0001F53C", "medium"),   # 🔼
-      ("\U0001F53D", "low"),      # 🔽
-      ("\u23EC", "lowest"),       # ⏬
   ]
 
   TASK_RECURRENCE_SYMBOL = "\U0001F501"  # 🔁
@@ -81,7 +73,7 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
               meta[name] = m.group(1)
               remaining = remaining[:m.start()] + remaining[m.end():]
 
-      for emoji, name in TASK_PRIORITY_SYMBOLS:
+      for emoji, name in PRIORITY_SYMBOLS:
           if emoji in remaining:
               meta["priority"] = name
               remaining = remaining.replace(emoji, "")
@@ -1241,7 +1233,9 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
               "inline flags instead of being added to the title - "
               "-d/--date, -o/--offset, -t/--today, -T/--tomorrow set "
               "a \ud83d\udcc5 due date, -s/--state sets the checklist "
-              "mark, same values as todo's/todo-list's own flags. "
+              "mark, -p/--priority (1 highest .. 5 lowest) sets an "
+              "Obsidian Tasks priority emoji, same values as "
+              "todo's/todo-list's own flags. "
               "D toggles showing done todos, "
               "r reloads every "
               "file from disk (picking up todos added elsewhere, and "

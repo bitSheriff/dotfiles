@@ -8,7 +8,7 @@ pkgs.writers.writePython3Bin "todo" { libraries = [ todoCommon ]; } ''
   import subprocess
   import readline  # noqa: F401  (enables arrow-key/line editing for input())
   from todo_common import (
-      TODO_MARKER, VALID_STATES,
+      TODO_MARKER, VALID_STATES, PRIORITY_EMOJI,
       parse_prefixed_line, format_output_line, parse_date,
       resolve_due_date_file, apply_inline_options,
       select_file_with_fzf, pick_calendar_date,
@@ -198,6 +198,17 @@ pkgs.writers.writePython3Bin "todo" { libraries = [ todoCommon ]; } ''
           )
       )
       parser.add_argument(
+          "-p", "--priority", type=int, default=None,
+          choices=sorted(PRIORITY_EMOJI),
+          help=(
+              "Priority for the new todo(s), written as an Obsidian "
+              "Tasks priority emoji: 1 (highest) through "
+              f"{max(PRIORITY_EMOJI)} (lowest). Default: none (no "
+              "signifier). Only applies to new top-level todos, not "
+              "sub-todos/notes."
+          )
+      )
+      parser.add_argument(
           "task", nargs="*", help="The task content."
       )
 
@@ -257,6 +268,9 @@ pkgs.writers.writePython3Bin "todo" { libraries = [ todoCommon ]; } ''
       # Format dates
       date_str = target_date.strftime("%Y-%m-%d")
       due_suffix = f" 📅 {date_str}" if date_flag_used else ""
+      priority_suffix = (
+          f" {PRIORITY_EMOJI[args.priority]}" if args.priority else ""
+      )
 
       # Determine target file
       if args.file == "SELECT_WITH_FZF":
@@ -389,6 +403,10 @@ pkgs.writers.writePython3Bin "todo" { libraries = [ todoCommon ]; } ''
               if current_lines:
                   blocks.append((current_file, current_lines))
                   current_lines = []
+              if priority_suffix and not any(
+                  e in content for e in PRIORITY_EMOJI.values()
+              ):
+                  content += priority_suffix
               if due:
                   current_file = resolve_due_date_file(due, journal_file)
               else:
