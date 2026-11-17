@@ -16,8 +16,9 @@ let
   hledgerScripts = import ../../modules/hledger/scripts.nix { inherit pkgs; };
   inherit (hledgerScripts) timedot-add timeclock-add;
 
-  todo = import ../../modules/notes/scripts/todo.nix { inherit pkgs; };
-  todo-list = import ../../modules/notes/scripts/todo-list.nix { inherit pkgs; };
+  todoCommon = import ../../modules/notes/scripts/todo-common.nix { inherit pkgs; };
+  todo = import ../../modules/notes/scripts/todo.nix { inherit pkgs todoCommon; };
+  todo-list = import ../../modules/notes/scripts/todo-list.nix { inherit pkgs todoCommon; };
   jour = import ../../modules/notes/scripts/jour.nix { inherit pkgs; };
   memo = import ../../modules/notes/scripts/memo.nix { inherit pkgs; };
 
