@@ -85,9 +85,11 @@ in
 
       nv = "nvim";
       pulldots = "(cd \"$DOTFILES_PATH\" && git pull)";
+      gp = "git pull";
 
       t = "todo";
       tl = "todo-list";
+      tlt = "todo-list --tui";
     };
   };
 
