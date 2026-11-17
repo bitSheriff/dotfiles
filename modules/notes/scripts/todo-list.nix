@@ -927,7 +927,7 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
           footer = (
               "j/k move  h/l collapse/expand  n/p next/prev day  "
               "g/G top/bottom  space/x/i//-/</> set state  e edit  "
-              "a add  D toggle done  r reload  q quit"
+              "a add  o open in editor  D toggle done  r reload  q quit"
           )
           stdscr.addstr(max_y - 1, 0, footer[:max_x - 1], curses.A_REVERSE)
           stdscr.refresh()
@@ -1088,6 +1088,26 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
                               )
                           else:
                               sel = find_key(rows, (path, new_line_no), sel)
+              elif key == ord("o"):
+                  row = rows[sel]
+                  if row["type"] == "todo":
+                      editor = os.environ.get("EDITOR", args.editor)
+                      curses.def_prog_mode()
+                      curses.endwin()
+                      try:
+                          subprocess.run(
+                              [editor, f"+{row['node']['line']}", row["path"]]
+                          )
+                      except FileNotFoundError:
+                          pass
+                      curses.reset_prog_mode()
+                      stdscr.keypad(True)
+                      rkey = row["key"]
+                      rows = build_rows()
+                      if not rows:
+                          return
+                      sel = find_key(rows, rkey, sel)
+                      stdscr.clear()
               elif key == ord("D"):
                   args.done = not args.done
                   rows = build_rows()
