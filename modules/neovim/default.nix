@@ -15,10 +15,10 @@
     ./notes.nix
   ];
 
-  environment.systemPackages = with pkgs; [
-    neovim
-  ];
-
+  # Nothing added to environment.systemPackages here: programs.nvf.enable
+  # already puts its own wrapped/configured package (with all plugins) on
+  # PATH as `nvim`. A plain pkgs.neovim here would collide with it and,
+  # depending on which one wins, silently give you an unconfigured nvim.
   programs.nvf = {
     enable = true;
     settings.vim = {

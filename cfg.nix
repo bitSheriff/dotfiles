@@ -979,7 +979,9 @@ in
     env = {
       editor = mkOption {
         type = types.str;
-        default = "${pkgs.neovim}/bin/nvim";
+        # The nvf-wrapped package (modules/neovim), not plain pkgs.neovim,
+        # so $EDITOR actually carries the configured plugins/keymaps.
+        default = "${config.programs.nvf.finalPackage}/bin/nvim";
         description = "Default $EDITOR / $VISUAL.";
       };
 

@@ -1,8 +1,9 @@
 { config, pkgs, ... }:
 {
 
+  # No plain pkgs.neovim here: programs.nvf.enable already puts its own
+  # wrapped/configured package on PATH as `nvim` (see ./default.nix).
   environment.systemPackages = with pkgs; [
-    neovim
     nixfmt
     clang
     clang-tools
