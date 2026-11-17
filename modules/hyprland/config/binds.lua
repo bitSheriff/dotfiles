@@ -162,9 +162,12 @@ wk_exec_bind("SUPER + SHIFT + C", "speedcrunch", "Open calculator")
 wk_exec_bind("SUPER + ALT + C", apps.markdown_editor, "Open markdown editor")
 wk_exec_bind("SUPER + M", "1password", "Open 1Password")
 wk_exec_bind("SUPER + SHIFT + M", "floatui pass", "Open password picker")
-wk_exec_bind("SUPER + T", "todoist", "Open Todoist")
-wk_exec_bind("SUPER + SHIFT + T", "floatui todo", "Open todo")
+
+-- TODOs
+wk_exec_bind("SUPER + T", "floatui todo", "Open Todoist")
+wk_exec_bind("SUPER + SHIFT + T", "floatui todo-list", "Open todo")
 wk_exec_bind("SUPER + CTRL + T", "korganizer", "Open KOrganizer")
+
 wk_exec_bind("SUPER + CTRL + Z", "marktext", "Open MarkText")
 wk_exec_bind("SUPER + SHIFT + Z", "zathura", "Open Zathura")
 wk_exec_bind("SUPER + XF86AudioPlay", "spotify-launcher", "Open Spotify")
