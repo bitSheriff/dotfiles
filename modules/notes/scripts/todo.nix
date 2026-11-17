@@ -4,6 +4,7 @@ pkgs.writers.writePython3Bin "todo" { } ''
   import os
   import re
   import sys
+  import shlex
   import calendar
   import curses
   import datetime
@@ -359,6 +360,146 @@ pkgs.writers.writePython3Bin "todo" { } ''
       ).date()
 
 
+  def parse_inline_options(content):
+      """Pull a leading "<...>" block of todo flags off content.
+
+      Lets a single multi-line interactive entry (when `todo` is run
+      with no task arguments) carry a date/state per typed line
+      instead of all lines sharing whatever -d/-o/-t/-T/-s was given
+      on the command line, e.g. "<-T> Buy milk" alongside "<-t> Call
+      bank". Recognizes -d/--date, -o/--offset, -t/--today,
+      -T/--tomorrow and -s/--state, same meaning/accepted values as
+      the matching command-line flags above. The block, if present,
+      must be the very first thing in content (callers run this
+      after stripping any "-"/"." nesting markers via
+      parse_prefixed_line) - its contents are shlex-split, so
+      shell-style quoting works (e.g. "<-d 'next friday'>").
+
+      Returns (options, remaining_content); options is {} if there
+      is no "<...>" block. Raises ValueError (with a usable
+      message) on an unterminated "<", an unknown flag, a missing
+      value, or an invalid value.
+      """
+      stripped = content.lstrip()
+      if not stripped.startswith("<"):
+          return {}, content
+
+      end = stripped.find(">")
+      if end == -1:
+          raise ValueError("unterminated '<' in inline options")
+      raw, rest = stripped[1:end], stripped[end + 1:].lstrip()
+
+      try:
+          tokens = shlex.split(raw)
+      except ValueError as e:
+          raise ValueError(f"invalid inline options {raw!r}: {e}")
+
+      options = {}
+      i = 0
+      while i < len(tokens):
+          tok = tokens[i]
+          if tok in ("-t", "--today"):
+              options["today"] = True
+              i += 1
+          elif tok in ("-T", "--tomorrow"):
+              options["tomorrow"] = True
+              i += 1
+          elif tok in ("-d", "--date"):
+              if i + 1 >= len(tokens):
+                  raise ValueError(f"{tok} needs a value")
+              options["date"] = tokens[i + 1]
+              i += 2
+          elif tok in ("-o", "--offset"):
+              if i + 1 >= len(tokens):
+                  raise ValueError(f"{tok} needs a value")
+              try:
+                  options["offset"] = int(tokens[i + 1])
+              except ValueError:
+                  raise ValueError(f"{tok} value must be an integer")
+              i += 2
+          elif tok in ("-s", "--state"):
+              if i + 1 >= len(tokens):
+                  raise ValueError(f"{tok} needs a value")
+              state = tokens[i + 1].lower()
+              if len(state) != 1 or state not in VALID_STATES:
+                  valid = ", ".join(f"{s!r}" for s in VALID_STATES)
+                  raise ValueError(
+                      f"{tok} value must be one of: {valid}"
+                  )
+              options["state"] = state
+              i += 2
+          else:
+              raise ValueError(f"unknown inline option {tok!r}")
+      return options, rest
+
+
+  def resolve_inline_due_date(options):
+      """Resolve a "YYYY-MM-DD" due date from a parsed inline-options
+      dict, using the same flag precedence as the command-line date
+      flags (-d > -o > -T > -t). Returns None if none of date/
+      offset/tomorrow/today was given.
+      """
+      today = datetime.date.today()
+      if "date" in options:
+          return parse_date(options["date"]).strftime("%Y-%m-%d")
+      if "offset" in options:
+          return (
+              today + datetime.timedelta(days=options["offset"])
+          ).strftime("%Y-%m-%d")
+      if options.get("tomorrow"):
+          return (today + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+      if options.get("today"):
+          return today.strftime("%Y-%m-%d")
+      return None
+
+
+  def resolve_due_date_file(due, fallback_path):
+      """Return the daily journal file a \U0001F4C5 due date should
+      land in: that date's own file if it exists (or the date is
+      today), else today's file. Returns fallback_path unchanged if
+      JOURNAL_DAILY_PATH isn't set (e.g. -f/--file or -w/--weekly
+      contexts with no daily journal to redirect into).
+      """
+      journal_dir = os.getenv("JOURNAL_DAILY_PATH")
+      if not journal_dir:
+          return fallback_path
+      today_str = datetime.date.today().strftime("%Y-%m-%d")
+      assigned_file = os.path.join(journal_dir, f"{due}.md")
+      if due == today_str or os.path.exists(assigned_file):
+          return assigned_file
+      return os.path.join(journal_dir, f"{today_str}.md")
+
+
+  def apply_inline_options(content, is_desc):
+      """Fold a leading "<...>" inline-options block (see
+      parse_inline_options) out of content and into the shape the
+      output-line builder expects: a resolved due date is appended
+      as a \U0001F4C5 emoji tag (unless content already carries one,
+      in which case it's left alone), and an explicit -s/--state
+      becomes the returned mark character.
+
+      Returns (content, mark, due); mark is None if no -s/--state
+      was given (callers should leave the existing/default mark
+      alone in that case, rather than stomping it with " "); due is
+      the resolved "YYYY-MM-DD" date, or None if no date/offset/
+      today/tomorrow flag was given - pass it to
+      resolve_due_date_file() to find which file the todo should
+      actually land in. Raises ValueError if content carries
+      inline options but is_desc (notes have no state/due
+      semantics), or if the options themselves fail to parse (see
+      parse_inline_options).
+      """
+      options, content = parse_inline_options(content)
+      if not options:
+          return content, None, None
+      if is_desc:
+          raise ValueError("inline options aren't supported on notes")
+      due = resolve_inline_due_date(options)
+      if due and "\U0001F4C5" not in content:
+          content = f"{content} \U0001F4C5 {due}"
+      return content, options.get("state"), due
+
+
   def main():
       parser = argparse.ArgumentParser(description="Add a todo task.")
       parser.add_argument(
@@ -557,7 +698,9 @@ pkgs.writers.writePython3Bin "todo" { } ''
           if sys.stdin.isatty():
               print(
                   "Enter todo (blank line, or Ctrl+D, to finish; "
-                  "Ctrl+C to cancel):"
+                  "Ctrl+C to cancel). A leading \"<...>\" on a line "
+                  "(e.g. \"<-T> Buy milk\") sets that todo's own "
+                  "date/state, same flags as -d/-o/-t/-T/-s:"
               )
               input_lines = []
               while True:
@@ -592,15 +735,23 @@ pkgs.writers.writePython3Bin "todo" { } ''
           print("Error: No task content provided.", file=sys.stderr)
           sys.exit(1)
 
-      # Prepare output lines
-      output_lines = []
+      # Prepare output blocks, one per top-level todo. A top-level
+      # line (and any sub-todos/notes following it) normally lands
+      # in journal_file, but a leading "<...>" inline-options block
+      # on that line (see apply_inline_options) can redirect just
+      # that block to a different daily file - this is what lets a
+      # single interactive multi-line entry mix e.g. a today todo
+      # with a tomorrow one.
+      blocks = []
+      current_file = journal_file
+      current_lines = []
 
       for line in lines:
           stripped = line.strip()
           if not stripped:
               continue
 
-          if not output_lines:
+          if not blocks and not current_lines:
               # The very first line is always a new top-level todo,
               # regardless of any leading "-"/"." markers.
               depth, is_desc, content = 0, False, stripped
@@ -608,19 +759,45 @@ pkgs.writers.writePython3Bin "todo" { } ''
               depth, is_desc, content = parse_prefixed_line(stripped)
 
           is_new_top_level = not is_desc and depth == 0
-          mark = args.state if (is_new_top_level and args.state) else " "
-          out_line = format_output_line(depth, is_desc, content, mark)
-          if not is_desc and depth == 0 and due_suffix and "📅" not in out_line:
-              out_line += due_suffix
-          output_lines.append(out_line)
 
-      # Write to file
-      try:
-          content_to_write = "\n".join(output_lines) + "\n"
+          try:
+              content, inline_mark, due = apply_inline_options(
+                  content, is_desc
+              )
+          except ValueError as e:
+              print(f"Error: {e}", file=sys.stderr)
+              sys.exit(1)
 
-          if (os.path.exists(journal_file) and
-                  os.path.getsize(journal_file) > 0):
-              with open(journal_file, "r") as f:
+          if is_new_top_level:
+              if current_lines:
+                  blocks.append((current_file, current_lines))
+                  current_lines = []
+              if due:
+                  current_file = resolve_due_date_file(due, journal_file)
+              else:
+                  current_file = journal_file
+                  if due_suffix and "📅" not in content:
+                      content += due_suffix
+              mark = (
+                  inline_mark if inline_mark is not None
+                  else (args.state if args.state else " ")
+              )
+          else:
+              mark = inline_mark if inline_mark is not None else " "
+
+          current_lines.append(
+              format_output_line(depth, is_desc, content, mark)
+          )
+
+      if current_lines:
+          blocks.append((current_file, current_lines))
+
+      def write_block(path, content_to_write):
+          os.makedirs(
+              os.path.dirname(os.path.abspath(path)), exist_ok=True
+          )
+          if os.path.exists(path) and os.path.getsize(path) > 0:
+              with open(path, "r") as f:
                   file_lines = f.readlines()
 
               marker_index = -1
@@ -631,19 +808,28 @@ pkgs.writers.writePython3Bin "todo" { } ''
 
               if marker_index != -1:
                   file_lines.insert(marker_index + 1, content_to_write)
-                  with open(journal_file, "w") as f:
+                  with open(path, "w") as f:
                       f.writelines(file_lines)
               else:
                   needs_newline = not file_lines[-1].endswith("\n")
-                  with open(journal_file, "a") as f:
+                  with open(path, "a") as f:
                       if needs_newline:
                           f.write("\n")
                       f.write(content_to_write)
           else:
-              with open(journal_file, "w") as f:
+              with open(path, "w") as f:
                   f.write(content_to_write)
 
-          print(f"Added todo to {journal_file}")
+      # Write to file(s)
+      try:
+          written_files = []
+          for path, out_lines in blocks:
+              write_block(path, "\n".join(out_lines) + "\n")
+              if path not in written_files:
+                  written_files.append(path)
+
+          for path in written_files:
+              print(f"Added todo to {path}")
       except Exception as e:
           print(f"Error writing to file: {e}", file=sys.stderr)
           sys.exit(1)
