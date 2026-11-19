@@ -97,6 +97,7 @@ in
             "claude-haiku-4-5" # fast
             "claude-sonnet-5" # normal tasks
             "claude-opus-5" # hard tasks, debugging
+            "claude-fable-5"
 
             # OpenRouter Models
             "deepseek/deepseek-v4-flash"
