@@ -11,8 +11,8 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
   from todo_common import (
       INDENT_UNIT, TODO_MARKER, VALID_STATES, PRIORITY_SYMBOLS,
       parse_prefixed_line, format_output_line, parse_date,
-      resolve_due_date_file, apply_inline_options,
-      select_file_with_fzf, pick_calendar_date,
+      resolve_due_date_file, apply_inline_options, normalize_state,
+      add_shared_arguments, select_file_with_fzf, pick_calendar_date,
   )
 
   # Sentinel for -f/--file given with no argument, meaning "let me
@@ -1013,8 +1013,10 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
                       stdscr.keypad(True)
                       if new_text is not None and new_text.strip() != "":
                           try:
-                              content, mark, _due = apply_inline_options(
-                                  new_text.strip(), False
+                              content, mark, _due, _file = (
+                                  apply_inline_options(
+                                      new_text.strip(), False
+                                  )
                               )
                           except ValueError as e:
                               show_message(stdscr, max_y - 1, f"Error: {e}")
@@ -1043,24 +1045,30 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
                           raw_input.strip()
                       )
                       try:
-                          content, mark, due = apply_inline_options(
-                              content, is_desc
+                          content, mark, due, inline_file = (
+                              apply_inline_options(content, is_desc)
                           )
                       except ValueError as e:
                           show_message(stdscr, max_y - 1, f"Error: {e}")
                           content = None
                       if content:
                           mark = mark if mark is not None else " "
-                          # A resolved due date may redirect the new
-                          # todo into a different daily journal file
-                          # than the one currently browsed (see
-                          # resolve_due_date_file) - same as todo's
-                          # own -d/-o file selection. There's then
-                          # nothing in that other file to anchor off
-                          # of, so it's always a root-level insert.
+                          # A resolved due date (or -f/-w) may redirect
+                          # the new todo into a different file than
+                          # the one currently browsed (see
+                          # resolve_due_date_file/resolve_inline_file)
+                          # - same as todo's own -d/-o/-f/-w file
+                          # selection. There's then nothing in that
+                          # other file to anchor off of, so it's
+                          # always a root-level insert.
                           path = row["path"]
                           redirected = False
-                          if due:
+                          if inline_file:
+                              path = inline_file
+                              redirected = path != row["path"]
+                              if path not in paths:
+                                  paths.append(path)
+                          elif due:
                               path = resolve_due_date_file(due, row["path"])
                               redirected = path != row["path"]
                               if path not in paths:
@@ -1142,37 +1150,35 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
               "file."
           )
       )
-      parser.add_argument(
-          "-w", "--weekly", action="store_true",
-          help="Read the weekly journal instead of the daily one."
-      )
-      parser.add_argument(
-          "-o", "--offset", type=int, default=0,
-          help="Offset in days (daily) or weeks (weekly) from today."
-      )
-      parser.add_argument(
-          "-d", "--date", type=str,
-          help=(
-              "Date for the daily journal (weekday name, 'today', "
-              "'tomorrow', 'yesterday', or a possibly-partial "
-              "YYYY-MM-DD date). Ignored with --weekly."
-          )
-      )
-      parser.add_argument(
-          "-c", "--calendar", action="store_true",
-          help=(
-              "Interactively pick the date from a calendar (weeks "
-              "start on Monday), instead of -d/--date. --offset "
-              "still applies relative to the picked date."
-          )
-      )
-      parser.add_argument(
-          "-f", "--file", type=str, nargs="?", const=FZF_SELECT,
-          help=(
-              "Read this file directly instead of resolving a journal "
-              "file. Ignored with --all. If given with no argument, "
-              "pick the file interactively with fzf from $NOTES_DIR."
-          )
+      add_shared_arguments(
+          parser, ["weekly", "offset", "date", "calendar", "file"],
+          weekly={"help": "Read the weekly journal instead of the daily one."},
+          offset={
+              "help": "Offset in days (daily) or weeks (weekly) from today.",
+          },
+          date={
+              "help": (
+                  "Date for the daily journal (weekday name, 'today', "
+                  "'tomorrow', 'yesterday', or a possibly-partial "
+                  "YYYY-MM-DD date). Ignored with --weekly."
+              ),
+          },
+          calendar={
+              "help": (
+                  "Interactively pick the date from a calendar (weeks "
+                  "start on Monday), instead of -d/--date. --offset "
+                  "still applies relative to the picked date."
+              ),
+          },
+          file={
+              "const": FZF_SELECT,
+              "help": (
+                  "Read this file directly instead of resolving a "
+                  "journal file. Ignored with --all. If given with "
+                  "no argument, pick the file interactively with fzf "
+                  "from $NOTES_DIR."
+              ),
+          },
       )
       parser.add_argument(
           "-r", "--range", nargs="+", metavar="DATE",
@@ -1215,14 +1221,17 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
               "todos instead of just today's."
           )
       )
-      parser.add_argument(
-          "-s", "--state", type=str, default=None,
-          help=(
-              "Only show todos with this checklist state - the "
-              "character inside \"[ ]\": " + ", ".join(
-                  f"{s!r} ({name})" for s, name in VALID_STATES.items()
-              ) + ". Overrides --done/--overdue."
-          )
+      add_shared_arguments(
+          parser, ["state"],
+          state={
+              "help": (
+                  "Only show todos with this checklist state - the "
+                  "character inside \"[ ]\": " + ", ".join(
+                      f"{s!r} ({name})"
+                      for s, name in VALID_STATES.items()
+                  ) + ". Overrides --done/--overdue."
+              ),
+          },
       )
       parser.add_argument(
           "-O", "--open", action="store_true",
@@ -1287,16 +1296,11 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
           args.overdue = True
 
       if args.state is not None:
-          state = args.state.lower()
-          if len(state) != 1 or state not in VALID_STATES:
-              valid = ", ".join(f"{s!r}" for s in VALID_STATES)
-              print(
-                  f"Error: Invalid --state {args.state!r}. Expected "
-                  f"one of: {valid}.",
-                  file=sys.stderr
-              )
+          try:
+              args.state = normalize_state(args.state)
+          except ValueError as e:
+              print(f"Error: {e}", file=sys.stderr)
               sys.exit(1)
-          args.state = state
 
       if args.open and args.all:
           print("Error: --open is not supported with --all.", file=sys.stderr)

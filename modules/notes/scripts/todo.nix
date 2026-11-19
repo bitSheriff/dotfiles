@@ -10,9 +10,11 @@ pkgs.writers.writePython3Bin "todo" { libraries = [ todoCommon ]; } ''
   from todo_common import (
       TODO_MARKER, VALID_STATES, PRIORITY_EMOJI,
       parse_prefixed_line, format_output_line, parse_date,
-      resolve_due_date_file, apply_inline_options,
-      select_file_with_fzf, pick_calendar_date,
+      resolve_due_date_file, apply_inline_options, normalize_state,
+      add_shared_arguments, select_file_with_fzf, pick_calendar_date,
   )
+
+  SELECT_WITH_FZF = "SELECT_WITH_FZF"  # -f/--file given with no argument
 
 
   def gum_input(placeholder):
@@ -122,41 +124,19 @@ pkgs.writers.writePython3Bin "todo" { libraries = [ todoCommon ]; } ''
 
   def main():
       parser = argparse.ArgumentParser(description="Add a todo task.")
-      parser.add_argument(
-          "-w", "--weekly", action="store_true",
-          help=(
-              "Add to the weekly journal (JOURNAL_WEEKLY_PATH) instead "
-              "of the daily one. -o/--offset is interpreted in weeks "
-              "rather than days. Ignored with -f/--file."
-          )
+      add_shared_arguments(
+          parser, ["weekly", "today", "tomorrow", "offset", "date"],
+          weekly={
+              "help": (
+                  "Add to the weekly journal (JOURNAL_WEEKLY_PATH) "
+                  "instead of the daily one. -o/--offset is "
+                  "interpreted in weeks rather than days. Ignored "
+                  "with -f/--file."
+              ),
+          },
       )
-      parser.add_argument(
-          "-t", "--today", action="store_true", help="Set to today."
-      )
-      parser.add_argument(
-          "-T", "--tomorrow", action="store_true", help="Set to tomorrow."
-      )
-      parser.add_argument(
-          "-o", "--offset", type=int, default=0,
-          help=(
-              "Offset in days from today (or weeks, with -w/--weekly). "
-              "Positive for future, negative for past."
-          )
-      )
-      parser.add_argument(
-          "-d", "--date", type=str,
-          help=(
-              "Set to a specific date. Accepts a weekday name "
-              "(e.g. 'friday', 'fri', optionally prefixed with "
-              "'next'), 'today', 'tomorrow', 'yesterday', or a "
-              "YYYY-MM-DD date. The date may be partial - "
-              "MM-DD (current year) or DD (current year and "
-              "month) - and the missing parts are filled in."
-          )
-      )
-      parser.add_argument(
-          "-f", "--file", nargs="?", const="SELECT_WITH_FZF",
-          help="Target markdown file."
+      add_shared_arguments(
+          parser, ["file"], file={"const": SELECT_WITH_FZF},
       )
       parser.add_argument(
           "-i", "--inbox", action="store_true",
@@ -170,14 +150,7 @@ pkgs.writers.writePython3Bin "todo" { libraries = [ todoCommon ]; } ''
           "-C", "--clipboard", action="store_true",
           help="With -i, use clipboard contents instead of task text."
       )
-      parser.add_argument(
-          "-c", "--calendar", action="store_true",
-          help=(
-              "Interactively pick the date from a calendar (weeks "
-              "start on Monday). Overrides -d/--date, -o/--offset, "
-              "-T/--tomorrow and -t/--today."
-          )
-      )
+      add_shared_arguments(parser, ["calendar"])
       parser.add_argument(
           "-l", "--link", action="store_true",
           help=(
@@ -186,27 +159,27 @@ pkgs.writers.writePython3Bin "todo" { libraries = [ todoCommon ]; } ''
               "arguments; anything missing (and notes) is prompted for."
           )
       )
-      parser.add_argument(
-          "-s", "--state", type=str, default=None,
-          help=(
-              "Checklist state for the new todo(s) - the character "
-              "to put inside \"[ ]\", same meaning as todo-list's "
-              "--state: " + ", ".join(
-                  f"{s!r} ({name})" for s, name in VALID_STATES.items()
-              ) + ". Default: ' ' (open). Only applies to new "
-              "top-level todos, not sub-todos/notes."
-          )
-      )
-      parser.add_argument(
-          "-p", "--priority", type=int, default=None,
-          choices=sorted(PRIORITY_EMOJI),
-          help=(
-              "Priority for the new todo(s), written as an Obsidian "
-              "Tasks priority emoji: 1 (highest) through "
-              f"{max(PRIORITY_EMOJI)} (lowest). Default: none (no "
-              "signifier). Only applies to new top-level todos, not "
-              "sub-todos/notes."
-          )
+      add_shared_arguments(
+          parser, ["state", "priority"],
+          state={
+              "help": (
+                  "Checklist state for the new todo(s) - the character "
+                  "to put inside \"[ ]\": " + ", ".join(
+                      f"{s!r} ({name})"
+                      for s, name in VALID_STATES.items()
+                  ) + ". Default: ' ' (open). Only applies to new "
+                  "top-level todos, not sub-todos/notes."
+              ),
+          },
+          priority={
+              "help": (
+                  "Priority for the new todo(s), written as an "
+                  "Obsidian Tasks priority emoji: 1 (highest) through "
+                  f"{max(PRIORITY_EMOJI)} (lowest). Default: none (no "
+                  "signifier). Only applies to new top-level todos, "
+                  "not sub-todos/notes."
+              ),
+          },
       )
       parser.add_argument(
           "task", nargs="*", help="The task content."
@@ -223,16 +196,11 @@ pkgs.writers.writePython3Bin "todo" { libraries = [ todoCommon ]; } ''
           return
 
       if args.state is not None:
-          state = args.state.lower()
-          if len(state) != 1 or state not in VALID_STATES:
-              valid = ", ".join(f"{s!r}" for s in VALID_STATES)
-              print(
-                  f"Error: Invalid --state {args.state!r}. Expected "
-                  f"one of: {valid}.",
-                  file=sys.stderr
-              )
+          try:
+              args.state = normalize_state(args.state)
+          except ValueError as e:
+              print(f"Error: {e}", file=sys.stderr)
               sys.exit(1)
-          args.state = state
 
       # Determine date (precedence: -d > -o > -T > -t)
       target_date = datetime.date.today()
@@ -273,7 +241,7 @@ pkgs.writers.writePython3Bin "todo" { libraries = [ todoCommon ]; } ''
       )
 
       # Determine target file
-      if args.file == "SELECT_WITH_FZF":
+      if args.file == SELECT_WITH_FZF:
           journal_file = select_file_with_fzf()
       elif args.file:
           journal_file = args.file
@@ -392,7 +360,7 @@ pkgs.writers.writePython3Bin "todo" { libraries = [ todoCommon ]; } ''
           is_new_top_level = not is_desc and depth == 0
 
           try:
-              content, inline_mark, due = apply_inline_options(
+              content, inline_mark, due, inline_file = apply_inline_options(
                   content, is_desc
               )
           except ValueError as e:
@@ -407,7 +375,9 @@ pkgs.writers.writePython3Bin "todo" { libraries = [ todoCommon ]; } ''
                   e in content for e in PRIORITY_EMOJI.values()
               ):
                   content += priority_suffix
-              if due:
+              if inline_file:
+                  current_file = inline_file
+              elif due:
                   current_file = resolve_due_date_file(due, journal_file)
               else:
                   current_file = journal_file

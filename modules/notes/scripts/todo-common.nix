@@ -53,6 +53,170 @@ let
     }
 
 
+    def normalize_state(value):
+        """Lowercase and validate a checklist state value (-s/--state,
+        CLI or inline). Returns the normalized single-character state,
+        or raises ValueError with a usable message.
+        """
+        state = value.lower()
+        if len(state) != 1 or state not in VALID_STATES:
+            valid = ", ".join(f"{s!r}" for s in VALID_STATES)
+            raise ValueError(f"invalid state {value!r}; expected one of: {valid}")
+        return state
+
+
+    def normalize_priority(value):
+        """Validate a priority value (-p/--priority, inline only - the
+        CLI uses argparse's choices= instead). Returns the priority
+        as an int, or raises ValueError with a usable message.
+        """
+        try:
+            priority = int(value)
+        except ValueError:
+            raise ValueError("value must be an integer")
+        if priority not in PRIORITY_EMOJI:
+            valid = ", ".join(str(p) for p in sorted(PRIORITY_EMOJI))
+            raise ValueError(f"value must be one of: {valid}")
+        return priority
+
+
+    def _parse_inline_int(value):
+        try:
+            return int(value)
+        except ValueError:
+            raise ValueError("value must be an integer")
+
+
+    # Single source of truth for every flag shared between the CLI
+    # (`todo`'s and `todo-list`'s argparse parsers) and the "<...>"
+    # inline syntax (see parse_inline_options) - add a flag here once
+    # and it's available, with the same spelling/types/validation, in
+    # both, rather than keeping two hand-written, driftable copies in
+    # sync. "argparse" holds the kwargs passed to parser.add_argument
+    # (besides the flag strings themselves); callers may override/add
+    # to these via add_shared_arguments's **overrides. "parse" is the
+    # inline-value parser (value string -> options[dest]), or None for
+    # a plain store_true flag.
+    SHARED_FLAGS = [
+        dict(
+            dest="today", short="-t", long="--today", parse=None,
+            argparse=dict(action="store_true", help="Set to today."),
+        ),
+        dict(
+            dest="tomorrow", short="-T", long="--tomorrow", parse=None,
+            argparse=dict(action="store_true", help="Set to tomorrow."),
+        ),
+        dict(
+            dest="offset", short="-o", long="--offset",
+            parse=_parse_inline_int,
+            argparse=dict(
+                type=int, default=0,
+                help=(
+                    "Offset in days from today (or weeks, with "
+                    "-w/--weekly). Positive for future, negative for "
+                    "past."
+                ),
+            ),
+        ),
+        dict(
+            dest="date", short="-d", long="--date", parse=lambda v: v,
+            argparse=dict(
+                type=str,
+                help=(
+                    "Set to a specific date. Accepts a weekday name "
+                    "(e.g. 'friday', 'fri', optionally prefixed with "
+                    "'next'), 'today', 'tomorrow', 'yesterday', or a "
+                    "YYYY-MM-DD date. The date may be partial - "
+                    "MM-DD (current year) or DD (current year and "
+                    "month) - and the missing parts are filled in."
+                ),
+            ),
+        ),
+        dict(
+            dest="calendar", short="-c", long="--calendar", parse=None,
+            argparse=dict(
+                action="store_true",
+                help=(
+                    "Interactively pick the date from a calendar "
+                    "(weeks start on Monday). Overrides -d/--date, "
+                    "-o/--offset, -T/--tomorrow and -t/--today."
+                ),
+            ),
+        ),
+        dict(
+            dest="weekly", short="-w", long="--weekly", parse=None,
+            argparse=dict(
+                action="store_true",
+                help=(
+                    "Target the weekly journal (JOURNAL_WEEKLY_PATH) "
+                    "instead of the daily one. -o/--offset is "
+                    "interpreted in weeks rather than days."
+                ),
+            ),
+        ),
+        dict(
+            dest="file", short="-f", long="--file", parse=lambda v: v,
+            argparse=dict(
+                type=str, nargs="?",
+                help=(
+                    "Target a specific markdown file directly. If "
+                    "given with no argument, pick the file "
+                    "interactively with fzf from $NOTES_DIR (not "
+                    "supported inline - a path must be given)."
+                ),
+            ),
+        ),
+        dict(
+            dest="state", short="-s", long="--state",
+            parse=normalize_state,
+            argparse=dict(
+                type=str, default=None,
+                help=(
+                    "Checklist state - the character to put inside "
+                    "\"[ ]\": " + ", ".join(
+                        f"{s!r} ({name})"
+                        for s, name in VALID_STATES.items()
+                    ) + "."
+                ),
+            ),
+        ),
+        dict(
+            dest="priority", short="-p", long="--priority",
+            parse=normalize_priority,
+            argparse=dict(
+                type=int, default=None, choices=sorted(PRIORITY_EMOJI),
+                help=(
+                    "Priority, written as an Obsidian Tasks priority "
+                    "emoji: 1 (highest) through "
+                    f"{max(PRIORITY_EMOJI)} (lowest)."
+                ),
+            ),
+        ),
+    ]
+
+    _SHARED_FLAGS_BY_DEST = {spec["dest"]: spec for spec in SHARED_FLAGS}
+    _SHARED_FLAGS_BY_TOKEN = {
+        tok: spec
+        for spec in SHARED_FLAGS
+        for tok in (spec["short"], spec["long"])
+    }
+
+
+    def add_shared_arguments(parser, include, **overrides):
+        """Add argparse arguments for the given SHARED_FLAGS dests (in
+        the given order) to parser - the same flags, spellings and
+        validation as the "<...>" inline syntax (see
+        parse_inline_options), so CLI and inline can't drift apart.
+        overrides maps dest -> extra/overridden add_argument kwargs
+        (e.g. a script-specific help string, or 'const').
+        """
+        for dest in include:
+            spec = _SHARED_FLAGS_BY_DEST[dest]
+            kwargs = dict(spec["argparse"])
+            kwargs.update(overrides.get(dest, {}))
+            parser.add_argument(spec["short"], spec["long"], **kwargs)
+
+
     def parse_prefixed_line(stripped):
         """Parse leading nesting/description markers off an input line.
 
@@ -278,16 +442,28 @@ let
         """Pull a leading "<...>" block of todo flags off content.
 
         Lets a single multi-line interactive `todo` entry, or --tui's
-        a/e keys in `todo-list`, carry a date/state on the typed text
-        itself instead of it being swallowed as part of the title, or
-        shared by every line, e.g. "<-T> Buy milk" alongside "<-t> Call
-        bank". Recognizes -d/--date, -o/--offset, -t/--today,
-        -T/--tomorrow and -s/--state, same meaning/accepted values as
-        both scripts' matching command-line flags. The block, if
-        present, must be the very first thing in content (callers run
-        this after stripping any "-"/"." nesting markers via
-        parse_prefixed_line) - its contents are shlex-split, so
-        shell-style quoting works (e.g. "<-d 'next friday'>").
+        a/e keys in `todo-list`, carry a date/state/target on the
+        typed text itself instead of it being swallowed as part of
+        the title, or shared by every line, e.g. "<-T> Buy milk"
+        alongside "<-t> Call bank". Recognizes -d/--date, -o/--offset,
+        -t/--today, -T/--tomorrow, -c/--calendar, -s/--state,
+        -p/--priority, -w/--weekly and -f/--file - same meaning/
+        accepted values as both scripts' matching command-line flags.
+        The block, if present, must be the very first thing in
+        content (callers run this after stripping any "-"/"." nesting
+        markers via parse_prefixed_line) - its contents are
+        shlex-split, so shell-style quoting works (e.g.
+        "<-d 'next friday'>"), and a long option may bundle its
+        value with "=" same as argparse (e.g. "<--state=i>").
+
+        As at the command line, -c overrides -d/-o/-T/-t, and
+        -f overrides -w.
+
+        Using -f/--file or -w/--weekly on content that is not a new
+        top-level todo (a sub-todo or note) has no effect - only a
+        new top-level line can redirect which file a block lands in.
+        A bare, fzf-driven "-f" (no value) is not supported inline; a
+        path must be given.
 
         Returns (options, remaining_content); options is {} if there
         is no "<...>" block. Raises ValueError (with a usable
@@ -312,73 +488,84 @@ let
         i = 0
         while i < len(tokens):
             tok = tokens[i]
-            if tok in ("-t", "--today"):
-                options["today"] = True
+            # As with argparse, a long option may bundle its value
+            # with "=", e.g. "--state=i".
+            inline_value = None
+            if tok.startswith("--") and "=" in tok:
+                tok, inline_value = tok.split("=", 1)
+            spec = _SHARED_FLAGS_BY_TOKEN.get(tok)
+            if spec is None:
+                raise ValueError(f"unknown inline option {tok!r}")
+            if spec["parse"] is None:
+                if inline_value is not None:
+                    raise ValueError(f"{tok} takes no value")
+                options[spec["dest"]] = True
                 i += 1
-            elif tok in ("-T", "--tomorrow"):
-                options["tomorrow"] = True
-                i += 1
-            elif tok in ("-d", "--date"):
+                continue
+            if inline_value is None:
                 if i + 1 >= len(tokens):
                     raise ValueError(f"{tok} needs a value")
-                options["date"] = tokens[i + 1]
-                i += 2
-            elif tok in ("-o", "--offset"):
-                if i + 1 >= len(tokens):
-                    raise ValueError(f"{tok} needs a value")
-                try:
-                    options["offset"] = int(tokens[i + 1])
-                except ValueError:
-                    raise ValueError(f"{tok} value must be an integer")
-                i += 2
-            elif tok in ("-s", "--state"):
-                if i + 1 >= len(tokens):
-                    raise ValueError(f"{tok} needs a value")
-                state = tokens[i + 1].lower()
-                if len(state) != 1 or state not in VALID_STATES:
-                    valid = ", ".join(f"{s!r}" for s in VALID_STATES)
-                    raise ValueError(
-                        f"{tok} value must be one of: {valid}"
-                    )
-                options["state"] = state
-                i += 2
-            elif tok in ("-p", "--priority"):
-                if i + 1 >= len(tokens):
-                    raise ValueError(f"{tok} needs a value")
-                try:
-                    priority = int(tokens[i + 1])
-                except ValueError:
-                    raise ValueError(f"{tok} value must be an integer")
-                if priority not in PRIORITY_EMOJI:
-                    valid = ", ".join(str(p) for p in sorted(PRIORITY_EMOJI))
-                    raise ValueError(
-                        f"{tok} value must be one of: {valid}"
-                    )
-                options["priority"] = priority
+                inline_value = tokens[i + 1]
                 i += 2
             else:
-                raise ValueError(f"unknown inline option {tok!r}")
+                i += 1
+            try:
+                options[spec["dest"]] = spec["parse"](inline_value)
+            except ValueError as e:
+                raise ValueError(f"{tok} {e}")
         return options, rest
 
 
     def resolve_inline_due_date(options):
         """Resolve a "YYYY-MM-DD" due date from a parsed inline-options
         dict, using the same flag precedence as the command-line date
-        flags (-d > -o > -T > -t). Returns None if none of date/
-        offset/tomorrow/today was given.
+        flags (-c > -d > -o > -T > -t). -o/--offset is interpreted in
+        weeks rather than days if -w/--weekly is also set, same as
+        the command-line flags. Returns None if none of calendar/
+        date/offset/tomorrow/today was given.
         """
         today = datetime.date.today()
+        if options.get("calendar"):
+            return pick_calendar_date().strftime("%Y-%m-%d")
         if "date" in options:
             return parse_date(options["date"]).strftime("%Y-%m-%d")
         if "offset" in options:
-            return (
-                today + datetime.timedelta(days=options["offset"])
-            ).strftime("%Y-%m-%d")
+            delta = (
+                datetime.timedelta(weeks=options["offset"])
+                if options.get("weekly")
+                else datetime.timedelta(days=options["offset"])
+            )
+            return (today + delta).strftime("%Y-%m-%d")
         if options.get("tomorrow"):
             return (today + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
         if options.get("today"):
             return today.strftime("%Y-%m-%d")
         return None
+
+
+    def resolve_inline_file(options, due):
+        """Resolve a direct file-path override implied by -f/--file
+        or -w/--weekly in a parsed inline-options dict, to use instead
+        of resolve_due_date_file's usual daily-journal redirect.
+        -f takes precedence over -w if both are given. due is the
+        already-resolved due date (see resolve_inline_due_date), used
+        to pick which week -w lands in; today's week is used if due
+        is None.
+
+        Returns None if neither -f nor -w was given. Raises
+        ValueError if -w/--weekly is given but JOURNAL_WEEKLY_PATH
+        isn't set.
+        """
+        if "file" in options:
+            return options["file"]
+        if not options.get("weekly"):
+            return None
+        weekly_path = os.getenv("JOURNAL_WEEKLY_PATH")
+        if not weekly_path:
+            raise ValueError("JOURNAL_WEEKLY_PATH not set")
+        target_date = parse_date(due) if due else datetime.date.today()
+        iso_year, iso_week, _ = target_date.isocalendar()
+        return os.path.join(weekly_path, f"{iso_year}-W{iso_week:02d}.md")
 
 
     def resolve_due_date_file(due, fallback_path):
@@ -408,20 +595,24 @@ let
         which case it's left alone), and an explicit -s/--state
         becomes the returned mark character.
 
-        Returns (content, mark, due); mark is None if no -s/--state
-        was given (callers should leave the existing/default mark
-        alone in that case, rather than stomping it with " "); due is
-        the resolved "YYYY-MM-DD" date, or None if no date/offset/
-        today/tomorrow flag was given - pass it to
-        resolve_due_date_file() to find which file the todo should
-        actually land in. Raises ValueError if content carries
-        inline options but is_desc (notes have no state/due/priority
-        semantics), or if the options themselves fail to parse (see
-        parse_inline_options).
+        Returns (content, mark, due, file); mark is None if no
+        -s/--state was given (callers should leave the existing/
+        default mark alone in that case, rather than stomping it with
+        " "); due is the resolved "YYYY-MM-DD" date, or None if no
+        calendar/date/offset/today/tomorrow flag was given - pass it
+        to resolve_due_date_file() to find which file the todo should
+        actually land in; file is a direct file-path override from
+        -f/--file or -w/--weekly (see resolve_inline_file), or None if
+        neither was given, in which case callers should fall back to
+        resolve_due_date_file() (or their own default) as usual.
+        Raises ValueError if content carries inline options but
+        is_desc (notes have no state/due/priority/file semantics), or
+        if the options themselves fail to parse (see
+        parse_inline_options) or resolve (see resolve_inline_file).
         """
         options, content = parse_inline_options(content)
         if not options:
-            return content, None, None
+            return content, None, None, None
         if is_desc:
             raise ValueError("inline options aren't supported on notes")
         if "priority" in options and not any(
@@ -431,7 +622,8 @@ let
         due = resolve_inline_due_date(options)
         if due and "\U0001F4C5" not in content:
             content = f"{content} \U0001F4C5 {due}"
-        return content, options.get("state"), due
+        file = resolve_inline_file(options, due)
+        return content, options.get("state"), due, file
   '';
 in
 pkgs.python3Packages.buildPythonPackage {
