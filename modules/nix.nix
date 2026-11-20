@@ -11,7 +11,7 @@ let
   '';
 
   nd = pkgs.writeShellScriptBin "nd" ''
-    nix develop --impure
+    nix develop --impure .#"$@"
   '';
 
   nr = pkgs.writeShellScriptBin "nr" ''
