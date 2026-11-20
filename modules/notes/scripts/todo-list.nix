@@ -87,6 +87,26 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
       return remaining.strip(), meta
 
 
+  # Matches a leading clock time or time range on a todo/event line,
+  # e.g. "06:00 Arbeiten" or "06:00 - 11:30 Arbeiten".
+  TIME_PREFIX_RE = re.compile(
+      r"^(\d{2}:\d{2}(?:\s*-\s*\d{2}:\d{2})?)\s+"
+  )
+
+
+  def extract_time_prefix(text):
+      """Strip a leading time or time range (\"06:00 ...\"/\"06:00 -
+      11:30 ...\") off a todo/event line's text.
+
+      Returns (clean_text, time_str), where time_str is e.g.
+      "06:00" or "06:00 - 11:30", or None if there's no leading time.
+      """
+      m = TIME_PREFIX_RE.match(text)
+      if not m:
+          return text, None
+      return text[m.end():], m.group(1)
+
+
   def format_task_metadata(meta):
       """Strip priority off and format the remaining task metadata
       for display. Priority gets its own visual treatment (the whole
@@ -226,9 +246,11 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
           if m:
               depth = len(m.group("indent")) // len(INDENT_UNIT)
               text, meta = extract_task_metadata(m.group("text").strip())
+              text, time_str = extract_time_prefix(text)
               mark = m.group("mark").lower()
               node = {
                   "text": text,
+                  "time": time_str,
                   "state": mark,
                   "line": lineno,
                   "done": mark in ("x", "-", "<"),
@@ -704,6 +726,7 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
       for n in nodes:
           indent = INDENT_UNIT * depth
           suffix = c("2", format_task_metadata(n.get("meta", {})))
+          time_prefix = c("2", n["time"] + " ") if n.get("time") else ""
           # Priority colors the whole todo text, but only for the
           # "still active" states - done/cancelled/delegated already
           # fade/strike their text to signal they're settled, and
@@ -731,7 +754,7 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
           else:
               box = "[ ]"
               text = active_text + suffix
-          print(f"{indent}- {box} {text}")
+          print(f"{indent}- {box} {time_prefix}{text}")
           for note in n["notes"]:
               note_indent = INDENT_UNIT * (depth + 1)
               print(f"{note_indent}- {c('2;3', note)}")
@@ -954,6 +977,7 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
                   indent = INDENT_UNIT * row["depth"]
                   box = f"[{n['state']}]"
                   suffix = format_task_metadata(n.get("meta", {}))
+                  time_prefix = (n["time"] + " ") if n.get("time") else ""
                   marker = ""
                   if n["children"] and collapsed.get(row["key"]):
                       marker = " (...)"
@@ -966,7 +990,10 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
                       attr |= pextra
                   if n["done"]:
                       attr |= curses.A_DIM
-                  text = f"{indent}- {box} {n['text']}{suffix}{marker}"
+                  text = (
+                      f"{indent}- {box} {time_prefix}{n['text']}"
+                      f"{suffix}{marker}"
+                  )
                   stdscr.addstr(i, 0, text[:max_x - 1], attr | reverse)
 
           footer = (
