@@ -1306,7 +1306,7 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
               "typed text (e.g. \"<-o 1> Buy milk\") is parsed as "
               "inline flags instead of being added to the title - "
               "-d/--date, -o/--offset, -t/--today, -T/--tomorrow set "
-              "a \ud83d\udcc5 due date, -s/--state sets the checklist "
+              "a \U0001F4C5 due date, -s/--state sets the checklist "
               "mark, -p/--priority (1 highest .. 5 lowest) sets an "
               "Obsidian Tasks priority emoji, same values as "
               "todo's/todo-list's own flags. "
