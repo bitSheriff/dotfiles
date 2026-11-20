@@ -88,11 +88,16 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
 
 
   def format_task_metadata(meta):
+      """Strip priority off and format the remaining task metadata
+      for display. Priority gets its own visual treatment (the whole
+      todo text is colored by priority, see PRIORITY_COLOR_ANSI/
+      TUI_PRIORITY_COLOR) instead of a '(priority high)' suffix.
+      """
       if not meta:
           return ""
       parts = []
       for field in TASK_FIELD_DISPLAY_ORDER:
-          if field not in meta:
+          if field == "priority" or field not in meta:
               continue
           if field == "due" and meta.get("due_implied"):
               # Implicit due dates (every open todo in a daily journal
@@ -101,6 +106,19 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
               continue
           parts.append(f"{field} {meta[field]}")
       return " (" + ", ".join(parts) + ")" if parts else ""
+
+
+  # Priority -> ANSI color code (plain output) / curses (pair, extra
+  # attr) (--tui), used to color a todo's whole text by priority:
+  # highest/high in red (highest also bold), medium yellow, low cyan,
+  # lowest just dimmed.
+  PRIORITY_COLOR_ANSI = {
+      "highest": "1;31",
+      "high": "31",
+      "medium": "33",
+      "low": "36",
+      "lowest": "2",
+  }
 
 
   DAILY_FILENAME_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})\.md$")
@@ -685,28 +703,34 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
   def print_todo_tree(nodes, depth=0):
       for n in nodes:
           indent = INDENT_UNIT * depth
-          suffix = format_task_metadata(n.get("meta", {}))
+          suffix = c("2", format_task_metadata(n.get("meta", {})))
+          # Priority colors the whole todo text, but only for the
+          # "still active" states - done/cancelled/delegated already
+          # fade/strike their text to signal they're settled, and
+          # that de-emphasis matters more than their old priority.
+          pcolor = PRIORITY_COLOR_ANSI.get(n.get("meta", {}).get("priority"))
+          active_text = c(pcolor, n["text"]) if pcolor else n["text"]
           if n.get("is_event"):
               box = c("36", "[i]")
-              text = n["text"] + c("2", suffix)
+              text = active_text + suffix
           elif n.get("in_progress"):
               box = c("33", "[/]")
-              text = n["text"] + c("2", suffix)
+              text = active_text + suffix
           elif n.get("cancelled"):
               box = c("31", "[-]")
-              text = c("31;9", n["text"]) + c("2", suffix)
+              text = c("31;9", n["text"]) + suffix
           elif n.get("delegated"):
               box = c("35", "[<]")
-              text = c("35;9", n["text"]) + c("2", suffix)
+              text = c("35;9", n["text"]) + suffix
           elif n.get("forwarded"):
               box = c("34", "[>]")
-              text = n["text"] + c("2", suffix)
+              text = active_text + suffix
           elif n["done"]:
               box = c("32", "[x]")
-              text = c("2;9", n["text"]) + c("2", suffix)
+              text = c("2;9", n["text"]) + suffix
           else:
               box = "[ ]"
-              text = n["text"] + c("2", suffix)
+              text = active_text + suffix
           print(f"{indent}- {box} {text}")
           for note in n["notes"]:
               note_indent = INDENT_UNIT * (depth + 1)
@@ -769,6 +793,22 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
       "<": 5,   # delegated - magenta
       ">": 6,   # forwarded - blue
   }
+
+
+  # Priority -> (curses color pair, extra attr), reusing the state
+  # color pairs init_pair'd below (1=green..6=blue). Only applied to
+  # the "still active" states (open/event/in-progress/forwarded,
+  # see TUI_NEUTRAL_STATES below) - done/cancelled/delegated keep
+  # their own color, their settled state matters more than priority.
+  TUI_PRIORITY_COLOR = {
+      "highest": (4, curses.A_BOLD),  # red, bold
+      "high": (4, 0),                 # red
+      "medium": (3, 0),               # yellow
+      "low": (2, 0),                  # cyan
+      "lowest": (0, curses.A_DIM),    # no color, just dimmed
+  }
+
+  TUI_NEUTRAL_STATES = (" ", ">", "/", "i")
 
 
   def run_tui(paths, args, refresh_paths=None):
@@ -917,11 +957,16 @@ pkgs.writers.writePython3Bin "todo-list" { libraries = [ todoCommon ]; } ''
                   marker = ""
                   if n["children"] and collapsed.get(row["key"]):
                       marker = " (...)"
-                  text = f"{indent}- {box} {n['text']}{suffix}{marker}"
                   pair = TUI_STATE_COLOR_PAIR.get(n["state"])
                   attr = curses.color_pair(pair) if pair else 0
+                  priority = n.get("meta", {}).get("priority")
+                  if priority and n["state"] in TUI_NEUTRAL_STATES:
+                      pair_num, pextra = TUI_PRIORITY_COLOR.get(priority, (0, 0))
+                      attr = (curses.color_pair(pair_num) if pair_num else 0)
+                      attr |= pextra
                   if n["done"]:
                       attr |= curses.A_DIM
+                  text = f"{indent}- {box} {n['text']}{suffix}{marker}"
                   stdscr.addstr(i, 0, text[:max_x - 1], attr | reverse)
 
           footer = (
