@@ -25,6 +25,14 @@
     enableCryptodisk = true;
   };
 
+  ## Debugging hard freezes (2026-11-20): turn silent hangs into a logged panic
+  ## and allow Alt+SysRq+W/S/B to dump stuck tasks, sync and reboot.
+  boot.kernel.sysctl = {
+    "kernel.sysrq" = 1;
+    "kernel.hung_task_panic" = 1;
+    "kernel.softlockup_panic" = 1;
+  };
+
   ## Trim SSD
   services.fstrim.enable = true;
 
@@ -54,7 +62,7 @@
   ## Legion 5 ARH05H ships with the dGPU-only BIOS mode (no AMD iGPU exposed),
   ## so nouveau's lack of color management/gamma support shows as washed-out output.
   hardware.nvidia = {
-    open = true; # Turing (RTX 20xx) is GSP-capable, open driver is the recommended default
+    open = false; # Turing (RTX 20xx) is GSP-capable, open driver is the recommended default
     modesetting.enable = true;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
