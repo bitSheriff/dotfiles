@@ -32,6 +32,15 @@ let
       # what resolves the .desktop icon; point straight at the file instead.
       icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark/48x48/devices/headphones.svg";
     };
+
+    nextcloud = {
+      name = "Nextcloud";
+      url = "https://cloud.mandl-meyer.me";
+      icon = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/nextcloud/server/master/core/img/favicon.svg";
+        sha256 = "sha256-jusxRM5ecc4UWUriRqcCmLvTQ5VpxiA1aCyHV9fqntg=";
+      };
+    };
   };
 in
 {

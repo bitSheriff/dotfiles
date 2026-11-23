@@ -701,6 +701,14 @@ in
             description = "Enable the Endel webapp shortcut.";
           };
         };
+
+        nextcloud = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Enable the Nextcloud webapp shortcut.";
+          };
+        };
       };
     };
 

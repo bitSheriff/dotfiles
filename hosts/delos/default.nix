@@ -115,6 +115,7 @@
     browser.webapp = {
       homeassistant.enable = true;
       endel.enable = true;
+      nextcloud.enable = true;
     };
 
     desktop.hyprland.enable = true;
