@@ -87,5 +87,13 @@
       enable = true;
       openFirewall = true;
     };
+
+    # NixOS restricts environment.pathsToLink by default, so Akonadi's resource
+    # agents (CalDAV/CardDAV, etc.) from kdepim-runtime never reach
+    # /run/current-system/sw and akonadictl only ever lists akonadi_knut_resource.
+    environment.pathsToLink = [
+      "/share/akonadi"
+      "/lib/qt-6/plugins"
+    ];
   };
 }
