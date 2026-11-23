@@ -125,7 +125,7 @@
       libre-office.enable = true;
       marktext.enable = true;
       apostrophe.enable = false; # currently has a bug
-
+      gnome-calendar.enable = true;
     };
 
     uni.enable = true;

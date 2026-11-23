@@ -35,11 +35,6 @@
         # Diagrams, Brainstorming and more
         drawio
 
-        kdePackages.korganizer # Calendar and more
-        kdePackages.akonadi # needed for korganizer
-        kdePackages.akonadi-search # needed for korganizer
-        kdePackages.kdepim-runtime
-
         qalculate-gtk # cli and gui calculator
 
         # Printers and Scanners
@@ -56,7 +51,18 @@
         # gromit-mpx # draw on desktop
       ]
       ++ lib.optionals config.cfg.office.typora.enable [ typora ]
-      ++ lib.optionals config.cfg.office.apostrophe.enable [ apostrophe ];
+      ++ lib.optionals config.cfg.office.apostrophe.enable [ apostrophe ]
+      ++ lib.optionals config.cfg.office.korganizer.enable [
+        kdePackages.korganizer # Calendar and more
+        kdePackages.akonadi # needed for korganizer
+        kdePackages.akonadi-search # needed for korganizer
+        kdePackages.kdepim-runtime
+      ]
+      ++ lib.optionals config.cfg.office.gnome-calendar.enable [
+        gnome-calendar
+        evolution-data-server # CalDAV backend for gnome-calendar
+        gnome-online-accounts # lets gnome-calendar add CalDAV accounts
+      ];
 
     # Crucial for office work to ensure documents look the same everywhere.
     fonts.packages = with pkgs; [
@@ -91,7 +97,7 @@
     # NixOS restricts environment.pathsToLink by default, so Akonadi's resource
     # agents (CalDAV/CardDAV, etc.) from kdepim-runtime never reach
     # /run/current-system/sw and akonadictl only ever lists akonadi_knut_resource.
-    environment.pathsToLink = [
+    environment.pathsToLink = lib.mkIf config.cfg.office.korganizer.enable [
       "/share/akonadi"
       "/lib/qt-6/plugins"
     ];

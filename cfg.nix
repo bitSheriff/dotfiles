@@ -579,6 +579,22 @@ in
           description = "Enable handwritten notes/drawing";
         };
       };
+
+      korganizer = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install KOrganizer (KDE calendar/todo) and its Akonadi backend.";
+        };
+      };
+
+      gnome-calendar = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Install GNOME Calendar and its CalDAV backend (evolution-data-server, gnome-online-accounts).";
+        };
+      };
     };
 
     ############
