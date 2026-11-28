@@ -173,7 +173,7 @@
       enable = true;
       steam.enable = true;
       heroic.enable = true;
-
+      sunshine.enable = true;
     };
 
     multimedia = {

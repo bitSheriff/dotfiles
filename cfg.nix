@@ -654,6 +654,14 @@ in
           description = "Install Heroic Games Launcher";
         };
       };
+
+      sunshine = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Run the Sunshine game streaming host (for Moonlight clients) and open its firewall ports.";
+        };
+      };
     };
 
     ###########

@@ -16,6 +16,13 @@
       ]
       ++ lib.optionals config.cfg.gaming.heroic.enable [ heroic ]; # for GOG and EPIC GAMES
 
+    services.sunshine = lib.mkIf config.cfg.gaming.sunshine.enable {
+      enable = true;
+      autoStart = true;
+      capSysAdmin = true; # KMS capture on Wayland needs CAP_SYS_ADMIN
+      openFirewall = true;
+    };
+
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
